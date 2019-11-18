@@ -1,0 +1,904 @@
+{
+    "categories": {
+        "title": "",
+        "categories": [
+            {
+                "title": "Bathroom",
+                "categories": [
+                    {
+                        "title": "Accessories",
+                        "categories": []
+                    },
+                    {
+                        "title": "Assemblies",
+                        "categories": []
+                    },
+                    {
+                        "title": "Baths",
+                        "categories": []
+                    },
+                    {
+                        "title": "Bidets",
+                        "categories": []
+                    },
+                    {
+                        "title": "Faucets",
+                        "categories": []
+                    },
+                    {
+                        "title": "Toilets",
+                        "categories": []
+                    },
+                    {
+                        "title": "Sinks",
+                        "categories": []
+                    },
+                    {
+                        "title": "Showers",
+                        "categories": []
+                    },
+                    {
+                        "title": "Equipment",
+                        "categories": []
+                    }
+                ]
+            },
+            {
+                "title": "Assembly spaces",
+                "categories": [
+                    {
+                        "title": "Classroom",
+                        "categories": []
+                    },
+                    {
+                        "title": "Hospitality",
+                        "categories": []
+                    },
+                    {
+                        "title": "Reception Areas",
+                        "categories": []
+                    },
+                    {
+                        "title": "Scene",
+                        "categories": []
+                    },
+                    {
+                        "title": "Schulz Speyer",
+                        "categories": []
+                    },
+                    {
+                        "title": "Seating",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Bedroom",
+                "categories": [
+                    {
+                        "title": "Accessories",
+                        "categories": []
+                    },
+                    {
+                        "title": "Assemblies",
+                        "categories": []
+                    },
+                    {
+                        "title": "Beds",
+                        "categories": []
+                    },
+                    {
+                        "title": "Clothing",
+                        "categories": []
+                    },
+                    {
+                        "title": "Dressers",
+                        "categories": []
+                    },
+                    {
+                        "title": "Night tables",
+                        "categories": []
+                    }
+                ]
+            },
+            {
+                "title": "Dining",
+                "categories": [
+                    {
+                        "title": "Accessories",
+                        "categories": []
+                    },
+                    {
+                        "title": "Assemblies",
+                        "categories": []
+                    },
+                    {
+                        "title": "Chairs",
+                        "categories": []
+                    },
+                    {
+                        "title": "Stools",
+                        "categories": []
+                    },
+                    {
+                        "title": "Tables",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Environment",
+                "categories": [
+                    {
+                        "title": "Backgrounds",
+                        "categories": []
+                    },
+                    {
+                        "title": "Backgrounds 180",
+                        "categories": []
+                    },
+                    {
+                        "title": "Backgrounds 360",
+                        "categories": []
+                    },
+                    {
+                        "title": "Buildings",
+                        "categories": []
+                    },
+                    {
+                        "title": "Cloud domes",
+                        "categories": []
+                    },
+                    {
+                        "title": "Clouds",
+                        "categories": []
+                    },
+                    {
+                        "title": "Terrains",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Exterior residential",
+                "categories": [
+                    {
+                        "title": "Assemblies",
+                        "categories": []
+                    },
+                    {
+                        "title": "Barbecues",
+                        "categories": []
+                    },
+                    {
+                        "title": "Chairs",
+                        "categories": []
+                    },
+                    {
+                        "title": "Miscellaneous",
+                        "categories": []
+                    },
+                    {
+                        "title": "Seating",
+                        "categories": []
+                    },
+                    {
+                        "title": "Structures & Fencing",
+                        "categories": []
+                    },
+                    {
+                        "title": "Tables",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "HDR",
+                "categories": [
+                    {
+                        "title": "Landscapes",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Holiday",
+                "categories": [
+                    {
+                        "title": "Christmas",
+                        "categories": []
+                    },
+                    {
+                        "title": "Christmas Assemblies",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Light fixtures exterior",
+                "categories": [
+                    {
+                        "title": "Bollards",
+                        "categories": []
+                    },
+                    {
+                        "title": "Floodlights & ground",
+                        "categories": []
+                    },
+                    {
+                        "title": "Pole",
+                        "categories": []
+                    },
+                    {
+                        "title": "Wall & ceiling",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Living",
+                "categories": [
+                    {
+                        "title": "Accessories",
+                        "categories": []
+                    },
+                    {
+                        "title": "Assemblies",
+                        "categories": []
+                    },
+                    {
+                        "title": "Chairs",
+                        "categories": []
+                    },
+                    {
+                        "title": "Poufs",
+                        "categories": []
+                    },
+                    {
+                        "title": "Rugs",
+                        "categories": []
+                    },
+                    {
+                        "title": "Sofas",
+                        "categories": []
+                    },
+                    {
+                        "title": "Storage",
+                        "categories": []
+                    },
+                    {
+                        "title": "Tables",
+                        "categories": []
+                    },
+                    {
+                        "title": "Wall units",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Office",
+                "categories": [
+                    {
+                        "title": "Accessories",
+                        "categories": []
+                    },
+                    {
+                        "title": "Acoustic decoration",
+                        "categories": []
+                    },
+                    {
+                        "title": "Assemblies",
+                        "categories": []
+                    },
+                    {
+                        "title": "Boards",
+                        "categories": []
+                    },
+                    {
+                        "title": "Chairs",
+                        "categories": []
+                    },
+                    {
+                        "title": "Conference",
+                        "categories": []
+                    },
+                    {
+                        "title": "Desks",
+                        "categories": []
+                    },
+                    {
+                        "title": "Lounge",
+                        "categories": []
+                    },
+                    {
+                        "title": "Partitions & Enclosures",
+                        "categories": []
+                    },
+                    {
+                        "title": "Showcases",
+                        "categories": []
+                    },
+                    {
+                        "title": "Storage",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Sports equipment",
+                "categories": [
+                    {
+                        "title": "Indoor",
+                        "categories": []
+                    },
+                    {
+                        "title": "Outdoor",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Vehicles",
+                "categories": [
+                    {
+                        "title": "Bicycles",
+                        "categories": []
+                    },
+                    {
+                        "title": "Cars",
+                        "categories": []
+                    },
+                    {
+                        "title": "Trucks",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Decoration",
+                "categories": [
+                    {
+                        "title": "Books",
+                        "categories": []
+                    },
+                    {
+                        "title": "Boxes",
+                        "categories": []
+                    },
+                    {
+                        "title": "Candles",
+                        "categories": []
+                    },
+                    {
+                        "title": "Clocks",
+                        "categories": []
+                    },
+                    {
+                        "title": "Curtains",
+                        "categories": []
+                    },
+                    {
+                        "title": "Glass_Items",
+                        "categories": []
+                    },
+                    {
+                        "title": "Mirrors",
+                        "categories": []
+                    },
+                    {
+                        "title": "Miscellaneous",
+                        "categories": []
+                    },
+                    {
+                        "title": "Music equipment",
+                        "categories": []
+                    },
+                    {
+                        "title": "Veses",
+                        "categories": []
+                    },
+                    {
+                        "title": "Wall Art",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Electronic",
+                "categories": [
+                    {
+                        "title": "Computers",
+                        "categories": []
+                    },
+                    {
+                        "title": "Portable",
+                        "categories": []
+                    },
+                    {
+                        "title": "Sound systems",
+                        "categories": []
+                    },
+                    {
+                        "title": "Televisions",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Exterior public",
+                "categories": [
+                    {
+                        "title": "Benches",
+                        "categories": []
+                    },
+                    {
+                        "title": "Bins",
+                        "categories": []
+                    },
+                    {
+                        "title": "Bollards",
+                        "categories": []
+                    },
+                    {
+                        "title": "Cafe Assemblies",
+                        "categories": []
+                    },
+                    {
+                        "title": "Cycle stands",
+                        "categories": []
+                    },
+                    {
+                        "title": "Flags",
+                        "categories": []
+                    },
+                    {
+                        "title": "Miscellaneous",
+                        "categories": []
+                    },
+                    {
+                        "title": "Plant grilles",
+                        "categories": []
+                    },
+                    {
+                        "title": "Playground",
+                        "categories": []
+                    },
+                    {
+                        "title": "Signages",
+                        "categories": []
+                    },
+                    {
+                        "title": "Street",
+                        "categories": []
+                    },
+                    {
+                        "title": "Tables",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Full 3D Models",
+                "categories": [
+                    {
+                        "title": "Kitchen models",
+                        "categories": []
+                    },
+                    {
+                        "title": "Studio models",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Hardware & construction",
+                "categories": [
+                    {
+                        "title": "Blinds & Shades",
+                        "categories": []
+                    },
+                    {
+                        "title": "Doors",
+                        "categories": []
+                    },
+                    {
+                        "title": "Electrical",
+                        "categories": []
+                    },
+                    {
+                        "title": "Handles",
+                        "categories": []
+                    },
+                    {
+                        "title": "Heating",
+                        "categories": []
+                    },
+                    {
+                        "title": "Miscellaneous",
+                        "categories": []
+                    },
+                    {
+                        "title": "Roofing",
+                        "categories": []
+                    },
+                    {
+                        "title": "Stairs & railings",
+                        "categories": []
+                    },
+                    {
+                        "title": "Ventilation",
+                        "categories": []
+                    },
+                    {
+                        "title": "Walls",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Kitchen",
+                "categories": [
+                    {
+                        "title": "Accessories",
+                        "categories": []
+                    },
+                    {
+                        "title": "Appliances",
+                        "categories": []
+                    },
+                    {
+                        "title": "Assemblies",
+                        "categories": []
+                    },
+                    {
+                        "title": "Base cabinets",
+                        "categories": []
+                    },
+                    {
+                        "title": "Cooking",
+                        "categories": []
+                    },
+                    {
+                        "title": "Countertops",
+                        "categories": []
+                    },
+                    {
+                        "title": "Cupboards",
+                        "categories": []
+                    },
+                    {
+                        "title": "Islands",
+                        "categories": []
+                    },
+                    {
+                        "title": "Microwaves",
+                        "categories": []
+                    },
+                    {
+                        "title": "Misc cabinets",
+                        "categories": []
+                    },
+                    {
+                        "title": "Refrigerators",
+                        "categories": []
+                    },
+                    {
+                        "title": "Seating",
+                        "categories": []
+                    },
+                    {
+                        "title": "Sinks",
+                        "categories": []
+                    },
+                    {
+                        "title": "Taps",
+                        "categories": []
+                    },
+                    {
+                        "title": "Wall cabinets",
+                        "categories": []
+                    }
+                ]
+            },
+            {
+                "title": "Light fixtures interior",
+                "categories": [
+                    {
+                        "title": "Ceiling",
+                        "categories": []
+                    },
+                    {
+                        "title": "Floor",
+                        "categories": []
+                    },
+                    {
+                        "title": "Picture_lights",
+                        "categories": []
+                    },
+                    {
+                        "title": "Point lights",
+                        "categories": []
+                    },
+                    {
+                        "title": "Suspended",
+                        "categories": []
+                    },
+                    {
+                        "title": "Table",
+                        "categories": []
+                    },
+                    {
+                        "title": "EWall",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Materials",
+                "categories": [
+                    {
+                        "title": "Carpet",
+                        "categories": []
+                    },
+                    {
+                        "title": "Ceramic",
+                        "categories": []
+                    },
+                    {
+                        "title": "Concrete",
+                        "categories": []
+                    },
+                    {
+                        "title": "Fabric",
+                        "categories": []
+                    },
+                    {
+                        "title": "Farrow and Ball Colors",
+                        "categories": []
+                    },
+                    {
+                        "title": "Fibre - cement",
+                        "categories": []
+                    },
+                    {
+                        "title": "Ground",
+                        "categories": []
+                    },
+                    {
+                        "title": "Leather",
+                        "categories": []
+                    },
+                    {
+                        "title": "LEM",
+                        "categories": []
+                    },
+                    {
+                        "title": "Marble",
+                        "categories": []
+                    },
+                    {
+                        "title": "Masonry",
+                        "categories": []
+                    },
+                    {
+                        "title": "Metal",
+                        "categories": []
+                    },
+                    {
+                        "title": "Metal V2+",
+                        "categories": []
+                    },
+                    {
+                        "title": "Miscellaneous",
+                        "categories": []
+                    },
+                    {
+                        "title": "Paving",
+                        "categories": []
+                    },
+                    {
+                        "title": "Plastic",
+                        "categories": []
+                    },
+                    {
+                        "title": "Roofing",
+                        "categories": []
+                    },
+                    {
+                        "title": "Stone - granite",
+                        "categories": []
+                    },
+                    {
+                        "title": "Stone - surface",
+                        "categories": []
+                    },
+                    {
+                        "title": "Stone - wall",
+                        "categories": []
+                    },
+                    {
+                        "title": "Stucco",
+                        "categories": []
+                    },
+                    {
+                        "title": "Tiles",
+                        "categories": []
+                    },
+                    {
+                        "title": "Tiles - floor",
+                        "categories": []
+                    },
+                    {
+                        "title": "Tiles - granite",
+                        "categories": []
+                    },
+                    {
+                        "title": "Tiles - mosaic",
+                        "categories": []
+                    },
+                    {
+                        "title": "Tiles - wall",
+                        "categories": []
+                    },
+                    {
+                        "title": "Transparent",
+                        "categories": []
+                    },
+                    {
+                        "title": "Wallpaper",
+                        "categories": []
+                    },
+                    {
+                        "title": "Water",
+                        "categories": []
+                    },
+                    {
+                        "title": "Wood",
+                        "categories": []
+                    },
+                    {
+                        "title": "Wood - flooring",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "People & animals",
+                "categories": [
+                    {
+                        "title": "Animals",
+                        "categories": []
+                    },
+                    {
+                        "title": "Silhouettes",
+                        "categories": []
+                    },
+                    {
+                        "title": "Summer",
+                        "categories": []
+                    },
+                    {
+                        "title": "Winter",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Vegetation",
+                "categories": [
+                    {
+                        "title": "2D Angles views",
+                        "categories": []
+                    },
+                    {
+                        "title": "2D Grass",
+                        "categories": []
+                    },
+                    {
+                        "title": "2D Interior plants",
+                        "categories": []
+                    },
+                    {
+                        "title": "2D Plants",
+                        "categories": []
+                    },
+                    {
+                        "title": "2D South pacific",
+                        "categories": []
+                    },
+                    {
+                        "title": "2D Trees",
+                        "categories": []
+                    },
+                    {
+                        "title": "3D Interior plants",
+                        "categories": []
+                    },
+                    {
+                        "title": "3D Planters",
+                        "categories": []
+                    },
+                    {
+                        "title": "3D Plants",
+                        "categories": []
+                    },
+                    {
+                        "title": "3D Trees",
+                        "categories": []
+                    },
+                    {
+                        "title": "3D Trees architectural",
+                        "categories": []
+                    },
+                    {
+                        "title": "3D Vegetation Assemblies",
+                        "categories": []
+                    },
+                    {
+                        "title": "Living Walls",
+                        "categories": []
+                    }
+
+                ]
+            },
+            {
+                "title": "Windows",
+                "categories": [
+                    {
+                        "title": "Andersen 100 200 400 Misc",
+                        "categories": []
+                    },
+                    {
+                        "title": "Andersen Series E Colonial",
+                        "categories": []
+                    },
+                    {
+                        "title": "Andersen Series E Custom",
+                        "categories": []
+                    },
+                    {
+                        "title": "Andersen Series E Fractional",
+                        "categories": []
+                    },
+                    {
+                        "title": "Andersen Series E Prairie",
+                        "categories": []
+                    },
+                    {
+                        "title": "DC & Misc",
+                        "categories": []
+                    },
+                    {
+                        "title": "Kolbe",
+                        "categories": []
+                    },
+                    {
+                        "title": "Milgard",
+                        "categories": []
+                    }
+
+                ]
+            }
+        ]
+    }
+}

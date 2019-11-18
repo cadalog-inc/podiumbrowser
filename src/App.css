@@ -20,3 +20,26 @@
 .App-link {
   color: #09d3ac;
 }
+
+
+
+div.float-left {float:left;}
+
+div.float-top {float:top;}
+
+div.grayborder {border:2px solid gray;}
+
+p.line-space {line-height:1.2;}
+
+p.line-space-card {line-height:0.4;}
+
+button.text-small {font-size: 1;}
+
+
+
+p.overflow-hidden {
+  white-space: nowrap; 
+  width: 175px; 
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
