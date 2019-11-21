@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { GalleryElement } from '../components/galleryelementcomponent';
 
 class GallerySeeAllPage extends React.Component {

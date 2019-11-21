@@ -2,11 +2,9 @@ import React from 'react';
 import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
-import { Link, BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { HomePage } from './components/homepagecomponent';
-import { TableComponent } from './components/gallerytablecomponent';
-
-
+import { BrowserRouter, Route } from "react-router-dom";
+import { NavBar } from './components/navbar';
+import { HomePage } from './components/homepage';
 
 class App extends React.Component {
   constructor(props) {
@@ -16,14 +14,9 @@ class App extends React.Component {
         title: "",
         categories: []
       },
-
-
-      browserDatabaseArray : [],
-
       items: [],
-
       selectedCategory: "",
-      searchTerm : "",
+      searchTerm: "",
       indexStart: 0,
       indexLimit: 100
     };
@@ -34,15 +27,46 @@ class App extends React.Component {
     this.getItems();
   }
 
-  searchArray = (items, value) => {
-    const l = items.length;
-    for(let i=0; i<l; i++) {
-      const item = items[i];
-      if(item.includes(value)) {
-        return true;
-      }
-    }
-    return false;
+  render() {
+    const items = this.state.items.filter((item) => {
+      const isInTags = this.state.searchTerm === "" || this.searchArray(item.tags, (this.state.searchTerm));
+      const isInCategoryTitle = item.category_title.includes(this.state.selectedCategory);
+      return isInTags && isInCategoryTitle;
+    });
+
+    // are there any categories in this category?
+
+    // todo: only search on press enter
+    return (
+      <div className="App">
+        <BrowserRouter>
+            <Route exact path="/" render={
+              (props) => {
+                return (
+                  <React.Fragment>
+                    <NavBar
+                      handleCategoryChange={this.handleCategoryChange}
+                      handleKeySearchChange={this.handleKeySearchChange}
+                      categories={this.state.categories}
+                      {...props}
+                    />
+                    <HomePage
+                      categories={this.state.categories}
+                      items={items}
+                      {...props}
+                    />
+                  </React.Fragment>
+                )
+              }
+            } />
+            {/* <Route render={
+              (props) => {
+                return (<h3>404 - Not found</h3>)
+              }
+            } /> */}
+        </BrowserRouter>
+      </div>
+    );
   }
 
   handleCategoryChange = (event) => {
@@ -61,74 +85,37 @@ class App extends React.Component {
     });
   }
 
-  render() {
-    const items = this.state.items.filter( (item) => {
-      const isInTags = this.state.searchTerm === "" || this.searchArray(item.tags,(this.state.searchTerm));
-      const isInCategoryTitle = item.category_title.includes(this.state.selectedCategory);
-      return isInTags && isInCategoryTitle;
-    });
-
-    const primaryCategories = this.state.categories.categories.length > 0 ? this.state.categories.categories : [];
-
-    // todo: only search on press enter
-    return (
-      <div className="App">
-        <Router>
-
-        </Router>
-        <select defaultValue={""} onChange={this.handleCategoryChange}>
-          
-        <option value="">Home</option>
-          {
-            primaryCategories.map((item, index) => {
-              return (
-              <option value={item.title} key={index}>{item.title}</option>
-              )
-            })
-          }
-        </select>
-        <input className="form-control mr-sm-2" type="text" placeholder="Search" onChange={this.handleKeySearchChange}></input>
-
-        <TableComponent  itemlist = {items}
-                         firstindex = {this.state.indexStart}
-                         lastindex = {this.state.indexLimit}/>
-
-        <HomePage categories = {primaryCategories}
-                  itemlist = {this.state.browserDatabaseArray}/>
-
-      </div>
-    );
-  }
-
   getCategories() {
     axios.get('categories.json')
-    .then((response) => {
-      this.setState({
-        categories: response.data.categories
-      }, () => {
-        console.log(this.state.categories.categories.length);
+      .then((response) => {
+        this.setState({
+          categories: response.data.categories
+        }, () => {
+          console.log(this.state.categories.categories.length);
+        });
       });
-    });
   }
 
   getItems() {
     axios.get('items.json')
-    .then((response) => {
-      this.setState({
-        items: response.data.data, browserDatabaseArray: response.data.data
-      }, () => {
-        // console.log(this.state.items);
+      .then((response) => {
+        this.setState({
+          items: response.data.data, browserDatabaseArray: response.data.data
+        }, () => {
+          // console.log(this.state.items);
+        });
       });
-    });
   }
 
-  formatFilesize(bytes) {
-    const size = Math.round(bytes / Math.pow(1024, 2));
-    if(size < 1) {
-      return '< 1';
-    } else {
-      return size;
+  searchArray = (items, value) => {
+    const l = items.length;
+    for (let i = 0; i < l; i++) {
+      const item = items[i];
+      if (item.includes(value)) {
+        return true;
+      }
     }
+    return false;
   }
 }
 
