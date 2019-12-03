@@ -2,9 +2,33 @@ import React from 'react';
 import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
-import { BrowserRouter, Route } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { BrowserRouter, Route, Link } from "react-router-dom";
 import { NavBar } from './components/navbar';
 import { HomePage } from './components/homepage';
+
+import { Container, Col, Row } from 'react-bootstrap';
+
+
+
+const TestGalleryElement = () => {
+  return (<React.Fragment>
+            <div className="grayborder" style={{ marginLeft: "5px", marginRight: "5px", marginBottom: "25px", height: 220, width: 180 }}>
+              {/* <img style={{ width: 175, height: 150 }} /> */}
+              <p> 4 MB</p>
+              <p> Description</p>
+              <p> In/Category/Subcategory</p>
+            </div>
+          </React.Fragment>
+  )
+};
+
+
+
+
+
+
+
 
 class App extends React.Component {
   constructor(props) {
@@ -40,6 +64,74 @@ class App extends React.Component {
     return (
       <div className="App">
         <BrowserRouter>
+
+            <Link to="/test01">Test 01</Link>
+            <Link to="/test02">Test 02</Link>
+            <Link to="/">Home</Link>
+
+            <Route exact path='/test01' render={
+              (props) => {
+                return (
+                  <React.Fragment style={{flexGrow : 1, width: "95%"}}>
+                    <Container fluid={true}>
+                      <Row>
+                        <Col style={{height: 80}} className="float-left grayborder">1 of 2</Col>
+                        <Col style={{height: 80}} className="float-left grayborder">2 of 2</Col>
+                      </Row>
+                      <Row>
+                        <Col className="float-left grayborder">1 of 3</Col>
+                        <Col className="float-left grayborder">2 of 3</Col>
+                        <Col className="float-left grayborder">3 of 3</Col>
+                      </Row>
+                      <Row>
+                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
+                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
+                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
+                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
+                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
+                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
+                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
+                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
+                      </Row>
+                    </Container>
+
+                  </React.Fragment>
+                )
+              }
+            } />
+
+
+            <Route exact path='/test02' render={
+              (props) => {
+                return (
+                  <React.Fragment>
+                    <h3>Category Name</h3>
+                    <table striped bordered hover variant="dark">
+                      <thead>
+                        <tr>
+                          <th colSpan="9"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td><TestGalleryElement/></td>
+                          <td><TestGalleryElement/></td>
+                          <td><TestGalleryElement/></td>
+                          <td><TestGalleryElement/></td>
+                          <td><TestGalleryElement/></td>
+                          <td><TestGalleryElement/></td>
+                          <td><TestGalleryElement/></td>
+                          <td><TestGalleryElement/></td>
+                          <td><TestGalleryElement/></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </React.Fragment>
+                )
+              }
+            } />
+
+
             <Route exact path="/" render={
               (props) => {
                 return (
@@ -59,11 +151,6 @@ class App extends React.Component {
                 )
               }
             } />
-            {/* <Route render={
-              (props) => {
-                return (<h3>404 - Not found</h3>)
-              }
-            } /> */}
         </BrowserRouter>
       </div>
     );

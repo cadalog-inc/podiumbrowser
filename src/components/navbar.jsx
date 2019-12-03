@@ -14,18 +14,20 @@ export class NavBar extends React.Component {
         return (
             <React.Fragment>
                 <div align="center">
-                    {/* category dropdown list*/}
-                    <select defaultValue={""} onChange={this.props.handleCategoryChange}>
-                        <option value="">Home</option>
-                        {
-                            primaryCategories.map((category, index) => {
-                                return (
-                                    <option value={category.title} key={index}>{category.title}</option>
-                                )
-                            })
-                        }
-                    </select>
-                    <input className="form-control mr-sm-2" type="text" placeholder="Search" onChange={this.props.handleKeySearchChange}></input>
+                    <form className="form-inline" action="/action_page.php">
+                        {/* category dropdown list*/}
+                        <select defaultValue={""} onChange={this.props.handleCategoryChange}>
+                            <option value="">Home</option>
+                            {
+                                primaryCategories.map((category, index) => {
+                                    return (
+                                        <option value={category.title} key={index}>{category.title}</option>
+                                    )
+                                })
+                            }
+                        </select>
+                        <input className="form-control mr-sm-2" type="text" placeholder="Search" style={{width: 200, height: 30}} onChange={this.props.handleKeySearchChange}></input>
+                    </form>
                 </div>
             </React.Fragment>
         );

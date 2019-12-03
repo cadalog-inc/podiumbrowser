@@ -75,7 +75,7 @@ export class GalleryRow extends React.Component {
         </div>
 
         {/* A blank region at the end of the row */}
-        <div className="float-left whiteborder" style={{ marginBottom: "25px", height: 220, width: 75 }}></div>
+        <div className="float-left whiteborder" style={{ marginBottom: "25px", height: 220, width: 120 }}></div>
       </div>
     );
   }
