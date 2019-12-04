@@ -6,40 +6,19 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter, Route, Link } from "react-router-dom";
 import { NavBar } from './components/navbar';
 import { HomePage } from './components/homepage';
+import { Test } from './components/test';
 
 import { Container, Col, Row } from 'react-bootstrap';
-
-
-
-const TestGalleryElement = () => {
-  return (<React.Fragment>
-            <div className="grayborder" style={{ marginLeft: "5px", marginRight: "5px", marginBottom: "25px", height: 220, width: 180 }}>
-              {/* <img style={{ width: 175, height: 150 }} /> */}
-              <p> 4 MB</p>
-              <p> Description</p>
-              <p> In/Category/Subcategory</p>
-            </div>
-          </React.Fragment>
-  )
-};
-
-
-
-
-
-
 
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      categories: {
-        title: "",
-        categories: []
-      },
+      categories: [],
       items: [],
-      selectedCategory: "",
+      relationships: [],
+      selectedCategoryId: 1,
       searchTerm: "",
       indexStart: 0,
       indexLimit: 100
@@ -49,118 +28,57 @@ class App extends React.Component {
   componentDidMount() {
     this.getCategories();
     this.getItems();
+    this.getRelationships();
   }
 
   render() {
-    const items = this.state.items.filter((item) => {
-      const isInTags = this.state.searchTerm === "" || this.searchArray(item.tags, (this.state.searchTerm));
-      const isInCategoryTitle = item.category_title.includes(this.state.selectedCategory);
-      return isInTags && isInCategoryTitle;
-    });
-
-    // are there any categories in this category?
-
-    // todo: only search on press enter
-    return (
-      <div className="App">
+    return (this.state.categories.length > 0 && this.state.items.length > 0 && this.state.relationships.length > 0) ? (
+      <React.Fragment>
         <BrowserRouter>
-
-            <Link to="/test01">Test 01</Link>
-            <Link to="/test02">Test 02</Link>
-            <Link to="/">Home</Link>
-
-            <Route exact path='/test01' render={
-              (props) => {
-                return (
-                  <React.Fragment style={{flexGrow : 1, width: "95%"}}>
-                    <Container fluid={true}>
-                      <Row>
-                        <Col style={{height: 80}} className="float-left grayborder">1 of 2</Col>
-                        <Col style={{height: 80}} className="float-left grayborder">2 of 2</Col>
-                      </Row>
-                      <Row>
-                        <Col className="float-left grayborder">1 of 3</Col>
-                        <Col className="float-left grayborder">2 of 3</Col>
-                        <Col className="float-left grayborder">3 of 3</Col>
-                      </Row>
-                      <Row>
-                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
-                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
-                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
-                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
-                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
-                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
-                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
-                        <Col style={{height: 224}} className="float-left grayborder"><TestGalleryElement/></Col>
-                      </Row>
-                    </Container>
-
-                  </React.Fragment>
-                )
-              }
-            } />
-
-
-            <Route exact path='/test02' render={
-              (props) => {
-                return (
-                  <React.Fragment>
-                    <h3>Category Name</h3>
-                    <table striped bordered hover variant="dark">
-                      <thead>
-                        <tr>
-                          <th colSpan="9"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr>
-                          <td><TestGalleryElement/></td>
-                          <td><TestGalleryElement/></td>
-                          <td><TestGalleryElement/></td>
-                          <td><TestGalleryElement/></td>
-                          <td><TestGalleryElement/></td>
-                          <td><TestGalleryElement/></td>
-                          <td><TestGalleryElement/></td>
-                          <td><TestGalleryElement/></td>
-                          <td><TestGalleryElement/></td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </React.Fragment>
-                )
-              }
-            } />
-
-
-            <Route exact path="/" render={
-              (props) => {
-                return (
-                  <React.Fragment>
-                    <NavBar
-                      handleCategoryChange={this.handleCategoryChange}
-                      handleKeySearchChange={this.handleKeySearchChange}
-                      categories={this.state.categories}
-                      {...props}
-                    />
-                    <HomePage
-                      categories={this.state.categories}
-                      items={items}
-                      {...props}
-                    />
-                  </React.Fragment>
-                )
-              }
-            } />
+          <Route exact path="/" render={
+            (props) => {
+              return (
+                <React.Fragment>
+                  <NavBar
+                    handleCategoryChange={this.handleCategoryChange}
+                    handleKeySearchChange={this.handleKeySearchChange}
+                    categories={this.state.categories}
+                    {...props}
+                  />
+                  <Test
+                    categories={this.state.categories}
+                    selectedCategoryId={this.state.selectedCategoryId}
+                    getSubCategories={this.getSubCategories}
+                    items={this.state.items}
+                    getItemsInCategory={this.getItemsInCategory}
+                    searchTerm={this.state.searchTerm}
+                    searchArray={this.searchArray}
+                    {...props}
+                  >
+                  </Test>
+                </React.Fragment>
+              )
+            }
+          } />
         </BrowserRouter>
-      </div>
-    );
+      </React.Fragment>
+    ) : (
+        <React.Fragment>
+          <div>Loading...</div>
+        </React.Fragment>
+      );
+
+    // return (
+    //   <div className="App">
+    //   </div>
+    // );
   }
 
   handleCategoryChange = (event) => {
     const value = event.target.value;
 
     this.setState({
-      selectedCategory: value
+      selectedCategoryId: value
     });
   }
 
@@ -172,26 +90,116 @@ class App extends React.Component {
     });
   }
 
-  getCategories() {
+  getCategories = () => {
     axios.get('categories.json')
       .then((response) => {
         this.setState({
-          categories: response.data.categories
+          categories: response.data
         }, () => {
-          console.log(this.state.categories.categories.length);
+          // console.log(this.state.categories.length);
         });
       });
   }
 
-  getItems() {
+  getItems = () => {
     axios.get('items.json')
       .then((response) => {
         this.setState({
-          items: response.data.data, browserDatabaseArray: response.data.data
+          items: response.data
         }, () => {
-          // console.log(this.state.items);
+          // console.log(this.state.items.length);
         });
       });
+  }
+
+  getRelationships = () => {
+    axios.get('relationships.json')
+      .then((response) => {
+        this.setState({
+          relationships: response.data
+        }, () => {
+          // console.log(this.state.relationships.length);
+        });
+      });
+  }
+
+  getSubCategories = (categoryId) => {
+    return this.state.categories.filter((category) => {
+      return category.parentId == categoryId
+    });
+  }
+
+  getItemsInCategory = (categoryId) => {
+    const itemsCategories = this.state.relationships.filter((item) => {
+      return item.categoryId == categoryId
+    });
+
+    const itemsInCategory = [];
+
+    const l = itemsCategories.length;
+    for (let i = 0; i < l; i++) {
+      const itemsCategory = itemsCategories[i];
+      const item = this.state.items.find((e) => {
+        return e.id == itemsCategory.itemId
+      });
+      itemsInCategory.push(item);
+    }
+
+    return itemsInCategory;
+  }
+
+  getPathToItem = (itemId) => {
+    const item = this.state.items.find((i) => {
+      return i.id == itemId
+    });
+
+    const itemsCategories = this.state.relationships.filter((item) => {
+      return item.itemId == itemId
+    });
+
+    const pathToItem = {
+      lastCategoryId: 1, // starts at home/1
+      categoryIds: [1]
+    };
+
+    let sanity = 0; // sanity check, limit depth of path to < 10
+
+    let l = itemsCategories.length;
+    while (itemsCategories.length > 0 && sanity < 10) {
+      l = itemsCategories.length;
+      for (let i = 0; i < l; i++) {
+        const itemCategory = itemsCategories[i];
+        const category = this.state.categories.find((c) => {
+          return c.id == itemCategory.categoryId
+        });
+        if (category.parentId == pathToItem.lastCategoryId) {
+          pathToItem.categoryIds.push(itemCategory.categoryId);
+          pathToItem.lastCategoryId = itemCategory.categoryId;
+          itemsCategories.splice(i, 1);
+          break;
+        }
+      }
+
+      sanity++;
+    }
+
+    let pathToItemString = "";
+    l = pathToItem.categoryIds.length;
+    for (let i = 0; i < l; i++) {
+      const categoryId = pathToItem.categoryIds[i];
+      const category = this.state.categories.find((c) => {
+        return c.id == categoryId
+      });
+      if (i == 0) {
+        pathToItemString += `${category.title}`;
+      } else {
+        pathToItemString += `/${category.title}`;
+      }
+    }
+
+    pathToItemString += `/${item.title}`;
+
+    return pathToItemString;
   }
 
   searchArray = (items, value) => {
