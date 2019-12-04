@@ -3,12 +3,9 @@ import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter, Route, Link } from "react-router-dom";
+import { BrowserRouter, Route } from "react-router-dom";
 import { NavBar } from './components/navbar';
-import { HomePage } from './components/homepage';
-import { Test } from './components/test';
-
-import { Container, Col, Row } from 'react-bootstrap';
+import { Page } from './components/page';
 
 
 class App extends React.Component {
@@ -17,11 +14,7 @@ class App extends React.Component {
     this.state = {
       categories: [],
       items: [],
-      relationships: [],
-      selectedCategoryId: 1,
-      searchTerm: "",
-      indexStart: 0,
-      indexLimit: 100
+      relationships: []
     };
   }
 
@@ -45,17 +38,14 @@ class App extends React.Component {
                     categories={this.state.categories}
                     {...props}
                   />
-                  <Test
+                  <Page
                     categories={this.state.categories}
-                    selectedCategoryId={this.state.selectedCategoryId}
                     getSubCategories={this.getSubCategories}
                     items={this.state.items}
                     getItemsInCategory={this.getItemsInCategory}
-                    searchTerm={this.state.searchTerm}
                     searchArray={this.searchArray}
                     {...props}
-                  >
-                  </Test>
+                  />
                 </React.Fragment>
               )
             }
@@ -67,27 +57,6 @@ class App extends React.Component {
           <div>Loading...</div>
         </React.Fragment>
       );
-
-    // return (
-    //   <div className="App">
-    //   </div>
-    // );
-  }
-
-  handleCategoryChange = (event) => {
-    const value = event.target.value;
-
-    this.setState({
-      selectedCategoryId: value
-    });
-  }
-
-  handleKeySearchChange = (event) => {
-    const value = event.target.value;
-
-    this.setState({
-      searchTerm: value
-    });
   }
 
   getCategories = () => {
@@ -125,13 +94,13 @@ class App extends React.Component {
 
   getSubCategories = (categoryId) => {
     return this.state.categories.filter((category) => {
-      return category.parentId == categoryId
+      return category.parentId === categoryId
     });
   }
 
   getItemsInCategory = (categoryId) => {
     const itemsCategories = this.state.relationships.filter((item) => {
-      return item.categoryId == categoryId
+      return item.categoryId === categoryId
     });
 
     const itemsInCategory = [];
@@ -140,7 +109,7 @@ class App extends React.Component {
     for (let i = 0; i < l; i++) {
       const itemsCategory = itemsCategories[i];
       const item = this.state.items.find((e) => {
-        return e.id == itemsCategory.itemId
+        return e.id === itemsCategory.itemId
       });
       itemsInCategory.push(item);
     }
@@ -150,11 +119,11 @@ class App extends React.Component {
 
   getPathToItem = (itemId) => {
     const item = this.state.items.find((i) => {
-      return i.id == itemId
+      return i.id === itemId
     });
 
     const itemsCategories = this.state.relationships.filter((item) => {
-      return item.itemId == itemId
+      return item.itemId === itemId
     });
 
     const pathToItem = {
@@ -170,9 +139,9 @@ class App extends React.Component {
       for (let i = 0; i < l; i++) {
         const itemCategory = itemsCategories[i];
         const category = this.state.categories.find((c) => {
-          return c.id == itemCategory.categoryId
+          return c.id === itemCategory.categoryId
         });
-        if (category.parentId == pathToItem.lastCategoryId) {
+        if (category.parentId === pathToItem.lastCategoryId) {
           pathToItem.categoryIds.push(itemCategory.categoryId);
           pathToItem.lastCategoryId = itemCategory.categoryId;
           itemsCategories.splice(i, 1);
@@ -188,9 +157,9 @@ class App extends React.Component {
     for (let i = 0; i < l; i++) {
       const categoryId = pathToItem.categoryIds[i];
       const category = this.state.categories.find((c) => {
-        return c.id == categoryId
+        return c.id === categoryId
       });
-      if (i == 0) {
+      if (i === 0) {
         pathToItemString += `${category.title}`;
       } else {
         pathToItemString += `/${category.title}`;

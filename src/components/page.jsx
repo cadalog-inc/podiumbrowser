@@ -1,15 +1,24 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
-export class Test extends React.Component {
+export class Page extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
 
         }
     }
-
     render() {
-        let categories = this.props.getSubCategories(this.props.selectedCategoryId);
+        const queryValues = this.parseQueryString(this.props.location.search);
+        let categoryId = 1;
+        let searchTerm = "";
+        if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
+            categoryId = queryValues.categoryId;
+        }
+        if (queryValues.searchTerm && queryValues.searchTerm !== "") {
+            searchTerm = queryValues.searchTerm;
+        }
+        let categories = this.props.getSubCategories(categoryId);
         if (categories.length === 0) {
             const category = this.props.categories.find((category) => {
                 return category.id === this.props.selectedCategoryId
@@ -22,7 +31,7 @@ export class Test extends React.Component {
                     <tbody>
                         {categories.map((category, index) => {
                             const items = this.props.getItemsInCategory(category.id).filter((item) => {
-                                return this.props.searchTerm === "" || this.props.searchArray(item.tags, this.props.searchTerm);
+                                return searchTerm === "" || this.props.searchArray(item.tags, searchTerm);
                             }).slice(0, 3);
                             return (
                                 <React.Fragment key={index}>
@@ -30,7 +39,9 @@ export class Test extends React.Component {
                                         <td>
                                             {category.title}
                                         </td>
-                                        <td></td>
+                                        <td align="right">
+                                            <Link to={`/?categoryId=${category.id}`}>See All</Link>
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -56,5 +67,21 @@ export class Test extends React.Component {
                 </table>
             </React.Fragment>
         );
+    }
+    parseQueryString = (queryString) => {
+        const values = {};
+        const elements = queryString.replace('?', '').split("&");
+        const l = elements.length;
+        for (let i = 0; i < l; i++) {
+            const element = elements[i];
+            const pair = element.split('=');
+            const key = pair[0];
+            let value = pair[1];
+            if (!isNaN(parseInt(value))) {
+                value = parseInt(value);
+            }
+            values[key] = value;
+        }
+        return values;
     }
 }
