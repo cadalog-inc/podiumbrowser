@@ -37,7 +37,7 @@ export class Page extends React.Component {
                             <React.Fragment key={index}>
                                 {
                                     categories.length > 1 && items.length > 0 ?
-                                        <Row>
+                                        <Row style={{ marginTop: 20 }}>
                                             <Col>
                                                 <h5>{category.title} - {items.length} files</h5>
                                             </Col>
@@ -59,7 +59,10 @@ export class Page extends React.Component {
                                                             <Card.Text>
                                                                 In {this.getPathToItem(item.id)}
                                                             </Card.Text>
-                                                            <Button variant="primary">Download</Button>
+                                                            <Card.Text>
+                                                                <Button variant="link">Download</Button>
+                                                                <Button variant="link">Favorite</Button>
+                                                            </Card.Text>
                                                         </Card.Body>
                                                     </Card>
                                                 </Col>
