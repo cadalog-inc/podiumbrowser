@@ -7,11 +7,19 @@ export class Page extends React.Component {
         const queryValues = this.props.parseQueryString(this.props.location.search);
         let categoryId = 1;
         let searchTerm = "";
+        let pageLength = 5;
+        let pageIndex = 0;
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
         }
         if (queryValues.searchTerm && queryValues.searchTerm !== "") {
             searchTerm = queryValues.searchTerm;
+        }
+        if (queryValues.pageLength && queryValues.pageLength !== "" && queryValues.pageLength >= 5) {
+            pageLength = queryValues.pageLength;
+        }
+        if (queryValues.pageIndex && queryValues.pageIndex !== "" && queryValues.pageIndex >= 0) {
+            pageIndex = queryValues.pageIndex;
         }
         let categories = this.props.getSubCategories(categoryId);
         const selectedCategory = this.props.categories.find((category) => {
@@ -43,13 +51,13 @@ export class Page extends React.Component {
                                             </Col>
                                             <Col></Col>
                                             <Col>
-                                                <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}`}>See All</Link>
+                                                <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageLength=5`}>See All</Link>
                                             </Col>
                                         </Row> : null
                                 }
                                 <Row>
                                     {
-                                        items.slice(0, 3).map((item, index) => {
+                                        items.slice(categories.length === 1 ? pageIndex : 0, categories.length === 1 ? pageLength : 3).map((item, index) => {
                                             return (
                                                 <Col key={index} md="4">
                                                     <Card style={{ width: '18rem' }}>
