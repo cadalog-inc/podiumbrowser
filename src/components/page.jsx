@@ -63,13 +63,14 @@ export class Page extends React.Component {
                                                     <Card style={{ width: '18rem' }}>
                                                         <Card.Img variant="top" src="http://v3.pdm-plants-textures.com/images/paid/materials/wood/Timber_veneer_048.jpg" />
                                                         <Card.Body>
+                                                            <Card.Text>
+                                                                {this.formatFileSize(item.fileSize)} MB
+                                                                <Button variant="link">Download</Button>
+                                                                <Button variant="link">Favorite</Button>
+                                                            </Card.Text>
                                                             <Card.Title>{item.title}</Card.Title>
                                                             <Card.Text>
                                                                 In {this.getPathToItem(item.id)}
-                                                            </Card.Text>
-                                                            <Card.Text>
-                                                                <Button variant="link">Download</Button>
-                                                                <Button variant="link">Favorite</Button>
                                                             </Card.Text>
                                                         </Card.Body>
                                                     </Card>
