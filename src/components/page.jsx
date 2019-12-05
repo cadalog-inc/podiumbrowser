@@ -96,6 +96,18 @@ export class Page extends React.Component {
         return values;
     }
 
+    // todo: path from selected category to home
+    pathToCategory = (categoryId) => {
+        // const selectedCategory = this.props.categories.find((category) => {
+        //     return category.id = categoryId
+        // });
+        // if(categoryId == 1) {
+        //     return "Home";
+        // } else {
+
+        // }
+    }
+
     getPathToItem = (itemId) => {
         // const item = this.props.items.find((i) => {
         //     return i.id === itemId
