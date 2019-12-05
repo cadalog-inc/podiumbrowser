@@ -37,6 +37,7 @@ class App extends React.Component {
                     handleKeySearchChange={this.handleKeySearchChange}
                     categories={this.state.categories}
                     getSubCategories={this.getSubCategories}
+                    parseQueryString={this.parseQueryString}
                     {...props}
                   />
                   <Page
@@ -44,8 +45,8 @@ class App extends React.Component {
                     getSubCategories={this.getSubCategories}
                     items={this.state.items}
                     getItemsInCategory={this.getItemsInCategory}
-                    getPathToItem={this.getPathToItem}
-                    searchArray={this.searchArray}
+                    relationships={this.state.relationships}
+                    parseQueryString={this.parseQueryString}
                     {...props}
                   />
                 </React.Fragment>
@@ -119,69 +120,21 @@ class App extends React.Component {
     return itemsInCategory;
   }
 
-  getPathToItem = (itemId) => {
-    const item = this.state.items.find((i) => {
-      return i.id === itemId
-    });
-
-    const itemsCategories = this.state.relationships.filter((item) => {
-      return item.itemId === itemId
-    });
-
-    const pathToItem = {
-      lastCategoryId: 1, // starts at home/1
-      categoryIds: [1]
-    };
-
-    let sanity = 0; // sanity check, limit depth of path to < 10
-
-    let l = itemsCategories.length;
-    while (itemsCategories.length > 0 && sanity < 10) {
-      l = itemsCategories.length;
-      for (let i = 0; i < l; i++) {
-        const itemCategory = itemsCategories[i];
-        const category = this.state.categories.find((c) => {
-          return c.id === itemCategory.categoryId
-        });
-        if (category.parentId === pathToItem.lastCategoryId) {
-          pathToItem.categoryIds.push(itemCategory.categoryId);
-          pathToItem.lastCategoryId = itemCategory.categoryId;
-          itemsCategories.splice(i, 1);
-          break;
-        }
-      }
-
-      sanity++;
-    }
-
-    let pathToItemString = "";
-    l = pathToItem.categoryIds.length;
+  parseQueryString = (queryString) => {
+    const values = {};
+    const elements = queryString.replace('?', '').split("&");
+    const l = elements.length;
     for (let i = 0; i < l; i++) {
-      const categoryId = pathToItem.categoryIds[i];
-      const category = this.state.categories.find((c) => {
-        return c.id === categoryId
-      });
-      if (i === 0) {
-        pathToItemString += `${category.title}`;
-      } else {
-        pathToItemString += `/${category.title}`;
+      const element = elements[i];
+      const pair = element.split('=');
+      const key = pair[0];
+      let value = pair[1];
+      if (!isNaN(parseInt(value))) {
+        value = parseInt(value);
       }
+      values[key] = value;
     }
-
-    pathToItemString += `/${item.title}`;
-
-    return pathToItemString;
-  }
-
-  searchArray = (items, value) => {
-    const l = items.length;
-    for (let i = 0; i < l; i++) {
-      const item = items[i];
-      if (item.includes(value)) {
-        return true;
-      }
-    }
-    return false;
+    return values;
   }
 }
 

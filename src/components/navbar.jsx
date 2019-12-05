@@ -11,7 +11,7 @@ export class NavBar extends React.Component {
     }
 
     render() {
-        const queryValues = this.parseQueryString(this.props.location.search);
+        const queryValues = this.props.parseQueryString(this.props.location.search);
         let categoryId = 1;
         let searchTerm = "";
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
@@ -70,22 +70,5 @@ export class NavBar extends React.Component {
 
     handleOnSearchClick = (categoryId) => {
         this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${this.state.searchTerm}`);
-    }
-
-    parseQueryString = (queryString) => {
-        const values = {};
-        const elements = queryString.replace('?', '').split("&");
-        const l = elements.length;
-        for (let i = 0; i < l; i++) {
-            const element = elements[i];
-            const pair = element.split('=');
-            const key = pair[0];
-            let value = pair[1];
-            if (!isNaN(parseInt(value))) {
-                value = parseInt(value);
-            }
-            values[key] = value;
-        }
-        return values;
     }
 }
