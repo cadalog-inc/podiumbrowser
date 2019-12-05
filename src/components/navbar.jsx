@@ -25,6 +25,8 @@ export class NavBar extends React.Component {
         return (
             <React.Fragment>
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                    <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>Back</Button>
+                    <Button type="button" variant="dark" onClick={() => { this.handleNextClick() }}>Next</Button>
                     <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(1) }}>Home</Button>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
@@ -42,7 +44,7 @@ export class NavBar extends React.Component {
                                     </NavDropdown>
                                 </Col>
                                 <Col key={searchTerm}>
-                                    <FormControl type="text" defaultValue={searchTerm} onChange={this.handleSearchTermChange} className="mr-sm-2" />
+                                    <FormControl type="text" style={{ width: 200 }} defaultValue={searchTerm} onChange={this.handleSearchTermChange} className="mr-sm-2" />
                                 </Col>
                                 <Col>
                                     <Button type="button" variant="dark" onClick={() => { this.handleOnSearchClick(categoryId) }}>Search</Button>
@@ -53,6 +55,14 @@ export class NavBar extends React.Component {
                 </Navbar>
             </React.Fragment>
         );
+    }
+
+    handleBackClick = (event) => {
+        this.props.history.goBack();
+    }
+
+    handleNextClick = (event) => {
+        this.props.history.goForward();
     }
 
     handleCategoryChange = (value) => {
