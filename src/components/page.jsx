@@ -19,15 +19,21 @@ export class Page extends React.Component {
             searchTerm = queryValues.searchTerm;
         }
         let categories = this.props.getSubCategories(categoryId);
+        const selectedCategory = this.props.categories.find((category) => {
+            return category.id === categoryId
+        });
         if (categories.length === 0) {
-            const category = this.props.categories.find((category) => {
-                return category.id === this.props.selectedCategoryId
-            });
-            categories.push(category);
+
+            categories.push(selectedCategory);
         }
         return (
             <React.Fragment>
                 <table>
+                    <thead>
+                        <th>
+                            <h2>{selectedCategory.title}</h2>
+                        </th>
+                    </thead>
                     <tbody>
                         {categories.map((category, index) => {
                             const items = this.props.getItemsInCategory(category.id).filter((item) => {
@@ -35,14 +41,17 @@ export class Page extends React.Component {
                             }).slice(0, 3);
                             return (
                                 <React.Fragment key={index}>
-                                    <tr>
-                                        <td>
-                                            {category.title}
-                                        </td>
-                                        <td align="right">
-                                            <Link to={`/?categoryId=${category.id}`}>See All</Link>
-                                        </td>
-                                    </tr>
+                                    {
+                                        categories.length > 1 ? 
+                                        <tr>
+                                            <td>
+                                                {category.title} - {items.length} files
+                                            </td>
+                                            <td align="right">
+                                                <Link to={`/?categoryId=${category.id}`}>See All</Link>
+                                            </td>
+                                        </tr> : ''
+                                    }
                                     <tr>
                                         <td></td>
                                         <td>
