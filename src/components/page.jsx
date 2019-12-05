@@ -63,6 +63,12 @@ export class Page extends React.Component {
                                                                 <td>
                                                                     {item.title}
                                                                 </td>
+                                                                <td>
+                                                                    {this.formatFilesize(item.fileSize)} MB
+                                                                </td>
+                                                                <td>
+                                                                    {this.props.getPathToItem(item.id)}
+                                                                </td>
                                                             </tr>
                                                         )
                                                     })}</tbody>

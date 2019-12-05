@@ -43,6 +43,7 @@ class App extends React.Component {
                     getSubCategories={this.getSubCategories}
                     items={this.state.items}
                     getItemsInCategory={this.getItemsInCategory}
+                    getPathToItem={this.getPathToItem}
                     searchArray={this.searchArray}
                     {...props}
                   />
