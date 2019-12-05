@@ -41,7 +41,7 @@ export class NavBar extends React.Component {
                                         }
                                     </NavDropdown>
                                 </Col>
-                                <Col>
+                                <Col key={searchTerm}>
                                     <FormControl type="text" defaultValue={searchTerm} onChange={this.handleSearchTermChange} className="mr-sm-2" />
                                 </Col>
                                 <Col>
