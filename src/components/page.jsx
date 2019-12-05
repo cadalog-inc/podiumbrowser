@@ -42,15 +42,15 @@ export class Page extends React.Component {
                             return (
                                 <React.Fragment key={index}>
                                     {
-                                        categories.length > 1 ? 
-                                        <tr>
-                                            <td>
-                                                {category.title} - {items.length} files
+                                        categories.length > 1 ?
+                                            <tr>
+                                                <td>
+                                                    {category.title} - {items.length} files
                                             </td>
-                                            <td align="right">
-                                                <Link to={`/?categoryId=${category.id}`}>See All</Link>
-                                            </td>
-                                        </tr> : ''
+                                                <td align="right">
+                                                    <Link to={`/?categoryId=${category.id}`}>See All</Link>
+                                                </td>
+                                            </tr> : ''
                                     }
                                     <tr>
                                         <td></td>
@@ -92,5 +92,14 @@ export class Page extends React.Component {
             values[key] = value;
         }
         return values;
+    }
+
+    formatFilesize(bytes) {
+        const size = Math.round(bytes / Math.pow(1024, 2));
+        if (size < 1) {
+            return '< 1';
+        } else {
+            return size;
+        }
     }
 }
