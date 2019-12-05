@@ -10,6 +10,15 @@ export class NavBar extends React.Component {
     }
 
     render() {
+        const queryValues = this.parseQueryString(this.props.location.search);
+        let categoryId = 1;
+        let searchTerm = "";
+        if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
+            categoryId = queryValues.categoryId;
+        }
+        if (queryValues.searchTerm && queryValues.searchTerm !== "") {
+            searchTerm = queryValues.searchTerm;
+        }
         const primaryCategories = this.props.categories.length > 0 ? this.props.categories : [];
 
         return (
@@ -17,8 +26,8 @@ export class NavBar extends React.Component {
                 <table>
                     <tbody>
                         <tr>
-                            <td>
-                                <select defaultValue={""} onChange={this.handleCategoryChange}>
+                            <td key={categoryId}>
+                                <select defaultValue={categoryId} onChange={this.handleCategoryChange}>
                                     {
                                         primaryCategories.map((category, index) => {
                                             return (
@@ -28,8 +37,8 @@ export class NavBar extends React.Component {
                                     }
                                 </select>
                             </td>
-                            <td>
-                                <input className="form-control mr-sm-2" type="text" placeholder="Search" style={{ width: 200, height: 30 }} onChange={this.handleSearchTermChange}></input>
+                            <td key={searchTerm}>
+                                <input className="form-control mr-sm-2" type="text" defaultValue={searchTerm} placeholder="Search" style={{ width: 200, height: 30 }} onChange={this.handleSearchTermChange}></input>
                             </td>
                             <td>
                                 <input type="button" onClick={this.handleOnSearchClick} value="Search" />
@@ -60,5 +69,22 @@ export class NavBar extends React.Component {
 
     handleOnSearchClick = (event) => {
         this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}`);
+    }
+
+    parseQueryString = (queryString) => {
+        const values = {};
+        const elements = queryString.replace('?', '').split("&");
+        const l = elements.length;
+        for (let i = 0; i < l; i++) {
+            const element = elements[i];
+            const pair = element.split('=');
+            const key = pair[0];
+            let value = pair[1];
+            if (!isNaN(parseInt(value))) {
+                value = parseInt(value);
+            }
+            values[key] = value;
+        }
+        return values;
     }
 }

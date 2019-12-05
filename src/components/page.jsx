@@ -48,7 +48,7 @@ export class Page extends React.Component {
                                                     {category.title} - {items.length} files
                                             </td>
                                                 <td align="right">
-                                                    <Link to={`/?categoryId=${category.id}`}>See All</Link>
+                                                    <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}`}>See All</Link>
                                                 </td>
                                             </tr> : ''
                                     }
