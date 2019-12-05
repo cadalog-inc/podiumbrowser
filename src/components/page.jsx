@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
 
 export class Page extends React.Component {
     render() {
@@ -22,60 +23,55 @@ export class Page extends React.Component {
         }
         return (
             <React.Fragment>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>
-                                <h3>{selectedCategory.title}</h3>
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {categories.map((category, index) => {
-                            const items = this.props.getItemsInCategory(category.id).filter((item) => {
-                                return searchTerm === "" || this.searchArray(item.tags, searchTerm);
-                            });
-                            return (
-                                <React.Fragment key={index}>
+                <Container>
+                    <Row>
+                        <Col>
+                            <h3>{selectedCategory.title}</h3>
+                        </Col>
+                    </Row>
+                    {categories.map((category, index) => {
+                        const items = this.props.getItemsInCategory(category.id).filter((item) => {
+                            return searchTerm === "" || this.searchArray(item.tags, searchTerm);
+                        });
+                        return (
+                            <React.Fragment key={index}>
+                                {
+                                    categories.length > 1 && items.length > 0 ?
+                                        <Row>
+                                            <Col>
+                                                <h5>{category.title} - {items.length} files</h5>
+                                            </Col>
+                                            <Col></Col>
+                                            <Col>
+                                                <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}`}>See All</Link>
+                                            </Col>
+                                        </Row> : null
+                                }
+                                <Row>
                                     {
-                                        categories.length > 1 && items.length > 0 ?
-                                            <tr>
-                                                <td>
-                                                    <h5>{category.title} - {items.length} files</h5>
-                                                </td>
-                                                <td align="right">
-                                                    <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}`}>See All</Link>
-                                                </td>
-                                            </tr> : null
+                                        items.slice(0, 3).map((item, index) => {
+                                            return (
+                                                <Col key={index} md="4">
+                                                    <Card style={{ width: '18rem' }}>
+                                                        <Card.Img variant="top" src="http://v3.pdm-plants-textures.com/images/paid/materials/wood/Timber_veneer_048.jpg" />
+                                                        <Card.Body>
+                                                            <Card.Title>{item.title}</Card.Title>
+                                                            <Card.Text>
+                                                                In {this.getPathToItem(item.id)}
+                                                            </Card.Text>
+                                                            <Button variant="primary">Download</Button>
+                                                        </Card.Body>
+                                                    </Card>
+                                                </Col>
+                                            )
+                                        })
                                     }
-                                    <tr>
-                                        <td></td>
-                                        <td>
-                                            <table>
-                                                <tbody>
-                                                    {items.slice(0, 5).map((item, index) => {
-                                                        return (
-                                                            <tr key={index}>
-                                                                <td>
-                                                                    {item.title}
-                                                                </td>
-                                                                <td>
-                                                                    {this.formatFilesize(item.fileSize)} MB
-                                                                </td>
-                                                                <td>
-                                                                    {this.getPathToItem(item.id)}
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    })}</tbody>
-                                            </table>
-                                        </td>
-                                    </tr>
-                                </React.Fragment>
-                            )
-                        })
-                        }</tbody>
-                </table>
+                                </Row>
+                            </React.Fragment>
+                        )
+                    })
+                    }
+                </Container>
             </React.Fragment>
         );
     }
@@ -98,9 +94,9 @@ export class Page extends React.Component {
     }
 
     getPathToItem = (itemId) => {
-        const item = this.props.items.find((i) => {
-            return i.id === itemId
-        });
+        // const item = this.props.items.find((i) => {
+        //     return i.id === itemId
+        // });
 
         const itemsCategories = this.props.relationships.filter((item) => {
             return item.itemId === itemId
@@ -139,14 +135,12 @@ export class Page extends React.Component {
             const category = this.props.categories.find((c) => {
                 return c.id === categoryId
             });
-            if (i === 0) {
-                pathToItemString += `${category.title}`;
-            } else {
-                pathToItemString += `/${category.title}`;
+            if (i !== 0) {
+                pathToItemString += `/ ${category.title}`;
             }
         }
 
-        pathToItemString += `/${item.title}`;
+        // pathToItemString += `/${item.title}`;
 
         return pathToItemString;
     }
@@ -162,7 +156,7 @@ export class Page extends React.Component {
         return false;
     }
 
-    formatFilesize(bytes) {
+    formatFileSize(bytes) {
         const size = Math.round(bytes / Math.pow(1024, 2));
         if (size < 1) {
             return '< 1';
