@@ -36,6 +36,7 @@ class App extends React.Component {
                     handleCategoryChange={this.handleCategoryChange}
                     handleKeySearchChange={this.handleKeySearchChange}
                     categories={this.state.categories}
+                    getSubCategories={this.getSubCategories}
                     {...props}
                   />
                   <Page

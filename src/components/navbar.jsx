@@ -19,7 +19,13 @@ export class NavBar extends React.Component {
         if (queryValues.searchTerm && queryValues.searchTerm !== "") {
             searchTerm = queryValues.searchTerm;
         }
-        const primaryCategories = this.props.categories.length > 0 ? this.props.categories : [];
+        let primaryCategories = [];
+        if (this.props.categories.length > 0) {
+            primaryCategories.push(this.props.categories.find((category) => {
+                return category.id === 1
+            }));
+            primaryCategories = [...primaryCategories, ...this.props.getSubCategories(1)];
+        }
 
         return (
             <React.Fragment>
@@ -41,7 +47,7 @@ export class NavBar extends React.Component {
                                 <input className="form-control mr-sm-2" type="text" defaultValue={searchTerm} placeholder="Search" style={{ width: 200, height: 30 }} onChange={this.handleSearchTermChange}></input>
                             </td>
                             <td>
-                                <input type="button" onClick={this.handleOnSearchClick} value="Search" />
+                                <input type="button" onClick={() => { this.handleOnSearchClick(categoryId) }} value="Search" />
                             </td>
                         </tr>
                     </tbody>
@@ -67,8 +73,8 @@ export class NavBar extends React.Component {
         });
     }
 
-    handleOnSearchClick = (event) => {
-        this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}`);
+    handleOnSearchClick = (categoryId) => {
+        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${this.state.searchTerm}`);
     }
 
     parseQueryString = (queryString) => {

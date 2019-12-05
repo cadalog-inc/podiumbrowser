@@ -2,12 +2,6 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 export class Page extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-
-        }
-    }
     render() {
         const queryValues = this.parseQueryString(this.props.location.search);
         let categoryId = 1;
@@ -30,9 +24,11 @@ export class Page extends React.Component {
             <React.Fragment>
                 <table>
                     <thead>
-                        <th>
-                            <h2>{selectedCategory.title}</h2>
-                        </th>
+                        <tr>
+                            <th>
+                                <h2>{selectedCategory.title}</h2>
+                            </th>
+                        </tr>
                     </thead>
                     <tbody>
                         {categories.map((category, index) => {
@@ -50,7 +46,7 @@ export class Page extends React.Component {
                                                 <td align="right">
                                                     <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}`}>See All</Link>
                                                 </td>
-                                            </tr> : ''
+                                            </tr> : null
                                     }
                                     <tr>
                                         <td></td>
