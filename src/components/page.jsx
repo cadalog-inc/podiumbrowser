@@ -34,15 +34,15 @@ export class Page extends React.Component {
                         {categories.map((category, index) => {
                             const items = this.props.getItemsInCategory(category.id).filter((item) => {
                                 return searchTerm === "" || this.props.searchArray(item.tags, searchTerm);
-                            }).slice(0, 3);
+                            });
                             return (
                                 <React.Fragment key={index}>
                                     {
-                                        categories.length > 1 ?
+                                        categories.length > 1 && items.length > 0 ?
                                             <tr>
                                                 <td>
-                                                    {category.title} - {items.length} files
-                                            </td>
+                                                    <h5>{category.title} - {items.length} files</h5>
+                                                </td>
                                                 <td align="right">
                                                     <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}`}>See All</Link>
                                                 </td>
@@ -53,7 +53,7 @@ export class Page extends React.Component {
                                         <td>
                                             <table>
                                                 <tbody>
-                                                    {items.map((item, index) => {
+                                                    {items.slice(0, 5).map((item, index) => {
                                                         return (
                                                             <tr key={index}>
                                                                 <td>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Row, Col, FormControl, Button, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 
 export class NavBar extends React.Component {
     constructor(props) {
@@ -19,46 +20,40 @@ export class NavBar extends React.Component {
         if (queryValues.searchTerm && queryValues.searchTerm !== "") {
             searchTerm = queryValues.searchTerm;
         }
-        let primaryCategories = [];
-        if (this.props.categories.length > 0) {
-            primaryCategories.push(this.props.categories.find((category) => {
-                return category.id === 1
-            }));
-            primaryCategories = [...primaryCategories, ...this.props.getSubCategories(1)];
-        }
+        let primaryCategories = this.props.getSubCategories(1);
 
         return (
             <React.Fragment>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td key={categoryId}>
-                                <select defaultValue={categoryId} onChange={this.handleCategoryChange}>
-                                    {
-                                        primaryCategories.map((category, index) => {
-                                            return (
-                                                <option value={category.id} key={index}>{category.title}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
-                            </td>
-                            <td key={searchTerm}>
-                                <input className="form-control mr-sm-2" type="text" defaultValue={searchTerm} placeholder="Search" style={{ width: 200, height: 30 }} onChange={this.handleSearchTermChange}></input>
-                            </td>
-                            <td>
-                                <input type="button" onClick={() => { this.handleOnSearchClick(categoryId) }} value="Search" />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+                    <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(1) }}>Home</Button>
+                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Navbar.Collapse id="responsive-navbar-nav">
+                        <Nav className="mr-auto">
+                            <NavDropdown title="Categories" id="collasible-nav-dropdown">
+                                {
+                                    primaryCategories.map((category, index) => {
+                                        return (
+                                            <NavDropdown.Item key={index} onClick={() => { this.handleCategoryChange(category.id) }}>{category.title}</NavDropdown.Item>
+                                        )
+                                    })
+                                }
+                            </NavDropdown>
+                        </Nav>
+                        <Row>
+                            <Col>
+                                <FormControl type="text" defaultValue={searchTerm} onChange={this.handleSearchTermChange} className="mr-sm-2" />
+                            </Col>
+                            <Col>
+                                <Button type="button" variant="dark" onClick={() => { this.handleOnSearchClick(categoryId) }}>Search</Button>
+                            </Col>
+                        </Row>
+                    </Navbar.Collapse>
+                </Navbar>
             </React.Fragment>
         );
     }
 
-    handleCategoryChange = (event) => {
-        const value = event.target.value;
-
+    handleCategoryChange = (value) => {
         this.setState({
             selectedCategoryId: value
         }, () => {
