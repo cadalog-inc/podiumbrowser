@@ -26,7 +26,7 @@ export class Page extends React.Component {
                     <thead>
                         <tr>
                             <th>
-                                <h2>{selectedCategory.title}</h2>
+                                <h3>{selectedCategory.title}</h3>
                             </th>
                         </tr>
                     </thead>

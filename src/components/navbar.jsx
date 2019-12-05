@@ -29,24 +29,26 @@ export class NavBar extends React.Component {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
-                            <NavDropdown title="Categories" id="collasible-nav-dropdown">
-                                {
-                                    primaryCategories.map((category, index) => {
-                                        return (
-                                            <NavDropdown.Item key={index} onClick={() => { this.handleCategoryChange(category.id) }}>{category.title}</NavDropdown.Item>
-                                        )
-                                    })
-                                }
-                            </NavDropdown>
+                            <Row>
+                                <Col>
+                                    <NavDropdown title="Categories" id="collasible-nav-dropdown">
+                                        {
+                                            primaryCategories.map((category, index) => {
+                                                return (
+                                                    <NavDropdown.Item key={index} onClick={() => { this.handleCategoryChange(category.id) }}>{category.title}</NavDropdown.Item>
+                                                )
+                                            })
+                                        }
+                                    </NavDropdown>
+                                </Col>
+                                <Col>
+                                    <FormControl type="text" defaultValue={searchTerm} onChange={this.handleSearchTermChange} className="mr-sm-2" />
+                                </Col>
+                                <Col>
+                                    <Button type="button" variant="dark" onClick={() => { this.handleOnSearchClick(categoryId) }}>Search</Button>
+                                </Col>
+                            </Row>
                         </Nav>
-                        <Row>
-                            <Col>
-                                <FormControl type="text" defaultValue={searchTerm} onChange={this.handleSearchTermChange} className="mr-sm-2" />
-                            </Col>
-                            <Col>
-                                <Button type="button" variant="dark" onClick={() => { this.handleOnSearchClick(categoryId) }}>Search</Button>
-                            </Col>
-                        </Row>
                     </Navbar.Collapse>
                 </Navbar>
             </React.Fragment>
