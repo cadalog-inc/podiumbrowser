@@ -101,11 +101,11 @@ export class Page extends React.Component {
                                             return (
                                                 <Col key={index} md="4">
                                                     <Card style={{ width: '18rem', margin: 20 }}>
-                                                        <Card.Img variant="top" src="http://v3.pdm-plants-textures.com/images/paid/materials/wood/Timber_veneer_048.jpg" />
+                                                        <Card.Img variant="top" src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} />
                                                         <Card.Body>
                                                             <Card.Text>
                                                                 {this.formatFileSize(item.fileSize)} MB
-                                                                <Button variant="link">Download</Button>
+                                                                <Button variant="link" onClick={() => { this.handleItemDownloadClick(item) }}>Download</Button>
                                                                 <Button variant="link">Favorite</Button>
                                                             </Card.Text>
                                                             <Card.Title>{item.title}</Card.Title>
@@ -126,6 +126,16 @@ export class Page extends React.Component {
                 </Container>
             </React.Fragment>
         );
+    }
+
+    handleItemDownloadClick = (item) => {
+        // http://v3.pdm-plants-textures.com/download/0f91ff33e41cf9f4c2c530eeb7ed8bb09f1d562f/2a2d4d95325c15bf/e790bb43-40c5-330d-20a5-0591c7e55d10/Speaker01.skp
+        // http://v3.pdm-plants-textures.com/download/0f91ff33e41cf9f4c2c530eeb7ed8bb09f1d562f/2a2d4d95325c15bf/e790bb43-40c5-330d-20a5-0591c7e55d10/free/assembly_spaces/scene/Speaker_01.skp
+        let filename = item.title;
+        const ext = item.filename.split('.')[1];
+        filename += "." + ext;
+        const url = `http://v3.pdm-plants-textures.com/download/${item.hash}/2a2d4d95325c15bf/e790bb43-40c5-330d-20a5-0591c7e55d10/${filename}`;
+        window.open(url);
     }
 
     handleBreadCrumbClick = (categoryId, searchTerm) => {
