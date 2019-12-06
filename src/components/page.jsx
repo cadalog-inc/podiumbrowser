@@ -79,7 +79,7 @@ export class Page extends React.Component {
                                                 <div className="float-right">
                                                     <div>
                                                         Items per page:
-                                                        <DropdownButton variant="dark" title={pageSize}>
+                                                        <DropdownButton variant="light" title={pageSize}>
                                                             <Dropdown.Item onClick={() => { this.handlePageSizeClick(5, searchTerm, categoryId) }}>5</Dropdown.Item>
                                                             <Dropdown.Item onClick={() => { this.handlePageSizeClick(10, searchTerm, categoryId) }}>10</Dropdown.Item>
                                                             <Dropdown.Item onClick={() => { this.handlePageSizeClick(25, searchTerm, categoryId) }}>25</Dropdown.Item>
