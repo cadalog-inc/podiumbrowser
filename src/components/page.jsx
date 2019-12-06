@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Button, Card, Col, Container, Dropdown, DropdownButton, Row } from 'react-bootstrap';
+import { Button, Breadcrumb, Card, Col, Container, Dropdown, DropdownButton, Row } from 'react-bootstrap';
 
 export class Page extends React.Component {
     render() {
@@ -31,6 +31,15 @@ export class Page extends React.Component {
         }
         return (
             <React.Fragment>
+                <Breadcrumb>
+                    {
+                        this.calculatePathToCategory(categoryId).map((category) => {
+                            return (
+                                <Breadcrumb.Item onClick={() => { this.handleBreadCrumbClick(category.id, searchTerm) }}>{category.title}</Breadcrumb.Item>
+                            )
+                        })
+                    }
+                </Breadcrumb>
                 <Container>
                     {
                         categories.length > 1 ?
@@ -61,7 +70,7 @@ export class Page extends React.Component {
                                             <Col>
                                                 <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=5`}>See All</Link>
                                             </Col>
-                                        </Row> : <Row style={{ margin: 20 }}>
+                                        </Row> : items.length > 0 ? <Row style={{ margin: 20 }}>
                                             <Col>
                                                 <h3>{category.title}</h3>
                                             </Col>
@@ -84,7 +93,7 @@ export class Page extends React.Component {
                                                     <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>Next</Link>
                                                 </div>
                                             </Col>
-                                        </Row>
+                                        </Row> : null
                                 }
                                 <Row>
                                     {
@@ -101,7 +110,7 @@ export class Page extends React.Component {
                                                             </Card.Text>
                                                             <Card.Title>{item.title}</Card.Title>
                                                             <Card.Text>
-                                                                In {this.getPathToItem(item.id)}
+                                                                In {this.calculatePathToItem(item.id)}
                                                             </Card.Text>
                                                         </Card.Body>
                                                     </Card>
@@ -117,6 +126,10 @@ export class Page extends React.Component {
                 </Container>
             </React.Fragment>
         );
+    }
+
+    handleBreadCrumbClick = (categoryId, searchTerm) => {
+        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=5`);
     }
 
     handlePageSizeClick = (pageSize, searchTerm, categoryId) => {
@@ -140,23 +153,33 @@ export class Page extends React.Component {
         return values;
     }
 
-    // todo: path from selected category to home
-    pathToCategory = (categoryId) => {
-        // const selectedCategory = this.props.categories.find((category) => {
-        //     return category.id = categoryId
-        // });
-        // if(categoryId == 1) {
-        //     return "Home";
-        // } else {
-
-        // }
+    calculatePathToCategory = (categoryId) => {
+        const path = [];
+        const selectedCategory = this.props.categories.find((category) => {
+            return category.id === categoryId
+        });
+        if (selectedCategory.id === 1) {
+            path.push(selectedCategory);
+        } else {
+            const parentCategory = this.props.categories.find((category) => {
+                return category.id === selectedCategory.parentId
+            });
+            if (parentCategory.id === 1) {
+                path.push(parentCategory);
+                path.push(selectedCategory);
+            } else {
+                const parentParentCategory = this.props.categories.find((category) => {
+                    return category.id === parentCategory.parentId
+                });
+                path.push(parentParentCategory);
+                path.push(parentCategory);
+                path.push(selectedCategory);
+            }
+        }
+        return path;
     }
 
-    getPathToItem = (itemId) => {
-        // const item = this.props.items.find((i) => {
-        //     return i.id === itemId
-        // });
-
+    calculatePathToItem = (itemId) => {
         const itemsCategories = this.props.relationships.filter((item) => {
             return item.itemId === itemId
         });
@@ -198,8 +221,6 @@ export class Page extends React.Component {
                 pathToItemString += `/ ${category.title}`;
             }
         }
-
-        // pathToItemString += `/${item.title}`;
 
         return pathToItemString;
     }
