@@ -14,11 +14,19 @@ export class NavBar extends React.Component {
         const queryValues = this.props.parseQueryString(this.props.location.search);
         let categoryId = 1;
         let searchTerm = "";
+        let pageIndex = 0;
+        let pageSize = 5;
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
         }
         if (queryValues.searchTerm && queryValues.searchTerm !== "") {
             searchTerm = queryValues.searchTerm;
+        }
+        if (queryValues.pageIndex && queryValues.pageIndex !== "" && queryValues.pageIndex >= 0) {
+            pageIndex = queryValues.pageIndex;
+        }
+        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 5) {
+            pageSize = queryValues.pageSize;
         }
         let primaryCategories = this.props.getSubCategories(1);
 
@@ -69,7 +77,7 @@ export class NavBar extends React.Component {
         this.setState({
             selectedCategoryId: value
         }, () => {
-            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}`);
+            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=5`);
         });
     }
 
@@ -81,6 +89,6 @@ export class NavBar extends React.Component {
     }
 
     handleOnSearchClick = (categoryId) => {
-        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${this.state.searchTerm}`);
+        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=5`);
     }
 }

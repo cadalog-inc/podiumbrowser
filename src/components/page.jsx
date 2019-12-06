@@ -1,25 +1,25 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Button, Card, Col, Container, Image, Row } from 'react-bootstrap';
+import { Button, Card, Col, Container, Dropdown, DropdownButton, Row } from 'react-bootstrap';
 
 export class Page extends React.Component {
     render() {
         const queryValues = this.props.parseQueryString(this.props.location.search);
         let categoryId = 1;
         let searchTerm = "";
-        let pageLength = 5;
         let pageIndex = 0;
+        let pageSize = 5;
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
         }
         if (queryValues.searchTerm && queryValues.searchTerm !== "") {
             searchTerm = queryValues.searchTerm;
         }
-        if (queryValues.pageLength && queryValues.pageLength !== "" && queryValues.pageLength >= 5) {
-            pageLength = queryValues.pageLength;
-        }
         if (queryValues.pageIndex && queryValues.pageIndex !== "" && queryValues.pageIndex >= 0) {
             pageIndex = queryValues.pageIndex;
+        }
+        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 5) {
+            pageSize = queryValues.pageSize;
         }
         let categories = this.props.getSubCategories(categoryId);
         const selectedCategory = this.props.categories.find((category) => {
@@ -32,35 +32,66 @@ export class Page extends React.Component {
         return (
             <React.Fragment>
                 <Container>
-                    <Row>
-                        <Col>
-                            <h3>{selectedCategory.title}</h3>
-                        </Col>
-                    </Row>
+                    {
+                        categories.length > 1 ?
+                            <Row>
+                                <Col>
+                                    <h3 style={{ margin: 20 }}>{selectedCategory.title}</h3>
+                                </Col>
+                            </Row> : null
+                    }
                     {categories.map((category, index) => {
                         const items = this.props.getItemsInCategory(category.id).filter((item) => {
                             return searchTerm === "" || this.searchArray(item.tags, searchTerm);
                         });
+                        let itemsBegin = categories.length === 1 ? pageIndex * pageSize : 0;
+                        let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 3;
+                        let itemsLength = items.length;
+                        let pageBack = pageIndex - 1 > 0 ? pageIndex - 1 : 0;
+                        let pageNext = this.calculateNextPage(pageIndex, pageSize, itemsLength);
                         return (
                             <React.Fragment key={index}>
                                 {
                                     categories.length > 1 && items.length > 0 ?
-                                        <Row style={{ marginTop: 20 }}>
+                                        <Row style={{ margin: 20 }}>
                                             <Col>
-                                                <h5>{category.title} - {items.length} files</h5>
+                                                <h5>{category.title} - {itemsLength} files</h5>
                                             </Col>
                                             <Col></Col>
                                             <Col>
-                                                <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageLength=5`}>See All</Link>
+                                                <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=5`}>See All</Link>
                                             </Col>
-                                        </Row> : null
+                                        </Row> : <Row style={{ margin: 20 }}>
+                                            <Col>
+                                                <h3>{category.title}</h3>
+                                            </Col>
+                                            <Col></Col>
+                                            <Col>
+                                                <div className="float-right">
+                                                    <div>
+                                                        Items per page:
+                                                        <DropdownButton variant="dark" title={pageSize}>
+                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(5, searchTerm, categoryId) }}>5</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(10, searchTerm, categoryId) }}>10</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(25, searchTerm, categoryId) }}>25</Dropdown.Item>
+                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(100, searchTerm, categoryId) }}>100</Dropdown.Item>
+                                                        </DropdownButton>
+                                                    </div>
+                                                    <div>
+                                                        {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength}
+                                                    </div>
+                                                    <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>Back</Link>
+                                                    <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>Next</Link>
+                                                </div>
+                                            </Col>
+                                        </Row>
                                 }
                                 <Row>
                                     {
-                                        items.slice(categories.length === 1 ? pageIndex : 0, categories.length === 1 ? pageLength : 3).map((item, index) => {
+                                        items.slice(itemsBegin, itemsEnd).map((item, index) => {
                                             return (
                                                 <Col key={index} md="4">
-                                                    <Card style={{ width: '18rem' }}>
+                                                    <Card style={{ width: '18rem', margin: 20 }}>
                                                         <Card.Img variant="top" src="http://v3.pdm-plants-textures.com/images/paid/materials/wood/Timber_veneer_048.jpg" />
                                                         <Card.Body>
                                                             <Card.Text>
@@ -86,6 +117,10 @@ export class Page extends React.Component {
                 </Container>
             </React.Fragment>
         );
+    }
+
+    handlePageSizeClick = (pageSize, searchTerm, categoryId) => {
+        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}`);
     }
 
     parseQueryString = (queryString) => {
@@ -186,6 +221,19 @@ export class Page extends React.Component {
             return '< 1';
         } else {
             return size;
+        }
+    }
+
+    calculateNextPage(pageIndex, pageSize, itemsLength) {
+        let nextPageIndex = pageIndex + 1;
+        let totalPages = Math.floor(itemsLength / pageSize);
+        let remainingItems = itemsLength % pageSize;
+        if (nextPageIndex <= totalPages - 1) {
+            return nextPageIndex;
+        } else if (nextPageIndex === totalPages && remainingItems > 0) {
+            return nextPageIndex;
+        } else {
+            return pageIndex;
         }
     }
 }
