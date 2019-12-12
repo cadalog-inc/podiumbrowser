@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Button, Breadcrumb, Card, Col, Container, Dropdown, DropdownButton, Row } from 'react-bootstrap';
+import { Button, Breadcrumb, Card, Col, Container, Dropdown, DropdownButton, Row, InputGroup } from 'react-bootstrap';
 
 export class Page extends React.Component {
     render() {
@@ -74,23 +74,27 @@ export class Page extends React.Component {
                                             <Col>
                                                 <h3>{category.title}</h3>
                                             </Col>
-                                            <Col></Col>
-                                            <Col>
+
+                                            <Col colSpan="2">
                                                 <div className="float-right">
-                                                    <div>
-                                                        Items per page:
-                                                        <DropdownButton variant="light" title={pageSize}>
-                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(5, searchTerm, categoryId) }}>5</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(10, searchTerm, categoryId) }}>10</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(25, searchTerm, categoryId) }}>25</Dropdown.Item>
-                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(100, searchTerm, categoryId) }}>100</Dropdown.Item>
-                                                        </DropdownButton>
-                                                    </div>
-                                                    <div>
-                                                        {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength}
-                                                    </div>
-                                                    <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>Back</Link>
-                                                    <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>Next</Link>
+                                                    <InputGroup className="mb-3">
+                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
+                                                        <Dropdown>
+                                                            <Dropdown.Toggle variant="light" id="dropdown-basic">
+                                                                {pageSize}
+                                                            </Dropdown.Toggle>
+
+                                                            <Dropdown.Menu>
+                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(5, searchTerm, categoryId) }}>5</Dropdown.Item>
+                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(10, searchTerm, categoryId) }}>10</Dropdown.Item>
+                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(25, searchTerm, categoryId) }}>25</Dropdown.Item>
+                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(100, searchTerm, categoryId) }}>100</Dropdown.Item>
+                                                            </Dropdown.Menu>
+                                                        </Dropdown>
+                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
+                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>Back</Link> </InputGroup.Text>
+                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>Next</Link> </InputGroup.Text>
+                                                    </InputGroup>
                                                 </div>
                                             </Col>
                                         </Row> : null
@@ -103,11 +107,12 @@ export class Page extends React.Component {
                                                     <Card style={{ width: '18rem', margin: 20 }}>
                                                         <Card.Img variant="top" src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} />
                                                         <Card.Body>
-                                                            <Card.Text>
-                                                                {this.formatFileSize(item.fileSize)} MB
-                                                                <Button variant="link" onClick={() => { this.handleItemDownloadClick(item) }}>Download</Button>
-                                                                <Button variant="link">Favorite</Button>
-                                                            </Card.Text>
+                                                            <InputGroup className="mb-3">
+                                                                <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {this.formatFileSize(item.fileSize)} MB </InputGroup.Text>
+                                                                <Button variant="light" style={{ width: 60 }}></Button>
+                                                                <Button variant="link" onClick={() => { this.handleItemDownloadClick(item) }}> dl </Button>
+                                                                <Button variant="link"> fav </Button>
+                                                            </InputGroup>
                                                             <Card.Title>{item.title}</Card.Title>
                                                             <Card.Text>
                                                                 In {this.calculatePathToItem(item.id)}
