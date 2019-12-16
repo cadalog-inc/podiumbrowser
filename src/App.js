@@ -3,6 +3,7 @@ import axios from 'axios';
 // import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { Alert } from 'react-bootstrap';
 import { BrowserRouter, Route } from "react-router-dom";
 import { NavBar } from './components/navbar';
 import { Page } from './components/page';
@@ -57,7 +58,10 @@ class App extends React.Component {
       </React.Fragment>
     ) : (
         <React.Fragment>
-          <div>Loading...</div>
+          <Alert variant="secondary">
+            <p> Loading up the home page. </p>
+            <p> This will take a few moments ... </p>
+          </Alert>
         </React.Fragment>
       );
   }
