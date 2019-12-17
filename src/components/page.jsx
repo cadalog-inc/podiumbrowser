@@ -31,7 +31,7 @@ export class Page extends React.Component {
         }
         return (
             <React.Fragment>
-                <Breadcrumb>
+                <Breadcrumb style={{ height: 20 }}>
                     {
                         this.calculatePathToCategory(categoryId).map((category) => {
                             return (
@@ -43,7 +43,7 @@ export class Page extends React.Component {
                 <Container>
                     {
                         categories.length > 1 ?
-                            <Row>
+                            <Row style={{ marginTop: "40px" }}>
                                 <Col>
                                     <h3 style={{ margin: 20 }}>{selectedCategory.title}</h3>
                                 </Col>
