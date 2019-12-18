@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Button, Breadcrumb, Card, Col, Container, Dropdown, Row, InputGroup } from 'react-bootstrap';
+import { FavoritesSection } from '../components/favoritessection';
 
 export class Page extends React.Component {
     render() {
@@ -129,6 +130,13 @@ export class Page extends React.Component {
                     })
                     }
                 </Container>
+
+                {/* to do -- conditional rendering of favorites section here */}
+                {categoryId === 1 ? <FavoritesSection>
+
+                </FavoritesSection>
+                    : null}
+
             </React.Fragment>
         );
     }
