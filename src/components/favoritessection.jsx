@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col, FormControl, Button, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Row, Col, FormControl, Button, Nav, Navbar, NavDropdown, Container } from 'react-bootstrap';
 
 export class FavoritesSection extends React.Component {
     constructor(props) {
@@ -11,7 +11,7 @@ export class FavoritesSection extends React.Component {
 
     render() {
         return (<React.Fragment>
-
+            <h5 style={{ marginTop: "40px", marginLeft: "40px" }}>Favorites</h5>
         </React.Fragment>
         )
     }

@@ -130,16 +130,14 @@ export class Page extends React.Component {
                         )
                     })
                     }
+
+                    {/* to do -- conditional rendering of favorites section here */}
+                    {categoryId === 1 ? <FavoritesSection>
+                        {/* add in favorites here as a props */}
+                        {/* favorites={this.props.favorites} */}
+                    </FavoritesSection>
+                        : null}
                 </Container>
-
-                {/* to do -- conditional rendering of favorites section here */}
-                {categoryId === 1 ? <FavoritesSection>
-                    {/* add in favorites here as a props */}
-                    {/* favorites={this.props.favorites} */}
-
-                </FavoritesSection>
-                    : null}
-
             </React.Fragment>
         );
     }
