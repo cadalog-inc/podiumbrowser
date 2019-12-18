@@ -116,7 +116,8 @@ export class Page extends React.Component {
                                                             </InputGroup>
                                                             <Card.Title>{item.title}</Card.Title>
                                                             <Card.Text>
-                                                                In {this.calculatePathToItem(item.id)}
+                                                                In {item.path}
+                                                                {/* In {this.calculatePathToItem(item.id)} */}
                                                             </Card.Text>
                                                         </Card.Body>
                                                     </Card>
