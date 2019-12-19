@@ -17,7 +17,7 @@ class App extends React.Component {
       categories: [],
       items: [],
       relationships: [],
-      favorites: [1, 2, 3, 4400]
+      favorites: []
     };
   }
 
@@ -25,8 +25,7 @@ class App extends React.Component {
     this.getCategories();
     this.getItems();
     this.getRelationships();
-    // add this line in the future
-    // this.getFavorites();
+    this.getFavorites();
   }
 
   render() {
@@ -49,17 +48,12 @@ class App extends React.Component {
                     categories={this.state.categories}
                     getSubCategories={this.getSubCategories}
                     items={this.state.items}
+                    favorites={this.state.favorites}
                     getItemsInCategory={this.getItemsInCategory}
                     relationships={this.state.relationships}
                     parseQueryString={this.parseQueryString}
                     {...props}
                   />
-                  {/* to do -- add the favorites array to the page section as a props */}
-                  {/* favorites={this.state.favorites} */}
-                  <h5>{this.state.items[this.state.favorites[0] - 1].title}</h5>
-                  <h5>{this.state.items[this.state.favorites[1] - 1].title}</h5>
-                  <h5>{this.state.items[this.state.favorites[2] - 1].title}</h5>
-                  <h5>{this.state.items[this.state.favorites[3] - 1].title}</h5>
                 </React.Fragment>
               )
             }
@@ -80,16 +74,14 @@ class App extends React.Component {
   // this section must be rendered only on the home page and
   // not on any of the other pages.
   getFavorites = () => {
-    /*
-      axios.get('favorites.json')
-        .then((response) => {
-          this.setState({
-            favorites: response.data
-          }, () => {
-            // console.log(this.state.favorites.length);
-          });
+    axios.get('favorites.json')
+      .then((response) => {
+        this.setState({
+          favorites: response.data
+        }, () => {
+          // console.log(this.state.favorites.length);
         });
-    */
+      });
   }
 
   getCategories = () => {

@@ -30,6 +30,7 @@ export class Page extends React.Component {
 
             categories.push(selectedCategory);
         }
+        const favoriteItems = this.getFavoriteItems(this.props.items, this.props.favorites);
         return (
             <React.Fragment>
                 <Breadcrumb style={{ height: 20 }}>
@@ -117,7 +118,6 @@ export class Page extends React.Component {
                                                             <Card.Title>{item.title}</Card.Title>
                                                             <Card.Text>
                                                                 In {item.path}
-                                                                {/* In {this.calculatePathToItem(item.id)} */}
                                                             </Card.Text>
                                                         </Card.Body>
                                                     </Card>
@@ -126,18 +126,46 @@ export class Page extends React.Component {
                                         })
                                     }
                                 </Row>
+                                {
+                                    categoryId === 1 ? (
+                                        <React.Fragment>
+                                            <Row style={{ margin: 20 }}>
+                                                <Col colSpan={3}>
+                                                    <h5>Favorites - {favoriteItems.length} files</h5>
+                                                </Col>
+                                            </Row>
+                                            <Row>
+                                                {
+                                                    favoriteItems.slice(0, 3).map((item, index) => {
+                                                        return (
+                                                            <Col key={index} md="4">
+                                                                <Card style={{ width: '18rem', margin: 20 }}>
+                                                                    <Card.Img variant="top" src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} />
+                                                                    <Card.Body>
+                                                                        <InputGroup className="mb-3">
+                                                                            <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {this.formatFileSize(item.fileSize)} MB </InputGroup.Text>
+                                                                            <span style={{ width: 60 }}></span>
+                                                                            <Button variant="link" onClick={() => { this.handleItemDownloadClick(item) }}> dl </Button>
+                                                                            <Button variant="link"> fav </Button>
+                                                                        </InputGroup>
+                                                                        <Card.Title>{item.title}</Card.Title>
+                                                                        <Card.Text>
+                                                                            In {item.path}
+                                                                        </Card.Text>
+                                                                    </Card.Body>
+                                                                </Card>
+                                                            </Col>
+                                                        )
+                                                    })
+                                                }
+                                            </Row>
+                                        </React.Fragment>
+                                    ) : null
+                                }
                             </React.Fragment>
                         )
                     })
                     }
-
-                    {/* to do -- conditional rendering of favorites section here */}
-                    {categoryId === 1 ? <FavoritesSection>
-                        {/* add in favorites here as a props */}
-                        {/* favorites={this.props.favorites} */}
-                        {/* items={this.props.items} */}
-                    </FavoritesSection>
-                        : null}
                 </Container>
             </React.Fragment>
         );
@@ -281,5 +309,15 @@ export class Page extends React.Component {
         } else {
             return pageIndex;
         }
+    }
+
+    getFavoriteItems(items, favorites) {
+        const favoriteItems = [];
+        const l = favorites.length;
+        for (let i = 0; i < l; i++) {
+            const favoriteItem = items[favorites[i]];
+            favoriteItems.push(favoriteItem);
+        }
+        return favoriteItems;
     }
 }
