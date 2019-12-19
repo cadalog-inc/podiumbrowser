@@ -135,6 +135,7 @@ export class Page extends React.Component {
                     {categoryId === 1 ? <FavoritesSection>
                         {/* add in favorites here as a props */}
                         {/* favorites={this.props.favorites} */}
+                        {/* items={this.props.items} */}
                     </FavoritesSection>
                         : null}
                 </Container>

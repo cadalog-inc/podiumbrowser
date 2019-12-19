@@ -17,7 +17,7 @@ class App extends React.Component {
       categories: [],
       items: [],
       relationships: [],
-      favorites: []
+      favorites: [1, 2, 3, 4400]
     };
   }
 
@@ -55,7 +55,11 @@ class App extends React.Component {
                     {...props}
                   />
                   {/* to do -- add the favorites array to the page section as a props */}
-                  {/* favorites={this.favorites} */}
+                  {/* favorites={this.state.favorites} */}
+                  <h5>{this.state.items[this.state.favorites[0] - 1].title}</h5>
+                  <h5>{this.state.items[this.state.favorites[1] - 1].title}</h5>
+                  <h5>{this.state.items[this.state.favorites[2] - 1].title}</h5>
+                  <h5>{this.state.items[this.state.favorites[3] - 1].title}</h5>
                 </React.Fragment>
               )
             }
@@ -73,10 +77,19 @@ class App extends React.Component {
   }
 
   // to do -- add a favorites section to the home page.
-  // this page must be rendered only on the home page and
+  // this section must be rendered only on the home page and
   // not on any of the other pages.
   getFavorites = () => {
-
+    /*
+      axios.get('favorites.json')
+        .then((response) => {
+          this.setState({
+            favorites: response.data
+          }, () => {
+            // console.log(this.state.favorites.length);
+          });
+        });
+    */
   }
 
   getCategories = () => {
