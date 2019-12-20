@@ -12,11 +12,16 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user: {
+        "id": 1,
+        "key": "2a2d4d95325c15bf"
+      },
       categories: [],
       items: [],
       relationships: [],
       favorites: [],
-      recentItems: []
+      recentItems: [],
+      dataDownloaded: false
     };
   }
 
@@ -25,8 +30,7 @@ class App extends React.Component {
   }
 
   render() {
-    // todo: do i need to make sure categories and relationships is downloaded or just items, since it's download last?
-    return (this.state.categories.length > 0 && this.state.items.length > 0 && this.state.relationships.length > 0) ? (
+    return (this.state.dataDownloaded) ? (
       <React.Fragment>
         <BrowserRouter>
           <Route exact path="/" render={
@@ -136,7 +140,9 @@ class App extends React.Component {
         this.setState({
           items: response.data
         }, () => {
-
+          this.setState({
+            dataDownloaded: true
+          })
         });
       });
   }
