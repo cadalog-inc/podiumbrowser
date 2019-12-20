@@ -140,6 +140,10 @@ export class Page extends React.Component {
                                     <Col colSpan={3}>
                                         <h5>Favorites - {favoriteItems.length} files</h5>
                                     </Col>
+                                    <Col></Col>
+                                    <Col>
+                                        <Link className="float-right" to={``}>See All</Link>
+                                    </Col>
                                 </Row>
                                 <Row>
                                     {
@@ -169,6 +173,10 @@ export class Page extends React.Component {
                                 <Row style={{ margin: 20 }}>
                                     <Col colSpan={3}>
                                         <h5>Recent Items - {recentItems.length} files</h5>
+                                    </Col>
+                                    <Col></Col>
+                                    <Col>
+                                        <Link className="float-right" to={``}>See All</Link>
                                     </Col>
                                 </Row>
                                 <Row>
