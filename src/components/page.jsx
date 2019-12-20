@@ -33,7 +33,7 @@ export class Page extends React.Component {
         const recentItems = this.getRecentItems(this.props.items, this.props.recentItems);
         return (
             <React.Fragment>
-                <Breadcrumb style={{ height: 20 }}>
+                <Breadcrumb style={{ height: 20, marginBottom: 40 }}>
                     {
                         this.calculatePathToCategory(categoryId).map((category, index) => {
                             return (
@@ -48,9 +48,9 @@ export class Page extends React.Component {
                 <Container>
                     {
                         categories.length > 1 ?
-                            <Row style={{ marginTop: "40px" }}>
+                            <Row>
                                 <Col>
-                                    <h3 style={{ margin: 20 }}>{selectedCategory.title}</h3>
+                                    <h3>{selectedCategory.title}</h3>
                                 </Col>
                             </Row> : null
                     }
