@@ -21,12 +21,11 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.getCategories();
-    this.getItems();
-    this.getRelationships();
+    this.getData();
   }
 
   render() {
+    // todo: do i need to make sure categories and relationships is downloaded or just items, since it's download last?
     return (this.state.categories.length > 0 && this.state.items.length > 0 && this.state.relationships.length > 0) ? (
       <React.Fragment>
         <BrowserRouter>
@@ -69,9 +68,32 @@ class App extends React.Component {
       );
   }
 
-  // to do -- add a favorites section to the home page.
-  // this section must be rendered only on the home page and
-  // not on any of the other pages.
+  getData = () => {
+    this.getCategories(); // begins a chain of data downloads from categories to items
+  }
+
+  getCategories = () => {
+    axios.get('categories.json')
+      .then((response) => {
+        this.setState({
+          categories: response.data
+        }, () => {
+          this.getRelationships();
+        });
+      });
+  }
+
+  getRelationships = () => {
+    axios.get('relationships.json')
+      .then((response) => {
+        this.setState({
+          relationships: response.data
+        }, () => {
+          this.getFavorites();
+        });
+      });
+  }
+
   getFavorites = () => {
     axios.get('favorites.json')
       .then((response) => {
@@ -102,17 +124,7 @@ class App extends React.Component {
             categoryId: recent.categoryId
           });
         }
-      });
-  }
-
-  getCategories = () => {
-    axios.get('categories.json')
-      .then((response) => {
-        this.setState({
-          categories: response.data
-        }, () => {
-          // console.log(this.state.categories.length);
-        });
+        this.getItems();
       });
   }
 
@@ -122,19 +134,7 @@ class App extends React.Component {
         this.setState({
           items: response.data
         }, () => {
-          // console.log(this.state.items.length);
-        });
-      });
-  }
 
-  getRelationships = () => {
-    axios.get('relationships.json')
-      .then((response) => {
-        this.setState({
-          relationships: response.data
-        }, () => {
-          // console.log(this.state.relationships.length);
-          this.getFavorites();
         });
       });
   }
