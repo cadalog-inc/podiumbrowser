@@ -21,7 +21,7 @@ export class Page extends React.Component {
         if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 5) {
             pageSize = queryValues.pageSize;
         }
-        let categories = this.props.getSubCategories(categoryId);
+        let categories = this.props.getSubCategories(categoryId).slice(0, 4);
         const selectedCategory = this.props.categories.find((category) => {
             return category.id === categoryId
         });
@@ -120,7 +120,7 @@ export class Page extends React.Component {
                                                             </InputGroup>
                                                             <Card.Title>{item.title}</Card.Title>
                                                             <Card.Text>
-                                                                In {item.path}
+                                                                In {this.calculatePathToItem(item.id)}
                                                             </Card.Text>
                                                         </Card.Body>
                                                     </Card>
