@@ -1,0 +1,27 @@
+[
+    {
+        "id": 1,
+        "itemId": 1,
+        "categoryId": 218
+    },
+    {
+        "id": 2,
+        "itemId": 20700,
+        "categoryId": 218
+    },
+    {
+        "id": 3,
+        "itemId": 20784,
+        "categoryId": 218
+    },
+    {
+        "id": 4,
+        "itemId": 20803,
+        "categoryId": 218
+    },
+    {
+        "id": 5,
+        "itemId": 21194,
+        "categoryId": 218
+    }
+]

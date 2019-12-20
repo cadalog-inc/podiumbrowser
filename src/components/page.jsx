@@ -21,7 +21,12 @@ export class Page extends React.Component {
         if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 5) {
             pageSize = queryValues.pageSize;
         }
-        let categories = this.props.getSubCategories(categoryId).slice(0, 4);
+        let categories = this.props.getSubCategories(categoryId);
+        if (categoryId === 1) {
+            categories = categories.filter((category) => {
+                return category.id === 14 || category.id === 21 || category.id === 24 || category.id === 8 || category.id === 217 || category.id === 218;
+            });
+        }
         const selectedCategory = this.props.categories.find((category) => {
             return category.id === categoryId
         });
@@ -29,8 +34,6 @@ export class Page extends React.Component {
 
             categories.push(selectedCategory);
         }
-        const favoriteItems = this.getFavoriteItems(this.props.items, this.props.favorites);
-        const recentItems = this.getRecentItems(this.props.items, this.props.recentItems);
         return (
             <React.Fragment>
                 <Breadcrumb style={{ height: 20, marginBottom: 40 }}>
@@ -132,80 +135,6 @@ export class Page extends React.Component {
                             </React.Fragment>
                         )
                     })
-                    }
-                    {
-                        categoryId === 1 ? (
-                            <React.Fragment>
-                                <Row style={{ margin: 20 }}>
-                                    <Col colSpan={3}>
-                                        <h5>Favorites - {favoriteItems.length} files</h5>
-                                    </Col>
-                                    <Col></Col>
-                                    <Col>
-                                        <Link className="float-right" to={``}>See All</Link>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    {
-                                        favoriteItems.slice(0, 3).map((item, index) => {
-                                            return (
-                                                <Col key={index} md="4">
-                                                    <Card style={{ width: '18rem', margin: 20 }}>
-                                                        <Card.Img variant="top" src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} />
-                                                        <Card.Body>
-                                                            <InputGroup className="mb-3">
-                                                                <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {this.formatFileSize(item.fileSize)} MB </InputGroup.Text>
-                                                                <span style={{ width: 60 }}></span>
-                                                                <Button variant="link" onClick={() => { this.handleItemDownloadClick(item) }}> dl </Button>
-                                                                <Button variant="link"> fav </Button>
-                                                            </InputGroup>
-                                                            <Card.Title>{item.title}</Card.Title>
-                                                            <Card.Text>
-                                                                In {item.path}
-                                                            </Card.Text>
-                                                        </Card.Body>
-                                                    </Card>
-                                                </Col>
-                                            )
-                                        })
-                                    }
-                                </Row>
-                                <Row style={{ margin: 20 }}>
-                                    <Col colSpan={3}>
-                                        <h5>Recent Items - {recentItems.length} files</h5>
-                                    </Col>
-                                    <Col></Col>
-                                    <Col>
-                                        <Link className="float-right" to={``}>See All</Link>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    {
-                                        recentItems.slice(0, 3).map((item, index) => {
-                                            return (
-                                                <Col key={index} md="4">
-                                                    <Card style={{ width: '18rem', margin: 20 }}>
-                                                        <Card.Img variant="top" src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} />
-                                                        <Card.Body>
-                                                            <InputGroup className="mb-3">
-                                                                <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {this.formatFileSize(item.fileSize)} MB </InputGroup.Text>
-                                                                <span style={{ width: 60 }}></span>
-                                                                <Button variant="link" onClick={() => { this.handleItemDownloadClick(item) }}> dl </Button>
-                                                                <Button variant="link"> fav </Button>
-                                                            </InputGroup>
-                                                            <Card.Title>{item.title}</Card.Title>
-                                                            <Card.Text>
-                                                                In {item.path}
-                                                            </Card.Text>
-                                                        </Card.Body>
-                                                    </Card>
-                                                </Col>
-                                            )
-                                        })
-                                    }
-                                </Row>
-                            </React.Fragment>
-                        ) : null
                     }
                 </Container>
             </React.Fragment>

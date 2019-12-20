@@ -1,7 +1,27 @@
 [
-    1,
-    354,
-    2018,
-    9803,
-    15094
+    {
+        "id": 1,
+        "itemId": 1,
+        "categoryId": 217
+    },
+    {
+        "id": 2,
+        "itemId": 354,
+        "categoryId": 217
+    },
+    {
+        "id": 3,
+        "itemId": 2018,
+        "categoryId": 217
+    },
+    {
+        "id": 4,
+        "itemId": 9803,
+        "categoryId": 217
+    },
+    {
+        "id": 5,
+        "itemId": 15094,
+        "categoryId": 217
+    }
 ]

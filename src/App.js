@@ -24,8 +24,6 @@ class App extends React.Component {
     this.getCategories();
     this.getItems();
     this.getRelationships();
-    this.getFavorites();
-    this.getRecentItems();
   }
 
   render() {
@@ -77,22 +75,33 @@ class App extends React.Component {
   getFavorites = () => {
     axios.get('favorites.json')
       .then((response) => {
-        this.setState({
-          favorites: response.data
-        }, () => {
-          // console.log(this.state.favorites.length);
-        });
+        const favorites = response.data;
+        const l = favorites.length;
+        for (let i = 0; i < l; i++) {
+          const favorite = favorites[i];
+          this.state.relationships.push({
+            id: this.state.relationships.length,
+            itemId: favorite.itemId,
+            categoryId: favorite.categoryId
+          });
+        }
+        this.getRecent();
       });
   }
 
-  getRecentItems = () => {
-    axios.get('recentitems.json')
+  getRecent = () => {
+    axios.get('recent.json')
       .then((response) => {
-        this.setState({
-          recentItems: response.data
-        }, () => {
-          // console.log(this.state.favorites.length);
-        });
+        const recents = response.data;
+        const l = recents.length;
+        for (let i = 0; i < l; i++) {
+          const recent = recents[i];
+          this.state.relationships.push({
+            id: this.state.relationships.length,
+            itemId: recent.itemId,
+            categoryId: recent.categoryId
+          });
+        }
       });
   }
 
@@ -125,6 +134,7 @@ class App extends React.Component {
           relationships: response.data
         }, () => {
           // console.log(this.state.relationships.length);
+          this.getFavorites();
         });
       });
   }
