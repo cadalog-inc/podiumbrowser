@@ -1,51 +1,61 @@
 [
     {
         "id": 1,
+        "userId": 1,
         "itemId": 1,
         "categoryId": 217
     },
     {
         "id": 2,
+        "userId": 1,
         "itemId": 354,
         "categoryId": 217
     },
     {
         "id": 3,
+        "userId": 1,
         "itemId": 2018,
         "categoryId": 217
     },
     {
         "id": 4,
+        "userId": 1,
         "itemId": 9803,
         "categoryId": 217
     },
     {
         "id": 5,
+        "userId": 1,
         "itemId": 15094,
         "categoryId": 217
     },
     {
         "id": 6,
+        "userId": 1,
         "itemId": 5,
         "categoryId": 217
     },
     {
         "id": 7,
+        "userId": 1,
         "itemId": 954,
         "categoryId": 217
     },
     {
         "id": 8,
+        "userId": 1,
         "itemId": 3018,
         "categoryId": 217
     },
     {
         "id": 9,
+        "userId": 1,
         "itemId": 19803,
         "categoryId": 217
     },
     {
         "id": 10,
+        "userId": 1,
         "itemId": 21094,
         "categoryId": 217
     }

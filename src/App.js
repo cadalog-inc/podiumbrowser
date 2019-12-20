@@ -103,6 +103,7 @@ class App extends React.Component {
           const favorite = favorites[i];
           this.state.relationships.push({
             id: this.state.relationships.length,
+            userId: favorite.userId,
             itemId: favorite.itemId,
             categoryId: favorite.categoryId
           });
@@ -120,6 +121,7 @@ class App extends React.Component {
           const recent = recents[i];
           this.state.relationships.push({
             id: this.state.relationships.length,
+            userId: recent.userId,
             itemId: recent.itemId,
             categoryId: recent.categoryId
           });
