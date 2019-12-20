@@ -17,7 +17,8 @@ class App extends React.Component {
       categories: [],
       items: [],
       relationships: [],
-      favorites: []
+      favorites: [],
+      recentItems: []
     };
   }
 
@@ -26,6 +27,7 @@ class App extends React.Component {
     this.getItems();
     this.getRelationships();
     this.getFavorites();
+    this.getRecentItems();
   }
 
   render() {
@@ -49,6 +51,7 @@ class App extends React.Component {
                     getSubCategories={this.getSubCategories}
                     items={this.state.items}
                     favorites={this.state.favorites}
+                    recentItems={this.state.recentItems}
                     getItemsInCategory={this.getItemsInCategory}
                     relationships={this.state.relationships}
                     parseQueryString={this.parseQueryString}
@@ -78,6 +81,17 @@ class App extends React.Component {
       .then((response) => {
         this.setState({
           favorites: response.data
+        }, () => {
+          // console.log(this.state.favorites.length);
+        });
+      });
+  }
+
+  getRecentItems = () => {
+    axios.get('recentitems.json')
+      .then((response) => {
+        this.setState({
+          recentItems: response.data
         }, () => {
           // console.log(this.state.favorites.length);
         });
