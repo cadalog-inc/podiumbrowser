@@ -8,8 +8,6 @@ import { BrowserRouter, Route } from "react-router-dom";
 import { NavBar } from './components/navbar';
 import { Page } from './components/page';
 
-
-
 class App extends React.Component {
   constructor(props) {
     super(props);
