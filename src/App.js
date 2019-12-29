@@ -4,9 +4,10 @@ import axios from 'axios';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert } from 'react-bootstrap';
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, HashRouter, Switch } from "react-router-dom";
 import { NavBar } from './components/navbar';
 import { Page } from './components/page';
+/*global sketchup*/
 
 class App extends React.Component {
   constructor(props) {
@@ -33,33 +34,37 @@ class App extends React.Component {
     return (this.state.dataDownloaded) ? (
       <React.Fragment>
         <BrowserRouter>
-          <Route exact path="/" render={
-            (props) => {
-              return (
-                <React.Fragment>
-                  <NavBar
-                    handleCategoryChange={this.handleCategoryChange}
-                    handleKeySearchChange={this.handleKeySearchChange}
-                    categories={this.state.categories}
-                    getSubCategories={this.getSubCategories}
-                    parseQueryString={this.parseQueryString}
-                    {...props}
-                  />
-                  <Page
-                    categories={this.state.categories}
-                    getSubCategories={this.getSubCategories}
-                    items={this.state.items}
-                    favorites={this.state.favorites}
-                    recentItems={this.state.recentItems}
-                    getItemsInCategory={this.getItemsInCategory}
-                    relationships={this.state.relationships}
-                    parseQueryString={this.parseQueryString}
-                    {...props}
-                  />
-                </React.Fragment>
-              )
-            }
-          } />
+          <Switch>
+            {/* using exact broke this in production */}
+            <Route path="/" render={
+              (props) => {
+                return (
+                  <React.Fragment>
+                    <NavBar
+                      handleCategoryChange={this.handleCategoryChange}
+                      handleKeySearchChange={this.handleKeySearchChange}
+                      categories={this.state.categories}
+                      getSubCategories={this.getSubCategories}
+                      parseQueryString={this.parseQueryString}
+                      {...props}
+                    />
+                    <Page
+                      categories={this.state.categories}
+                      getSubCategories={this.getSubCategories}
+                      items={this.state.items}
+                      favorites={this.state.favorites}
+                      recentItems={this.state.recentItems}
+                      getItemsInCategory={this.getItemsInCategory}
+                      relationships={this.state.relationships}
+                      parseQueryString={this.parseQueryString}
+                      handleDownloadClick={this.handleDownloadClick}
+                      {...props}
+                    />
+                  </React.Fragment>
+                )
+              }
+            } />
+          </Switch>
         </BrowserRouter>
       </React.Fragment>
     ) : (
@@ -72,12 +77,32 @@ class App extends React.Component {
       );
   }
 
+  handleDownloadClick = (item) => {
+    this.state.recentItems.push({
+      id: this.state.recentItems.length,
+      userId: this.state.user.userId,
+      itemId: item.id,
+      categoryId: 218
+    });
+    sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}`);
+  }
+
+  // todo: push/remove item from favorites and show that it's a favorite when you show it in lists
+  handleFavoriteClick = (item) => {
+    this.state.favorites.push({
+      id: this.state.favorites.length,
+      userId: this.state.user.userId,
+      itemId: item.id,
+      categoryId: 218
+    });
+  }
+
   getData = () => {
     this.getCategories(); // begins a chain of data downloads from categories to items
   }
-
+  // https://www.suplugins.com/podiumbrowserstandalone/
   getCategories = () => {
-    axios.get('categories.json')
+    axios.get('./categories.json')
       .then((response) => {
         this.setState({
           categories: response.data
@@ -88,7 +113,7 @@ class App extends React.Component {
   }
 
   getRelationships = () => {
-    axios.get('relationships.json')
+    axios.get('./relationships.json')
       .then((response) => {
         this.setState({
           relationships: response.data
@@ -99,7 +124,7 @@ class App extends React.Component {
   }
 
   getFavorites = () => {
-    axios.get('favorites.json')
+    axios.get('./favorites.json')
       .then((response) => {
         const favorites = response.data;
         const l = favorites.length;
@@ -117,7 +142,7 @@ class App extends React.Component {
   }
 
   getRecent = () => {
-    axios.get('recent.json')
+    axios.get('./recent.json')
       .then((response) => {
         const recents = response.data;
         const l = recents.length;
@@ -135,7 +160,7 @@ class App extends React.Component {
   }
 
   getItems = () => {
-    axios.get('items.json')
+    axios.get('./items.json')
       .then((response) => {
         this.setState({
           items: response.data

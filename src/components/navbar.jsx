@@ -44,9 +44,15 @@ export class NavBar extends React.Component {
                                     <NavDropdown title="Categories" id="collasible-nav-dropdown">
                                         {
                                             primaryCategories.map((category, index) => {
-                                                return (
-                                                    <NavDropdown.Item key={index} onClick={() => { this.handleCategoryChange(category.id) }}>{category.title}</NavDropdown.Item>
-                                                )
+                                                return category.title !== 'HDR' ? (
+                                                    <NavDropdown.Item key={index} onClick={
+                                                        () => {
+                                                            this.handleCategoryChange(category.id)
+                                                        }
+                                                    }>
+                                                        {category.title}
+                                                    </NavDropdown.Item>
+                                                ) : null
                                             })
                                         }
                                     </NavDropdown>

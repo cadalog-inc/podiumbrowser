@@ -59,7 +59,7 @@ export class Page extends React.Component {
                     }
                     {categories.map((category, index) => {
                         const items = this.props.getItemsInCategory(category.id).filter((item) => {
-                            return searchTerm === "" || this.searchArray(item.tags, searchTerm);
+                            return (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
                         });
                         let itemsBegin = categories.length === 1 ? pageIndex * pageSize : 0;
                         let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 3;
@@ -78,34 +78,34 @@ export class Page extends React.Component {
                                             <Col>
                                                 <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=5`}>See All</Link>
                                             </Col>
-                                        </Row> : items.length > 0 ? <Row style={{ margin: 20 }}>
-                                            <Col>
-                                                <h3>{category.title}</h3>
-                                            </Col>
+                                        </Row> : items.length > 0 ?
+                                            <Row style={{ margin: 20 }}>
+                                                <Col>
+                                                    <h3>{category.title}</h3>
+                                                </Col>
+                                                <Col colSpan="2">
+                                                    <div className="float-right">
+                                                        <InputGroup className="mb-3">
+                                                            <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
+                                                            <Dropdown>
+                                                                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                                                                    {pageSize}
+                                                                </Dropdown.Toggle>
 
-                                            <Col colSpan="2">
-                                                <div className="float-right">
-                                                    <InputGroup className="mb-3">
-                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
-                                                        <Dropdown>
-                                                            <Dropdown.Toggle variant="light" id="dropdown-basic">
-                                                                {pageSize}
-                                                            </Dropdown.Toggle>
-
-                                                            <Dropdown.Menu>
-                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(5, searchTerm, categoryId) }}>5</Dropdown.Item>
-                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(10, searchTerm, categoryId) }}>10</Dropdown.Item>
-                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(25, searchTerm, categoryId) }}>25</Dropdown.Item>
-                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(100, searchTerm, categoryId) }}>100</Dropdown.Item>
-                                                            </Dropdown.Menu>
-                                                        </Dropdown>
-                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
-                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>Back</Link> </InputGroup.Text>
-                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>Next</Link> </InputGroup.Text>
-                                                    </InputGroup>
-                                                </div>
-                                            </Col>
-                                        </Row> : null
+                                                                <Dropdown.Menu>
+                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(5, searchTerm, categoryId) }}>5</Dropdown.Item>
+                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(10, searchTerm, categoryId) }}>10</Dropdown.Item>
+                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(25, searchTerm, categoryId) }}>25</Dropdown.Item>
+                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(100, searchTerm, categoryId) }}>100</Dropdown.Item>
+                                                                </Dropdown.Menu>
+                                                            </Dropdown>
+                                                            <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
+                                                            <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>Back</Link> </InputGroup.Text>
+                                                            <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>Next</Link> </InputGroup.Text>
+                                                        </InputGroup>
+                                                    </div>
+                                                </Col>
+                                            </Row> : null
                                 }
                                 <Row>
                                     {
@@ -118,7 +118,7 @@ export class Page extends React.Component {
                                                             <InputGroup className="mb-3">
                                                                 <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {this.formatFileSize(item.fileSize)} MB </InputGroup.Text>
                                                                 <Button variant="light" style={{ width: 60 }}></Button>
-                                                                <Button variant="link" onClick={() => { this.handleItemDownloadClick(item) }}> dl </Button>
+                                                                <Button variant="link" onClick={() => { this.props.handleDownloadClick(item) }}> dl </Button>
                                                                 <Button variant="link"> fav </Button>
                                                             </InputGroup>
                                                             <Card.Title>{item.title}</Card.Title>
@@ -139,16 +139,6 @@ export class Page extends React.Component {
                 </Container>
             </React.Fragment>
         );
-    }
-
-    handleItemDownloadClick = (item) => {
-        // http://v3.pdm-plants-textures.com/download/0f91ff33e41cf9f4c2c530eeb7ed8bb09f1d562f/2a2d4d95325c15bf/e790bb43-40c5-330d-20a5-0591c7e55d10/Speaker01.skp
-        // http://v3.pdm-plants-textures.com/download/0f91ff33e41cf9f4c2c530eeb7ed8bb09f1d562f/2a2d4d95325c15bf/e790bb43-40c5-330d-20a5-0591c7e55d10/free/assembly_spaces/scene/Speaker_01.skp
-        let filename = item.title;
-        const ext = item.filename.split('.')[1];
-        filename += "." + ext;
-        const url = `http://v3.pdm-plants-textures.com/download/${item.hash}/2a2d4d95325c15bf/e790bb43-40c5-330d-20a5-0591c7e55d10/${filename}`;
-        window.open(url);
     }
 
     handleBreadCrumbClick = (categoryId, searchTerm) => {
