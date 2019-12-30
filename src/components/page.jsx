@@ -119,7 +119,11 @@ export class Page extends React.Component {
                                                                 <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {this.formatFileSize(item.fileSize)} MB </InputGroup.Text>
                                                                 <Button variant="light" style={{ width: 60 }}></Button>
                                                                 <Button variant="link" onClick={() => { this.props.handleDownloadClick(item) }}> dl </Button>
-                                                                <Button variant="link"> fav </Button>
+                                                                <Button variant="link" onClick={() => { this.props.handleFavoriteClick(item.id) }}>
+                                                                    {
+                                                                        this.isItemFavorite(item.id) ? <b>FAV</b> : <span>fav</span>
+                                                                    }
+                                                                </Button>
                                                             </InputGroup>
                                                             <Card.Title>{item.title}</Card.Title>
                                                             <Card.Text>
@@ -238,6 +242,13 @@ export class Page extends React.Component {
         return pathToItemString;
     }
 
+    isItemFavorite = (itemId) => {
+        const relationship = this.props.relationships.find((item) => {
+            return item.categoryId === 217 && item.itemId === itemId
+        });
+        return relationship !== undefined;
+    }
+
     searchArray = (items, value) => {
         const l = items.length;
         for (let i = 0; i < l; i++) {
@@ -269,25 +280,5 @@ export class Page extends React.Component {
         } else {
             return pageIndex;
         }
-    }
-
-    getFavoriteItems(items, favorites) {
-        const favoriteItems = [];
-        const l = favorites.length;
-        for (let i = 0; i < l; i++) {
-            const favoriteItem = items[favorites[i]];
-            favoriteItems.push(favoriteItem);
-        }
-        return favoriteItems;
-    }
-
-    getRecentItems(items, recentitems) {
-        const recentItems = [];
-        const l = recentitems.length;
-        for (let i = 0; i < l; i++) {
-            const recentItem = items[recentitems[i]];
-            recentItems.push(recentItem);
-        }
-        return recentItems;
     }
 }

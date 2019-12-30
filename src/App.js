@@ -53,11 +53,11 @@ class App extends React.Component {
                       getSubCategories={this.getSubCategories}
                       items={this.state.items}
                       favorites={this.state.favorites}
-                      recentItems={this.state.recentItems}
                       getItemsInCategory={this.getItemsInCategory}
                       relationships={this.state.relationships}
                       parseQueryString={this.parseQueryString}
                       handleDownloadClick={this.handleDownloadClick}
+                      handleFavoriteClick={this.handleFavoriteClick}
                       {...props}
                     />
                   </React.Fragment>
@@ -78,22 +78,43 @@ class App extends React.Component {
   }
 
   handleDownloadClick = (item) => {
-    this.state.recentItems.push({
-      id: this.state.recentItems.length,
-      userId: this.state.user.userId,
+    sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}`);
+    this.state.relationships.push({
+      id: this.state.relationships.length,
+      userId: this.state.user.id,
       itemId: item.id,
       categoryId: 218
     });
-    sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}`);
+    this.setState({
+      relationships: this.state.relationships
+    });
   }
 
-  // todo: push/remove item from favorites and show that it's a favorite when you show it in lists
-  handleFavoriteClick = (item) => {
-    this.state.favorites.push({
-      id: this.state.favorites.length,
-      userId: this.state.user.userId,
+  // todo: handle removing all items on favorites page
+  handleFavoriteClick = (itemId) => {
+    const item = this.state.items.find((e) => {
+      return e.id === itemId
+    });
+    const l = this.state.relationships.length;
+    for (let i = 0; i < l; i++) {
+      const relationship = this.state.relationships[i];
+      if (relationship.categoryId === 217 && relationship.itemId === itemId) {
+        this.state.relationships.splice(i, 1);
+        this.setState({
+          relationships: this.state.relationships
+        });
+        return;
+      }
+    }
+    // if a relationship wasn't found
+    this.state.relationships.push({
+      id: this.state.relationships.length,
+      userId: this.state.user.id,
       itemId: item.id,
-      categoryId: 218
+      categoryId: 217
+    });
+    this.setState({
+      relationship: this.state.relationships
     });
   }
 
