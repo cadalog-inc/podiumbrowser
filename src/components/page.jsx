@@ -112,7 +112,7 @@ export class Page extends React.Component {
                                         items.slice(itemsBegin, itemsEnd).map((item, index) => {
                                             return (
                                                 <Col key={index} md="4">
-                                                    <Card style={{ width: '18rem', height: '24rem', margin: 20 }}>
+                                                    <Card style={{ width: '18rem', height: '25rem', margin: 20 }}>
                                                         <Card.Img style={{ height: '200px' }} variant="top" src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} />
                                                         <Card.Body>
                                                             <InputGroup className="mb-3">
