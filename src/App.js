@@ -8,6 +8,7 @@ import { BrowserRouter, Route, HashRouter, Switch } from "react-router-dom";
 import { NavBar } from './components/navbar';
 import { Page } from './components/page';
 /*global sketchup*/
+import { Searchv2 } from './components/search_version2';
 
 class App extends React.Component {
   constructor(props) {
@@ -60,6 +61,9 @@ class App extends React.Component {
                       handleFavoriteClick={this.handleFavoriteClick}
                       {...props}
                     />
+
+                    <Searchv2 />
+
                   </React.Fragment>
                 )
               }
