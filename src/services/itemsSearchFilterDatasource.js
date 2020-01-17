@@ -29,3 +29,9 @@ const itemFilterSearchSource = [
 export function getDataSourceInfo() {
     return itemFilterSearchSource;
 }
+
+export function renderSearchSuggestion(state, val) {
+    return (
+        state.item.toLowerCase().indexOf(val.toLowerCase()) === 0
+    );
+}
