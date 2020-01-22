@@ -5,11 +5,15 @@ import Autocomplete from 'react-autocomplete';
 
 export class Searchv2 extends React.Component {
 
-    state = { val: '', selected: '' };
+    state = { val: '', selected: '', selected2: '' };
 
     handleSuggestionSelect = () => {
-
+        return (<React.Fragment>
+            <h5> +++ {this.state.selected.length} +++ </h5>
+            <h5> --- {this.state.selected} ---</h5>
+        </React.Fragment>)
     }
+
 
     render() {
         return (
@@ -32,15 +36,16 @@ export class Searchv2 extends React.Component {
                             </div>
                         }
                         onChange={(event, val) => this.setState({ val })}
-                        onSelect={val => this.setState({ val, selected: val })}
+                        onSelect={val => this.setState({ val, selected: val, selected2: this.handleSuggestionSelect() })}
                     />
 
                     {
                         this.state.val.length != 0 ? <h3>{this.state.val} is selected </h3> : null
                     }
                     {
-                        this.state.selected.length != 0 ? <h5>{this.state.selected} is selected </h5> : null
+                        this.state.selected.length != 0 ? <h3>{this.state.selected} is selected </h3> : null
                     }
+                    <h5>{this.state.selected2}</h5>
                 </div>
             </React.Fragment>
         );
