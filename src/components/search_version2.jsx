@@ -1,5 +1,6 @@
 import React from 'react';
-import { MoviesData, renderMovieTitle, getDataSourceInfo, renderSearchSuggestion } from '../services/itemsSearchFilterDatasource';
+import { getDataSourceInfo, renderSearchSuggestion } from '../services/itemsSearchFilterDatasource';
+import { Searchv2page } from '../components/search_version2_minipage';
 import Autocomplete from 'react-autocomplete';
 //import './App.css';
 
@@ -39,13 +40,11 @@ export class Searchv2 extends React.Component {
                         onSelect={val => this.setState({ val, selected: val, selected2: this.handleSuggestionSelect() })}
                     />
 
-                    {
-                        this.state.val.length != 0 ? <h3>{this.state.val} is selected </h3> : null
-                    }
-                    {
-                        this.state.selected.length != 0 ? <h3>{this.state.selected} is selected </h3> : null
-                    }
-                    <h5>{this.state.selected2}</h5>
+                    <Searchv2page
+                        value={this.state.val}
+                        selected={this.state.selected}
+                        selected2={this.state.selected2}
+                    />
                 </div>
             </React.Fragment>
         );
