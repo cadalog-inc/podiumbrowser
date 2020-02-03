@@ -9,6 +9,7 @@ import { NavBar } from './components/navbar';
 import { Page } from './components/page';
 /*global sketchup*/
 import { Searchv2 } from './components/search_version2';
+import { Navbarv2 } from './components/navbar_version2';
 
 class App extends React.Component {
   constructor(props) {
@@ -49,6 +50,17 @@ class App extends React.Component {
                       parseQueryString={this.parseQueryString}
                       {...props}
                     />
+
+                    <Navbarv2
+                      handleCategoryChange={this.handleCategoryChange}
+                      handleKeySearchChange={this.handleKeySearchChange}
+                      categories={this.state.categories}
+                      getSubCategories={this.getSubCategories}
+                      parseQueryString={this.parseQueryString}
+                      {...props}
+                    />
+
+
                     <Page
                       categories={this.state.categories}
                       getSubCategories={this.getSubCategories}

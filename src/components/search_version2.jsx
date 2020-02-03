@@ -20,7 +20,6 @@ export class Searchv2 extends React.Component {
         return (
             <React.Fragment>
                 <div className="autocomplete-wrapper">
-                    <h5>React Autocomplete Demo</h5>
                     <Autocomplete
                         value={this.state.val}
                         items={getDataSourceInfo()}
