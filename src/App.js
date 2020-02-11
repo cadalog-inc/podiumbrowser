@@ -10,6 +10,7 @@ import { Page } from './components/page';
 /*global sketchup*/
 import { Searchv2 } from './components/search_version2';
 import { Navbarv2 } from './components/navbar_version2';
+import { TagList } from './components/taglist_minipage';
 
 class App extends React.Component {
   constructor(props) {
@@ -75,6 +76,7 @@ class App extends React.Component {
                     />
 
                     <Searchv2 />
+                    <TagList />
 
                   </React.Fragment>
                 )
