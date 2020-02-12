@@ -14,7 +14,7 @@ export class TagList extends React.Component {
                 <p></p>
                 <h4>{this.state.itemTagList.length}</h4>
                 <p></p>
-                {this.state.itemTagList.map(item => (<h5>{item.tag} --- {item.pos}</h5>))}
+                {this.state.itemTagList.map(item => (<h5>{item}</h5>))}
             </React.Fragment>
         )
     }

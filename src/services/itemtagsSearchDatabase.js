@@ -60,20 +60,22 @@ const itemTagsList = [
 function createItemTagsArray() {
 
     let itemTagArray = [];
+    let finalitemTagArray = [];
     const itemlist = getItemTagsList();
 
     for (let i = 0; i < itemlist.length; i++) {
         for (let j = 0; j < itemlist[i].tags.length; j++) {
-            if (itemTagArray.length === 0) {
-                itemTagArray.push({ tag: itemlist[i].tags[j], pos: itemTagArray.indexOf(itemlist[i].tags[j]) });
-            }
-            else if (itemTagArray.indexOf(itemlist[i].tags[j]) === -1) {
-                itemTagArray.push({ tag: itemlist[i].tags[j], pos: itemTagArray.indexOf(itemlist[i].tags[j]) });
-            }
+            itemTagArray.push(itemlist[i].tags[j]);
         }
     }
 
-    return itemTagArray;
+    for (let i = 0; i < itemTagArray.length; i++) {
+        if (finalitemTagArray.indexOf(itemTagArray[i]) === -1) {
+            finalitemTagArray.push(itemTagArray[i]);
+        }
+    }
+
+    return finalitemTagArray;
 }
 
 function getItemTagsList() {
