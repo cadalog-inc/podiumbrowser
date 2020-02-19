@@ -25,12 +25,17 @@ class App extends React.Component {
       relationships: [],
       favorites: [],
       recentItems: [],
-      dataDownloaded: false
+      dataDownloaded: false,
+
+
+      searchtagarray: [],
+      finalsearchtagarray: []
     };
   }
 
   componentDidMount() {
     this.getData();
+    //this.populateSearchTagsArray();
   }
 
   render() {
@@ -77,6 +82,8 @@ class App extends React.Component {
 
                     <Searchv2 />
                     <TagList />
+
+                    <h2>{this.state.finalsearchtagarray.length}</h2>
 
                   </React.Fragment>
                 )
@@ -207,6 +214,29 @@ class App extends React.Component {
           this.setState({
             dataDownloaded: true
           })
+
+
+          // the search tag array is populated here.
+          const items = response.data;
+          const l = items.length;
+          let itemtagarray = [];
+
+          for (let i = 0; i < l; i++) {
+            this.state.searchtagarray.push(items[i].tags);
+          }
+
+          for (let i = 0; i < this.state.searchtagarray.length; i++) {
+            for (let j = 0; j < this.state.searchtagarray[i].length; j++) {
+              itemtagarray.push(this.state.searchtagarray[i][j]);
+            }
+          }
+
+          for (let i = 0; i < itemtagarray.length; i++) {
+            if (this.state.finalsearchtagarray.indexOf(itemtagarray[i]) === -1) {
+              this.state.finalsearchtagarray.push(itemtagarray[i]);
+            }
+          }
+
         });
       });
   }
