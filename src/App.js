@@ -9,6 +9,7 @@ import { NavBar } from './components/navbar';
 import { Page } from './components/page';
 /*global sketchup*/
 import { Searchv2 } from './components/search_version2';
+import { Searchv3 } from './components/search_version3';
 import { Navbarv2 } from './components/navbar_version2';
 import { TagList } from './components/taglist_minipage';
 
@@ -81,9 +82,12 @@ class App extends React.Component {
                     />
 
                     <Searchv2 />
+                    <Searchv3 suggestionslist={this.state.finalsearchtagarray} />
                     <TagList />
 
                     <h2>{this.state.finalsearchtagarray.length}</h2>
+
+
 
                   </React.Fragment>
                 )

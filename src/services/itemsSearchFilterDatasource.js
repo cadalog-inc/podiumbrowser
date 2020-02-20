@@ -36,6 +36,12 @@ export function renderSearchSuggestion(state, val) {
     );
 }
 
+export function renderSearchSuggestionv3(state, val) {
+    return (
+        state.toLowerCase().indexOf(val.toLowerCase()) === 0
+    );
+}
+
 export function MoviesData() {
     return [
         { "title": "The Shawshank Redemption", "rank": "1", "id": "tt0111161" },
