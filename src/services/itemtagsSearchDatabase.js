@@ -78,6 +78,41 @@ function createItemTagsArray() {
     return finalitemTagArray;
 }
 
+export function createItemRelationshipsArray() {
+
+    let itemtagRelationshipArray = [];
+    const itemlist = getItemTagsList();
+    const itemTagsArray = createItemTagsArray();
+
+
+    // loop through the tags
+    for (let i = 0; i < itemTagsArray.length; i++) {
+
+        // temp array
+        let itemtaginfo = [];
+
+        // loop through the items
+        for (let j = 0; j < itemlist.length; j++) {
+            let itemtagpointer = 0;
+            let tagfound = false;
+
+            do {
+                if (itemlist[j].tags[itemtagpointer] === itemTagsArray[i]) {
+                    tagfound = true;
+                    itemtaginfo.push(j);
+                }
+                else {
+                    itemtagpointer++;
+                }
+            } while ((tagfound === false) && (itemtagpointer < itemlist[j].tags.length));
+        }
+
+        itemtagRelationshipArray.push({ tag: itemTagsArray[i], itemlist: itemtaginfo });
+    }
+
+    return itemtagRelationshipArray;
+}
+
 function getItemTagsList() {
     return itemTagsList;
 }
