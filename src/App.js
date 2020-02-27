@@ -83,7 +83,9 @@ class App extends React.Component {
 
                     <Searchv2 />
                     <Searchv3 suggestionslist={this.state.finalsearchtagarray} />
-                    <TagList />
+                    <TagList tagarray={this.state.finalsearchtagarray}
+                      items={this.state.items}
+                    />
 
                     <h2>{this.state.finalsearchtagarray.length}</h2>
 
