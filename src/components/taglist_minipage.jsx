@@ -4,10 +4,10 @@ import { getItemTagsArray, createItemRelationshipsArray } from '../services/item
 export class TagList extends React.Component {
 
     state = {
-        itemTagList: getItemTagsArray(),
-        itemtagrelationships: createItemRelationshipsArray(),
+        itemTagList: getItemTagsArray(),  // test of version 3
+        itemtagrelationships: createItemRelationshipsArray(), // test of version 3
 
-        itemtagRelationshipsArrayv2: []
+        itemtagRelationshipsArrayv2: [] // full version 3 array
     }
 
     handleButtonClick = () => {
@@ -17,7 +17,7 @@ export class TagList extends React.Component {
         let itemtagRelationshipArray = [];
 
         // loop through the tags
-        for (let i = 0; i < 3000; i++) {
+        for (let i = 27000; i < itemTagsArray.length; i++) {
 
             // temp array
             let itemtaginfo = [];
@@ -58,6 +58,7 @@ export class TagList extends React.Component {
                 <p></p>
                 <button onClick={() => this.handleButtonClick()}> Test it </button>
                 <h6> {this.state.itemtagRelationshipsArrayv2.length} </h6>
+                <div>{JSON.stringify(this.state.itemtagRelationshipsArrayv2)}</div>
             </React.Fragment>
         )
     }
