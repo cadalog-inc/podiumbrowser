@@ -8,10 +8,9 @@ import { BrowserRouter, Route, HashRouter, Switch } from "react-router-dom";
 import { NavBar } from './components/navbar';
 import { Page } from './components/page';
 /*global sketchup*/
-import { Searchv2 } from './components/search_version2';
 import { Searchv3 } from './components/search_version3';
 import { Navbarv2 } from './components/navbar_version2';
-import { TagList } from './components/taglist_minipage';
+
 
 class App extends React.Component {
   constructor(props) {
@@ -66,6 +65,7 @@ class App extends React.Component {
                       categories={this.state.categories}
                       getSubCategories={this.getSubCategories}
                       parseQueryString={this.parseQueryString}
+                      suggestionslist={this.state.itemtagrelationships}
                       {...props}
                     />
 
@@ -83,11 +83,7 @@ class App extends React.Component {
                       {...props}
                     />
 
-                    <Searchv2 />
-                    <Searchv3 suggestionslist={this.state.finalsearchtagarray} />
-                    <TagList tagarray={this.state.finalsearchtagarray}
-                      items={this.state.items}
-                    />
+                    <Searchv3 suggestionslist={this.state.itemtagrelationships} />
 
                     <h2>{this.state.itemtagrelationships.length}</h2>
 

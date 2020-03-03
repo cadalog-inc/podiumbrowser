@@ -1,8 +1,7 @@
 import React from 'react';
-import { renderSearchSuggestionv3 } from '../services/itemsSearchFilterDatasource';
-//import { Searchv2page } from '../components/search_version2_minipage';
+import { renderSearchSuggestionv3 } from '../services/itemSearchFilterVersion3';
 import Autocomplete from 'react-autocomplete';
-//import './App.css';
+
 
 export class Searchv3 extends React.Component {
 
@@ -15,7 +14,7 @@ export class Searchv3 extends React.Component {
                     <Autocomplete
                         value={this.state.val}
                         items={this.props.suggestionslist}
-                        getItemValue={item => item}
+                        getItemValue={item => item.tag}
                         shouldItemRender={renderSearchSuggestionv3}
                         renderMenu={item => (
                             <div className="dropdown">
@@ -24,7 +23,7 @@ export class Searchv3 extends React.Component {
                         )}
                         renderItem={(item, isHighlighted) =>
                             <div className={`item ${isHighlighted ? 'selected-item' : ''}`}>
-                                {item}
+                                {item.tag}
                             </div>
                         }
                         onChange={(event, val) => this.setState({ val })}

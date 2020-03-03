@@ -1,7 +1,7 @@
 import React from 'react';
 import { Row, Col, FormControl, Button, Nav, Navbar, NavDropdown } from 'react-bootstrap';
 import Autocomplete from 'react-autocomplete';
-import { Searchv2 } from './search_version2';
+import { Searchv3 } from './search_version3';
 
 export class Navbarv2 extends React.Component {
     constructor(props) {
@@ -60,7 +60,7 @@ export class Navbarv2 extends React.Component {
                                     </NavDropdown>
                                 </Col>
                                 <Col>
-                                    <Searchv2 />
+                                    <Searchv3 suggestionslist={this.props.suggestionslist} />
                                 </Col>
                                 <Col>
                                     <Button type="button" variant="dark" onClick={() => { this.handleOnSearchClick(categoryId) }}>Search</Button>
