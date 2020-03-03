@@ -37,7 +37,6 @@ class App extends React.Component {
   componentDidMount() {
     this.getData();
     this.getItemTagRelationships();
-    //this.populateSearchTagsArray();
   }
 
   render() {
