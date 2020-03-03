@@ -27,10 +27,6 @@ class App extends React.Component {
       recentItems: [],
       dataDownloaded: false,
       itemtagrelationships: [],
-
-
-      searchtagarray: [],
-      finalsearchtagarray: []
     };
   }
 
@@ -234,32 +230,6 @@ class App extends React.Component {
           this.setState({
             dataDownloaded: true
           })
-
-
-          // the search tag array is populated here.
-          /*
-          const items = response.data;
-          const l = items.length;
-          let itemtagarray = [];
-
-          for (let i = 0; i < l; i++) {
-            this.state.searchtagarray.push(items[i].tags);
-          }
-
-          for (let i = 0; i < this.state.searchtagarray.length; i++) {
-            for (let j = 0; j < this.state.searchtagarray[i].length; j++) {
-              itemtagarray.push(this.state.searchtagarray[i][j]);
-            }
-          }
-
-          for (let i = 0; i < itemtagarray.length; i++) {
-            if (this.state.finalsearchtagarray.indexOf(itemtagarray[i]) === -1) {
-              this.state.finalsearchtagarray.push(itemtagarray[i]);
-            }
-          }
-
-          */
-
         });
       });
   }
