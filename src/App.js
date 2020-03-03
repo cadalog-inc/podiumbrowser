@@ -27,6 +27,7 @@ class App extends React.Component {
       favorites: [],
       recentItems: [],
       dataDownloaded: false,
+      itemtagrelationships: [],
 
 
       searchtagarray: [],
@@ -36,6 +37,7 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getData();
+    this.getItemTagRelationships();
     //this.populateSearchTagsArray();
   }
 
@@ -87,7 +89,7 @@ class App extends React.Component {
                       items={this.state.items}
                     />
 
-                    <h2>{this.state.finalsearchtagarray.length}</h2>
+                    <h2>{this.state.itemtagrelationships.length}</h2>
 
 
 
@@ -211,6 +213,23 @@ class App extends React.Component {
       });
   }
 
+  getItemTagRelationships = () => {
+
+    axios.get('./itemtagrelationships.json')
+      .then((response) => {
+        const tags = response.data;
+        const l = tags.length;
+        for (let i = 0; i < l; i++) {
+          const tag = tags[i];
+          this.state.itemtagrelationships.push({
+            tag: tag.tag,
+            itemlist: tag.itemlist,
+          });
+        }
+      });
+
+  }
+
   getItems = () => {
     axios.get('./items.json')
       .then((response) => {
@@ -223,6 +242,7 @@ class App extends React.Component {
 
 
           // the search tag array is populated here.
+          /*
           const items = response.data;
           const l = items.length;
           let itemtagarray = [];
@@ -242,6 +262,8 @@ class App extends React.Component {
               this.state.finalsearchtagarray.push(itemtagarray[i]);
             }
           }
+
+          */
 
         });
       });
