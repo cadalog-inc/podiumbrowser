@@ -80,10 +80,6 @@ class App extends React.Component {
 
                     <Searchv3 suggestionslist={this.state.itemtagrelationships} />
 
-                    <h2>{this.state.itemtagrelationships.length}</h2>
-
-
-
                   </React.Fragment>
                 )
               }

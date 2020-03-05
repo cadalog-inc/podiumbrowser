@@ -5,7 +5,28 @@ import Autocomplete from 'react-autocomplete';
 
 export class Searchv3 extends React.Component {
 
-    state = { val: '', selected: '' };
+    state = {
+        val: '',
+        selected: '',
+        itemtagarray: []
+    };
+
+    getItemTagArray = (tag) => {
+        let tagindex = 0;
+        let tagfound = false;
+        let arraypointer = 0;
+
+        do {
+            if (this.props.suggestionslist[arraypointer].tag === tag) {
+                tagfound = true;
+                tagindex = arraypointer;
+            }
+            else
+                arraypointer++;
+        } while (tagfound === false);
+
+        return this.props.suggestionslist[tagindex].itemlist;
+    }
 
     render() {
         return (
@@ -27,10 +48,11 @@ export class Searchv3 extends React.Component {
                             </div>
                         }
                         onChange={(event, val) => this.setState({ val })}
-                        onSelect={val => this.setState({ val, selected: val })}
+                        onSelect={val => this.setState({ val, selected: val, itemtagarray: this.getItemTagArray(val) })}
                     />
                 </div>
-                <h6>{this.props.suggestionslist.length}</h6>
+
+                <h6>{this.state.selected} is selected and its is in {this.state.itemtagarray.length} items</h6>
             </React.Fragment>
         );
     }
