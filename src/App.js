@@ -27,6 +27,8 @@ class App extends React.Component {
       recentItems: [],
       dataDownloaded: false,
       itemtagrelationships: [],
+
+      itemtagarrayv2: []
     };
   }
 
@@ -78,7 +80,10 @@ class App extends React.Component {
                       {...props}
                     />
 
-                    <Searchv3 suggestionslist={this.state.itemtagrelationships} />
+                    <Searchv3 suggestionslist={this.state.itemtagrelationships}
+                      updateTagArray={this.updateItemTagArrayv2} />
+
+                    <h6><b>array has {this.state.itemtagarrayv2.length} items</b></h6>
 
                   </React.Fragment>
                 )
@@ -96,6 +101,14 @@ class App extends React.Component {
         </React.Fragment>
       );
   }
+
+  updateItemTagArrayv2 = (tagarray) => {
+
+    this.setState({ itemtagarrayv2: tagarray });
+  }
+
+
+
 
   handleDownloadClick = (item) => {
     sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}`);

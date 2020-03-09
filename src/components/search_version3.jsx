@@ -7,7 +7,6 @@ export class Searchv3 extends React.Component {
 
     state = {
         val: '',
-        selected: '',
         itemtagarray: []
     };
 
@@ -24,6 +23,8 @@ export class Searchv3 extends React.Component {
             else
                 arraypointer++;
         } while (tagfound === false);
+
+        this.props.updateTagArray(this.props.suggestionslist[tagindex].itemlist);
 
         return this.props.suggestionslist[tagindex].itemlist;
     }
@@ -48,7 +49,7 @@ export class Searchv3 extends React.Component {
                             </div>
                         }
                         onChange={(event, val) => this.setState({ val })}
-                        onSelect={val => this.setState({ val, selected: val, itemtagarray: this.getItemTagArray(val) })}
+                        onSelect={val => this.setState({ val, itemtagarray: this.getItemTagArray(val) })}
                     />
                 </div>
 
