@@ -29,7 +29,7 @@ class App extends React.Component {
       itemtagrelationships: [],
 
       itemtagarrayv2: [],
-      tagArrayItems: []
+      tagArrayItems: []  // has the actual items that have selected tag
     };
   }
 
