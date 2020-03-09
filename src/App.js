@@ -28,7 +28,8 @@ class App extends React.Component {
       dataDownloaded: false,
       itemtagrelationships: [],
 
-      itemtagarrayv2: []
+      itemtagarrayv2: [],
+      tagArrayItems: []
     };
   }
 
@@ -84,6 +85,9 @@ class App extends React.Component {
                       updateTagArray={this.updateItemTagArrayv2} />
 
                     <h6><b>array has {this.state.itemtagarrayv2.length} items</b></h6>
+                    <h5><b>array has {this.state.tagArrayItems.length} items</b></h5>
+                    {this.state.tagArrayItems.length > 0 ? <h6>{this.state.tagArrayItems[0].title}</h6> : <h6>empty</h6>}
+
 
                   </React.Fragment>
                 )
@@ -105,6 +109,20 @@ class App extends React.Component {
   updateItemTagArrayv2 = (tagarray) => {
 
     this.setState({ itemtagarrayv2: tagarray });
+
+    this.getTagArrayItems(tagarray);
+  }
+
+  getTagArrayItems = (tagarray) => {
+
+    let temptagarray = []
+
+    for (let i = 0; i < tagarray.length; i++) {
+      temptagarray.push(this.state.items[tagarray[i]]);
+    }
+
+    this.setState({ tagArrayItems: temptagarray });
+
   }
 
 
