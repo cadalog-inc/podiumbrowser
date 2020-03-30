@@ -10,6 +10,7 @@ import { Page } from './components/page';
 /*global sketchup*/
 import { Searchv3 } from './components/search_version3';
 import { Navbarv2 } from './components/navbar_version2';
+import { SideBar } from './components/sidebar';
 
 
 class App extends React.Component {
@@ -56,18 +57,7 @@ class App extends React.Component {
                       parseQueryString={this.parseQueryString}
                       {...props}
                     />
-
-                    <Navbarv2
-                      handleCategoryChange={this.handleCategoryChange}
-                      handleKeySearchChange={this.handleKeySearchChange}
-                      categories={this.state.categories}
-                      getSubCategories={this.getSubCategories}
-                      parseQueryString={this.parseQueryString}
-                      suggestionslist={this.state.itemtagrelationships}
-                      {...props}
-                    />
-
-
+                    
                     <Page
                       categories={this.state.categories}
                       getSubCategories={this.getSubCategories}
@@ -81,12 +71,12 @@ class App extends React.Component {
                       {...props}
                     />
 
-                    <Searchv3 suggestionslist={this.state.itemtagrelationships}
+                    {/* <Searchv3 suggestionslist={this.state.itemtagrelationships}
                       updateTagArray={this.updateItemTagArrayv2} />
 
                     <h6><b>array has {this.state.itemtagarrayv2.length} items</b></h6>
                     <h5><b>array has {this.state.tagArrayItems.length} items</b></h5>
-                    {this.state.tagArrayItems.length > 0 ? <h6>{this.state.tagArrayItems[0].title}</h6> : <h6>empty</h6>}
+                    {this.state.tagArrayItems.length > 0 ? <h6>{this.state.tagArrayItems[0].title}</h6> : <h6>empty</h6>} */}
 
 
                   </React.Fragment>
@@ -106,24 +96,24 @@ class App extends React.Component {
       );
   }
 
-  updateItemTagArrayv2 = (tagarray) => {
+  // updateItemTagArrayv2 = (tagarray) => {
 
-    this.setState({ itemtagarrayv2: tagarray });
+  //   this.setState({ itemtagarrayv2: tagarray });
 
-    this.getTagArrayItems(tagarray);
-  }
+  //   this.getTagArrayItems(tagarray);
+  // }
 
-  getTagArrayItems = (tagarray) => {
+  // getTagArrayItems = (tagarray) => {
 
-    let temptagarray = []
+  //   let temptagarray = []
 
-    for (let i = 0; i < tagarray.length; i++) {
-      temptagarray.push(this.state.items[tagarray[i]]);
-    }
+  //   for (let i = 0; i < tagarray.length; i++) {
+  //     temptagarray.push(this.state.items[tagarray[i]]);
+  //   }
 
-    this.setState({ tagArrayItems: temptagarray });
+  //   this.setState({ tagArrayItems: temptagarray });
 
-  }
+  // }
 
 
 
@@ -172,6 +162,7 @@ class App extends React.Component {
   getData = () => {
     this.getCategories(); // begins a chain of data downloads from categories to items
   }
+
   // https://www.suplugins.com/podiumbrowserstandalone/
   getCategories = () => {
     axios.get('./categories.json')
