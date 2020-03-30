@@ -49,7 +49,7 @@ export class Page extends React.Component {
                         })
                     }
                 </Breadcrumb>
-                <Container>
+                <Container fluid>
                     <Row>
                         <Col sm={2}>
                             <SideBar

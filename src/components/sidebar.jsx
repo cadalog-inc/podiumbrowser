@@ -30,28 +30,19 @@ export class SideBar extends React.Component {
                     }
                 </ul>
                 <hr />
-                <table>
-                    <thead>
-                        <th>Categories</th>
-                    </thead>
-                    <tbody>
-                        {
-                            primaryCategories.map((category, index) => {
-                                return category.title !== 'HDR' ? (
-                                    <tr key={index} onClick={
-                                        () => {
-                                            this.handleCategoryChange(category.id)
-                                        }
-                                    }>
-                                        <td>
-                                            {category.title}
-                                        </td>
-                                    </tr>
-                                ) : null
-                            })
-                        }
-                    </tbody>
-                </table>
+                <ul>
+                    {
+                        primaryCategories.map((category, index) => {
+                            return category.title !== 'HDR' ? (
+                                <li key={index}>
+                                    <span  style={category.id === selectedCategory.id ? {fontWeight: "bold", cursor: "pointer"} : {cursor: "pointer"}} onClick={() => this.handleCategoryChange(category.id)}>
+                                        {category.title}
+                                    </span>
+                                </li>
+                            ) : null
+                        })
+                    }
+                </ul>
             </React.Fragment>
         );
     }
@@ -64,7 +55,7 @@ export class SideBar extends React.Component {
         const category = path[index];
         return category ? index < path.length - 1 ? (
             <li>
-                <span onClick={() => this.handleCategoryChange(category.id)}>
+                <span style={{cursor: "pointer"}} onClick={() => this.handleCategoryChange(category.id)}>
                     {category.title}
                 </span>
                 <ul>
@@ -73,7 +64,7 @@ export class SideBar extends React.Component {
             </li>
         ) : (
                 <li>
-                    <span onClick={() => this.handleCategoryChange(category.id)}>
+                    <span style={{fontWeight: "bold", cursor: "pointer"}} onClick={() => this.handleCategoryChange(category.id)}>
                         {category.title}
                     </span>
                     <ul>
@@ -82,7 +73,7 @@ export class SideBar extends React.Component {
                                 categories.map((item, index) => {
                                     return item.title !== 'HDR' ? (
                                         <li key={index}>
-                                            <span onClick={() => this.handleCategoryChange(item.id)}>
+                                            <span style={{cursor: "pointer"}} onClick={() => this.handleCategoryChange(item.id)}>
                                                 {item.title}
                                             </span>
                                         </li>
