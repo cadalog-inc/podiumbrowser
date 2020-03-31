@@ -1,6 +1,5 @@
 import React from 'react';
 import { Row, Col, FormControl, Button, Nav, Navbar, NavDropdown, Dropdown } from 'react-bootstrap';
-import DropdownItem from 'react-bootstrap/DropdownItem';
 
 export class NavBar extends React.Component {
     constructor(props) {
@@ -60,7 +59,7 @@ export class NavBar extends React.Component {
                                     </NavDropdown>
                                 </Col>
                                 <Col key={searchTerm}>
-                                    <FormControl type="text" style={{ width: 400 }} defaultValue={searchTerm} onChange={this.handleSearchTermChange} className="mr-sm-2" />
+                                    <FormControl type="text" style={{ width: 400 }} defaultValue={searchTerm} onChange={(e)=>this.handleSearchTermChange(e.target.value, ()=>{})} className="mr-sm-2" />
                                 </Col>
                                 <Col>
                                     <Button type="button" variant="dark" onClick={() => { this.handleOnSearchClick(categoryId) }}>Search</Button>

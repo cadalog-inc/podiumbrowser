@@ -113,8 +113,8 @@ export class Page extends React.Component {
                                                                             </Dropdown.Menu>
                                                                         </Dropdown>
                                                                         <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
-                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>Back</Link> </InputGroup.Text>
-                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>Next</Link> </InputGroup.Text>
+                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>{"<"}</Link> </InputGroup.Text>
+                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>{">"}</Link> </InputGroup.Text>
                                                                     </InputGroup>
                                                                 </div>
                                                             </Col>
@@ -126,11 +126,11 @@ export class Page extends React.Component {
                                                         return (
                                                             <Col key={index} md="4">
                                                                 <Card style={{ width: '18rem', height: '25rem', margin: 20 }}>
-                                                                    <Card.Img style={{ height: '200px' }} variant="top" src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} />
+                                                                    <Card.Img style={{ width: '18rem', height: '12.5rem'}} variant="top" src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} />
                                                                     <Card.Body>
                                                                         <InputGroup className="mb-3">
                                                                             <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {this.formatFileSize(item.fileSize)} MB </InputGroup.Text>
-                                                                            <Button variant="light" style={{ width: 60 }}></Button>
+                                                                            <span style={{ width: 60 }}></span>
                                                                             <Button variant="link" onClick={() => { this.props.handleDownloadClick(item) }}> dl </Button>
                                                                             <Button variant="link" onClick={() => { this.props.handleFavoriteClick(item.id) }}>
                                                                                 {
