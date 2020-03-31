@@ -1,12 +1,14 @@
 import React from 'react';
-import { Row, Col, FormControl, Button, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import { Row, Col, FormControl, Button, Nav, Navbar, NavDropdown, Dropdown } from 'react-bootstrap';
+import DropdownItem from 'react-bootstrap/DropdownItem';
 
 export class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedCategoryId: 1,
-            searchTerm: ""
+            searchTerm: "",
+            searchItems: []
         }
     }
 
@@ -30,7 +32,7 @@ export class NavBar extends React.Component {
         }
         let primaryCategories = this.props.getSubCategories(1);
 
-        return (
+        return this.props.items.length > 0 ? (
             <React.Fragment>
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ height: 70 }}>
                     <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>Back</Button>
@@ -63,12 +65,41 @@ export class NavBar extends React.Component {
                                 <Col>
                                     <Button type="button" variant="dark" onClick={() => { this.handleOnSearchClick(categoryId) }}>Search</Button>
                                 </Col>
+                                {/* <Col key={searchTerm}>
+                                    <Dropdown>
+                                        <Dropdown.Toggle variant="secondary">
+                                            <FormControl autoFocus type="text" defaultValue={searchTerm} onChange={
+                                                (e) => {
+                                                    const value = e.target.value;
+                                                    const callback = () => {
+                                                        this.autoComplete(value, categoryId);
+                                                    };
+                                                    this.handleSearchTermChange(value, callback)
+                                                }
+                                             } className="mr-sm-2" />
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                            {
+                                                this.state.searchItems.map((item, index) => {
+                                                    return (
+                                                        <Dropdown.Item
+                                                            key={index}
+                                                            onSelect={() => this.handleSearchTermChange(item.title, () => this.handleOnSearchClick(categoryId))}
+                                                        >
+                                                            {item.title}
+                                                        </Dropdown.Item>
+                                                    )
+                                                })
+                                            }
+                                        </Dropdown.Menu>
+                                    </Dropdown>
+                                </Col> */}
                             </Row>
                         </Nav>
                     </Navbar.Collapse>
                 </Navbar>
             </React.Fragment>
-        );
+        ) : null;
     }
 
     handleBackClick = (event) => {
@@ -87,10 +118,30 @@ export class NavBar extends React.Component {
         });
     }
 
-    handleSearchTermChange = (event) => {
-        const value = event.target.value;
+    handleSearchTermChange = (value, callback) => {
         this.setState({
             searchTerm: value
+        }, callback);
+    }
+
+    searchArray = (items, value) => {
+        const l = items.length;
+        for (let i = 0; i < l; i++) {
+            const item = items[i];
+            if (item.includes(value)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    autoComplete = (searchTerm, categoryId) => {
+        const items = this.props.getItemsInCategory(categoryId);
+        const filtered = items.filter((item) => {
+            return (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
+        })
+        this.setState({
+            searchItems: filtered.slice(0, 10)
         });
     }
 

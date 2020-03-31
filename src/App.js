@@ -1,17 +1,13 @@
 import React from 'react';
 import axios from 'axios';
-// import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Alert } from 'react-bootstrap';
-import { BrowserRouter, Route, HashRouter, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { NavBar } from './components/navbar';
 import { Page } from './components/page';
 /*global sketchup*/
-import { Searchv3 } from './components/search_version3';
-import { Navbarv2 } from './components/navbar_version2';
-import { SideBar } from './components/sidebar';
-
+// import { Search } from './components/search';
 
 class App extends React.Component {
   constructor(props) {
@@ -27,16 +23,16 @@ class App extends React.Component {
       favorites: [],
       recentItems: [],
       dataDownloaded: false,
-      itemtagrelationships: [],
+      itemTagRelationships: [],
 
-      itemtagarrayv2: [],
-      tagArrayItems: []  // has the actual items that have selected tag
+      itemTags: [],
+      tagItems: []  // has the actual items that have selected tag
     };
   }
 
   componentDidMount() {
     this.getData();
-    this.getItemTagRelationships();
+    // this.getItemTagRelationships();
   }
 
   render() {
@@ -52,12 +48,23 @@ class App extends React.Component {
                     <NavBar
                       handleCategoryChange={this.handleCategoryChange}
                       handleKeySearchChange={this.handleKeySearchChange}
+                      items={this.state.items}
+                      getItemsInCategory={this.getItemsInCategory}
                       categories={this.state.categories}
                       getSubCategories={this.getSubCategories}
                       parseQueryString={this.parseQueryString}
                       {...props}
                     />
                     
+                    {/* <Search 
+                      suggestions={this.state.itemTagRelationships}
+                      updateTags={this.updateItemTags} 
+                    />
+
+                    <h6><b>array has {this.state.itemTags.length} items</b></h6>
+                    <h5><b>array has {this.state.tagItems.length} items</b></h5>
+                    {this.state.tagItems.length > 0 ? <h6>{this.state.tagItems[0].title}</h6> : <h6>empty</h6>} */}
+
                     <Page
                       categories={this.state.categories}
                       getSubCategories={this.getSubCategories}
@@ -70,15 +77,6 @@ class App extends React.Component {
                       handleFavoriteClick={this.handleFavoriteClick}
                       {...props}
                     />
-
-                    {/* <Searchv3 suggestionslist={this.state.itemtagrelationships}
-                      updateTagArray={this.updateItemTagArrayv2} />
-
-                    <h6><b>array has {this.state.itemtagarrayv2.length} items</b></h6>
-                    <h5><b>array has {this.state.tagArrayItems.length} items</b></h5>
-                    {this.state.tagArrayItems.length > 0 ? <h6>{this.state.tagArrayItems[0].title}</h6> : <h6>empty</h6>} */}
-
-
                   </React.Fragment>
                 )
               }
@@ -96,27 +94,25 @@ class App extends React.Component {
       );
   }
 
-  // updateItemTagArrayv2 = (tagarray) => {
+  // updateItemTags = (tags) => {
+  //   this.setState({ 
+  //     itemTags: tags 
+  //   });
 
-  //   this.setState({ itemtagarrayv2: tagarray });
-
-  //   this.getTagArrayItems(tagarray);
+  //   this.getTagItems(tags);
   // }
 
-  // getTagArrayItems = (tagarray) => {
+  // getTagItems = (tags) => {
+  //   let tempTags = []
 
-  //   let temptagarray = []
-
-  //   for (let i = 0; i < tagarray.length; i++) {
-  //     temptagarray.push(this.state.items[tagarray[i]]);
+  //   for (let i = 0; i < tags.length; i++) {
+  //     tempTags.push(this.state.items[tags[i]]);
   //   }
 
-  //   this.setState({ tagArrayItems: temptagarray });
-
+  //   this.setState({ 
+  //     tagArrayItems: tempTags 
+  //   });
   // }
-
-
-
 
   handleDownloadClick = (item) => {
     sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}`);
@@ -222,22 +218,22 @@ class App extends React.Component {
       });
   }
 
-  getItemTagRelationships = () => {
+  // getItemTagRelationships = () => {
 
-    axios.get('./itemtagrelationships.json')
-      .then((response) => {
-        const tags = response.data;
-        const l = tags.length;
-        for (let i = 0; i < l; i++) {
-          const tag = tags[i];
-          this.state.itemtagrelationships.push({
-            tag: tag.tag,
-            itemlist: tag.itemlist,
-          });
-        }
-      });
+  //   axios.get('./itemtagrelationships.json')
+  //     .then((response) => {
+  //       const tags = response.data;
+  //       const l = tags.length;
+  //       for (let i = 0; i < l; i++) {
+  //         const tag = tags[i];
+  //         this.state.itemTagRelationships.push({
+  //           tag: tag.tag,
+  //           itemlist: tag.itemlist,
+  //         });
+  //       }
+  //     });
 
-  }
+  // }
 
   getItems = () => {
     axios.get('./items.json')
