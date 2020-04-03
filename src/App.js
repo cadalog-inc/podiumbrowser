@@ -7,7 +7,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { NavBar } from './components/navbar';
 import { Page } from './components/page';
 /*global sketchup*/
-// import { Search } from './components/search';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,15 +23,11 @@ class App extends React.Component {
       recentItems: [],
       dataDownloaded: false,
       itemTagRelationships: [],
-
-      itemTags: [],
-      tagItems: []  // has the actual items that have selected tag
     };
   }
 
   componentDidMount() {
     this.getData();
-    // this.getItemTagRelationships();
   }
 
   render() {
@@ -55,16 +50,6 @@ class App extends React.Component {
                       parseQueryString={this.parseQueryString}
                       {...props}
                     />
-                    
-                    {/* <Search 
-                      suggestions={this.state.itemTagRelationships}
-                      updateTags={this.updateItemTags} 
-                    />
-
-                    <h6><b>array has {this.state.itemTags.length} items</b></h6>
-                    <h5><b>array has {this.state.tagItems.length} items</b></h5>
-                    {this.state.tagItems.length > 0 ? <h6>{this.state.tagItems[0].title}</h6> : <h6>empty</h6>} */}
-
                     <Page
                       categories={this.state.categories}
                       getSubCategories={this.getSubCategories}
@@ -93,26 +78,6 @@ class App extends React.Component {
         </React.Fragment>
       );
   }
-
-  // updateItemTags = (tags) => {
-  //   this.setState({ 
-  //     itemTags: tags 
-  //   });
-
-  //   this.getTagItems(tags);
-  // }
-
-  // getTagItems = (tags) => {
-  //   let tempTags = []
-
-  //   for (let i = 0; i < tags.length; i++) {
-  //     tempTags.push(this.state.items[tags[i]]);
-  //   }
-
-  //   this.setState({ 
-  //     tagArrayItems: tempTags 
-  //   });
-  // }
 
   handleDownloadClick = (item) => {
     sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}`);
@@ -218,23 +183,6 @@ class App extends React.Component {
       });
   }
 
-  // getItemTagRelationships = () => {
-
-  //   axios.get('./itemtagrelationships.json')
-  //     .then((response) => {
-  //       const tags = response.data;
-  //       const l = tags.length;
-  //       for (let i = 0; i < l; i++) {
-  //         const tag = tags[i];
-  //         this.state.itemTagRelationships.push({
-  //           tag: tag.tag,
-  //           itemlist: tag.itemlist,
-  //         });
-  //       }
-  //     });
-
-  // }
-
   getItems = () => {
     axios.get('./items.json')
       .then((response) => {
@@ -275,7 +223,7 @@ class App extends React.Component {
 
   parseQueryString = (queryString) => {
     const values = {};
-    const elements = queryString.replace('?', '').split("&");
+    const elements = decodeURIComponent(queryString).replace('?', '').split("&");
     const l = elements.length;
     for (let i = 0; i < l; i++) {
       const element = elements[i];
