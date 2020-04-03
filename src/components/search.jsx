@@ -2,10 +2,14 @@ import React from 'react';
 import Autocomplete from 'react-autocomplete';
 
 export class Search extends React.Component {
-    state = {
-        val: '',
-        itemTags: []
-    };
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            val: '',
+            itemTags: []
+        };
+    }
 
     getItemTagArray = (tag) => {
         let tagIndex = 0;

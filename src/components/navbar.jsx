@@ -1,35 +1,44 @@
 import React from 'react';
-import { Row, Col, FormControl, Button, Nav, Navbar, NavDropdown, Dropdown } from 'react-bootstrap';
+import { Row, Col, Button, Form, FormControl, ListGroup, Nav, Navbar, NavDropdown } from 'react-bootstrap';
+import Autocomplete from 'react-autocomplete';
 
 export class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCategoryId: 1,
-            searchTerm: "",
-            searchItems: []
+            categoryId: 1,
+            searchTerm: ""
         }
     }
 
-    render() {
+    componentDidMount() {
         const queryValues = this.props.parseQueryString(this.props.location.search);
-        let categoryId = 1;
-        let searchTerm = "";
-        let pageIndex = 0;
-        let pageSize = 5;
+        let categoryId = null;
+        let searchTerm = null;
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
         }
         if (queryValues.searchTerm && queryValues.searchTerm !== "") {
             searchTerm = queryValues.searchTerm;
         }
-        if (queryValues.pageIndex && queryValues.pageIndex !== "" && queryValues.pageIndex >= 0) {
-            pageIndex = queryValues.pageIndex;
+        if(categoryId) {
+            if(searchTerm) {
+                this.setState({
+                    categoryId: categoryId,
+                    searchTerm: searchTerm
+                })
+            } else {
+                this.setState({
+                    categoryId: categoryId
+                })
+            }
         }
-        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 5) {
-            pageSize = queryValues.pageSize;
-        }
+    }
+
+    render() {
         let primaryCategories = this.props.getSubCategories(1);
+
+        const suggestions = this.state.searchTerm === "" ? [] : this.findSuggestions(this.state.searchTerm);
 
         return this.props.items.length > 0 ? (
             <React.Fragment>
@@ -37,7 +46,25 @@ export class NavBar extends React.Component {
                     <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>Back</Button>
                     <Button type="button" variant="dark" onClick={() => { this.handleNextClick() }}>Next</Button>
                     <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(1) }}>Home</Button>
-                    <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+                    <Autocomplete
+                        getItemValue={(item) => item.label}
+                        items={suggestions}
+                        renderItem={(item, isHighlighted) =>
+                            <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                {item.label}
+                            </div>
+                        }
+                        renderInput={(props) => {
+                            return <FormControl {...props} type="text" style={{ width: 400 }} defaultValue={searchTerm} onChange={(e) => this.handleSearchTermChange(e.target.value, () => { })} className="mr-sm-2" />
+                        }}
+                        value={this.state.searchTerm}
+                        default
+                        onChange={(e) => this.handleSearchTermChange(e.target.value)}
+                        onSelect={(value) => this.handleSearchTermChange(value)}
+                    />
+                    <Button type="button" variant="dark" onClick={() => { this.handleOnSearchClick(categoryId) }}>Search</Button>
+
+                    {/* <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
                             <Row>
@@ -58,13 +85,38 @@ export class NavBar extends React.Component {
                                         }
                                     </NavDropdown>
                                 </Col>
-                                <Col key={searchTerm}>
-                                    <FormControl type="text" style={{ width: 400 }} defaultValue={searchTerm} onChange={(e)=>this.handleSearchTermChange(e.target.value, ()=>{})} className="mr-sm-2" />
+                                <Col>
+                                    <Autocomplete
+                                        getItemValue={(item) => item.label}
+                                        items={suggestions}
+                                        renderItem={(item, isHighlighted) =>
+                                            <div style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+                                                {item.label}
+                                            </div>
+                                        }
+                                        renderInput={(props) => {
+                                            return <FormControl {...props} type="text" style={{ width: 400 }} defaultValue={searchTerm} onChange={(e)=>this.handleSearchTermChange(e.target.value, ()=>{})} className="mr-sm-2" />
+                                        }}
+                                        value={this.state.searchTerm}
+                                        default
+                                        onChange={(e) => this.handleSearchTermChange(e.target.value)}
+                                        onSelect={(value) => this.handleSearchTermChange(value)}
+                                    />
                                 </Col>
                                 <Col>
                                     <Button type="button" variant="dark" onClick={() => { this.handleOnSearchClick(categoryId) }}>Search</Button>
                                 </Col>
-                                {/* <Col key={searchTerm}>
+                            </Row>
+                        </Nav>
+                    </Navbar.Collapse> */}
+                    {/* 
+<Col key={searchTerm}>
+                                    <FormControl type="text" style={{ width: 400 }} defaultValue={searchTerm} onChange={(e)=>this.handleSearchTermChange(e.target.value, ()=>{})} className="mr-sm-2" />
+                                </Col>
+                                <Col>
+                                    <Button type="button" variant="dark" onClick={() => { this.handleOnSearchClick(categoryId) }}>Search</Button>
+                                </Col> */}
+                    {/* <Col key={searchTerm}>
                                     <Dropdown>
                                         <Dropdown.Toggle variant="secondary">
                                             <FormControl autoFocus type="text" defaultValue={searchTerm} onChange={
@@ -93,19 +145,16 @@ export class NavBar extends React.Component {
                                         </Dropdown.Menu>
                                     </Dropdown>
                                 </Col> */}
-                            </Row>
-                        </Nav>
-                    </Navbar.Collapse>
                 </Navbar>
             </React.Fragment>
         ) : null;
     }
 
-    handleBackClick = (event) => {
+    handleBackClick = () => {
         this.props.history.goBack();
     }
 
-    handleNextClick = (event) => {
+    handleNextClick = () => {
         this.props.history.goForward();
     }
 
@@ -113,35 +162,43 @@ export class NavBar extends React.Component {
         this.setState({
             selectedCategoryId: value
         }, () => {
-            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=5`);
+            this.props.history.push(`/?categoryId=${this.state.categoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=5`);
         });
     }
 
-    handleSearchTermChange = (value, callback) => {
+    handleSearchTermChange = (value) => {
         this.setState({
             searchTerm: value
-        }, callback);
+        });
     }
 
-    searchArray = (items, value) => {
-        const l = items.length;
+    searchTags = (tags, value) => {
+        const l = tags.length;
         for (let i = 0; i < l; i++) {
-            const item = items[i];
-            if (item.includes(value)) {
-                return true;
+            const tag = tags[i];
+            if (tag.includes(value)) {
+                return tag;
             }
         }
         return false;
     }
 
-    autoComplete = (searchTerm, categoryId) => {
-        const items = this.props.getItemsInCategory(categoryId);
-        const filtered = items.filter((item) => {
-            return (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
-        })
-        this.setState({
-            searchItems: filtered.slice(0, 10)
+    findSuggestions = (searchTerm) => {
+        const suggestions = [];
+        const l = this.props.items.length;
+        for (let i = 0; i < l; i++) {
+            const item = this.props.items[i];
+            const result = this.searchTags(item.tags, searchTerm);
+            if (result && !suggestions.includes(result)) {
+                suggestions.push(result);
+            }
+        }
+
+        const final = Array.from(new Set(suggestions)).sort().slice(0, 10).map((item) => {
+            return { label: item }
         });
+
+        return final;
     }
 
     handleOnSearchClick = (categoryId) => {
