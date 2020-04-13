@@ -37,7 +37,7 @@ export class Page extends React.Component {
         }
         return (
             <React.Fragment>
-                <Breadcrumb style={{ height: 20, marginBottom: 40 }}>
+                {/* <Breadcrumb style={{ height: 20, marginBottom: 40 }}>
                     {
                         this.calculatePathToCategory(categoryId).map((category, index) => {
                             return (
@@ -48,7 +48,7 @@ export class Page extends React.Component {
                             )
                         })
                     }
-                </Breadcrumb>
+                </Breadcrumb> */}
                 <Container fluid>
                     <Row>
                         <Col sm={2}>
@@ -75,7 +75,7 @@ export class Page extends React.Component {
                                         return (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
                                     });
                                     let itemsBegin = categories.length === 1 ? pageIndex * pageSize : 0;
-                                    let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 3;
+                                    let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 5;
                                     let itemsLength = items.length;
                                     let pageBack = pageIndex - 1 > 0 ? pageIndex - 1 : 0;
                                     let pageNext = this.calculateNextPage(pageIndex, pageSize, itemsLength);
@@ -87,13 +87,13 @@ export class Page extends React.Component {
                                                         <Col>
                                                             <h5>{category.title} - {itemsLength} files</h5>
                                                         </Col>
-                                                        <Col></Col>
+                                                        <Col colSpan="3"></Col>
                                                         <Col>
                                                             <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=5`}>See All</Link>
                                                         </Col>
                                                     </Row> : items.length > 0 ?
                                                         <Row style={{ margin: 20 }}>
-                                                            <Col>
+                                                            <Col colSpan="3">
                                                                 <h3>{category.title}</h3>
                                                             </Col>
                                                             <Col colSpan="2">
@@ -124,26 +124,81 @@ export class Page extends React.Component {
                                                 {
                                                     items.slice(itemsBegin, itemsEnd).map((item, index) => {
                                                         return (
-                                                            <Col key={index} md="4">
-                                                                <Card style={{ width: '18rem', height: '25rem', margin: 20 }}>
-                                                                    <Card.Img style={{ width: '18rem', height: '12.5rem'}} variant="top" src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} />
-                                                                    <Card.Body>
-                                                                        <InputGroup className="mb-3">
+                                                            <Col key={index} md="3">
+                                                                <div
+                                                                    style={{
+                                                                        position: 'relative',
+                                                                        width: '104px',
+                                                                        backgroundColor: '#f1f1f1',
+                                                                        display: "flex",
+                                                                        flexDirection: "column",
+                                                                        justifyContent: "center",
+                                                                        alignItems: "center",
+                                                                        border: '2px solid #f2f2f2'
+                                                                    }}
+                                                                >
+                                                                    <img alt=''
+                                                                        src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile}
+                                                                        style={{
+                                                                            position: 'relative',
+                                                                            width: '100px',
+                                                                            cursor: "pointer"
+                                                                        }}
+                                                                        onClick={() => { this.props.handleDownloadClick(item) }}
+                                                                    />
+                                                                    <span
+                                                                        style={{
+                                                                            position: 'absolute',
+                                                                            right: '0px',
+                                                                            top: '0px',
+                                                                            cursor: 'pointer'
+                                                                        }}
+                                                                        onClick={() => { this.props.handleFavoriteClick(item.id) }}
+                                                                    >
+                                                                        {
+                                                                            this.isItemFavorite(item.id) ? <b>FAV</b> : <span>fav</span>
+                                                                        }
+                                                                    </span>
+                                                                    <span
+                                                                        style={{
+                                                                            fontSize: '11px',
+                                                                            width: '100px'
+                                                                        }}
+                                                                    >
+                                                                        {item.title}
+                                                                    </span>
+                                                                    <span
+                                                                        style={{
+                                                                            fontSize: '11px',
+                                                                            width: '100px'
+                                                                        }}
+                                                                    >
+                                                                        {this.formatFileSize(item.fileSize)} MB
+                                                                    </span>
+                                                                </div>
+                                                                {/* <Card> */}
+                                                                {/* <Card.Img
+                                                                        variant="top" 
+                                                                        src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} 
+                                                                        onClick={() => { this.props.handleDownloadClick(item) }}
+                                                                    /> */}
+                                                                {/* <Card.Body> */}
+                                                                {/* <InputGroup className="mb-3">
                                                                             <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {this.formatFileSize(item.fileSize)} MB </InputGroup.Text>
-                                                                            <span style={{ width: 60 }}></span>
-                                                                            <Button variant="link" onClick={() => { this.props.handleDownloadClick(item) }}> dl </Button>
-                                                                            <Button variant="link" onClick={() => { this.props.handleFavoriteClick(item.id) }}>
+                                                                            <span style={{ width: 60 }}></span> */}
+                                                                {/* <Button variant="link" onClick={() => { this.props.handleDownloadClick(item) }}> dl </Button> */}
+                                                                {/* <Button variant="link" onClick={() => { this.props.handleFavoriteClick(item.id) }}>
                                                                                 {
                                                                                     this.isItemFavorite(item.id) ? <b>FAV</b> : <span>fav</span>
                                                                                 }
                                                                             </Button>
                                                                         </InputGroup>
-                                                                        <Card.Title>{item.title}</Card.Title>
-                                                                        <Card.Text>
+                                                                        <Card.Title>{item.title}</Card.Title> */}
+                                                                {/* <Card.Text>
                                                                             In {this.calculatePathToItem(item.id)}
-                                                                        </Card.Text>
-                                                                    </Card.Body>
-                                                                </Card>
+                                                                        </Card.Text> */}
+                                                                {/* </Card.Body>
+                                                                </Card> */}
                                                             </Col>
                                                         )
                                                     })
