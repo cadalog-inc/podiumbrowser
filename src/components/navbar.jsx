@@ -1,6 +1,8 @@
 import React from 'react';
 import { Button, FormControl, Navbar, DropdownButton, NavItem, Dropdown } from 'react-bootstrap';
 import Autocomplete from 'react-autocomplete';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faArrowLeft, faArrowRight, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 export class NavBar extends React.Component {
     constructor(props) {
@@ -58,9 +60,15 @@ export class NavBar extends React.Component {
             <React.Fragment>
                 <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ height: 70 }}>
                     <NavItem>
-                        <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>Back</Button>
-                        <Button type="button" variant="dark" onClick={() => { this.handleNextClick() }}>Next</Button>
-                        <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(1) }}>Home</Button>
+                        <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>
+                            <FontAwesomeIcon icon={faArrowLeft} />
+                        </Button>
+                        <Button type="button" variant="dark" onClick={() => { this.handleNextClick() }}>
+                            <FontAwesomeIcon icon={faArrowRight} />
+                        </Button>
+                        <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(1) }}>
+                            <FontAwesomeIcon icon={faHome} />
+                        </Button>
                     </NavItem>
                     <NavItem>
                         <DropdownButton variant="dark" title="Categories" id="collasible-nav-dropdown">
@@ -95,7 +103,9 @@ export class NavBar extends React.Component {
                             onChange={(e) => this.handleSearchTermChange(e.target.value)}
                             onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
                         />
-                        <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>Search</Button>
+                        <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>
+                        <FontAwesomeIcon icon={faSearch} />
+                        </Button>
                     </NavItem>
 
 
