@@ -51,6 +51,7 @@ class App extends React.Component {
                       {...props}
                     />
                     <Page
+                      user={this.state.user}
                       categories={this.state.categories}
                       getSubCategories={this.getSubCategories}
                       items={this.state.items}

@@ -1,5 +1,4 @@
 import React from 'react';
-import { ListGroup } from 'react-bootstrap';
 
 export class SideBar extends React.Component {
     render() {

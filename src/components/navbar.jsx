@@ -53,12 +53,36 @@ export class NavBar extends React.Component {
         }
     }
 
+    getDropdownTranslateX = (index) => {
+        if (index >= 0 && index < 7) {
+            return 0;
+        } else if (index >= 7 && index < 13) {
+            return 200;
+        } else if (index >= 13 && index < 19) {
+            return 400;
+        } else {
+            return 600;
+        }
+    }
+
+    getDropdownTranslateY = (index) => {
+        if (index >= 0 && index < 7) {
+            return 0;
+        } else if (index >= 7 && index < 13) {
+            return -180;
+        } else if (index >= 13 && index < 19) {
+            return -360;
+        } else {
+            return -540;
+        }
+    }
+
     render() {
         let primaryCategories = this.props.getSubCategories(1);
         const suggestions = this.state.searchTerm === "" ? [] : this.findSuggestions(this.state.searchTerm);
         return this.props.items.length > 0 ? (
             <React.Fragment>
-                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ height: 70 }}>
+                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ height: 55 }}>
                     <NavItem>
                         <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>
                             <FontAwesomeIcon icon={faArrowLeft} />
@@ -71,21 +95,37 @@ export class NavBar extends React.Component {
                         </Button>
                     </NavItem>
                     <NavItem>
-                        <DropdownButton variant="dark" title="Categories" id="collasible-nav-dropdown">
-                            {
-                                primaryCategories.map((category, index) => {
-                                    return category.title !== 'HDR' ? (
-                                        <Dropdown.Item key={index} onClick={
-                                            () => {
-                                                this.handleCategoryChange(category.id)
-                                            }
-                                        }>
-                                            {category.title}
-                                        </Dropdown.Item>
-                                    ) : null
-                                })
-                            }
-                        </DropdownButton>
+                        <Dropdown>
+                            <Dropdown.Toggle variant="dark">
+                                Categories
+                            </Dropdown.Toggle>
+                            <Dropdown.Menu style={true ? { height: 240 } : null}>
+                                {
+                                    primaryCategories.map((category, index) => {
+                                        return category.title !== 'HDR' ? (
+                                            <Dropdown.Item
+                                                key={index}
+                                                style={true ? {
+                                                    width: 200,
+                                                    height: 30,
+                                                    transform: `translate(${this.getDropdownTranslateX(index)}px, ${this.getDropdownTranslateY(index)}px)`
+                                                } : null}
+                                                onClick={
+                                                    () => {
+                                                        this.handleCategoryChange(category.id)
+                                                    }
+                                                }
+                                            >
+                                                {category.title}
+                                            </Dropdown.Item>
+                                        ) : null
+                                    })
+                                }
+                                {
+                                    true ? <Dropdown.Divider style={{ width: 800 }} /> : null
+                                }
+                            </Dropdown.Menu>
+                        </Dropdown>
                     </NavItem>
                     <NavItem>
                         <Autocomplete
@@ -104,7 +144,7 @@ export class NavBar extends React.Component {
                             onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
                         />
                         <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>
-                        <FontAwesomeIcon icon={faSearch} />
+                            <FontAwesomeIcon icon={faSearch} />
                         </Button>
                     </NavItem>
 
@@ -126,7 +166,7 @@ export class NavBar extends React.Component {
         this.setState({
             selectedCategoryId: value
         }, () => {
-            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=5`);
+            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=4`);
         });
     }
 

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from "react-router-dom";
 import { Button, Breadcrumb, Card, Col, Container, Dropdown, Row, InputGroup } from 'react-bootstrap';
 import { SideBar } from './sidebar';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar, faAngleLeft, faAngleRight, faDownload } from '@fortawesome/free-solid-svg-icons';
 
 export class Page extends React.Component {
     render() {
@@ -9,7 +11,7 @@ export class Page extends React.Component {
         let categoryId = 1;
         let searchTerm = "";
         let pageIndex = 0;
-        let pageSize = 5;
+        let pageSize = 4;
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
         }
@@ -19,7 +21,7 @@ export class Page extends React.Component {
         if (queryValues.pageIndex && queryValues.pageIndex !== "" && queryValues.pageIndex >= 0) {
             pageIndex = queryValues.pageIndex;
         }
-        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 5) {
+        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 4) {
             pageSize = queryValues.pageSize;
         }
         let categories = this.props.getSubCategories(categoryId);
@@ -37,18 +39,6 @@ export class Page extends React.Component {
         }
         return (
             <React.Fragment>
-                {/* <Breadcrumb style={{ height: 20, marginBottom: 40 }}>
-                    {
-                        this.calculatePathToCategory(categoryId).map((category, index) => {
-                            return (
-                                <Breadcrumb.Item key={index} onClick={() => {
-                                    this.handleBreadCrumbClick(category.id, searchTerm)
-                                }
-                                }>{category.title}</Breadcrumb.Item>
-                            )
-                        })
-                    }
-                </Breadcrumb> */}
                 <Container fluid>
                     <Row>
                         <Col sm={2}>
@@ -75,7 +65,7 @@ export class Page extends React.Component {
                                         return (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
                                     });
                                     let itemsBegin = categories.length === 1 ? pageIndex * pageSize : 0;
-                                    let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 5;
+                                    let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 4;
                                     let itemsLength = items.length;
                                     let pageBack = pageIndex - 1 > 0 ? pageIndex - 1 : 0;
                                     let pageNext = this.calculateNextPage(pageIndex, pageSize, itemsLength);
@@ -89,7 +79,7 @@ export class Page extends React.Component {
                                                         </Col>
                                                         <Col colSpan="3"></Col>
                                                         <Col>
-                                                            <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=5`}>See All</Link>
+                                                            <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=4`}>See All</Link>
                                                         </Col>
                                                     </Row> : items.length > 0 ?
                                                         <Row style={{ margin: 20 }}>
@@ -106,15 +96,24 @@ export class Page extends React.Component {
                                                                             </Dropdown.Toggle>
 
                                                                             <Dropdown.Menu>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(5, searchTerm, categoryId) }}>5</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(10, searchTerm, categoryId) }}>10</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(25, searchTerm, categoryId) }}>25</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(100, searchTerm, categoryId) }}>100</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(4, searchTerm, categoryId) }}>4</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId) }}>16</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId) }}>32</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId) }}>64</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId) }}>128</Dropdown.Item>
                                                                             </Dropdown.Menu>
                                                                         </Dropdown>
                                                                         <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
-                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>{"<"}</Link> </InputGroup.Text>
-                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>{">"}</Link> </InputGroup.Text>
+                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
+                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>
+                                                                                <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
+                                                                            </Link>
+                                                                        </InputGroup.Text>
+                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
+                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>
+                                                                                <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
+                                                                            </Link>
+                                                                        </InputGroup.Text>
                                                                     </InputGroup>
                                                                 </div>
                                                             </Col>
@@ -156,7 +155,7 @@ export class Page extends React.Component {
                                                                         onClick={() => { this.props.handleFavoriteClick(item.id) }}
                                                                     >
                                                                         {
-                                                                            this.isItemFavorite(item.id) ? <b>FAV</b> : <span>fav</span>
+                                                                            this.isItemFavorite(item.id) ? <FontAwesomeIcon icon={faStar} color="gold" /> : <FontAwesomeIcon icon={faStar} color="lightgrey" />
                                                                         }
                                                                     </span>
                                                                     <span
@@ -175,30 +174,20 @@ export class Page extends React.Component {
                                                                     >
                                                                         {this.formatFileSize(item.fileSize)} MB
                                                                     </span>
-                                                                </div>
-                                                                {/* <Card> */}
-                                                                {/* <Card.Img
-                                                                        variant="top" 
-                                                                        src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile} 
+                                                                    <span
+                                                                        style={{
+                                                                            position: 'absolute',
+                                                                            right: '2px',
+                                                                            bottom: '0px',
+                                                                            cursor: 'pointer'
+                                                                        }}
                                                                         onClick={() => { this.props.handleDownloadClick(item) }}
-                                                                    /> */}
-                                                                {/* <Card.Body> */}
-                                                                {/* <InputGroup className="mb-3">
-                                                                            <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {this.formatFileSize(item.fileSize)} MB </InputGroup.Text>
-                                                                            <span style={{ width: 60 }}></span> */}
-                                                                {/* <Button variant="link" onClick={() => { this.props.handleDownloadClick(item) }}> dl </Button> */}
-                                                                {/* <Button variant="link" onClick={() => { this.props.handleFavoriteClick(item.id) }}>
-                                                                                {
-                                                                                    this.isItemFavorite(item.id) ? <b>FAV</b> : <span>fav</span>
-                                                                                }
-                                                                            </Button>
-                                                                        </InputGroup>
-                                                                        <Card.Title>{item.title}</Card.Title> */}
-                                                                {/* <Card.Text>
-                                                                            In {this.calculatePathToItem(item.id)}
-                                                                        </Card.Text> */}
-                                                                {/* </Card.Body>
-                                                                </Card> */}
+                                                                    >
+                                                                        {
+                                                                            this.props.user.key !== '' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
+                                                                        }
+                                                                    </span>
+                                                                </div>
                                                             </Col>
                                                         )
                                                     })
@@ -218,7 +207,7 @@ export class Page extends React.Component {
     }
 
     handleBreadCrumbClick = (categoryId, searchTerm) => {
-        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=5`);
+        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=4`);
     }
 
     handlePageSizeClick = (pageSize, searchTerm, categoryId) => {
