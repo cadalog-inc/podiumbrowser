@@ -37,10 +37,10 @@ export class SideBar extends React.Component {
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="recentChecked" disabled />
+                    <input class="form-check-input" type="checkbox" value="" id="recentChecked" disabled={selectedCategory.id === 1} />
                     <label class="form-check-label" for="recentChecked">
                         Show only recent files
-                        </label>
+                    </label>
                 </div>
                 <hr />
                 <ul>

@@ -82,7 +82,7 @@ export class NavBar extends React.Component {
         const suggestions = this.state.searchTerm === "" ? [] : this.findSuggestions(this.state.searchTerm);
         return this.props.items.length > 0 ? (
             <React.Fragment>
-                <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ height: 55 }}>
+                <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ height: 55 }}>
                     <NavItem>
                         <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>
                             <FontAwesomeIcon icon={faArrowLeft} />
@@ -128,24 +128,26 @@ export class NavBar extends React.Component {
                         </Dropdown>
                     </NavItem>
                     <NavItem>
-                        <Autocomplete
-                            getItemValue={(item) => item.label}
-                            items={suggestions}
-                            renderItem={(item, isHighlighted) =>
-                                <div style={{ zIndex: 10, background: isHighlighted ? 'lightgray' : 'white' }}>
-                                    {item.label}
-                                </div>
-                            }
-                            renderInput={(props) => {
-                                return <FormControl {...props} type="text" style={{ width: 400 }} onKeyUp={this.handleOnSearchKey} onChange={(e) => this.handleSearchTermChange(e.target.value)} className="mr-sm-2" />
-                            }}
-                            value={this.state.searchTerm}
-                            onChange={(e) => this.handleSearchTermChange(e.target.value)}
-                            onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
-                        />
-                        <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>
-                            <FontAwesomeIcon icon={faSearch} />
-                        </Button>
+                        <div style={{zIndex: 10000}}>
+                            <Autocomplete
+                                getItemValue={(item) => item.label}
+                                items={suggestions}
+                                renderItem={(item, isHighlighted) =>
+                                    <div style={{background: isHighlighted ? 'lightgray' : 'white' }}>
+                                        {item.label}
+                                    </div>
+                                }
+                                renderInput={(props) => {
+                                    return <FormControl {...props} type="text" style={{ width: 400 }} onKeyUp={this.handleOnSearchKey} onChange={(e) => this.handleSearchTermChange(e.target.value)} className="mr-sm-2" />
+                                }}
+                                value={this.state.searchTerm}
+                                onChange={(e) => this.handleSearchTermChange(e.target.value)}
+                                onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
+                            />
+                            <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>
+                                <FontAwesomeIcon icon={faSearch} />
+                            </Button>
+                        </div>
                     </NavItem>
 
 

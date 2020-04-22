@@ -39,7 +39,7 @@ export class Page extends React.Component {
         }
         return (
             <React.Fragment>
-                <Container fluid>
+                <Container style={{ marginTop: 55 }} fluid>
                     <Row>
                         <Col lg={2} md={3} sm={4} xs={6}>
                             <SideBar
@@ -82,50 +82,55 @@ export class Page extends React.Component {
                                                             <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8`}>See All</Link>
                                                         </Col>
                                                     </Row> : items.length > 0 ?
-                                                        <Row style={{ marginTop: 20 }}>
-                                                            <Col>
-                                                                <h3>{category.title}</h3>
-                                                            </Col>
-                                                            <Col>
-                                                                <div className="float-right">
-                                                                    <InputGroup className="mb-3">
-                                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
-                                                                        <Dropdown>
-                                                                            <Dropdown.Toggle variant="light" id="dropdown-basic">
-                                                                                {pageSize}
-                                                                            </Dropdown.Toggle>
+                                                        <React.Fragment>
+                                                            <Row style={{ marginTop: 20 }}>
+                                                                <Col>
+                                                                    <h3>{category.title}</h3>
+                                                                </Col>
+                                                            </Row>
+                                                            <Row>
+                                                                <Col>
+                                                                    <div className="float-right">
+                                                                        <InputGroup className="mb-3">
+                                                                            <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
+                                                                            <Dropdown>
+                                                                                <Dropdown.Toggle variant="light" id="dropdown-basic">
+                                                                                    {pageSize}
+                                                                                </Dropdown.Toggle>
 
-                                                                            <Dropdown.Menu>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId) }}>8</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId) }}>16</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId) }}>32</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId) }}>64</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId) }}>128</Dropdown.Item>
-                                                                            </Dropdown.Menu>
-                                                                        </Dropdown>
-                                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
-                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>
-                                                                                <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
-                                                                            </Link>
-                                                                        </InputGroup.Text>
-                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>
-                                                                                <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
-                                                                            </Link>
-                                                                        </InputGroup.Text>
-                                                                    </InputGroup>
-                                                                </div>
-                                                            </Col>
-                                                        </Row> : null
+                                                                                <Dropdown.Menu>
+                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId) }}>8</Dropdown.Item>
+                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId) }}>16</Dropdown.Item>
+                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId) }}>32</Dropdown.Item>
+                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId) }}>64</Dropdown.Item>
+                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId) }}>128</Dropdown.Item>
+                                                                                </Dropdown.Menu>
+                                                                            </Dropdown>
+                                                                            <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
+                                                                            <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
+                                                                                <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>
+                                                                                    <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
+                                                                                </Link>
+                                                                            </InputGroup.Text>
+                                                                            <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
+                                                                                <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>
+                                                                                    <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
+                                                                                </Link>
+                                                                            </InputGroup.Text>
+                                                                        </InputGroup>
+                                                                    </div>
+                                                                </Col>
+                                                            </Row>
+                                                        </React.Fragment> : null
                                             }
                                             <Row>
                                                 {
                                                     items.slice(itemsBegin, itemsEnd).map((item, index) => {
                                                         return (
-                                                            <Col key={index} style={{margin: 20}} xl="1" lg="2" md="3" sm="4" xs="6">
+                                                            <Col key={index} style={{ margin: 20 }} xl="1" lg="2" md="3" sm="4" xs="6">
                                                                 <div
                                                                     style={{
+                                                                        zIndex: 0,
                                                                         position: 'relative',
                                                                         width: '104px',
                                                                         backgroundColor: '#f1f1f1',

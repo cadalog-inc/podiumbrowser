@@ -22,7 +22,7 @@ class App extends React.Component {
       favorites: [],
       recentItems: [],
       dataDownloaded: false,
-      itemTagRelationships: [],
+      itemTagRelationships: []
     };
   }
 
@@ -40,16 +40,6 @@ class App extends React.Component {
               (props) => {
                 return (
                   <React.Fragment>
-                    <NavBar
-                      handleCategoryChange={this.handleCategoryChange}
-                      handleKeySearchChange={this.handleKeySearchChange}
-                      items={this.state.items}
-                      getItemsInCategory={this.getItemsInCategory}
-                      categories={this.state.categories}
-                      getSubCategories={this.getSubCategories}
-                      parseQueryString={this.parseQueryString}
-                      {...props}
-                    />
                     <Page
                       user={this.state.user}
                       categories={this.state.categories}
@@ -61,6 +51,16 @@ class App extends React.Component {
                       parseQueryString={this.parseQueryString}
                       handleDownloadClick={this.handleDownloadClick}
                       handleFavoriteClick={this.handleFavoriteClick}
+                      {...props}
+                    />
+                    <NavBar
+                      handleCategoryChange={this.handleCategoryChange}
+                      handleKeySearchChange={this.handleKeySearchChange}
+                      items={this.state.items}
+                      getItemsInCategory={this.getItemsInCategory}
+                      categories={this.state.categories}
+                      getSubCategories={this.getSubCategories}
+                      parseQueryString={this.parseQueryString}
                       {...props}
                     />
                   </React.Fragment>
