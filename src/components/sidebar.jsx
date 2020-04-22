@@ -10,7 +10,7 @@ export class SideBar extends React.Component {
         let categories = this.props.getSubCategories(categoryId);
         if (categoryId === 1) {
             categories = categories.filter((category) => {
-                return category.id === 14 || category.id === 21 || category.id === 24 || category.id === 8 || category.id === 217 || category.id === 218;
+                return category.id === 217 || category.id === 218;
             });
         }
         const selectedCategory = this.props.categories.find((category) => {
@@ -23,18 +23,32 @@ export class SideBar extends React.Component {
         const primaryCategories = this.props.getSubCategories(1);
         return (
             <React.Fragment>
+                <hr />
                 <ul>
                     {
                         this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories)
                     }
                 </ul>
                 <hr />
+                <div className="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="freeChecked" />
+                    <label class="form-check-label" for="freeChecked">
+                        Show only free files
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="recentChecked" disabled />
+                    <label class="form-check-label" for="recentChecked">
+                        Show only recent files
+                        </label>
+                </div>
+                <hr />
                 <ul>
                     {
                         primaryCategories.map((category, index) => {
                             return category.title !== 'HDR' ? (
                                 <li key={index}>
-                                    <span  style={category.id === selectedCategory.id ? {fontWeight: "bold", cursor: "pointer"} : {cursor: "pointer"}} onClick={() => this.handleCategoryChange(category.id)}>
+                                    <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id)}>
                                         {category.title}
                                     </span>
                                 </li>
@@ -54,7 +68,7 @@ export class SideBar extends React.Component {
         const category = path[index];
         return category ? index < path.length - 1 ? (
             <li>
-                <span style={{cursor: "pointer"}} onClick={() => this.handleCategoryChange(category.id)}>
+                <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id)}>
                     {category.title}
                 </span>
                 <ul>
@@ -63,7 +77,7 @@ export class SideBar extends React.Component {
             </li>
         ) : (
                 <li>
-                    <span style={{fontWeight: "bold", cursor: "pointer"}} onClick={() => this.handleCategoryChange(category.id)}>
+                    <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id)}>
                         {category.title}
                     </span>
                     <ul>
@@ -72,7 +86,7 @@ export class SideBar extends React.Component {
                                 categories.map((item, index) => {
                                     return item.title !== 'HDR' ? (
                                         <li key={index}>
-                                            <span style={{cursor: "pointer"}} onClick={() => this.handleCategoryChange(item.id)}>
+                                            <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(item.id)}>
                                                 {item.title}
                                             </span>
                                         </li>

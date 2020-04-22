@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Button, Breadcrumb, Card, Col, Container, Dropdown, Row, InputGroup } from 'react-bootstrap';
+import { Col, Container, Dropdown, Row, InputGroup } from 'react-bootstrap';
 import { SideBar } from './sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faAngleLeft, faAngleRight, faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -11,7 +11,7 @@ export class Page extends React.Component {
         let categoryId = 1;
         let searchTerm = "";
         let pageIndex = 0;
-        let pageSize = 4;
+        let pageSize = 8;
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
         }
@@ -21,13 +21,13 @@ export class Page extends React.Component {
         if (queryValues.pageIndex && queryValues.pageIndex !== "" && queryValues.pageIndex >= 0) {
             pageIndex = queryValues.pageIndex;
         }
-        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 4) {
+        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 8) {
             pageSize = queryValues.pageSize;
         }
         let categories = this.props.getSubCategories(categoryId);
         if (categoryId === 1) {
             categories = categories.filter((category) => {
-                return category.id === 14 || category.id === 21 || category.id === 24 || category.id === 8 || category.id === 217 || category.id === 218;
+                return category.id === 217 || category.id === 218;
             });
         }
         const selectedCategory = this.props.categories.find((category) => {
@@ -41,7 +41,7 @@ export class Page extends React.Component {
             <React.Fragment>
                 <Container fluid>
                     <Row>
-                        <Col sm={2}>
+                        <Col lg={2} md={3} sm={4} xs={6}>
                             <SideBar
                                 categories={categories}
                                 parseQueryString={this.props.parseQueryString}
@@ -50,7 +50,7 @@ export class Page extends React.Component {
                                 {...this.props}
                             />
                         </Col>
-                        <Col sm={10}>
+                        <Col lg={10} md={9} sm={8} xs={6}>
                             <Container>
                                 {
                                     categories.length > 1 ?
@@ -65,7 +65,7 @@ export class Page extends React.Component {
                                         return (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
                                     });
                                     let itemsBegin = categories.length === 1 ? pageIndex * pageSize : 0;
-                                    let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 4;
+                                    let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 8;
                                     let itemsLength = items.length;
                                     let pageBack = pageIndex - 1 > 0 ? pageIndex - 1 : 0;
                                     let pageNext = this.calculateNextPage(pageIndex, pageSize, itemsLength);
@@ -73,20 +73,20 @@ export class Page extends React.Component {
                                         <React.Fragment key={index}>
                                             {
                                                 categories.length > 1 && items.length > 0 ?
-                                                    <Row style={{ margin: 20 }}>
+                                                    <Row style={{ marginTop: 20 }}>
                                                         <Col>
                                                             <h5>{category.title} - {itemsLength} files</h5>
                                                         </Col>
-                                                        <Col colSpan="3"></Col>
+                                                        <Col></Col>
                                                         <Col>
-                                                            <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=4`}>See All</Link>
+                                                            <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8`}>See All</Link>
                                                         </Col>
                                                     </Row> : items.length > 0 ?
-                                                        <Row style={{ margin: 20 }}>
-                                                            <Col colSpan="3">
+                                                        <Row style={{ marginTop: 20 }}>
+                                                            <Col>
                                                                 <h3>{category.title}</h3>
                                                             </Col>
-                                                            <Col colSpan="2">
+                                                            <Col>
                                                                 <div className="float-right">
                                                                     <InputGroup className="mb-3">
                                                                         <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
@@ -96,7 +96,7 @@ export class Page extends React.Component {
                                                                             </Dropdown.Toggle>
 
                                                                             <Dropdown.Menu>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(4, searchTerm, categoryId) }}>4</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId) }}>8</Dropdown.Item>
                                                                                 <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId) }}>16</Dropdown.Item>
                                                                                 <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId) }}>32</Dropdown.Item>
                                                                                 <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId) }}>64</Dropdown.Item>
@@ -123,7 +123,7 @@ export class Page extends React.Component {
                                                 {
                                                     items.slice(itemsBegin, itemsEnd).map((item, index) => {
                                                         return (
-                                                            <Col key={index} md="3">
+                                                            <Col key={index} style={{margin: 20}} xl="1" lg="2" md="3" sm="4" xs="6">
                                                                 <div
                                                                     style={{
                                                                         position: 'relative',
@@ -133,7 +133,8 @@ export class Page extends React.Component {
                                                                         flexDirection: "column",
                                                                         justifyContent: "center",
                                                                         alignItems: "center",
-                                                                        border: '2px solid #f2f2f2'
+                                                                        border: '2px solid #f2f2f2',
+                                                                        margin: 10
                                                                     }}
                                                                 >
                                                                     <img alt=''
@@ -207,7 +208,7 @@ export class Page extends React.Component {
     }
 
     handleBreadCrumbClick = (categoryId, searchTerm) => {
-        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=4`);
+        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8`);
     }
 
     handlePageSizeClick = (pageSize, searchTerm, categoryId) => {

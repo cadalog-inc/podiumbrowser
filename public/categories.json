@@ -1081,12 +1081,12 @@
     },
     {
         "id": 217,
-        "title": "Favorites",
+        "title": "My Favorites",
         "parentId": 1
     },
     {
         "id": 218,
-        "title": "Recent",
+        "title": "Recent Used",
         "parentId": 1
     }
 ]
