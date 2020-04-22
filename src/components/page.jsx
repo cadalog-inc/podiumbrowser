@@ -194,6 +194,43 @@ export class Page extends React.Component {
                                                     })
                                                 }
                                             </Row>
+                                            {
+                                                categories.length > 1 && items.length > 0 ?
+                                                    null : items.length > 0 ?
+                                                        <Row style={{ marginTop: 20 }}>
+                                                            <Col>
+                                                                <div className="float-right">
+                                                                    <InputGroup className="mb-3">
+                                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
+                                                                        <Dropdown>
+                                                                            <Dropdown.Toggle variant="light" id="dropdown-basic">
+                                                                                {pageSize}
+                                                                            </Dropdown.Toggle>
+
+                                                                            <Dropdown.Menu>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId) }}>8</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId) }}>16</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId) }}>32</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId) }}>64</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId) }}>128</Dropdown.Item>
+                                                                            </Dropdown.Menu>
+                                                                        </Dropdown>
+                                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
+                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
+                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>
+                                                                                <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
+                                                                            </Link>
+                                                                        </InputGroup.Text>
+                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
+                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>
+                                                                                <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
+                                                                            </Link>
+                                                                        </InputGroup.Text>
+                                                                    </InputGroup>
+                                                                </div>
+                                                            </Col>
+                                                        </Row> : null
+                                            }
                                         </React.Fragment>
                                     )
                                 })
