@@ -9,7 +9,8 @@ export class NavBar extends React.Component {
         super(props);
         this.state = {
             selectedCategoryId: 1,
-            searchTerm: ""
+            searchTerm: "",
+            onlyFree: false
         }
         this.search = "";
     }
@@ -19,6 +20,7 @@ export class NavBar extends React.Component {
         const queryValues = this.props.parseQueryString(this.props.location.search);
         let categoryId = 1;
         let searchTerm = "";
+        let onlyFree = false;
 
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
@@ -26,9 +28,13 @@ export class NavBar extends React.Component {
         if (queryValues.searchTerm && queryValues.searchTerm !== "") {
             searchTerm = queryValues.searchTerm;
         }
+        if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
+            onlyFree = queryValues.onlyFree === 'true' ? true : false;
+        }
         this.setState({
             categoryId: categoryId,
-            searchTerm: searchTerm
+            searchTerm: searchTerm,
+            onlyFree: onlyFree
         });
     }
 
@@ -38,6 +44,7 @@ export class NavBar extends React.Component {
             const queryValues = this.props.parseQueryString(this.props.location.search);
             let categoryId = 1;
             let searchTerm = "";
+            let onlyFree = false;
 
             if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
                 categoryId = queryValues.categoryId;
@@ -45,10 +52,14 @@ export class NavBar extends React.Component {
             if (queryValues.searchTerm && queryValues.searchTerm !== "") {
                 searchTerm = queryValues.searchTerm;
             }
+            if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
+                onlyFree = queryValues.onlyFree === 'true' ? true : false;
+            }
 
             this.setState({
                 categoryId: categoryId,
-                searchTerm: searchTerm
+                searchTerm: searchTerm,
+                onlyFree: onlyFree
             });
         }
     }
@@ -168,7 +179,7 @@ export class NavBar extends React.Component {
         this.setState({
             selectedCategoryId: value
         }, () => {
-            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=8`);
+            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=8&onlyFree=${this.state.onlyFree}`);
         });
     }
 
@@ -216,6 +227,6 @@ export class NavBar extends React.Component {
     }
 
     handleOnSearchClick = () => {
-        this.props.history.push(`/?categoryId=${this.state.categoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=5`);
+        this.props.history.push(`/?categoryId=${this.state.categoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=8&onlyFree=${this.state.onlyFree}`);
     }
 }

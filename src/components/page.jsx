@@ -10,6 +10,7 @@ export class Page extends React.Component {
         const queryValues = this.props.parseQueryString(this.props.location.search);
         let categoryId = 1;
         let searchTerm = "";
+        let onlyFree = false;
         let pageIndex = 0;
         let pageSize = 8;
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
@@ -23,6 +24,9 @@ export class Page extends React.Component {
         }
         if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 8) {
             pageSize = queryValues.pageSize;
+        }
+        if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
+            onlyFree = queryValues.onlyFree === 'true' ? true : false;
         }
         let categories = this.props.getSubCategories(categoryId);
         if (categoryId === 1) {
@@ -62,7 +66,7 @@ export class Page extends React.Component {
                                 }
                                 {categories.map((category, index) => {
                                     const items = this.props.getItemsInCategory(category.id).filter((item) => {
-                                        return (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
+                                        return (onlyFree === false || item.type === 'free') && (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
                                     });
                                     let itemsBegin = categories.length === 1 ? pageIndex * pageSize : 0;
                                     let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 8;
@@ -79,7 +83,7 @@ export class Page extends React.Component {
                                                         </Col>
                                                         <Col></Col>
                                                         <Col>
-                                                            <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8`}>See All</Link>
+                                                            <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8&onlyFree=${onlyFree}`}>See All</Link>
                                                         </Col>
                                                     </Row> : items.length > 0 ?
                                                         <React.Fragment>
@@ -99,21 +103,21 @@ export class Page extends React.Component {
                                                                                 </Dropdown.Toggle>
 
                                                                                 <Dropdown.Menu>
-                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId) }}>8</Dropdown.Item>
-                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId) }}>16</Dropdown.Item>
-                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId) }}>32</Dropdown.Item>
-                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId) }}>64</Dropdown.Item>
-                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId) }}>128</Dropdown.Item>
+                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId, onlyFree) }}>8</Dropdown.Item>
+                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId, onlyFree) }}>16</Dropdown.Item>
+                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId, onlyFree) }}>32</Dropdown.Item>
+                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId, onlyFree) }}>64</Dropdown.Item>
+                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId, onlyFree) }}>128</Dropdown.Item>
                                                                                 </Dropdown.Menu>
                                                                             </Dropdown>
                                                                             <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
                                                                             <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                                <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>
+                                                                                <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
                                                                                     <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
                                                                                 </Link>
                                                                             </InputGroup.Text>
                                                                             <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                                <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>
+                                                                                <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
                                                                                     <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
                                                                                 </Link>
                                                                             </InputGroup.Text>
@@ -213,21 +217,21 @@ export class Page extends React.Component {
                                                                             </Dropdown.Toggle>
 
                                                                             <Dropdown.Menu>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId) }}>8</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId) }}>16</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId) }}>32</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId) }}>64</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId) }}>128</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId, onlyFree) }}>8</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId, onlyFree) }}>16</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId, onlyFree) }}>32</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId, onlyFree) }}>64</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId, onlyFree) }}>128</Dropdown.Item>
                                                                             </Dropdown.Menu>
                                                                         </Dropdown>
                                                                         <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
                                                                         <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}`}>
+                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
                                                                                 <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
                                                                             </Link>
                                                                         </InputGroup.Text>
                                                                         <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}`}>
+                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
                                                                                 <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
                                                                             </Link>
                                                                         </InputGroup.Text>
@@ -249,12 +253,8 @@ export class Page extends React.Component {
         );
     }
 
-    handleBreadCrumbClick = (categoryId, searchTerm) => {
-        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8`);
-    }
-
-    handlePageSizeClick = (pageSize, searchTerm, categoryId) => {
-        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}`);
+    handlePageSizeClick = (pageSize, searchTerm, categoryId, onlyFree) => {
+        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${onlyFree}`);
     }
 
     parseQueryString = (queryString) => {

@@ -4,8 +4,24 @@ export class SideBar extends React.Component {
     render() {
         const queryValues = this.props.parseQueryString(this.props.location.search);
         let categoryId = 1;
+        let searchTerm = "";
+        let onlyFree = false;
+        let pageIndex = 0;
+        let pageSize = 8;
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
+        }
+        if (queryValues.searchTerm && queryValues.searchTerm !== "") {
+            searchTerm = queryValues.searchTerm;
+        }
+        if (queryValues.pageIndex && queryValues.pageIndex !== "" && queryValues.pageIndex >= 0) {
+            pageIndex = queryValues.pageIndex;
+        }
+        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 8) {
+            pageSize = queryValues.pageSize;
+        }
+        if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
+            onlyFree = queryValues.onlyFree === 'true' ? true : false;
         }
         let categories = this.props.getSubCategories(categoryId);
         if (categoryId === 1) {
@@ -26,19 +42,21 @@ export class SideBar extends React.Component {
                 <hr />
                 <ul>
                     {
-                        this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories)
+                        this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, onlyFree)
                     }
                 </ul>
                 <hr />
                 <div className="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="freeChecked" />
-                    <label class="form-check-label" for="freeChecked">
+                    <input className="form-check-input" type="checkbox" defaultChecked={onlyFree} onChange={(e) => {
+                        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=${pageIndex}&pageSize=${pageSize}&onlyFree=${e.target.checked}`);
+                    }} id="freeChecked" />
+                    <label className="form-check-label" htmlFor="freeChecked">
                         Show only free files
                     </label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" value="" id="recentChecked" disabled={selectedCategory.id === 1} />
-                    <label class="form-check-label" for="recentChecked">
+                <div className="form-check">
+                    <input className="form-check-input" type="checkbox" value="" id="recentChecked" disabled={selectedCategory.id === 1} />
+                    <label className="form-check-label" htmlFor="recentChecked">
                         Show only recent files
                     </label>
                 </div>
@@ -48,7 +66,7 @@ export class SideBar extends React.Component {
                         primaryCategories.map((category, index) => {
                             return category.title !== 'HDR' ? (
                                 <li key={index}>
-                                    <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id)}>
+                                    <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, onlyFree)}>
                                         {category.title}
                                     </span>
                                 </li>
@@ -60,15 +78,15 @@ export class SideBar extends React.Component {
         );
     }
 
-    handleCategoryChange = (value) => {
-        this.props.history.push(`/?categoryId=${value}&searchTerm=&pageIndex=0&pageSize=5`);
+    handleCategoryChange = (value, onlyFree) => {
+        this.props.history.push(`/?categoryId=${value}&searchTerm=&pageIndex=0&pageSize=5&onlyFree=${onlyFree}`);
     }
 
-    renderPath = (path, index, categories) => {
+    renderPath = (path, index, categories, onlyFree) => {
         const category = path[index];
         return category ? index < path.length - 1 ? (
             <li>
-                <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id)}>
+                <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, onlyFree)}>
                     {category.title}
                 </span>
                 <ul>
@@ -77,7 +95,7 @@ export class SideBar extends React.Component {
             </li>
         ) : (
                 <li>
-                    <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id)}>
+                    <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, onlyFree)}>
                         {category.title}
                     </span>
                     <ul>
@@ -86,7 +104,7 @@ export class SideBar extends React.Component {
                                 categories.map((item, index) => {
                                     return item.title !== 'HDR' ? (
                                         <li key={index}>
-                                            <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(item.id)}>
+                                            <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(item.id, onlyFree)}>
                                                 {item.title}
                                             </span>
                                         </li>
