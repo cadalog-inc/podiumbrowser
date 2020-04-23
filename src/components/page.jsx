@@ -11,6 +11,7 @@ export class Page extends React.Component {
         let categoryId = 1;
         let searchTerm = "";
         let onlyFree = false;
+        let onlyRecent = false;
         let pageIndex = 0;
         let pageSize = 8;
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
@@ -27,6 +28,9 @@ export class Page extends React.Component {
         }
         if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
             onlyFree = queryValues.onlyFree === 'true' ? true : false;
+        }
+        if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
+            onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
         }
         let categories = this.props.getSubCategories(categoryId);
         if (categoryId === 1) {
@@ -64,9 +68,18 @@ export class Page extends React.Component {
                                     </Row> : null
                             }
                             {categories.map((category, index) => {
-                                const items = this.props.getItemsInCategory(category.id).filter((item) => {
+                                let items = this.props.getItemsInCategory(category.id).filter((item) => {
                                     return (onlyFree === false || item.type === 'free') && (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
                                 });
+                                items = onlyRecent ? items.sort((a, b) => {
+                                    if(a.uploadDate < b.uploadDate) {
+                                        return -1;
+                                    }
+                                    if(a.uploadDate > b.uploadDate) {
+                                        return 1;
+                                    }
+                                    return 0;
+                                }).splice(0, 100) : items;
                                 let itemsBegin = categories.length === 1 ? pageIndex * pageSize : 0;
                                 let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 8;
                                 let itemsLength = items.length;
@@ -82,7 +95,7 @@ export class Page extends React.Component {
                                                     </Col>
                                                     <Col></Col>
                                                     <Col>
-                                                        <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8&onlyFree=${onlyFree}`}>See All</Link>
+                                                        <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}`}>See All</Link>
                                                     </Col>
                                                 </Row> : items.length > 0 ?
                                                     <React.Fragment>
@@ -102,21 +115,21 @@ export class Page extends React.Component {
                                                                             </Dropdown.Toggle>
 
                                                                             <Dropdown.Menu>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId, onlyFree) }}>8</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId, onlyFree) }}>16</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId, onlyFree) }}>32</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId, onlyFree) }}>64</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId, onlyFree) }}>128</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId, onlyFree, onlyRecent) }}>8</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId, onlyFree, onlyRecent) }}>16</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId, onlyFree, onlyRecent) }}>32</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId, onlyFree, onlyRecent) }}>64</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId, onlyFree, onlyRecent) }}>128</Dropdown.Item>
                                                                             </Dropdown.Menu>
                                                                         </Dropdown>
                                                                         <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
                                                                         <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
+                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}`}>
                                                                                 <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
                                                                             </Link>
                                                                         </InputGroup.Text>
                                                                         <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
+                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}`}>
                                                                                 <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
                                                                             </Link>
                                                                         </InputGroup.Text>
@@ -226,21 +239,21 @@ export class Page extends React.Component {
                                                                         </Dropdown.Toggle>
 
                                                                         <Dropdown.Menu>
-                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId, onlyFree) }}>8</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId, onlyFree) }}>16</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId, onlyFree) }}>32</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId, onlyFree) }}>64</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId, onlyFree) }}>128</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId, onlyFree, onlyRecent) }}>8</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId, onlyFree, onlyRecent) }}>16</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId, onlyFree, onlyRecent) }}>32</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId, onlyFree, onlyRecent) }}>64</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId, onlyFree, onlyRecent) }}>128</Dropdown.Item>
                                                                         </Dropdown.Menu>
                                                                     </Dropdown>
                                                                     <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
                                                                     <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                        <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
+                                                                        <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}`}>
                                                                             <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
                                                                         </Link>
                                                                     </InputGroup.Text>
                                                                     <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                        <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
+                                                                        <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}`}>
                                                                             <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
                                                                         </Link>
                                                                     </InputGroup.Text>
@@ -260,8 +273,8 @@ export class Page extends React.Component {
         );
     }
 
-    handlePageSizeClick = (pageSize, searchTerm, categoryId, onlyFree) => {
-        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${onlyFree}`);
+    handlePageSizeClick = (pageSize, searchTerm, categoryId, onlyFree, onlyRecent) => {
+        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}`);
     }
 
     parseQueryString = (queryString) => {
