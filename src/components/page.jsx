@@ -43,9 +43,9 @@ export class Page extends React.Component {
         }
         return (
             <React.Fragment>
-                <Container style={{ marginTop: 55 }} fluid>
+                <div style={{ marginTop: 55, marginBottom: 10, marginLeft: 10, marginRight: 10 }}>
                     <Row>
-                        <Col lg={2} md={3} sm={4} xs={6}>
+                        <Col lg={2} md={3} sm={4} xm={5}>
                             <SideBar
                                 categories={categories}
                                 parseQueryString={this.props.parseQueryString}
@@ -54,159 +54,44 @@ export class Page extends React.Component {
                                 {...this.props}
                             />
                         </Col>
-                        <Col lg={10} md={9} sm={8} xs={6}>
-                            <Container>
-                                {
-                                    categories.length > 1 ?
-                                        <Row>
-                                            <Col>
-                                                <h3>{selectedCategory.title}</h3>
-                                            </Col>
-                                        </Row> : null
-                                }
-                                {categories.map((category, index) => {
-                                    const items = this.props.getItemsInCategory(category.id).filter((item) => {
-                                        return (onlyFree === false || item.type === 'free') && (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
-                                    });
-                                    let itemsBegin = categories.length === 1 ? pageIndex * pageSize : 0;
-                                    let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 8;
-                                    let itemsLength = items.length;
-                                    let pageBack = pageIndex - 1 > 0 ? pageIndex - 1 : 0;
-                                    let pageNext = this.calculateNextPage(pageIndex, pageSize, itemsLength);
-                                    return (
-                                        <React.Fragment key={index}>
-                                            {
-                                                categories.length > 1 && items.length > 0 ?
-                                                    <Row style={{ marginTop: 20 }}>
-                                                        <Col>
-                                                            <h5>{category.title} - {itemsLength} files</h5>
-                                                        </Col>
-                                                        <Col></Col>
-                                                        <Col>
-                                                            <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8&onlyFree=${onlyFree}`}>See All</Link>
-                                                        </Col>
-                                                    </Row> : items.length > 0 ?
-                                                        <React.Fragment>
-                                                            <Row style={{ marginTop: 20 }}>
-                                                                <Col>
-                                                                    <h3>{category.title}</h3>
-                                                                </Col>
-                                                            </Row>
-                                                            <Row>
-                                                                <Col>
-                                                                    <div className="float-right">
-                                                                        <InputGroup className="mb-3">
-                                                                            <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
-                                                                            <Dropdown>
-                                                                                <Dropdown.Toggle variant="light" id="dropdown-basic">
-                                                                                    {pageSize}
-                                                                                </Dropdown.Toggle>
-
-                                                                                <Dropdown.Menu>
-                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId, onlyFree) }}>8</Dropdown.Item>
-                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId, onlyFree) }}>16</Dropdown.Item>
-                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId, onlyFree) }}>32</Dropdown.Item>
-                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId, onlyFree) }}>64</Dropdown.Item>
-                                                                                    <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId, onlyFree) }}>128</Dropdown.Item>
-                                                                                </Dropdown.Menu>
-                                                                            </Dropdown>
-                                                                            <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
-                                                                            <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                                <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
-                                                                                    <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
-                                                                                </Link>
-                                                                            </InputGroup.Text>
-                                                                            <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                                <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
-                                                                                    <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
-                                                                                </Link>
-                                                                            </InputGroup.Text>
-                                                                        </InputGroup>
-                                                                    </div>
-                                                                </Col>
-                                                            </Row>
-                                                        </React.Fragment> : null
-                                            }
-                                            <Row>
-                                                {
-                                                    items.slice(itemsBegin, itemsEnd).map((item, index) => {
-                                                        return (
-                                                            <Col key={index} style={{ margin: 20 }} xl="1" lg="2" md="3" sm="4" xs="6">
-                                                                <div
-                                                                    style={{
-                                                                        zIndex: 0,
-                                                                        position: 'relative',
-                                                                        width: '104px',
-                                                                        backgroundColor: '#f1f1f1',
-                                                                        display: "flex",
-                                                                        flexDirection: "column",
-                                                                        justifyContent: "center",
-                                                                        alignItems: "center",
-                                                                        border: '2px solid #f2f2f2',
-                                                                        margin: 10
-                                                                    }}
-                                                                >
-                                                                    <img alt=''
-                                                                        src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile}
-                                                                        style={{
-                                                                            position: 'relative',
-                                                                            width: '100px',
-                                                                            cursor: "pointer"
-                                                                        }}
-                                                                        onClick={() => { this.props.handleDownloadClick(item) }}
-                                                                    />
-                                                                    <span
-                                                                        style={{
-                                                                            position: 'absolute',
-                                                                            right: '0px',
-                                                                            top: '0px',
-                                                                            cursor: 'pointer'
-                                                                        }}
-                                                                        onClick={() => { this.props.handleFavoriteClick(item.id) }}
-                                                                    >
-                                                                        {
-                                                                            this.isItemFavorite(item.id) ? <FontAwesomeIcon icon={faStar} color="gold" /> : <FontAwesomeIcon icon={faStar} color="lightgrey" />
-                                                                        }
-                                                                    </span>
-                                                                    <span
-                                                                        style={{
-                                                                            fontSize: '11px',
-                                                                            width: '100px'
-                                                                        }}
-                                                                    >
-                                                                        {item.title}
-                                                                    </span>
-                                                                    <span
-                                                                        style={{
-                                                                            fontSize: '11px',
-                                                                            width: '100px'
-                                                                        }}
-                                                                    >
-                                                                        {this.formatFileSize(item.fileSize)} MB
-                                                                    </span>
-                                                                    <span
-                                                                        style={{
-                                                                            position: 'absolute',
-                                                                            right: '2px',
-                                                                            bottom: '0px',
-                                                                            cursor: 'pointer'
-                                                                        }}
-                                                                        onClick={() => { this.props.handleDownloadClick(item) }}
-                                                                    >
-                                                                        {
-                                                                            this.props.user.key !== '' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
-                                                                        }
-                                                                    </span>
-                                                                </div>
-                                                            </Col>
-                                                        )
-                                                    })
-                                                }
-                                            </Row>
-                                            {
-                                                categories.length > 1 && items.length > 0 ?
-                                                    null : items.length > 0 ?
+                        <Col lg={10} md={9} sm={8} xm={7}>
+                            {
+                                categories.length > 1 ?
+                                    <Row>
+                                        <Col>
+                                            <h3>{selectedCategory.title}</h3>
+                                        </Col>
+                                    </Row> : null
+                            }
+                            {categories.map((category, index) => {
+                                const items = this.props.getItemsInCategory(category.id).filter((item) => {
+                                    return (onlyFree === false || item.type === 'free') && (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
+                                });
+                                let itemsBegin = categories.length === 1 ? pageIndex * pageSize : 0;
+                                let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 8;
+                                let itemsLength = items.length;
+                                let pageBack = pageIndex - 1 > 0 ? pageIndex - 1 : 0;
+                                let pageNext = this.calculateNextPage(pageIndex, pageSize, itemsLength);
+                                return (
+                                    <React.Fragment key={index}>
+                                        {
+                                            categories.length > 1 && items.length > 0 ?
+                                                <Row style={{ marginTop: 20 }}>
+                                                    <Col>
+                                                        <h5>{category.title} - {itemsLength} files</h5>
+                                                    </Col>
+                                                    <Col></Col>
+                                                    <Col>
+                                                        <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8&onlyFree=${onlyFree}`}>See All</Link>
+                                                    </Col>
+                                                </Row> : items.length > 0 ?
+                                                    <React.Fragment>
                                                         <Row style={{ marginTop: 20 }}>
+                                                            <Col>
+                                                                <h3>{category.title}</h3>
+                                                            </Col>
+                                                        </Row>
+                                                        <Row>
                                                             <Col>
                                                                 <div className="float-right">
                                                                     <InputGroup className="mb-3">
@@ -238,17 +123,138 @@ export class Page extends React.Component {
                                                                     </InputGroup>
                                                                 </div>
                                                             </Col>
-                                                        </Row> : null
+                                                        </Row>
+                                                    </React.Fragment> : null
+                                        }
+                                        <Row>
+                                            {
+                                                items.slice(itemsBegin, itemsEnd).map((item, index) => {
+                                                    return (
+                                                        <Col key={index} style={{marginTop: 20}} xl={2} lg={3} md={4} sm={6} xs={6}>
+                                                            <div
+                                                                style={{
+                                                                    position: 'relative',
+                                                                    width: '154px',
+                                                                    backgroundColor: '#f1f1f1',
+                                                                    display: "flex",
+                                                                    flexDirection: "column",
+                                                                    justifyContent: "center",
+                                                                    alignItems: "center",
+                                                                    border: '1px solid #e5e5e5'
+                                                                }}
+                                                            >
+                                                                <img alt=''
+                                                                    src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile}
+                                                                    style={{
+                                                                        position: 'relative',
+                                                                        width: '150px',
+                                                                        cursor: "pointer"
+                                                                    }}
+                                                                    onClick={() => { this.props.handleDownloadClick(item) }}
+                                                                />
+                                                                <span
+                                                                    style={{
+                                                                        position: 'absolute',
+                                                                        right: '0px',
+                                                                        top: '0px',
+                                                                        cursor: 'pointer'
+                                                                    }}
+                                                                    onClick={() => { this.props.handleFavoriteClick(item.id) }}
+                                                                >
+                                                                    {
+                                                                        this.isItemFavorite(item.id) ? <FontAwesomeIcon icon={faStar} color="gold" /> : <FontAwesomeIcon icon={faStar} color="lightgrey" />
+                                                                    }
+                                                                </span>
+                                                                <span
+                                                                    style={{
+                                                                        fontSize: '11px',
+                                                                        width: '150px',
+                                                                        padding: 5,
+                                                                        borderBottom: '1px solid #e6e6e6'
+                                                                    }}
+                                                                >
+                                                                    {item.title}
+                                                                </span>
+                                                                <span
+                                                                    style={{
+                                                                        height: 27
+                                                                    }}
+                                                                >
+                                                                    <span
+                                                                        style={{
+                                                                            position: 'absolute',
+                                                                            left: '5px',
+                                                                            bottom: '4px',
+                                                                            fontSize: '11px',
+                                                                            fontWeight: '600'
+                                                                        }}
+                                                                    >
+                                                                        {this.formatFileSize(item.fileSize)} MB
+                                                                        </span>
+                                                                    <span
+                                                                        style={{
+                                                                            position: 'absolute',
+                                                                            right: '5px',
+                                                                            bottom: '2px',
+                                                                            cursor: 'pointer'
+                                                                        }}
+                                                                        onClick={() => { this.props.handleDownloadClick(item) }}
+                                                                    >
+                                                                        {
+                                                                            this.props.user.key !== '' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
+                                                                        }
+                                                                    </span>
+                                                                </span>
+                                                            </div>
+                                                        </Col>
+                                                    )
+                                                })
                                             }
-                                        </React.Fragment>
-                                    )
-                                })
-                                }
-                            </Container>
+                                        </Row>
+                                        {
+                                            categories.length > 1 && items.length > 0 ?
+                                                null : items.length > 0 ?
+                                                    <Row style={{ marginTop: 20 }}>
+                                                        <Col>
+                                                            <div className="float-right">
+                                                                <InputGroup className="mb-3">
+                                                                    <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
+                                                                    <Dropdown>
+                                                                        <Dropdown.Toggle variant="light" id="dropdown-basic">
+                                                                            {pageSize}
+                                                                        </Dropdown.Toggle>
+
+                                                                        <Dropdown.Menu>
+                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId, onlyFree) }}>8</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId, onlyFree) }}>16</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId, onlyFree) }}>32</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId, onlyFree) }}>64</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId, onlyFree) }}>128</Dropdown.Item>
+                                                                        </Dropdown.Menu>
+                                                                    </Dropdown>
+                                                                    <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
+                                                                    <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
+                                                                        <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
+                                                                            <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
+                                                                        </Link>
+                                                                    </InputGroup.Text>
+                                                                    <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
+                                                                        <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}&onlyFree=${onlyFree}`}>
+                                                                            <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
+                                                                        </Link>
+                                                                    </InputGroup.Text>
+                                                                </InputGroup>
+                                                            </div>
+                                                        </Col>
+                                                    </Row> : null
+                                        }
+                                    </React.Fragment>
+                                )
+                            })
+                            }
                         </Col>
                     </Row>
-                </Container>
-
+                </div>
             </React.Fragment>
         );
     }
