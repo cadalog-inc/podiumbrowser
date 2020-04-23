@@ -130,11 +130,11 @@ export class Page extends React.Component {
                                             {
                                                 items.slice(itemsBegin, itemsEnd).map((item, index) => {
                                                     return (
-                                                        <Col key={index} style={{marginTop: 20}} xl={2} lg={3} md={4} sm={6} xs={6}>
+                                                        <Col key={index} style={{marginTop: 20, minWidth: 150}} xl={1} lg={2} md={3} sm={4} xs={6}>
                                                             <div
                                                                 style={{
                                                                     position: 'relative',
-                                                                    width: '154px',
+                                                                    width: '100%',
                                                                     backgroundColor: '#f1f1f1',
                                                                     display: "flex",
                                                                     flexDirection: "column",
@@ -147,8 +147,9 @@ export class Page extends React.Component {
                                                                     src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile}
                                                                     style={{
                                                                         position: 'relative',
-                                                                        width: '150px',
-                                                                        cursor: "pointer"
+                                                                        width: '100%',
+                                                                        cursor: "pointer",
+                                                                        borderBottom: '1px solid #e5e5e5'
                                                                     }}
                                                                     onClick={() => { this.props.handleDownloadClick(item) }}
                                                                 />
@@ -168,7 +169,7 @@ export class Page extends React.Component {
                                                                 <span
                                                                     style={{
                                                                         fontSize: '11px',
-                                                                        width: '150px',
+                                                                        width: '100%',
                                                                         padding: 5,
                                                                         borderBottom: '1px solid #e6e6e6'
                                                                     }}
