@@ -90,7 +90,7 @@ export class SideBar extends React.Component {
                     {category.title}
                 </span>
                 <ul>
-                    {this.renderPath(path, index + 1, categories)}
+                    {this.renderPath(path, index + 1, categories, onlyFree)}
                 </ul>
             </li>
         ) : (
