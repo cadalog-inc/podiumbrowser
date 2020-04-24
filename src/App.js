@@ -84,15 +84,18 @@ class App extends React.Component {
     handleDownloadClick = (item) => {
         if (this.state.user.key !== '' || item.type === 'free') {
             sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}`);
-            this.state.relationships.push({
-                id: this.state.relationships.length,
-                userId: this.state.user.id,
-                itemId: item.id,
-                categoryId: 218
-            });
-            this.setState({
-                relationships: this.state.relationships
-            });
+            axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/add_recents/${this.state.user.id}/${item.id}`)
+                .then((response) => {
+                    this.state.relationships.push({
+                        id: this.state.relationships.length,
+                        userId: this.state.user.id,
+                        itemId: item.id,
+                        categoryId: 218
+                    });
+                    this.setState({
+                        relationships: this.state.relationships
+                    });
+                });
         }
     }
 
@@ -106,9 +109,15 @@ class App extends React.Component {
             for (let i = 0; i < l; i++) {
                 const relationship = this.state.relationships[i];
                 if (relationship.categoryId === 217 && relationship.itemId === itemId) {
+                    // remove from 
                     this.state.relationships.splice(i, 1);
                     this.setState({
                         relationships: this.state.relationships
+                    }, () => {
+                        axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/remove_favorite/${this.state.user.id}/${itemId}`)
+                            .then((response) => {
+                                console.log(response);
+                            });
                     });
                     return;
                 }
@@ -122,6 +131,11 @@ class App extends React.Component {
             });
             this.setState({
                 relationship: this.state.relationships
+            }, () => {
+                axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/add_favorite/${this.state.user.id}/${itemId}`)
+                    .then((response) => {
+                        console.log(response);
+                    });
             });
         }
     }
@@ -174,7 +188,7 @@ class App extends React.Component {
 
     // https://www.suplugins.com/podiumbrowserstandalone/
     getCategories = () => {
-        axios.get('./categories.json')
+        axios.get('http://www.suplugins.com/podiumbrowserstandalone/categories.json')
             .then((response) => {
                 this.setState({
                     categories: response.data
@@ -185,7 +199,7 @@ class App extends React.Component {
     }
 
     getRelationships = () => {
-        axios.get('./relationships.json')
+        axios.get('http://www.suplugins.com/podiumbrowserstandalone/relationships.json')
             .then((response) => {
                 this.setState({
                     relationships: response.data
@@ -196,12 +210,12 @@ class App extends React.Component {
     }
 
     getItems = () => {
-        axios.get('./items.json')
+        axios.get('http://www.suplugins.com/podiumbrowserstandalone/items.json')
             .then((response) => {
                 this.setState({
                     items: response.data
-                }, () => {      
-                    this.getLicense(); 
+                }, () => {
+                    this.getLicense();
                 });
             });
     }
@@ -215,6 +229,10 @@ class App extends React.Component {
     setLicense(license, isValid) {
         if (isValid) {
             this.getUser(license.key);
+        } else {
+            this.setState({
+                dataDownloaded: true
+            });
         }
     }
 
@@ -238,7 +256,7 @@ class App extends React.Component {
     }
 
     getFavorites = () => {
-        axios.get('./favorites.json')
+        axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/favorites/${this.state.user.id}`)
             .then((response) => {
                 const favorites = response.data;
                 const l = favorites.length;
@@ -261,7 +279,7 @@ class App extends React.Component {
     }
 
     getRecent = () => {
-        axios.get('./recent.json')
+        axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/recents/${this.state.user.id}`)
             .then((response) => {
                 const recents = response.data;
                 const l = recents.length;
