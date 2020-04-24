@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, FormControl, Navbar, DropdownButton, NavItem, Dropdown } from 'react-bootstrap';
+import { Button, FormControl, Navbar, NavItem, Card, Dropdown, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
 import Autocomplete from 'react-autocomplete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faHome, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faHome, faSearch, faSync } from '@fortawesome/free-solid-svg-icons';
 
 export class NavBar extends React.Component {
     constructor(props) {
@@ -104,7 +104,7 @@ export class NavBar extends React.Component {
         const suggestions = this.state.searchTerm === "" ? [] : this.findSuggestions(this.state.searchTerm);
         return this.props.items.length > 0 ? (
             <React.Fragment>
-                <Navbar fixed="top" collapseOnSelect expand="lg" bg="dark" variant="dark" style={{ height: 55 }}>
+                <Navbar fill fixed="top" expand="lg" bg="dark" variant="dark" style={{zIndex: 1}}>
                     <NavItem>
                         <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>
                             <FontAwesomeIcon icon={faArrowLeft} />
@@ -115,64 +115,88 @@ export class NavBar extends React.Component {
                         <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(1) }}>
                             <FontAwesomeIcon icon={faHome} />
                         </Button>
+                        <Button type="button" variant="dark" onClick={() => { window.location.reload(); }}>
+                            <FontAwesomeIcon icon={faSync} />
+                        </Button>
                     </NavItem>
                     <NavItem>
-                        <Dropdown>
-                            <Dropdown.Toggle variant="dark">
+                        <OverlayTrigger
+                            trigger="click"
+                            rootClose
+                            key={'bottom'}
+                            placement={'bottom'}
+                            overlay={
+                                <Container style={{
+                                    zIndex: 2,
+                                    backgroundColor: '#fff',
+                                    border: '1px solid #e5e5e5',
+                                    boxShadow: 50,
+                                    borderRadius: 10,
+                                    padding: 20,
+                                    display: "flex",
+                                    flexDirection: "column",
+                                    justifyContent: "center",
+                                    alignItems: "center"
+                                }}>
+                                    <Row>
+                                        {
+                                            primaryCategories.map((category, index) => {
+                                                return category.title !== 'HDR' ? (
+                                                    <Col lg={3} md={4} key={index}>
+                                                        <span
+                                                            style={{ cursor: 'pointer' }}
+                                                            onClick={
+                                                                () => {
+                                                                    this.handleCategoryChange(category.id)
+                                                                }
+                                                            }
+                                                        >
+                                                            {category.title}
+                                                        </span>
+                                                    </Col>
+                                                ) : null
+                                            })
+                                        }
+                                    </Row>
+                                </Container>
+                            }
+                        >
+                            <Button variant="dark">
                                 Categories
-                            </Dropdown.Toggle>
-                            <Dropdown.Menu style={true ? { height: 240 } : null}>
-                                {
-                                    primaryCategories.map((category, index) => {
-                                        return category.title !== 'HDR' ? (
-                                            <Dropdown.Item
-                                                key={index}
-                                                style={true ? {
-                                                    width: 200,
-                                                    height: 30,
-                                                    transform: `translate(${this.getDropdownTranslateX(index)}px, ${this.getDropdownTranslateY(index)}px)`
-                                                } : null}
-                                                onClick={
-                                                    () => {
-                                                        this.handleCategoryChange(category.id)
-                                                    }
-                                                }
-                                            >
-                                                {category.title}
-                                            </Dropdown.Item>
-                                        ) : null
-                                    })
-                                }
-                                {
-                                    true ? <Dropdown.Divider style={{ width: 800 }} /> : null
-                                }
-                            </Dropdown.Menu>
-                        </Dropdown>
+                            </Button>
+                        </OverlayTrigger>
                     </NavItem>
                     <NavItem>
-                        <div style={{zIndex: 10000}}>
-                            <Autocomplete
-                                getItemValue={(item) => item.label}
-                                items={suggestions}
-                                renderItem={(item, isHighlighted) =>
-                                    <div style={{background: isHighlighted ? 'lightgray' : 'white' }}>
-                                        {item.label}
-                                    </div>
-                                }
-                                renderInput={(props) => {
-                                    return <FormControl {...props} type="text" style={{ width: 400 }} onKeyUp={this.handleOnSearchKey} onChange={(e) => this.handleSearchTermChange(e.target.value)} className="mr-sm-2" />
-                                }}
-                                value={this.state.searchTerm}
-                                onChange={(e) => this.handleSearchTermChange(e.target.value)}
-                                onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
-                            />
-                            <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>
-                                <FontAwesomeIcon icon={faSearch} />
-                            </Button>
-                        </div>
+                        <Autocomplete
+                            getItemValue={(item) => item.label}
+                            items={suggestions}
+                            renderItem={(item, isHighlighted) =>
+                                <Container style={{ cursor: 'pointer', background: isHighlighted ? 'lightgray' : 'white' }}>
+                                    {item.label}
+                                </Container>
+                            }
+                            renderInput={(props) => {
+                                return (
+                                    <FormControl
+                                        type="text"
+                                        className="mr-sm-2"
+                                        style={{ width: 400 }}
+                                        onKeyUp={this.handleOnSearchKey}
+                                        onChange={(e) => {
+                                            this.handleSearchTermChange(e.target.value);
+                                        }}
+                                        {...props}
+                                    />
+                                )
+                            }}
+                            value={this.state.searchTerm}
+                            onChange={(e) => this.handleSearchTermChange(e.target.value)}
+                            onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
+                        />
+                        <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>
+                            <FontAwesomeIcon icon={faSearch} />
+                        </Button>
                     </NavItem>
-
-
                 </Navbar>
             </React.Fragment>
         ) : null;
