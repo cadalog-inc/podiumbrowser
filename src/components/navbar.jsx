@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, FormControl, Navbar, NavItem, Card, Dropdown, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
+import { Button, FormControl, Navbar, NavItem, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
 import Autocomplete from 'react-autocomplete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faHome, faSearch, faSync } from '@fortawesome/free-solid-svg-icons';
@@ -104,7 +104,7 @@ export class NavBar extends React.Component {
         const suggestions = this.state.searchTerm === "" ? [] : this.findSuggestions(this.state.searchTerm);
         return this.props.items.length > 0 ? (
             <React.Fragment>
-                <Navbar fill fixed="top" expand="lg" bg="dark" variant="dark" style={{zIndex: 1}}>
+                <Navbar fill="true" fixed="top" expand="lg" bg="dark" variant="dark" style={{zIndex: 1}}>
                     <NavItem>
                         <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>
                             <FontAwesomeIcon icon={faArrowLeft} />

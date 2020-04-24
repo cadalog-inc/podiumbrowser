@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Col, Container, Dropdown, Row, InputGroup } from 'react-bootstrap';
+import { Col, Dropdown, Row, InputGroup } from 'react-bootstrap';
 import { SideBar } from './sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faAngleLeft, faAngleRight, faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -176,7 +176,7 @@ export class Page extends React.Component {
                                                                     onClick={() => { this.props.handleFavoriteClick(item.id) }}
                                                                 >
                                                                     {
-                                                                        this.isItemFavorite(item.id) ? <FontAwesomeIcon icon={faStar} color="gold" /> : <FontAwesomeIcon icon={faStar} color="lightgrey" />
+                                                                        this.props.user.key !== '' && this.isItemFavorite(item.id) ? <FontAwesomeIcon icon={faStar} color="gold" /> : <FontAwesomeIcon icon={faStar} color="lightgrey" />
                                                                     }
                                                                 </span>
                                                                 <span
@@ -215,7 +215,7 @@ export class Page extends React.Component {
                                                                         onClick={() => { this.props.handleDownloadClick(item) }}
                                                                     >
                                                                         {
-                                                                            this.props.user.key !== '' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
+                                                                            this.props.user.key !== '' || item.type === 'free' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
                                                                         }
                                                                     </span>
                                                                 </span>

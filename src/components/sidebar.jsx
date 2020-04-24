@@ -7,16 +7,12 @@ export class SideBar extends React.Component {
         let searchTerm = "";
         let onlyFree = false;
         let onlyRecent = false;
-        let pageIndex = 0;
         let pageSize = 8;
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
         }
         if (queryValues.searchTerm && queryValues.searchTerm !== "") {
             searchTerm = queryValues.searchTerm;
-        }
-        if (queryValues.pageIndex && queryValues.pageIndex !== "" && queryValues.pageIndex >= 0) {
-            pageIndex = queryValues.pageIndex;
         }
         if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 8) {
             pageSize = queryValues.pageSize;
