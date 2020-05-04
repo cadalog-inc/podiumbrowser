@@ -184,9 +184,9 @@ class App extends React.Component {
         this.getCategories(); // begins a chain of data downloads from categories to items
     }
 
-    // https://www.suplugins.com/podiumbrowserstandalone/
+    // https://v4.pdm-plants-textures.com/
     getCategories = () => {
-        axios.get('http://www.suplugins.com/podiumbrowserstandalone/categories.json')
+        axios.get('https://v4.pdm-plants-textures.com/categories.json')
             .then((response) => {
                 this.setState({
                     categories: response.data
@@ -197,7 +197,7 @@ class App extends React.Component {
     }
 
     getRelationships = () => {
-        axios.get('http://www.suplugins.com/podiumbrowserstandalone/relationships.json')
+        axios.get('https://v4.pdm-plants-textures.com/relationships.json')
             .then((response) => {
                 this.setState({
                     relationships: response.data
@@ -208,7 +208,7 @@ class App extends React.Component {
     }
 
     getItems = () => {
-        axios.get('http://www.suplugins.com/podiumbrowserstandalone/items.json')
+        axios.get('https://v4.pdm-plants-textures.com/items.json')
             .then((response) => {
                 this.setState({
                     items: response.data

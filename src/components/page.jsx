@@ -69,7 +69,7 @@ export class Page extends React.Component {
                             }
                             {categories.map((category, index) => {
                                 let items = this.props.getItemsInCategory(category.id).filter((item) => {
-                                    return (onlyFree === false || item.type === 'free') && (searchTerm === "" || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
+                                    return (onlyFree === false || item.type === 'free') && (searchTerm === "" || item.title.includes(searchTerm) || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
                                 });
                                 items = onlyRecent ? items.sort((a, b) => {
                                     if(a.uploadDate < b.uploadDate) {
