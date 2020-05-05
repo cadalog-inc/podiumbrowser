@@ -32,12 +32,8 @@ export class Page extends React.Component {
         if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
             onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
         }
-        let categories = this.props.getSubCategories(categoryId);
-        if (categoryId === 1) {
-            categories = this.props.categories.filter((category) => {
-                return category.id === 1 || category.id === 217 || category.id === 218;
-            });
-        }
+        
+        let categories = categoryId === 1 ? [] : this.props.getSubCategories(categoryId);
         const selectedCategory = this.props.categories.find((category) => {
             return category.id === categoryId
         });
