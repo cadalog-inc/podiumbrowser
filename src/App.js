@@ -186,7 +186,7 @@ class App extends React.Component {
 
     // https://v4.pdm-plants-textures.com/
     getCategories = () => {
-        axios.get('https://v4.pdm-plants-textures.com/categories.json')
+        axios.get('categories.json')
             .then((response) => {
                 this.setState({
                     categories: response.data
@@ -197,7 +197,7 @@ class App extends React.Component {
     }
 
     getRelationships = () => {
-        axios.get('https://v4.pdm-plants-textures.com/relationships.json')
+        axios.get('relationships.json')
             .then((response) => {
                 this.setState({
                     relationships: response.data
@@ -208,7 +208,7 @@ class App extends React.Component {
     }
 
     getItems = () => {
-        axios.get('https://v4.pdm-plants-textures.com/items.json')
+        axios.get('items.json')
             .then((response) => {
                 this.setState({
                     items: response.data
@@ -221,7 +221,13 @@ class App extends React.Component {
     getLicense() {
         // call sketchup to get license
         // sketchup will call set license below
-        sketchup.getLicense();
+        if (window.sketchup) {
+            sketchup.getLicense();
+        } else {
+            this.setState({
+                dataDownloaded: true
+            });
+        }
     }
 
     setLicense(license, isValid) {

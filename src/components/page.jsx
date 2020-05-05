@@ -34,8 +34,8 @@ export class Page extends React.Component {
         }
         let categories = this.props.getSubCategories(categoryId);
         if (categoryId === 1) {
-            categories = categories.filter((category) => {
-                return category.id === 217 || category.id === 218;
+            categories = this.props.categories.filter((category) => {
+                return category.id === 1 || category.id === 217 || category.id === 218;
             });
         }
         const selectedCategory = this.props.categories.find((category) => {
@@ -68,7 +68,7 @@ export class Page extends React.Component {
                                     </Row> : null
                             }
                             {categories.map((category, index) => {
-                                let items = this.props.getItemsInCategory(category.id).filter((item) => {
+                                let items = (category.id === 1 ? this.props.items : this.props.getItemsInCategory(category.id)).filter((item) => {
                                     return (onlyFree === false || item.type === 'free') && (searchTerm === "" || item.title.includes(searchTerm) || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
                                 });
                                 items = onlyRecent ? items.sort((a, b) => {
@@ -80,8 +80,8 @@ export class Page extends React.Component {
                                     }
                                     return 0;
                                 }).splice(0, 100) : items;
-                                let itemsBegin = categories.length === 1 ? pageIndex * pageSize : 0;
-                                let itemsEnd = categories.length === 1 ? itemsBegin + pageSize : 8;
+                                let itemsBegin = categories.length === 1 || category.id === 1 ? pageIndex * pageSize : 0;
+                                let itemsEnd = categories.length === 1 || category.id === 1 ? itemsBegin + pageSize : 8;
                                 let itemsLength = items.length;
                                 let pageBack = pageIndex - 1 > 0 ? pageIndex - 1 : 0;
                                 let pageNext = this.calculateNextPage(pageIndex, pageSize, itemsLength);

@@ -42,7 +42,7 @@ export class SideBar extends React.Component {
                 <hr />
                 <ul>
                     {
-                        this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, onlyFree, onlyRecent)
+                        this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, searchTerm, onlyFree, onlyRecent)
                     }
                 </ul>
                 <hr />
@@ -68,7 +68,7 @@ export class SideBar extends React.Component {
                         primaryCategories.map((category, index) => {
                             return category.title !== 'HDR' ? (
                                 <li key={index}>
-                                    <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, onlyFree, onlyRecent)}>
+                                    <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent)}>
                                         {category.title}
                                     </span>
                                 </li>
@@ -80,24 +80,24 @@ export class SideBar extends React.Component {
         );
     }
 
-    handleCategoryChange = (value, onlyFree, onlyRecent) => {
-        this.props.history.push(`/?categoryId=${value}&searchTerm=&pageIndex=0&pageSize=5&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}`);
+    handleCategoryChange = (value, searchTerm, onlyFree, onlyRecent) => {
+        this.props.history.push(`/?categoryId=${value}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}`);
     }
 
-    renderPath = (path, index, categories, onlyFree, onlyRecent) => {
+    renderPath = (path, index, categories, searchTerm, onlyFree, onlyRecent) => {
         const category = path[index];
         return category ? index < path.length - 1 ? (
             <li>
-                <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, onlyFree, onlyRecent)}>
+                <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent)}>
                     {category.title}
                 </span>
                 <ul>
-                    {this.renderPath(path, index + 1, categories, onlyFree, onlyRecent)}
+                    {this.renderPath(path, index + 1, categories, searchTerm, onlyFree, onlyRecent)}
                 </ul>
             </li>
         ) : (
                 <li>
-                    <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, onlyFree, onlyRecent)}>
+                    <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent)}>
                         {category.title}
                     </span>
                     <ul>
@@ -106,7 +106,7 @@ export class SideBar extends React.Component {
                                 categories.map((item, index) => {
                                     return item.title !== 'HDR' ? (
                                         <li key={index}>
-                                            <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(item.id, onlyFree, onlyRecent)}>
+                                            <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(item.id, searchTerm, onlyFree, onlyRecent)}>
                                                 {item.title}
                                             </span>
                                         </li>
