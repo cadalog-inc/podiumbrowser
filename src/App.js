@@ -14,7 +14,7 @@ class App extends React.Component {
         this.state = {
             user: {
                 "id": 1,
-                "key": "" // 2a2d4d95325c15bf
+                "key": "2a2d4d95325c15bf" // 2a2d4d95325c15bf
             },
             categories: [],
             items: [],
@@ -81,7 +81,7 @@ class App extends React.Component {
     handleDownloadClick = (item) => {
         if (this.state.user.key !== '' || item.type === 'free') {
             sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}`);
-            axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/add_recent/${this.state.user.id}/${item.id}/218`)
+            axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_recent/${this.state.user.id}/${item.id}/218`)
                 .then((response) => {
                     console.log(response.data);
                     this.state.relationships.push({
@@ -112,7 +112,7 @@ class App extends React.Component {
                     this.setState({
                         relationships: this.state.relationships
                     }, () => {
-                        axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/remove_favorite/${this.state.user.id}/${itemId}/217`)
+                        axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/remove_favorite/${this.state.user.id}/${itemId}/217`)
                             .then((response) => {
                                 console.log(response);
                             });
@@ -130,7 +130,7 @@ class App extends React.Component {
             this.setState({
                 relationship: this.state.relationships
             }, () => {
-                axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/add_favorite/${this.state.user.id}/${itemId}/217`)
+                axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_favorite/${this.state.user.id}/${itemId}/217`)
                     .then((response) => {
                         console.log(response);
                     });
@@ -275,7 +275,7 @@ class App extends React.Component {
     getLicense() {
         // call sketchup to get license
         // sketchup will call set license below
-        if (window.sketchup) {
+        if (window.sketchup !== undefined) {
             sketchup.getLicense();
         } else {
             this.setState({
@@ -296,7 +296,7 @@ class App extends React.Component {
 
     getUser = (key) => {
         // todo: first get license and if it doesn't exist, then set license?
-        axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/set_license/${key}`)
+        axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/set_license/${key}`)
             .then((response) => {
                 this.setState({
                     user: {
@@ -315,7 +315,7 @@ class App extends React.Component {
     }
 
     getFavorites = () => {
-        axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/favorites/${this.state.user.id}`)
+        axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/favorites/${this.state.user.id}`)
             .then((response) => {
                 const favorites = response.data;
                 const l = favorites.length;
@@ -338,7 +338,7 @@ class App extends React.Component {
     }
 
     getRecent = () => {
-        axios.get(`http://v3.pdm-plants-textures.com/v4/api/users/recents/${this.state.user.id}`)
+        axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/recents/${this.state.user.id}`)
             .then((response) => {
                 const recents = response.data;
                 const l = recents.length;

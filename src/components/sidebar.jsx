@@ -39,12 +39,16 @@ export class SideBar extends React.Component {
         return (
             <React.Fragment>
                 <hr />
-                <ul>
-                    {
-                        this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, searchTerm, onlyFree, onlyRecent)
-                    }
-                </ul>
-                <hr />
+                {
+                    selectedCategory.id !== 1 && selectedCategory.id !== 217 && selectedCategory.id !== 218 ? <React.Fragment>
+                        <ul>
+                            {
+                                this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, searchTerm, onlyFree, onlyRecent)
+                            }
+                        </ul>
+                        <hr />
+                    </React.Fragment> : null
+                }
                 <div className="form-check">
                     <input className="form-check-input" type="checkbox" defaultChecked={onlyFree} onChange={(e) => {
                         this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${e.target.checked}&onlyRecent=${onlyRecent}`);
@@ -65,20 +69,20 @@ export class SideBar extends React.Component {
                 {
 
                     this.props.user.key !== '' ? <React.Fragment>
-                    <ul>
-                        {
-                            homeCategories.map((category, index) => {
-                                return (
-                                    <li key={index}>
-                                        <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent)}>
-                                            {category.title}
-                                        </span>
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
-                    <hr />
+                        <ul>
+                            {
+                                homeCategories.map((category, index) => {
+                                    return (
+                                        <li key={index}>
+                                            <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent)}>
+                                                {category.title}
+                                            </span>
+                                        </li>
+                                    )
+                                })
+                            }
+                        </ul>
+                        <hr />
                     </React.Fragment> : null
                 }
                 <ul>
