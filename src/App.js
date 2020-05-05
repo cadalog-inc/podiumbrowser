@@ -139,9 +139,27 @@ class App extends React.Component {
     }
 
     getSubCategories = (categoryId) => {
-        return categoryId === 1 ? this.getPrimaryCategories() : this.state.categories.filter((category) => {
-            return category.parentId === categoryId
-        });
+        if(categoryId === 1) {
+            return this.getPrimaryCategories();
+        } else {
+            const subCategories = this.state.categories.filter((category) => {
+                return category.parentId === categoryId
+            });
+
+            if(categoryId === 24) {
+                return subCategories.sort((a, b) => {
+                    if (a.id > b.id) {
+                        return -1;
+                    }
+                    if (a.id < b.id) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            } else {
+                return subCategories;
+            }
+        }
     }
 
     getPrimaryCategories = () => {
