@@ -37,6 +37,7 @@ export class SideBar extends React.Component {
             categories.push(selectedCategory);
         }
         const primaryCategories = this.props.getSubCategories(1);
+        console.log(primaryCategories);
         return (
             <React.Fragment>
                 <hr />

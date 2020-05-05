@@ -139,9 +139,45 @@ class App extends React.Component {
     }
 
     getSubCategories = (categoryId) => {
-        return this.state.categories.filter((category) => {
+        return categoryId === 1 ? this.getPrimaryCategories() : this.state.categories.filter((category) => {
             return category.parentId === categoryId
         });
+    }
+
+    getPrimaryCategories = () => {
+        const primaryCategoryNames = [
+            "Light fixtures exterior",
+            "Light fixtures interior",
+            "Environment",
+            "Materials",
+            "Vegetation",
+            "People & animals",
+            "Vehicles",
+            "Kitchen",
+            "Bathroom",
+            "Bedroom",
+            "Dining",
+            "Living",
+            "Office",
+            "Electronic",
+            "Decoration",
+            "Hardware & construction",
+            "Sports equipment",
+            "Assembly spaces",
+            "Full 3D Models",
+            "Windows"
+        ];
+        const primaryCategories = [];
+        const l = primaryCategoryNames.length;
+        for (let i = 0; i < l; i++) {
+            const primaryCategoryName = primaryCategoryNames[i];
+            const primaryCategory = this.state.categories.filter((category) => {
+                return category.title === primaryCategoryName;
+            })[0];
+            primaryCategories.push(primaryCategory);
+        }
+
+        return primaryCategories;
     }
 
     getItemsInCategory = (categoryId) => {
