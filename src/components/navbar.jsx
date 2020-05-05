@@ -18,6 +18,10 @@ export class NavBar extends React.Component {
     }
 
     componentDidMount() {
+        console.log(this.props.queryValues);
+        if(this.props.queryValues !== "") {    
+            this.props.history.push(`/${this.props.queryValues}`);
+        }
         this.search = this.props.location.search;
         const queryValues = this.props.parseQueryString(this.props.location.search);
         let categoryId = 1;
@@ -53,6 +57,7 @@ export class NavBar extends React.Component {
     componentDidUpdate(nextProps) {
         if (this.search !== this.props.location.search) {
             this.search = this.props.location.search;
+            this.props.setQueryValues(this.props.location.search);
             const queryValues = this.props.parseQueryString(this.props.location.search);
             let categoryId = 1;
             let searchTerm = "";
@@ -126,9 +131,9 @@ export class NavBar extends React.Component {
                         <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(1) }}>
                             <FontAwesomeIcon icon={faHome} />
                         </Button>
-                        <Button type="button" variant="dark" onClick={() => { window.location.reload(); }}>
+                        {/* <Button type="button" variant="dark" onClick={() => { window.location.reload(); }}>
                             <FontAwesomeIcon icon={faSync} />
-                        </Button>
+                        </Button> */}
                     </NavItem>
                     <NavItem>
                         <OverlayTrigger

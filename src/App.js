@@ -19,9 +19,10 @@ class App extends React.Component {
             categories: [],
             items: [],
             relationships: [],
+            queryValues: "",
             dataDownloaded: false
         };
-
+        this.savedQueryValues = "";
         window["setLicense"] = this.setLicense.bind(this);
     }
 
@@ -52,6 +53,8 @@ class App extends React.Component {
                                             {...props}
                                         />
                                         <NavBar
+                                            queryValues={this.state.queryValues}
+                                            setQueryValues={this.setQueryValues}
                                             handleCategoryChange={this.handleCategoryChange}
                                             handleKeySearchChange={this.handleKeySearchChange}
                                             items={this.state.items}
@@ -139,14 +142,14 @@ class App extends React.Component {
     }
 
     getSubCategories = (categoryId) => {
-        if(categoryId === 1) {
+        if (categoryId === 1) {
             return this.getPrimaryCategories();
         } else {
             const subCategories = this.state.categories.filter((category) => {
                 return category.parentId === categoryId
             });
 
-            if(categoryId === 24) {
+            if (categoryId === 24) {
                 return subCategories.sort((a, b) => {
                     if (a.id > b.id) {
                         return -1;
@@ -234,6 +237,12 @@ class App extends React.Component {
         return values;
     }
 
+    setQueryValues(queryValues) {
+        if(window.sketchup !== undefined) {
+            sketchup.setQueryValues(queryValues);
+        }
+    }
+
     getData = () => {
         this.getCategories(); // begins a chain of data downloads from categories to items
     }
@@ -278,19 +287,16 @@ class App extends React.Component {
         if (window.sketchup !== undefined) {
             sketchup.getLicense();
         } else {
-            this.setState({
-                dataDownloaded: true
-            });
+            this.dataDownloaded();
         }
     }
 
-    setLicense(license, isValid) {
+    setLicense(license, isValid, queryValues) {
+        this.savedQueryValues = queryValues !== undefined ? queryValues : "";
         if (isValid) {
             this.getUser(license.key);
         } else {
-            this.setState({
-                dataDownloaded: true
-            });
+            this.dataDownloaded();
         }
     }
 
@@ -308,9 +314,7 @@ class App extends React.Component {
                 });
             })
             .catch((e) => {
-                this.setState({
-                    dataDownloaded: true
-                });
+                this.dataDownloaded();
             });
     }
 
@@ -331,9 +335,7 @@ class App extends React.Component {
                 this.getRecent();
             })
             .catch((e) => {
-                this.setState({
-                    dataDownloaded: true
-                });
+                this.dataDownloaded();
             });
     }
 
@@ -351,15 +353,20 @@ class App extends React.Component {
                         categoryId: recent.categoryId
                     });
                 }
-                this.setState({
-                    dataDownloaded: true
-                });
+                this.dataDownloaded();
             })
             .catch((e) => {
-                this.setState({
-                    dataDownloaded: true
-                });
+                this.dataDownloaded();
             });
+    }
+
+    dataDownloaded = () => {
+        this.setState({
+            queryValues: this.savedQueryValues,
+            dataDownloaded: true
+        }, () => {
+            console.log(this.state.queryValues);
+        });
     }
 }
 
