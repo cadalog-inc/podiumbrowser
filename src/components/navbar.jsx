@@ -11,7 +11,8 @@ export class NavBar extends React.Component {
             selectedCategoryId: 1,
             searchTerm: "",
             onlyFree: false,
-            onlyRecent: false
+            onlyRecent: false,
+            sortBy: "File Name"
         }
         this.search = "";
     }
@@ -23,6 +24,7 @@ export class NavBar extends React.Component {
         let searchTerm = "";
         let onlyFree = false;
         let onlyRecent = false;
+        let sortBy = "File Name (A to Z)";
 
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
@@ -36,11 +38,15 @@ export class NavBar extends React.Component {
         if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
             onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
         }
+        if (queryValues.sortBy !== undefined && queryValues.sortBy !== "") {
+            sortBy = queryValues.sortBy;
+        }
         this.setState({
             categoryId: categoryId,
             searchTerm: searchTerm,
             onlyFree: onlyFree,
-            onlyRecent: onlyRecent
+            onlyRecent: onlyRecent, 
+            sortBy: sortBy
         });
     }
 
@@ -52,6 +58,7 @@ export class NavBar extends React.Component {
             let searchTerm = "";
             let onlyFree = false;
             let onlyRecent = false;
+            let sortBy = "File Name (A to Z)";
 
             if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
                 categoryId = queryValues.categoryId;
@@ -65,12 +72,16 @@ export class NavBar extends React.Component {
             if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
                 onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
             }
+            if (queryValues.sortBy !== undefined && queryValues.sortBy !== "") {
+                sortBy = queryValues.sortBy;
+            }
 
             this.setState({
                 categoryId: categoryId,
                 searchTerm: searchTerm,
                 onlyFree: onlyFree,
-                onlyRecent: onlyRecent
+                onlyRecent: onlyRecent, 
+                sortBy: sortBy
             });
         }
     }
@@ -214,7 +225,7 @@ export class NavBar extends React.Component {
         this.setState({
             selectedCategoryId: value
         }, () => {
-            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=8&onlyFree=${this.state.onlyFree}&onlyRecent=${this.state.onlyRecent}`);
+            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=8&onlyFree=${this.state.onlyFree}&onlyRecent=${this.state.onlyRecent}&sortBy=${this.state.sortBy}`);
         });
     }
 
@@ -262,6 +273,6 @@ export class NavBar extends React.Component {
     }
 
     handleOnSearchClick = () => {
-        this.props.history.push(`/?categoryId=${this.state.categoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=8&onlyFree=${this.state.onlyFree}&onlyRecent=${this.state.onlyRecent}`);
+        this.props.history.push(`/?categoryId=${this.state.categoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=8&onlyFree=${this.state.onlyFree}&onlyRecent=${this.state.onlyRecent}&sortBy=${this.state.sortBy}`);
     }
 }

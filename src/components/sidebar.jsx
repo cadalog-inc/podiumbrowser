@@ -8,6 +8,8 @@ export class SideBar extends React.Component {
         let onlyFree = false;
         let onlyRecent = false;
         let pageSize = 8;
+        let sortBy = "File Name (A to Z)";
+
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
         }
@@ -23,6 +25,10 @@ export class SideBar extends React.Component {
         if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
             onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
         }
+        if (queryValues.sortBy !== undefined && queryValues.sortBy !== "") {
+            sortBy = queryValues.sortBy;
+        }
+
         const selectedCategory = this.props.categories.find((category) => {
             return category.id === categoryId
         });
@@ -43,7 +49,7 @@ export class SideBar extends React.Component {
                     selectedCategory.id !== 1 && selectedCategory.id !== 217 && selectedCategory.id !== 218 ? <React.Fragment>
                         <ul>
                             {
-                                this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, searchTerm, onlyFree, onlyRecent)
+                                this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, searchTerm, onlyFree, onlyRecent, sortBy)
                             }
                         </ul>
                         <hr />
@@ -51,20 +57,20 @@ export class SideBar extends React.Component {
                 }
                 <div className="form-check">
                     <input className="form-check-input" type="checkbox" defaultChecked={onlyFree} onChange={(e) => {
-                        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${e.target.checked}&onlyRecent=${onlyRecent}`);
+                        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${e.target.checked}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
                     }} id="freeChecked" />
                     <label className="form-check-label" htmlFor="freeChecked">
                         Show only free files
                     </label>
                 </div>
-                <div className="form-check" hidden={selectedCategory.id === 1} >
+                {/* <div className="form-check" hidden={selectedCategory.id === 1} >
                     <input className="form-check-input" type="checkbox" onChange={(e) => {
-                        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${e.target.checked}`);
+                        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${e.target.checked}&sortBy=${sortBy}`);
                     }} value="" id="recentChecked" />
                     <label className="form-check-label" htmlFor="recentChecked">
                         Show only recent files
                     </label>
-                </div>
+                </div> */}
                 <hr />
                 {
 
@@ -74,7 +80,7 @@ export class SideBar extends React.Component {
                                 homeCategories.map((category, index) => {
                                     return (
                                         <li key={index}>
-                                            <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent)}>
+                                            <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
                                                 {category.title}
                                             </span>
                                         </li>
@@ -90,7 +96,7 @@ export class SideBar extends React.Component {
                         primaryCategories.map((category, index) => {
                             return category.title !== 'HDR' ? (
                                 <li key={index}>
-                                    <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent)}>
+                                    <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
                                         {category.title}
                                     </span>
                                 </li>
@@ -102,24 +108,24 @@ export class SideBar extends React.Component {
         );
     }
 
-    handleCategoryChange = (value, searchTerm, onlyFree, onlyRecent) => {
-        this.props.history.push(`/?categoryId=${value}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}`);
+    handleCategoryChange = (value, searchTerm, onlyFree, onlyRecent, sortBy) => {
+        this.props.history.push(`/?categoryId=${value}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
     }
 
-    renderPath = (path, index, categories, searchTerm, onlyFree, onlyRecent) => {
+    renderPath = (path, index, categories, searchTerm, onlyFree, onlyRecent, sortBy) => {
         const category = path[index];
         return category ? index < path.length - 1 ? (
             <li>
-                <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent)}>
+                <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
                     {category.title}
                 </span>
                 <ul>
-                    {this.renderPath(path, index + 1, categories, searchTerm, onlyFree, onlyRecent)}
+                    {this.renderPath(path, index + 1, categories, searchTerm, onlyFree, onlyRecent, sortBy)}
                 </ul>
             </li>
         ) : (
                 <li>
-                    <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent)}>
+                    <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
                         {category.title}
                     </span>
                     <ul>
@@ -128,7 +134,7 @@ export class SideBar extends React.Component {
                                 categories.map((item, index) => {
                                     return item.title !== 'HDR' ? (
                                         <li key={index}>
-                                            <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(item.id, searchTerm, onlyFree, onlyRecent)}>
+                                            <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(item.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
                                                 {item.title}
                                             </span>
                                         </li>
