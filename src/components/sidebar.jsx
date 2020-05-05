@@ -23,21 +23,19 @@ export class SideBar extends React.Component {
         if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
             onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
         }
-        let categories = this.props.getSubCategories(categoryId);
-        if (categoryId === 1) {
-            categories = categories.filter((category) => {
-                return category.id === 217 || category.id === 218;
-            });
-        }
         const selectedCategory = this.props.categories.find((category) => {
             return category.id === categoryId
         });
-        if (categories.length === 0) {
-
-            categories.push(selectedCategory);
+        let categories = this.props.getSubCategories(categoryId);
+        if (categoryId === 1 || categories.length === 0) {
+            categories = [selectedCategory];
         }
         const primaryCategories = this.props.getSubCategories(1);
-        console.log(primaryCategories);
+
+        const homeCategories = this.props.categories.filter((category) => {
+            return category.id === 217 || category.id === 218;
+        });
+
         return (
             <React.Fragment>
                 <hr />
@@ -55,15 +53,34 @@ export class SideBar extends React.Component {
                         Show only free files
                     </label>
                 </div>
-                <div className="form-check">
+                <div className="form-check" hidden={selectedCategory.id === 1} >
                     <input className="form-check-input" type="checkbox" onChange={(e) => {
                         this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${e.target.checked}`);
-                    }} value="" id="recentChecked" disabled={selectedCategory.id === 1} />
+                    }} value="" id="recentChecked" />
                     <label className="form-check-label" htmlFor="recentChecked">
                         Show only recent files
                     </label>
                 </div>
                 <hr />
+                {
+
+                    this.props.user.key !== '' ? <React.Fragment>
+                    <ul>
+                        {
+                            homeCategories.map((category, index) => {
+                                return (
+                                    <li key={index}>
+                                        <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent)}>
+                                            {category.title}
+                                        </span>
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                    <hr />
+                    </React.Fragment> : null
+                }
                 <ul>
                     {
                         primaryCategories.map((category, index) => {

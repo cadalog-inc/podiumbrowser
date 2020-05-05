@@ -47,6 +47,7 @@ export class Page extends React.Component {
                     <Row>
                         <Col lg={2} md={3} sm={4} xm={5}>
                             <SideBar
+                                user={this.props.user}
                                 categories={categories}
                                 parseQueryString={this.props.parseQueryString}
                                 getSubCategories={this.props.getSubCategories}
