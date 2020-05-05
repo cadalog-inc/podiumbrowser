@@ -14,7 +14,7 @@ class App extends React.Component {
         this.state = {
             user: {
                 "id": 1,
-                "key": "2a2d4d95325c15bf" // 2a2d4d95325c15bf
+                "key": "" // 2a2d4d95325c15bf
             },
             categories: [],
             items: [],
