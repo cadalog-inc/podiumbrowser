@@ -19,10 +19,8 @@ class App extends React.Component {
             categories: [],
             items: [],
             relationships: [],
-            queryValues: "",
             dataDownloaded: false
         };
-        this.savedQueryValues = "";
         window["setLicense"] = this.setLicense.bind(this);
     }
 
@@ -54,7 +52,7 @@ class App extends React.Component {
                                         />
                                         <NavBar
                                             queryValues={this.state.queryValues}
-                                            setQueryValues={this.setQueryValues}
+                                            saveQueryValues={this.saveQueryValues}
                                             handleCategoryChange={this.handleCategoryChange}
                                             handleKeySearchChange={this.handleKeySearchChange}
                                             items={this.state.items}
@@ -237,12 +235,6 @@ class App extends React.Component {
         return values;
     }
 
-    setQueryValues(queryValues) {
-        if(window.sketchup !== undefined) {
-            sketchup.setQueryValues(queryValues);
-        }
-    }
-
     getData = () => {
         this.getCategories(); // begins a chain of data downloads from categories to items
     }
@@ -291,8 +283,7 @@ class App extends React.Component {
         }
     }
 
-    setLicense(license, isValid, queryValues) {
-        this.savedQueryValues = queryValues !== undefined ? queryValues : "";
+    setLicense(license, isValid) {
         if (isValid) {
             this.getUser(license.key);
         } else {
@@ -362,10 +353,7 @@ class App extends React.Component {
 
     dataDownloaded = () => {
         this.setState({
-            queryValues: this.savedQueryValues,
             dataDownloaded: true
-        }, () => {
-            console.log(this.state.queryValues);
         });
     }
 }

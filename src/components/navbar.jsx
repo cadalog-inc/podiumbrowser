@@ -18,10 +18,12 @@ export class NavBar extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.queryValues);
-        if(this.props.queryValues !== "") {    
-            this.props.history.push(`/${this.props.queryValues}`);
+        // use most recent query values persisted in local storage
+        const savedQueryValues = localStorage.getItem("PodiumBrowserStandaloneQueryValues") || "";
+        if(savedQueryValues !== "") {
+            this.props.history.push(`/${savedQueryValues}`);
         }
+
         this.search = this.props.location.search;
         const queryValues = this.props.parseQueryString(this.props.location.search);
         let categoryId = 1;
@@ -57,7 +59,10 @@ export class NavBar extends React.Component {
     componentDidUpdate(nextProps) {
         if (this.search !== this.props.location.search) {
             this.search = this.props.location.search;
-            this.props.setQueryValues(this.props.location.search);
+
+            // persist latest query values in local storage
+            localStorage.setItem("PodiumBrowserStandaloneQueryValues", this.props.location.search);
+
             const queryValues = this.props.parseQueryString(this.props.location.search);
             let categoryId = 1;
             let searchTerm = "";
