@@ -13,7 +13,7 @@ export class Page extends React.Component {
         let onlyFree = false;
         let onlyRecent = false;
         let pageIndex = 0;
-        let pageSize = 8;
+        let pageSize = 6;
         let sortBy = "File Name (A to Z)";
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
             categoryId = queryValues.categoryId;
@@ -160,7 +160,7 @@ export class Page extends React.Component {
                                                     </Col>
                                                     <Col></Col>
                                                     <Col>
-                                                        <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`}>See All</Link>
+                                                        <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=6&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`}>See All</Link>
                                                     </Col>
                                                 </Row> : items.length > 0 ?
                                                     <React.Fragment>
@@ -193,11 +193,11 @@ export class Page extends React.Component {
                                                                                 {pageSize}
                                                                             </Dropdown.Toggle>
                                                                             <Dropdown.Menu>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>8</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>16</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>32</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>64</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>128</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(6, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>6</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(12, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>12</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(24, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>24</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(48, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>48</Dropdown.Item>
+                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(96, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>96</Dropdown.Item>
                                                                             </Dropdown.Menu>
                                                                         </Dropdown>
                                                                         <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>

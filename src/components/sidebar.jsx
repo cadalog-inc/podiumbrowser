@@ -7,7 +7,7 @@ export class SideBar extends React.Component {
         let searchTerm = "";
         let onlyFree = false;
         let onlyRecent = false;
-        let pageSize = 8;
+        let pageSize = 6;
         let sortBy = "File Name (A to Z)";
 
         if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
@@ -109,7 +109,7 @@ export class SideBar extends React.Component {
     }
 
     handleCategoryChange = (value, searchTerm, onlyFree, onlyRecent, sortBy) => {
-        this.props.history.push(`/?categoryId=${value}&searchTerm=${searchTerm}&pageIndex=0&pageSize=8&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
+        this.props.history.push(`/?categoryId=${value}&searchTerm=${searchTerm}&pageIndex=0&pageSize=6&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
     }
 
     renderPath = (path, index, categories, searchTerm, onlyFree, onlyRecent, sortBy) => {

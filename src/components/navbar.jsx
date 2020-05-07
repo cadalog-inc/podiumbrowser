@@ -235,7 +235,7 @@ export class NavBar extends React.Component {
         this.setState({
             selectedCategoryId: value
         }, () => {
-            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=8&onlyFree=${this.state.onlyFree}&onlyRecent=${this.state.onlyRecent}&sortBy=${this.state.sortBy}`);
+            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=6&onlyFree=${this.state.onlyFree}&onlyRecent=${this.state.onlyRecent}&sortBy=${this.state.sortBy}`);
         });
     }
 
@@ -283,6 +283,6 @@ export class NavBar extends React.Component {
     }
 
     handleOnSearchClick = () => {
-        this.props.history.push(`/?categoryId=${this.state.categoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=8&onlyFree=${this.state.onlyFree}&onlyRecent=${this.state.onlyRecent}&sortBy=${this.state.sortBy}`);
+        this.props.history.push(`/?categoryId=${this.state.categoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=6&onlyFree=${this.state.onlyFree}&onlyRecent=${this.state.onlyRecent}&sortBy=${this.state.sortBy}`);
     }
 }
