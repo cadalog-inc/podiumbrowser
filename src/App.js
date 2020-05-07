@@ -184,8 +184,18 @@ class App extends React.Component {
             "Sports equipment",
             "Assembly spaces",
             "Full 3D Models",
-            "Windows"
+            "Windows",
+            "Bedroom",
+            "Exterior residential",
+            "Exterior public",
+            // "HDR",
+            "Holiday"
         ];
+
+
+
+
+
         const primaryCategories = [];
         const l = primaryCategoryNames.length;
         for (let i = 0; i < l; i++) {
