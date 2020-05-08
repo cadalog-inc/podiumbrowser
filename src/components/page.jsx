@@ -221,7 +221,7 @@ export class Page extends React.Component {
                                             {
                                                 items.slice(itemsBegin, itemsEnd).map((item, index) => {
                                                     return (
-                                                        <Col key={index} style={{ marginTop: 20, minWidth: 150 }} xl={1} lg={2} md={3} sm={4} xs={6}>
+                                                        <Col key={index} style={{ marginTop: 20, minWidth: 175 }} xl={1} lg={2} md={3} sm={4} xs={6}>
                                                             <div
                                                                 style={{
                                                                     position: 'relative',
