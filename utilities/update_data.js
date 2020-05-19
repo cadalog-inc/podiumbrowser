@@ -13,7 +13,7 @@ class Files {
     }
     main() {
         this.getCategories();
-        this.getFiles('https://v3.pdm-plants-textures.com/api/files?limit=1000&page=', 1);
+        this.getItems('https://v3.pdm-plants-textures.com/api/files?limit=1000&page=', 1);
     }
 
     getCategories(categories) {
@@ -41,7 +41,7 @@ class Files {
             })
     }
 
-    getFiles(path, page) {
+    getItems(path, page) {
         axios.get(`${path}${page}`)
             .then((response) => {
                 const files = response.data.data;
@@ -65,9 +65,9 @@ class Files {
 
                 console.log(response.data.current_page);
                 if (response.data.next_page_url) {
-                    this.getFiles(path, page + 1);
+                    this.getItems(path, page + 1);
                 } else {
-                    fs.writeFile(`./utilities/json/files.json`, JSON.stringify(this.items), (err) => {
+                    fs.writeFile(`./utilities/json/items.json`, JSON.stringify(this.items), (err) => {
                         if (err) return console.log(err);
                         console.log(`${this.items.length} items`);
                         console.log("complete");
