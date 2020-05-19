@@ -8,7 +8,7 @@ import { faStar, faAngleLeft, faAngleRight, faDownload } from '@fortawesome/free
 export class Page extends React.Component {
     render() {
         const queryValues = this.props.parseQueryString(this.props.location.search);
-        let categoryId = 1;
+        let categoryId = this.props.getHomeCategory();
         let searchTerm = "";
         let onlyFree = false;
         let onlyRecent = false;
@@ -37,7 +37,7 @@ export class Page extends React.Component {
             sortBy = queryValues.sortBy;
         }
 
-        let categories = categoryId === 1 ? [] : this.props.getSubCategories(categoryId);
+        let categories = this.props.isHomeCategory(categoryId) ? [] : this.props.getSubCategories(categoryId);
         const selectedCategory = this.props.categories.find((category) => {
             return category.id === categoryId
         });
@@ -56,6 +56,8 @@ export class Page extends React.Component {
                                 parseQueryString={this.props.parseQueryString}
                                 getSubCategories={this.props.getSubCategories}
                                 calculatePathToCategory={this.calculatePathToCategory}
+                                getHomeCategory={this.getHomeCategory}
+                                isHomeCategory={this.props.isHomeCategory}
                                 {...this.props}
                             />
                         </Col>
@@ -69,7 +71,7 @@ export class Page extends React.Component {
                                     </Row> : null
                             }
                             {categories.map((category, index) => {
-                                let items = (category.id === 1 ? this.props.items : this.props.getItemsInCategory(category.id)).filter((item) => {
+                                let items = (this.props.isHomeCategory(category.id) ? this.props.items : this.props.getItemsInCategory(category.id)).filter((item) => {
                                     return (onlyFree === false || item.type === 'free') && (searchTerm === "" || item.title.includes(searchTerm) || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
                                 });
                                 if (onlyRecent) {
@@ -145,8 +147,8 @@ export class Page extends React.Component {
                                         });
                                     }
                                 }
-                                let itemsBegin = categories.length === 1 || category.id === 1 ? pageIndex * pageSize : 0;
-                                let itemsEnd = categories.length === 1 || category.id === 1 ? itemsBegin + pageSize : 8;
+                                let itemsBegin = categories.length === 1 || category.id === this.props.getHomeCategory() ? pageIndex * pageSize : 0;
+                                let itemsEnd = categories.length === 1 || category.id === this.props.getHomeCategory() ? itemsBegin + pageSize : 8;
                                 let itemsLength = items.length;
                                 let pageBack = pageIndex - 1 > 0 ? pageIndex - 1 : 0;
                                 let pageNext = this.calculateNextPage(pageIndex, pageSize, itemsLength);
@@ -417,13 +419,13 @@ export class Page extends React.Component {
         const selectedCategory = this.props.categories.find((category) => {
             return category.id === categoryId
         });
-        if (selectedCategory.id === 1) {
+        if (selectedCategory.id === this.props.getHomeCategory()) {
             path.push(selectedCategory);
         } else {
             const parentCategory = this.props.categories.find((category) => {
                 return category.id === selectedCategory.parentId
             });
-            if (parentCategory.id === 1) {
+            if (parentCategory.id === this.props.getHomeCategory()) {
                 path.push(parentCategory);
                 path.push(selectedCategory);
             } else {
@@ -444,8 +446,8 @@ export class Page extends React.Component {
         });
 
         const pathToItem = {
-            lastCategoryId: 1, // starts at home/1
-            categoryIds: [1]
+            lastCategoryId: this.props.getHomeCategory(), // starts at home/1
+            categoryIds: [this.props.getHomeCategory()]
         };
 
         let sanity = 0; // sanity check, limit depth of path to < 10

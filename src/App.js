@@ -16,6 +16,7 @@ class App extends React.Component {
                 "id": 1,
                 "key": "" // 2a2d4d95325c15bf
             },
+            homeCategoryId: 1,
             categories: [],
             items: [],
             relationships: [],
@@ -48,6 +49,7 @@ class App extends React.Component {
                                             categories={this.state.categories}
                                             getSubCategories={this.getSubCategories}
                                             parseQueryString={this.parseQueryString}
+                                            getHomeCategory={this.getHomeCategory}
                                             {...props}
                                         />
                                         <Page
@@ -60,6 +62,8 @@ class App extends React.Component {
                                             parseQueryString={this.parseQueryString}
                                             handleDownloadClick={this.handleDownloadClick}
                                             handleFavoriteClick={this.handleFavoriteClick}
+                                            getHomeCategory={this.getHomeCategory}
+                                            isHomeCategory={this.isHomeCategory}
                                             {...props}
                                         />
                                     </React.Fragment>
@@ -139,8 +143,26 @@ class App extends React.Component {
         }
     }
 
+    findHomeCategory = (categories) => {
+        const l = categories.length;
+        for (let c = 0; c < l; c++) {
+            const category = categories[c];
+            if (category.title === "Home") {
+                return category;
+            }
+        }
+    }
+
+    getHomeCategory = () => {
+        return this.state.homeCategoryId;
+    }
+
+    isHomeCategory = (categoryId) => {
+        return categoryId === this.getHomeCategory();
+    }
+
     getSubCategories = (categoryId) => {
-        if (categoryId === 1) {
+        if (this.isHomeCategory(categoryId)) {
             return this.getPrimaryCategories();
         } else {
             const subCategories = this.state.categories.filter((category) => {
@@ -252,7 +274,12 @@ class App extends React.Component {
                 this.setState({
                     categories: response.data
                 }, () => {
-                    this.getRelationships();
+                    const homeCategory = this.findHomeCategory(this.state.categories);
+                    this.setState({
+                        homeCategory: homeCategory.id ? homeCategory.id : 1
+                    }, () => {
+                        this.getRelationships();
+                    });
                 });
             });
     }

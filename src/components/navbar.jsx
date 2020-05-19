@@ -8,7 +8,7 @@ export class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            selectedCategoryId: 1,
+            selectedCategoryId: this.props.getHomeCategory(),
             searchTerm: "",
             onlyFree: false,
             onlyRecent: false,
@@ -26,7 +26,7 @@ export class NavBar extends React.Component {
 
         this.search = this.props.location.search;
         const queryValues = this.props.parseQueryString(this.props.location.search);
-        let categoryId = 1;
+        let categoryId = this.props.getHomeCategory();
         let searchTerm = "";
         let onlyFree = false;
         let onlyRecent = false;
@@ -64,7 +64,7 @@ export class NavBar extends React.Component {
             localStorage.setItem("PodiumBrowserStandaloneQueryValues", this.props.location.search);
 
             const queryValues = this.props.parseQueryString(this.props.location.search);
-            let categoryId = 1;
+            let categoryId = this.props.getHomeCategory();
             let searchTerm = "";
             let onlyFree = false;
             let onlyRecent = false;
@@ -121,7 +121,7 @@ export class NavBar extends React.Component {
     }
 
     render() {
-        let primaryCategories = this.props.getSubCategories(1);
+        let primaryCategories = this.props.getSubCategories(this.props.getHomeCategory());
         const suggestions = this.state.searchTerm === "" ? [] : this.findSuggestions(this.state.searchTerm);
         return this.props.items.length > 0 ? (
             <React.Fragment>
@@ -133,7 +133,7 @@ export class NavBar extends React.Component {
                         <Button type="button" variant="dark" onClick={() => { this.handleNextClick() }}>
                             <FontAwesomeIcon icon={faArrowRight} />
                         </Button>
-                        <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(1) }}>
+                        <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(this.props.getHomeCategory()) }}>
                             <FontAwesomeIcon icon={faHome} />
                         </Button>
                         {/* <Button type="button" variant="dark" onClick={() => { window.location.reload(); }}>

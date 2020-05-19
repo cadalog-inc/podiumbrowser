@@ -3,7 +3,7 @@ import React from 'react';
 export class SideBar extends React.Component {
     render() {
         const queryValues = this.props.parseQueryString(this.props.location.search);
-        let categoryId = 1;
+        let categoryId = this.props.getHomeCategory();
         let searchTerm = "";
         let onlyFree = false;
         let onlyRecent = false;
@@ -33,10 +33,10 @@ export class SideBar extends React.Component {
             return category.id === categoryId
         });
         let categories = this.props.getSubCategories(categoryId);
-        if (categoryId === 1 || categories.length === 0) {
+        if (this.props.isHomeCategory(categoryId) || categories.length === 0) {
             categories = [selectedCategory];
         }
-        const primaryCategories = this.props.getSubCategories(1);
+        const primaryCategories = this.props.getSubCategories(this.props.getHomeCategory());
 
         const homeCategories = this.props.categories.filter((category) => {
             return category.id === 217 || category.id === 218;
@@ -51,7 +51,7 @@ export class SideBar extends React.Component {
                     border: "1px solid #e5e5e5"
                 }}>
                     {
-                        selectedCategory.id !== 1 && selectedCategory.id !== 217 && selectedCategory.id !== 218 ? <React.Fragment>
+                        selectedCategory.id !== this.props.getHomeCategory() && selectedCategory.id !== 217 && selectedCategory.id !== 218 ? <React.Fragment>
                             <ul>
                                 {
                                     this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, searchTerm, onlyFree, onlyRecent, sortBy)

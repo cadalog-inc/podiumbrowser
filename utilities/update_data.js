@@ -4,11 +4,15 @@ const fs = require('fs');
 class Files {
     constructor() {
         this.items = [];
-        this.categories = [{
-            "id": 1,
-            "title": "Home",
-            "parentId": 0
-        }];
+        this.homeCategory = {
+            id: 1,
+            title: "Home",
+            parentId: 0
+        };
+        this.updateDir = "public"; // utilities/json
+        this.categories = [
+            this.homeCategory
+        ];
         this.relationships = [];
     }
     main() {
@@ -25,15 +29,16 @@ class Files {
                 for (let c = 0; c < l; c++) {
                     const category = categories[c];
                     if (category.fileCount !== 0 && category.parents.length !== 0) {
+                        const parentId = category.parents[0].parent_id;
                         this.categories.push({
                             id: category.id,
                             title: category.title,
-                            parentId: category.parents[0].parent_id
+                            parentId: parentId === 0 ? this.homeCategory.id : parentId
                         });
                     }
                 }
 
-                fs.writeFile(`./utilities/json/categories.json`, JSON.stringify(this.categories), (err) => {
+                fs.writeFile(`./${this.updateDir}/categories.json`, JSON.stringify(this.categories), (err) => {
                     if (err) return console.log(err);
                     console.log(this.categories.length);
                     console.log("complete");
@@ -67,12 +72,12 @@ class Files {
                 if (response.data.next_page_url) {
                     this.getItems(path, page + 1);
                 } else {
-                    fs.writeFile(`./utilities/json/items.json`, JSON.stringify(this.items), (err) => {
+                    fs.writeFile(`./${this.updateDir}/items.json`, JSON.stringify(this.items), (err) => {
                         if (err) return console.log(err);
                         console.log(`${this.items.length} items`);
                         console.log("complete");
                     });
-                    fs.writeFile(`./utilities/json/relationships.json`, JSON.stringify(this.relationships), (err) => {
+                    fs.writeFile(`./${this.updateDir}/relationships.json`, JSON.stringify(this.relationships), (err) => {
                         if (err) return console.log(err);
                         console.log(`${this.relationships.length} relationships`);
                         console.log("complete");
