@@ -11,7 +11,7 @@ class Files {
         };
         this.updateDir = "public"; // utilities/json
         this.categories = [
-            this.homeCategory
+            this.homeCategory,
         ];
         this.relationships = [];
     }
@@ -37,6 +37,17 @@ class Files {
                         });
                     }
                 }
+
+                this.categories.push({
+                    id: 217,
+                    title: "My Favorites",
+                    parentId: this.homeCategory.id
+                });
+                this.categories.push({
+                    id: 218,
+                    title: "Recent Downloaded",
+                    parentId: this.homeCategory.id
+                });
 
                 fs.writeFile(`./${this.updateDir}/categories.json`, JSON.stringify(this.categories), (err) => {
                     if (err) return console.log(err);
