@@ -38,18 +38,6 @@ class App extends React.Component {
                             (props) => {
                                 return (
                                     <React.Fragment>
-                                        <Page
-                                            user={this.state.user}
-                                            categories={this.state.categories}
-                                            getSubCategories={this.getSubCategories}
-                                            items={this.state.items}
-                                            getItemsInCategory={this.getItemsInCategory}
-                                            relationships={this.state.relationships}
-                                            parseQueryString={this.parseQueryString}
-                                            handleDownloadClick={this.handleDownloadClick}
-                                            handleFavoriteClick={this.handleFavoriteClick}
-                                            {...props}
-                                        />
                                         <NavBar
                                             queryValues={this.state.queryValues}
                                             saveQueryValues={this.saveQueryValues}
@@ -60,6 +48,18 @@ class App extends React.Component {
                                             categories={this.state.categories}
                                             getSubCategories={this.getSubCategories}
                                             parseQueryString={this.parseQueryString}
+                                            {...props}
+                                        />
+                                        <Page
+                                            user={this.state.user}
+                                            categories={this.state.categories}
+                                            getSubCategories={this.getSubCategories}
+                                            items={this.state.items}
+                                            getItemsInCategory={this.getItemsInCategory}
+                                            relationships={this.state.relationships}
+                                            parseQueryString={this.parseQueryString}
+                                            handleDownloadClick={this.handleDownloadClick}
+                                            handleFavoriteClick={this.handleFavoriteClick}
                                             {...props}
                                         />
                                     </React.Fragment>
@@ -191,10 +191,6 @@ class App extends React.Component {
             // "HDR",
             "Holiday"
         ];
-
-
-
-
 
         const primaryCategories = [];
         const l = primaryCategoryNames.length;

@@ -1,0 +1,3483 @@
+{
+    "data": [
+        {
+            "id": 6,
+            "category_name": "materials",
+            "title": "Materials",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 1
+                }
+            ],
+            "fileCount": 6480
+        },
+        {
+            "id": 9,
+            "category_name": "people_and_animals",
+            "title": "People & animals",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 5
+                }
+            ],
+            "fileCount": 1609
+        },
+        {
+            "id": 15,
+            "category_name": "design_fixtures",
+            "title": "Design Fixtures",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 16,
+            "category_name": "supermodular_exterior",
+            "title": "Supermodular Exterior",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 17,
+            "category_name": "supermodular_interior",
+            "title": "Supermodular Interior",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 18,
+            "category_name": "tiago",
+            "title": "Tiago",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 19,
+            "category_name": "vector_pro",
+            "title": "Vector Pro",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 20,
+            "category_name": "household",
+            "title": "Household",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 22,
+            "category_name": "sanitary",
+            "title": "Sanitary",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 23,
+            "category_name": "vector_pro_household",
+            "title": "Vector Pro Household",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 24,
+            "category_name": "vector_pro_kitchen",
+            "title": "Vector Pro Kitchen",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 25,
+            "category_name": "vector_pro_picture_frames",
+            "title": "Vector Pro Picture Frames",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 26,
+            "category_name": "vector_pro_sideboard",
+            "title": "Vector Pro Sideboard",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 27,
+            "category_name": "vector_pro",
+            "title": "Vector Pro",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 28,
+            "category_name": "bandb_italia",
+            "title": "B and B Italia",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 29,
+            "category_name": "equipment",
+            "title": "Equipment",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 30,
+            "category_name": "herman_miller",
+            "title": "Herman Miller",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 409,
+            "category_name": "leather",
+            "title": "Leather",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 23
+        },
+        {
+            "id": 32,
+            "category_name": "vector_pro_bath",
+            "title": "Vector Pro Bath",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 33,
+            "category_name": "vector_pro_chairs",
+            "title": "Vector Pro Chairs",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 34,
+            "category_name": "vector_pro_sofas",
+            "title": "Vector Pro Sofas",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 36,
+            "category_name": "tiago",
+            "title": "Tiago",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 37,
+            "category_name": "vector_pro_bedroom",
+            "title": "Vector Pro Bedroom",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 38,
+            "category_name": "vector_pro_deco",
+            "title": "Vector Pro Deco",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 39,
+            "category_name": "vector_pro_equipment",
+            "title": "Vector Pro Equipment",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 40,
+            "category_name": "zanotta",
+            "title": "Zonotta",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 61,
+            "category_name": "cadplants",
+            "title": "CAD Plants",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 62,
+            "category_name": "indoor",
+            "title": "Indoor",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 63,
+            "category_name": "northamericantrees3d",
+            "title": "North American Trees 3D",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 64,
+            "category_name": "shrubs",
+            "title": "Shrubs",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 65,
+            "category_name": "trees",
+            "title": "Trees",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 66,
+            "category_name": "ozbreed",
+            "title": "Ozbreed",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 67,
+            "category_name": "plants",
+            "title": "Plants",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 68,
+            "category_name": "2dtrees",
+            "title": "2D Trees",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 69,
+            "category_name": "3dplants",
+            "title": "3D Plants",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 70,
+            "category_name": "3dtrees",
+            "title": "3D Trees",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 71,
+            "category_name": "more_3dplants",
+            "title": "More 3D Plants",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 72,
+            "category_name": "southpacificplants",
+            "title": "South Pacific Plants",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 73,
+            "category_name": "cars",
+            "title": "Cars",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 136,
+                    "sort_order": 1,
+                    "parent_title": "Vehicles"
+                }
+            ],
+            "fileCount": 159
+        },
+        {
+            "id": 77,
+            "category_name": "plastic",
+            "title": "Plastic",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": 11,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 2
+        },
+        {
+            "id": 78,
+            "category_name": "transparent",
+            "title": "Transparent",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": 16,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 13
+        },
+        {
+            "id": 79,
+            "category_name": "water",
+            "title": "Water",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": 17,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 1
+        },
+        {
+            "id": 88,
+            "category_name": "wood",
+            "title": "Wood",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": 18,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 232
+        },
+        {
+            "id": 92,
+            "category_name": "bollards",
+            "title": "Bollards",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": 3,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 23
+        },
+        {
+            "id": 93,
+            "category_name": "escofet",
+            "title": "Escofet",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 94,
+            "category_name": "general",
+            "title": "General",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 95,
+            "category_name": "kitchenaid",
+            "title": "KitchenAid",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 96,
+            "category_name": "vekso",
+            "title": "Vekso",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 97,
+            "category_name": "woodhouse",
+            "title": "Woodhouse",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 98,
+            "category_name": "birds",
+            "title": "Birds",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 99,
+            "category_name": "people",
+            "title": "People",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 103,
+            "category_name": "santacole_exterior",
+            "title": "Santacole Exterior",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 104,
+            "category_name": "louispoulsen_exterior",
+            "title": "Louis Poulsen Exterior",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 107,
+            "category_name": "winter",
+            "title": "Winter",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 9,
+                    "sort_order": 2,
+                    "parent_title": "People & animals"
+                }
+            ],
+            "fileCount": 86
+        },
+        {
+            "id": 108,
+            "category_name": "summer",
+            "title": "Summer",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 9,
+                    "sort_order": 1,
+                    "parent_title": "People & animals"
+                }
+            ],
+            "fileCount": 964
+        },
+        {
+            "id": 110,
+            "category_name": "trucks",
+            "title": "Trucks",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 136,
+                    "sort_order": 2,
+                    "parent_title": "Vehicles"
+                }
+            ],
+            "fileCount": 22
+        },
+        {
+            "id": 111,
+            "category_name": "stone_granite",
+            "title": "Stone - granite",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": 5,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 123
+        },
+        {
+            "id": 112,
+            "category_name": "ikea",
+            "title": "IKEA",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 114,
+            "category_name": "electronic",
+            "title": "Electronic",
+            "group_id": 1,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 7
+                }
+            ],
+            "fileCount": 117
+        },
+        {
+            "id": 115,
+            "category_name": "sound_systems",
+            "title": "Sound systems",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 114,
+                    "sort_order": 2,
+                    "parent_title": "Electronic"
+                }
+            ],
+            "fileCount": 43
+        },
+        {
+            "id": 116,
+            "category_name": "kitchen",
+            "title": "Kitchen",
+            "group_id": 1,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 1
+                }
+            ],
+            "fileCount": 967
+        },
+        {
+            "id": 117,
+            "category_name": "accessories",
+            "title": "Accessories",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 144
+        },
+        {
+            "id": 118,
+            "category_name": "refrigerators",
+            "title": "Refrigerators",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 20
+        },
+        {
+            "id": 119,
+            "category_name": "sinks_and_taps",
+            "title": "Sinks",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 145
+        },
+        {
+            "id": 120,
+            "category_name": "dining",
+            "title": "Dining",
+            "group_id": 1,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 4
+                }
+            ],
+            "fileCount": 478
+        },
+        {
+            "id": 121,
+            "category_name": "tables",
+            "title": "Tables",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 122,
+                    "sort_order": 4,
+                    "parent_title": "Living"
+                }
+            ],
+            "fileCount": 248
+        },
+        {
+            "id": 122,
+            "category_name": "living",
+            "title": "Living",
+            "group_id": 1,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 5
+                }
+            ],
+            "fileCount": 1510
+        },
+        {
+            "id": 123,
+            "category_name": "chairs",
+            "title": "Chairs",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 122,
+                    "sort_order": 1,
+                    "parent_title": "Living"
+                }
+            ],
+            "fileCount": 208
+        },
+        {
+            "id": 124,
+            "category_name": "sofas",
+            "title": "Sofas",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 122,
+                    "sort_order": 2,
+                    "parent_title": "Living"
+                }
+            ],
+            "fileCount": 563
+        },
+        {
+            "id": 125,
+            "category_name": "cooking",
+            "title": "Cooking",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 41
+        },
+        {
+            "id": 126,
+            "category_name": "decoration",
+            "title": "Decoration",
+            "group_id": 1,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 8
+                }
+            ],
+            "fileCount": 692
+        },
+        {
+            "id": 415,
+            "category_name": "picture_lights",
+            "title": "Picture_lights",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 305,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures interior"
+                }
+            ],
+            "fileCount": 10
+        },
+        {
+            "id": 128,
+            "category_name": "portable",
+            "title": "Portable",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 114,
+                    "sort_order": 4,
+                    "parent_title": "Electronic"
+                }
+            ],
+            "fileCount": 22
+        },
+        {
+            "id": 129,
+            "category_name": "appliances",
+            "title": "Appliances",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 82
+        },
+        {
+            "id": 130,
+            "category_name": "bathroom",
+            "title": "Bathroom",
+            "group_id": 1,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 2
+                }
+            ],
+            "fileCount": 1599
+        },
+        {
+            "id": 131,
+            "category_name": "vegetation",
+            "title": "Vegetation",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 3
+                }
+            ],
+            "fileCount": 3408
+        },
+        {
+            "id": 132,
+            "category_name": "2d_plants",
+            "title": "2D Plants",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": 4,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 551
+        },
+        {
+            "id": 133,
+            "category_name": "3d_plants",
+            "title": "3D Plants",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": 2,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 743
+        },
+        {
+            "id": 134,
+            "category_name": "3d_trees",
+            "title": "3D Trees",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": 1,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 659
+        },
+        {
+            "id": 135,
+            "category_name": "2d_trees",
+            "title": "2D Trees",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": 3,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 433
+        },
+        {
+            "id": 136,
+            "category_name": "vehicles",
+            "title": "Vehicles",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 6
+                }
+            ],
+            "fileCount": 190
+        },
+        {
+            "id": 137,
+            "category_name": "backgrounds",
+            "title": "Backgrounds",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 324,
+                    "sort_order": 1,
+                    "parent_title": "Environment"
+                }
+            ],
+            "fileCount": 122
+        },
+        {
+            "id": 138,
+            "category_name": "microwaves",
+            "title": "Microwaves",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 18
+        },
+        {
+            "id": 139,
+            "category_name": "sinks",
+            "title": "Sinks",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 267
+        },
+        {
+            "id": 140,
+            "category_name": "baths",
+            "title": "Baths",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 131
+        },
+        {
+            "id": 437,
+            "category_name": "structures_and_fencing",
+            "title": "Structures & Fencing",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 174,
+                    "sort_order": null,
+                    "parent_title": "Exterior residential"
+                }
+            ],
+            "fileCount": 206
+        },
+        {
+            "id": 142,
+            "category_name": "toilets",
+            "title": "Toilets",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 56
+        },
+        {
+            "id": 143,
+            "category_name": "showers",
+            "title": "Showers",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 84
+        },
+        {
+            "id": 144,
+            "category_name": "bedroom",
+            "title": "Bedroom",
+            "group_id": 1,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 3
+                }
+            ],
+            "fileCount": 378
+        },
+        {
+            "id": 145,
+            "category_name": "poufs",
+            "title": "Poufs",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 122,
+                    "sort_order": 3,
+                    "parent_title": "Living"
+                }
+            ],
+            "fileCount": 71
+        },
+        {
+            "id": 146,
+            "category_name": "boxes",
+            "title": "Boxes",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": 3,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 25
+        },
+        {
+            "id": 147,
+            "category_name": "curtains",
+            "title": "Curtains",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": null,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 34
+        },
+        {
+            "id": 148,
+            "category_name": "books",
+            "title": "Books",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": 1,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 46
+        },
+        {
+            "id": 149,
+            "category_name": "refrigerator",
+            "title": "Refrigerator",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 151,
+            "category_name": "office",
+            "title": "Office",
+            "group_id": 1,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 6
+                }
+            ],
+            "fileCount": 408
+        },
+        {
+            "id": 152,
+            "category_name": "storage",
+            "title": "Storage",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": 4,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 38
+        },
+        {
+            "id": 153,
+            "category_name": "rugs",
+            "title": "Rugs",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 122,
+                    "sort_order": 6,
+                    "parent_title": "Living"
+                }
+            ],
+            "fileCount": 50
+        },
+        {
+            "id": 154,
+            "category_name": "hardware_and_construction",
+            "title": "Hardware & construction",
+            "group_id": 1,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 9
+                }
+            ],
+            "fileCount": 797
+        },
+        {
+            "id": 156,
+            "category_name": "televisions",
+            "title": "Televisions",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 114,
+                    "sort_order": 1,
+                    "parent_title": "Electronic"
+                }
+            ],
+            "fileCount": 19
+        },
+        {
+            "id": 157,
+            "category_name": "wall_units",
+            "title": "Wall units",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 122,
+                    "sort_order": 8,
+                    "parent_title": "Living"
+                }
+            ],
+            "fileCount": 19
+        },
+        {
+            "id": 158,
+            "category_name": "shelves",
+            "title": "Shelves",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 159,
+            "category_name": "computers",
+            "title": "Computers",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 114,
+                    "sort_order": 3,
+                    "parent_title": "Electronic"
+                }
+            ],
+            "fileCount": 33
+        },
+        {
+            "id": 435,
+            "category_name": "",
+            "title": "",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 161,
+            "category_name": "clocks",
+            "title": "Clocks",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": null,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 24
+        },
+        {
+            "id": 162,
+            "category_name": "beds",
+            "title": "Beds",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 144,
+                    "sort_order": 2,
+                    "parent_title": "Bedroom"
+                }
+            ],
+            "fileCount": 85
+        },
+        {
+            "id": 163,
+            "category_name": "candles",
+            "title": "Candles",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": null,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 21
+        },
+        {
+            "id": 164,
+            "category_name": "mirrors",
+            "title": "Mirrors",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": 2,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 43
+        },
+        {
+            "id": 165,
+            "category_name": "desks",
+            "title": "Desks",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": 3,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 66
+        },
+        {
+            "id": 166,
+            "category_name": "exterior_public",
+            "title": "Exterior public",
+            "group_id": 2,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 1
+                }
+            ],
+            "fileCount": 530
+        },
+        {
+            "id": 167,
+            "category_name": "benches",
+            "title": "Benches",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": 1,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 57
+        },
+        {
+            "id": 168,
+            "category_name": "night_tables",
+            "title": "Night tables",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 144,
+                    "sort_order": 4,
+                    "parent_title": "Bedroom"
+                }
+            ],
+            "fileCount": 48
+        },
+        {
+            "id": 169,
+            "category_name": "dressers",
+            "title": "Dressers",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 144,
+                    "sort_order": 3,
+                    "parent_title": "Bedroom"
+                }
+            ],
+            "fileCount": 116
+        },
+        {
+            "id": 170,
+            "category_name": "vases",
+            "title": "Vases",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": 4,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 98
+        },
+        {
+            "id": 171,
+            "category_name": "sideboards",
+            "title": "Sideboards",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 172,
+            "category_name": "stools",
+            "title": "Stools",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 120,
+                    "sort_order": 1,
+                    "parent_title": "Dining"
+                }
+            ],
+            "fileCount": 64
+        },
+        {
+            "id": 173,
+            "category_name": "bidets",
+            "title": "Bidets",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 9
+        },
+        {
+            "id": 174,
+            "category_name": "exterior_residential",
+            "title": "Exterior residential",
+            "group_id": 2,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 2
+                }
+            ],
+            "fileCount": 613
+        },
+        {
+            "id": 429,
+            "category_name": "marble",
+            "title": "materials",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 0
+        },
+        {
+            "id": 177,
+            "category_name": "bins",
+            "title": "Bins",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": 2,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 28
+        },
+        {
+            "id": 178,
+            "category_name": "streets",
+            "title": "Streets",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 179,
+            "category_name": "barbecues",
+            "title": "Barbecues",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 174,
+                    "sort_order": 1,
+                    "parent_title": "Exterior residential"
+                }
+            ],
+            "fileCount": 2
+        },
+        {
+            "id": 180,
+            "category_name": "plant_grilles",
+            "title": "Plant grilles",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": 7,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 5
+        },
+        {
+            "id": 181,
+            "category_name": "signages",
+            "title": "Signages",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": 4,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 253
+        },
+        {
+            "id": 182,
+            "category_name": "cycle_stands",
+            "title": "Cycle stands",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": 6,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 6
+        },
+        {
+            "id": 183,
+            "category_name": "animals",
+            "title": "Animals",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 9,
+                    "sort_order": 3,
+                    "parent_title": "People & animals"
+                }
+            ],
+            "fileCount": 18
+        },
+        {
+            "id": 184,
+            "category_name": "holiday",
+            "title": "Holiday",
+            "group_id": 2,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": 3
+                }
+            ],
+            "fileCount": 215
+        },
+        {
+            "id": 185,
+            "category_name": "christmas",
+            "title": "Christmas",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 184,
+                    "sort_order": null,
+                    "parent_title": "Holiday"
+                }
+            ],
+            "fileCount": 182
+        },
+        {
+            "id": 186,
+            "category_name": "people",
+            "title": "People",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 187,
+            "category_name": "summer",
+            "title": "Summer",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 188,
+            "category_name": "winter",
+            "title": "Winter",
+            "group_id": null,
+            "parents": [],
+            "fileCount": 0
+        },
+        {
+            "id": 190,
+            "category_name": "miscellaneous",
+            "title": "Miscellaneous",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": 6,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 96
+        },
+        {
+            "id": 191,
+            "category_name": "accessories",
+            "title": "Accessories",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": 0,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 14
+        },
+        {
+            "id": 397,
+            "category_name": "seating",
+            "title": "Seating",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 21
+        },
+        {
+            "id": 193,
+            "category_name": "2d_angled_views",
+            "title": "2D Angled views",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": null,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 371
+        },
+        {
+            "id": 194,
+            "category_name": "2d_south_pacific",
+            "title": "2D South pacific",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": null,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 85
+        },
+        {
+            "id": 197,
+            "category_name": "2d_interior_plants",
+            "title": "2D Interior plants",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": null,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 99
+        },
+        {
+            "id": 203,
+            "category_name": "miscellaneous",
+            "title": "Miscellaneous",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 30
+        },
+        {
+            "id": 212,
+            "category_name": "miscellaneous",
+            "title": "Miscellaneous",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 174,
+                    "sort_order": null,
+                    "parent_title": "Exterior residential"
+                }
+            ],
+            "fileCount": 168
+        },
+        {
+            "id": 215,
+            "category_name": "equipment",
+            "title": "Equipment",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 29
+        },
+        {
+            "id": 216,
+            "category_name": "3d_trees_architectural",
+            "title": "3D Trees architectural",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": null,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 40
+        },
+        {
+            "id": 219,
+            "category_name": "25d_grass",
+            "title": "2D Grass",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": null,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 5
+        },
+        {
+            "id": 221,
+            "category_name": "street",
+            "title": "Street",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": null,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 81
+        },
+        {
+            "id": 438,
+            "category_name": "vanity_assemblies",
+            "title": "Vanity Assemblies",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 219
+        },
+        {
+            "id": 225,
+            "category_name": "miscellaneous",
+            "title": "Miscellaneous",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 87
+        },
+        {
+            "id": 229,
+            "category_name": "walls",
+            "title": "Walls",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 1
+        },
+        {
+            "id": 231,
+            "category_name": "metal_v2plus",
+            "title": "Metal V2+",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 9
+        },
+        {
+            "id": 236,
+            "category_name": "silhouettes",
+            "title": "Silhouettes",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 9,
+                    "sort_order": null,
+                    "parent_title": "People & animals"
+                }
+            ],
+            "fileCount": 541
+        },
+        {
+            "id": 430,
+            "category_name": "marble",
+            "title": "Marble",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 21
+        },
+        {
+            "id": 242,
+            "category_name": "doors",
+            "title": "Doors",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 234
+        },
+        {
+            "id": 243,
+            "category_name": "handles",
+            "title": "Handles",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 44
+        },
+        {
+            "id": 246,
+            "category_name": "conference",
+            "title": "Conference",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": null,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 34
+        },
+        {
+            "id": 250,
+            "category_name": "stone_wall",
+            "title": "Stone - wall",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 52
+        },
+        {
+            "id": 251,
+            "category_name": "stone_surface",
+            "title": "Stone - surface",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 111
+        },
+        {
+            "id": 252,
+            "category_name": "wallpaper",
+            "title": "Wallpaper",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 3754
+        },
+        {
+            "id": 253,
+            "category_name": "sports_equipment",
+            "title": "Sports equipment",
+            "group_id": 2,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": null
+                }
+            ],
+            "fileCount": 83
+        },
+        {
+            "id": 254,
+            "category_name": "indoor",
+            "title": "Indoor",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 253,
+                    "sort_order": null,
+                    "parent_title": "Sports equipment"
+                }
+            ],
+            "fileCount": 50
+        },
+        {
+            "id": 255,
+            "category_name": "outdoor",
+            "title": "Outdoor",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 253,
+                    "sort_order": null,
+                    "parent_title": "Sports equipment"
+                }
+            ],
+            "fileCount": 33
+        },
+        {
+            "id": 257,
+            "category_name": "clouds",
+            "title": "Clouds",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 324,
+                    "sort_order": null,
+                    "parent_title": "Environment"
+                }
+            ],
+            "fileCount": 8
+        },
+        {
+            "id": 258,
+            "category_name": "assembly_spaces",
+            "title": "Assembly spaces",
+            "group_id": 2,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": null
+                }
+            ],
+            "fileCount": 269
+        },
+        {
+            "id": 259,
+            "category_name": "scene",
+            "title": "Scene",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 258,
+                    "sort_order": null,
+                    "parent_title": "Assembly spaces"
+                }
+            ],
+            "fileCount": 3
+        },
+        {
+            "id": 260,
+            "category_name": "seating",
+            "title": "Seating",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 258,
+                    "sort_order": null,
+                    "parent_title": "Assembly spaces"
+                }
+            ],
+            "fileCount": 63
+        },
+        {
+            "id": 261,
+            "category_name": "miscellaneous",
+            "title": "Miscellaneous",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": null,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 51
+        },
+        {
+            "id": 262,
+            "category_name": "wood_flooring",
+            "title": "Wood - flooring",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 127
+        },
+        {
+            "id": 265,
+            "category_name": "carpet",
+            "title": "Carpet",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 124
+        },
+        {
+            "id": 266,
+            "category_name": "concrete",
+            "title": "Concrete",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 69
+        },
+        {
+            "id": 267,
+            "category_name": "fabric",
+            "title": "Fabric",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 149
+        },
+        {
+            "id": 268,
+            "category_name": "ground",
+            "title": "Ground",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 42
+        },
+        {
+            "id": 269,
+            "category_name": "masonry",
+            "title": "Masonry",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 157
+        },
+        {
+            "id": 270,
+            "category_name": "metal",
+            "title": "Metal",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 54
+        },
+        {
+            "id": 271,
+            "category_name": "paving",
+            "title": "Paving",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 65
+        },
+        {
+            "id": 272,
+            "category_name": "stucco",
+            "title": "Stucco",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 23
+        },
+        {
+            "id": 274,
+            "category_name": "playground",
+            "title": "Playground",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": null,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 15
+        },
+        {
+            "id": 276,
+            "category_name": "bicycles",
+            "title": "Bicycles",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 136,
+                    "sort_order": null,
+                    "parent_title": "Vehicles"
+                }
+            ],
+            "fileCount": 9
+        },
+        {
+            "id": 277,
+            "category_name": "seating",
+            "title": "Seating",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 174,
+                    "sort_order": null,
+                    "parent_title": "Exterior residential"
+                }
+            ],
+            "fileCount": 107
+        },
+        {
+            "id": 280,
+            "category_name": "hospitality",
+            "title": "Hospitality",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 258,
+                    "sort_order": null,
+                    "parent_title": "Assembly spaces"
+                }
+            ],
+            "fileCount": 58
+        },
+        {
+            "id": 281,
+            "category_name": "music_equipment",
+            "title": "Music equipment",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": null,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 33
+        },
+        {
+            "id": 282,
+            "category_name": "lem",
+            "title": "LEM",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 18
+        },
+        {
+            "id": 286,
+            "category_name": "schulz_speyer",
+            "title": "Schulz Speyer",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 258,
+                    "sort_order": null,
+                    "parent_title": "Assembly spaces"
+                }
+            ],
+            "fileCount": 92
+        },
+        {
+            "id": 287,
+            "category_name": "roofing",
+            "title": "Roofing",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 136
+        },
+        {
+            "id": 288,
+            "category_name": "roofing",
+            "title": "Roofing",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 108
+        },
+        {
+            "id": 289,
+            "category_name": "tiles_mosaic",
+            "title": "Tiles - mosaic",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 161
+        },
+        {
+            "id": 290,
+            "category_name": "tiles_wall",
+            "title": "Tiles - wall",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 315
+        },
+        {
+            "id": 291,
+            "category_name": "tiles_accent",
+            "title": "Tiles - accent",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 223
+        },
+        {
+            "id": 292,
+            "category_name": "acoustic_decoration",
+            "title": "Acoustic decoration",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": null,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 14
+        },
+        {
+            "id": 293,
+            "category_name": "boards",
+            "title": "Boards",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": null,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 33
+        },
+        {
+            "id": 432,
+            "category_name": "blinds_and_shades",
+            "title": "Blinds & Shades",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 14
+        },
+        {
+            "id": 295,
+            "category_name": "showcases",
+            "title": "Showcases",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": null,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 7
+        },
+        {
+            "id": 296,
+            "category_name": "taps",
+            "title": "Taps",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 62
+        },
+        {
+            "id": 297,
+            "category_name": "tiles_granite",
+            "title": "Tiles - granite",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 120
+        },
+        {
+            "id": 300,
+            "category_name": "light_fixtures_exterior",
+            "title": "Light fixtures exterior",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": null
+                }
+            ],
+            "fileCount": 820
+        },
+        {
+            "id": 301,
+            "category_name": "bollards",
+            "title": "Bollards",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 300,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures exterior"
+                }
+            ],
+            "fileCount": 147
+        },
+        {
+            "id": 302,
+            "category_name": "floodlights_and_ground",
+            "title": "Floodlights & ground",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 300,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures exterior"
+                }
+            ],
+            "fileCount": 205
+        },
+        {
+            "id": 303,
+            "category_name": "pole",
+            "title": "Pole",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 300,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures exterior"
+                }
+            ],
+            "fileCount": 119
+        },
+        {
+            "id": 304,
+            "category_name": "wall_and_ceiling",
+            "title": "Wall & ceiling",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 300,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures exterior"
+                }
+            ],
+            "fileCount": 349
+        },
+        {
+            "id": 305,
+            "category_name": "light_fixtures_interior",
+            "title": "Light fixtures interior",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": null
+                }
+            ],
+            "fileCount": 2471
+        },
+        {
+            "id": 306,
+            "category_name": "ceiling",
+            "title": "Ceiling",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 305,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures interior"
+                }
+            ],
+            "fileCount": 423
+        },
+        {
+            "id": 307,
+            "category_name": "floor",
+            "title": "Floor",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 305,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures interior"
+                }
+            ],
+            "fileCount": 215
+        },
+        {
+            "id": 308,
+            "category_name": "suspended",
+            "title": "Suspended",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 305,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures interior"
+                }
+            ],
+            "fileCount": 926
+        },
+        {
+            "id": 309,
+            "category_name": "table",
+            "title": "Table",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 305,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures interior"
+                }
+            ],
+            "fileCount": 320
+        },
+        {
+            "id": 310,
+            "category_name": "wall",
+            "title": "Wall",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 305,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures interior"
+                }
+            ],
+            "fileCount": 516
+        },
+        {
+            "id": 311,
+            "category_name": "point_lights",
+            "title": "Point lights",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 305,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures interior"
+                }
+            ],
+            "fileCount": 46
+        },
+        {
+            "id": 312,
+            "category_name": "buildings",
+            "title": "Buildings",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 324,
+                    "sort_order": null,
+                    "parent_title": "Environment"
+                }
+            ],
+            "fileCount": 82
+        },
+        {
+            "id": 317,
+            "category_name": "stairs_and_railings",
+            "title": "Stairs & railings",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 140
+        },
+        {
+            "id": 318,
+            "category_name": "lounge",
+            "title": "Lounge",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": null,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 3
+        },
+        {
+            "id": 319,
+            "category_name": "tables",
+            "title": "Tables",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": null,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 12
+        },
+        {
+            "id": 321,
+            "category_name": "clothing",
+            "title": "Clothing",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 144,
+                    "sort_order": null,
+                    "parent_title": "Bedroom"
+                }
+            ],
+            "fileCount": 7
+        },
+        {
+            "id": 322,
+            "category_name": "heating",
+            "title": "Heating",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 8
+        },
+        {
+            "id": 323,
+            "category_name": "ventilation",
+            "title": "Ventilation",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 35
+        },
+        {
+            "id": 324,
+            "category_name": "environment",
+            "title": "Environment",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": null
+                }
+            ],
+            "fileCount": 279
+        },
+        {
+            "id": 325,
+            "category_name": "backgrounds_360",
+            "title": "Backgrounds 360\u00b0",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 324,
+                    "sort_order": null,
+                    "parent_title": "Environment"
+                }
+            ],
+            "fileCount": 24
+        },
+        {
+            "id": 326,
+            "category_name": "backgrounds_180",
+            "title": "Backgrounds 180\u00b0",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 324,
+                    "sort_order": null,
+                    "parent_title": "Environment"
+                }
+            ],
+            "fileCount": 25
+        },
+        {
+            "id": 327,
+            "category_name": "cloud_domes",
+            "title": "Cloud domes",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 324,
+                    "sort_order": null,
+                    "parent_title": "Environment"
+                }
+            ],
+            "fileCount": 14
+        },
+        {
+            "id": 337,
+            "category_name": "full_3d_models",
+            "title": "Full 3D Models",
+            "group_id": 2,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": null
+                }
+            ],
+            "fileCount": 9
+        },
+        {
+            "id": 339,
+            "category_name": "studio_models",
+            "title": "Studio models",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 337,
+                    "sort_order": null,
+                    "parent_title": "Full 3D Models"
+                }
+            ],
+            "fileCount": 5
+        },
+        {
+            "id": 351,
+            "category_name": "base_cabinets",
+            "title": "Base cabinets",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 143
+        },
+        {
+            "id": 352,
+            "category_name": "wall_cabinets",
+            "title": "Wall cabinets",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 104
+        },
+        {
+            "id": 353,
+            "category_name": "cupboards",
+            "title": "Cupboards",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 37
+        },
+        {
+            "id": 354,
+            "category_name": "misc_cabinets",
+            "title": "Misc cabinets",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 15
+        },
+        {
+            "id": 355,
+            "category_name": "islands",
+            "title": "Islands",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 30
+        },
+        {
+            "id": 356,
+            "category_name": "countertops",
+            "title": "Countertops",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 22
+        },
+        {
+            "id": 361,
+            "category_name": "tiles_floor",
+            "title": "Tiles - floor",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 164
+        },
+        {
+            "id": 362,
+            "category_name": "kitchen_models",
+            "title": "Kitchen models",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 337,
+                    "sort_order": null,
+                    "parent_title": "Full 3D Models"
+                }
+            ],
+            "fileCount": 4
+        },
+        {
+            "id": 364,
+            "category_name": "3d_interior_plants",
+            "title": "3D Interior plants",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": null,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 251
+        },
+        {
+            "id": 369,
+            "category_name": "assemblies",
+            "title": "Assemblies",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 120,
+                    "sort_order": null,
+                    "parent_title": "Dining"
+                }
+            ],
+            "fileCount": 59
+        },
+        {
+            "id": 376,
+            "category_name": "ceramic",
+            "title": "Ceramic",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 13
+        },
+        {
+            "id": 377,
+            "category_name": "fibre_cement",
+            "title": "Fibre - cement",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 11
+        },
+        {
+            "id": 378,
+            "category_name": "assemblies",
+            "title": "Assemblies",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 122,
+                    "sort_order": null,
+                    "parent_title": "Living"
+                }
+            ],
+            "fileCount": 77
+        },
+        {
+            "id": 379,
+            "category_name": "assemblies",
+            "title": "Assemblies",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 144,
+                    "sort_order": null,
+                    "parent_title": "Bedroom"
+                }
+            ],
+            "fileCount": 87
+        },
+        {
+            "id": 381,
+            "category_name": "glass_items",
+            "title": "Glass_Items",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": null,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 28
+        },
+        {
+            "id": 384,
+            "category_name": "assemblies",
+            "title": "Assemblies",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 174,
+                    "sort_order": null,
+                    "parent_title": "Exterior residential"
+                }
+            ],
+            "fileCount": 34
+        },
+        {
+            "id": 386,
+            "category_name": "assemblies",
+            "title": "Assemblies",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": null,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 76
+        },
+        {
+            "id": 389,
+            "category_name": "assemblies",
+            "title": "Assemblies",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 34
+        },
+        {
+            "id": 390,
+            "category_name": "classroom",
+            "title": "Classroom",
+            "group_id": 0,
+            "parents": [
+                {
+                    "parent_id": 258,
+                    "sort_order": null,
+                    "parent_title": "Assembly spaces"
+                }
+            ],
+            "fileCount": 19
+        },
+        {
+            "id": 391,
+            "category_name": "assemblies",
+            "title": "Assemblies",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 116,
+                    "sort_order": null,
+                    "parent_title": "Kitchen"
+                }
+            ],
+            "fileCount": 76
+        },
+        {
+            "id": 392,
+            "category_name": "terrains",
+            "title": "Terrains",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 324,
+                    "sort_order": null,
+                    "parent_title": "Environment"
+                }
+            ],
+            "fileCount": 4
+        },
+        {
+            "id": 394,
+            "category_name": "reception_areas",
+            "title": "Reception Areas",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 258,
+                    "sort_order": null,
+                    "parent_title": "Assembly spaces"
+                }
+            ],
+            "fileCount": 29
+        },
+        {
+            "id": 395,
+            "category_name": "cafe_assemblies",
+            "title": "Cafe Assemblies",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": 8,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 20
+        },
+        {
+            "id": 396,
+            "category_name": "flags",
+            "title": "Flags",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 166,
+                    "sort_order": null,
+                    "parent_title": "Exterior public"
+                }
+            ],
+            "fileCount": 14
+        },
+        {
+            "id": 398,
+            "category_name": "accessories",
+            "title": "Accessories",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 120,
+                    "sort_order": null,
+                    "parent_title": "Dining"
+                }
+            ],
+            "fileCount": 36
+        },
+        {
+            "id": 399,
+            "category_name": "accessories",
+            "title": "Accessories",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 122,
+                    "sort_order": null,
+                    "parent_title": "Living"
+                }
+            ],
+            "fileCount": 126
+        },
+        {
+            "id": 400,
+            "category_name": "accessories",
+            "title": "Accessories",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 251
+        },
+        {
+            "id": 401,
+            "category_name": "accessories",
+            "title": "Accessories",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 144,
+                    "sort_order": null,
+                    "parent_title": "Bedroom"
+                }
+            ],
+            "fileCount": 117
+        },
+        {
+            "id": 402,
+            "category_name": "chairs",
+            "title": "Chairs",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 120,
+                    "sort_order": null,
+                    "parent_title": "Dining"
+                }
+            ],
+            "fileCount": 163
+        },
+        {
+            "id": 403,
+            "category_name": "chairs",
+            "title": "Chairs",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": null,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 75
+        },
+        {
+            "id": 404,
+            "category_name": "chairs",
+            "title": "Chairs",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 174,
+                    "sort_order": null,
+                    "parent_title": "Exterior residential"
+                }
+            ],
+            "fileCount": 19
+        },
+        {
+            "id": 405,
+            "category_name": "tables",
+            "title": "Tables",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 120,
+                    "sort_order": null,
+                    "parent_title": "Dining"
+                }
+            ],
+            "fileCount": 155
+        },
+        {
+            "id": 406,
+            "category_name": "tables",
+            "title": "Tables",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 174,
+                    "sort_order": null,
+                    "parent_title": "Exterior residential"
+                }
+            ],
+            "fileCount": 104
+        },
+        {
+            "id": 407,
+            "category_name": "storage",
+            "title": "Storage",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 122,
+                    "sort_order": null,
+                    "parent_title": "Living"
+                }
+            ],
+            "fileCount": 101
+        },
+        {
+            "id": 414,
+            "category_name": "hdr",
+            "title": "HDR",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": null
+                }
+            ],
+            "fileCount": 43
+        },
+        {
+            "id": 411,
+            "category_name": "landscapes",
+            "title": "Landscapes",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 414,
+                    "sort_order": null,
+                    "parent_title": "HDR"
+                }
+            ],
+            "fileCount": 43
+        },
+        {
+            "id": 412,
+            "category_name": "christmas_assemblies",
+            "title": "Christmas Assemblies",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 184,
+                    "sort_order": null,
+                    "parent_title": "Holiday"
+                }
+            ],
+            "fileCount": 33
+        },
+        {
+            "id": 413,
+            "category_name": "wall_art",
+            "title": "Wall Art",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 126,
+                    "sort_order": null,
+                    "parent_title": "Decoration"
+                }
+            ],
+            "fileCount": 239
+        },
+        {
+            "id": 416,
+            "category_name": "farrow_and_ball_colors",
+            "title": "Farrow and Ball Colors",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 6,
+                    "sort_order": null,
+                    "parent_title": "Materials"
+                }
+            ],
+            "fileCount": 164
+        },
+        {
+            "id": 417,
+            "category_name": "living_walls",
+            "title": "Living Walls",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": null,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 18
+        },
+        {
+            "id": 418,
+            "category_name": "3d_planters",
+            "title": "3D Planters",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": null,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 135
+        },
+        {
+            "id": 419,
+            "category_name": "andersen_series_e_colonial",
+            "title": "windows",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 241,
+                    "sort_order": null
+                }
+            ],
+            "fileCount": 0
+        },
+        {
+            "id": 420,
+            "category_name": "windows",
+            "title": "Windows",
+            "group_id": 2,
+            "parents": [
+                {
+                    "parent_id": 0,
+                    "sort_order": null
+                }
+            ],
+            "fileCount": 590
+        },
+        {
+            "id": 421,
+            "category_name": "dc_and_misc",
+            "title": "DC & Misc",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 420,
+                    "sort_order": null,
+                    "parent_title": "Windows"
+                }
+            ],
+            "fileCount": 13
+        },
+        {
+            "id": 422,
+            "category_name": "andersen_100_200_400_misc",
+            "title": "Andersen 100 200 400 Misc",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 420,
+                    "sort_order": null,
+                    "parent_title": "Windows"
+                }
+            ],
+            "fileCount": 34
+        },
+        {
+            "id": 423,
+            "category_name": "andersen_series_e_colonial",
+            "title": "Andersen Series E Colonial",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 420,
+                    "sort_order": null,
+                    "parent_title": "Windows"
+                }
+            ],
+            "fileCount": 117
+        },
+        {
+            "id": 424,
+            "category_name": "andersen_series_e_custom",
+            "title": "Andersen Series E Custom",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 420,
+                    "sort_order": null,
+                    "parent_title": "Windows"
+                }
+            ],
+            "fileCount": 116
+        },
+        {
+            "id": 425,
+            "category_name": "andersen_series_e_fractional",
+            "title": "Andersen Series E Fractional",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 420,
+                    "sort_order": null,
+                    "parent_title": "Windows"
+                }
+            ],
+            "fileCount": 116
+        },
+        {
+            "id": 426,
+            "category_name": "andersen_series_e_prairie",
+            "title": "Andersen Series E Prairie",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 420,
+                    "sort_order": null,
+                    "parent_title": "Windows"
+                }
+            ],
+            "fileCount": 116
+        },
+        {
+            "id": 427,
+            "category_name": "kolbe",
+            "title": "Kolbe",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 420,
+                    "sort_order": null,
+                    "parent_title": "Windows"
+                }
+            ],
+            "fileCount": 67
+        },
+        {
+            "id": 428,
+            "category_name": "milgard",
+            "title": "Milgard",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 420,
+                    "sort_order": null,
+                    "parent_title": "Windows"
+                }
+            ],
+            "fileCount": 11
+        },
+        {
+            "id": 431,
+            "category_name": "partitions_and_enclosures",
+            "title": "Partitions & Enclosures",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 151,
+                    "sort_order": null,
+                    "parent_title": "Office"
+                }
+            ],
+            "fileCount": 44
+        },
+        {
+            "id": 433,
+            "category_name": "3d_vegetation_assemblies",
+            "title": "3D Vegetation Assemblies",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 131,
+                    "sort_order": null,
+                    "parent_title": "Vegetation"
+                }
+            ],
+            "fileCount": 18
+        },
+        {
+            "id": 434,
+            "category_name": "electrical",
+            "title": "Electrical",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 50
+        },
+        {
+            "id": 436,
+            "category_name": "faucets",
+            "title": "Faucets",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 192
+        },
+        {
+            "id": 439,
+            "category_name": "vanity_base",
+            "title": "Vanity Base",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 193
+        },
+        {
+            "id": 440,
+            "category_name": "cabinets",
+            "title": "Cabinets",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 130,
+                    "sort_order": null,
+                    "parent_title": "Bathroom"
+                }
+            ],
+            "fileCount": 63
+        },
+        {
+            "id": 441,
+            "category_name": "under_counter",
+            "title": "Under Counter",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 305,
+                    "sort_order": null,
+                    "parent_title": "Light fixtures interior"
+                }
+            ],
+            "fileCount": 15
+        },
+        {
+            "id": 442,
+            "category_name": "moulding",
+            "title": "hardware_and_construction",
+            "group_id": null,
+            "parents": [
+                {
+                    "parent_id": 154,
+                    "sort_order": null,
+                    "parent_title": "Hardware & construction"
+                }
+            ],
+            "fileCount": 46
+        }
+    ]
+}

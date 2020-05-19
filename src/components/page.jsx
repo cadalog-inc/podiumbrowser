@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Col, Dropdown, Row, InputGroup } from 'react-bootstrap';
+import { Col, Dropdown, Row, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { SideBar } from './sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faAngleLeft, faAngleRight, faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -49,7 +49,7 @@ export class Page extends React.Component {
             <React.Fragment>
                 <div style={{ marginTop: 55, marginBottom: 10, marginLeft: 10, marginRight: 10 }}>
                     <Row>
-                        <Col lg={2} md={3} sm={4} xm={5}>
+                        <Col xl={2} lg={3} md={4} sm={5} xs={6} style={{ padding: 0 }}>
                             <SideBar
                                 user={this.props.user}
                                 categories={categories}
@@ -59,7 +59,7 @@ export class Page extends React.Component {
                                 {...this.props}
                             />
                         </Col>
-                        <Col lg={10} md={9} sm={8} xm={7}>
+                        <Col xl={10} lg={9} md={8} sm={7} xs={6}>
                             {
                                 categories.length > 1 ?
                                     <Row>
@@ -83,7 +83,7 @@ export class Page extends React.Component {
                                         return 0;
                                     }).splice(0, 100);
                                 } else {
-                                    if(sortBy === "File Size (Low to High)") {
+                                    if (sortBy === "File Size (Low to High)") {
                                         items = items.sort((a, b) => {
                                             if (a.fileSize < b.fileSize) {
                                                 return -1;
@@ -93,7 +93,7 @@ export class Page extends React.Component {
                                             }
                                             return 0;
                                         });
-                                    } else if(sortBy === "File Size (High to Low)") {
+                                    } else if (sortBy === "File Size (High to Low)") {
                                         items = items.sort((a, b) => {
                                             if (a.fileSize > b.fileSize) {
                                                 return -1;
@@ -103,7 +103,7 @@ export class Page extends React.Component {
                                             }
                                             return 0;
                                         });
-                                    } else if(sortBy === "Date Uploaded (New to Old)") {
+                                    } else if (sortBy === "Date Uploaded (New to Old)") {
                                         items = items.sort((a, b) => {
                                             if (a.uploadDate < b.uploadDate) {
                                                 return -1;
@@ -113,7 +113,7 @@ export class Page extends React.Component {
                                             }
                                             return 0;
                                         });
-                                    } else if(sortBy === "Date Uploaded (Old to New)") {
+                                    } else if (sortBy === "Date Uploaded (Old to New)") {
                                         items = items.sort((a, b) => {
                                             if (a.uploadDate > b.uploadDate) {
                                                 return -1;
@@ -123,7 +123,7 @@ export class Page extends React.Component {
                                             }
                                             return 0;
                                         });
-                                    } else if(sortBy === "File Name (Z to A)") {
+                                    } else if (sortBy === "File Name (Z to A)") {
                                         items = items.sort((a, b) => {
                                             if (a.title > b.title) {
                                                 return -1;
@@ -222,82 +222,105 @@ export class Page extends React.Component {
                                                 items.slice(itemsBegin, itemsEnd).map((item, index) => {
                                                     return (
                                                         <Col key={index} style={{ marginTop: 20, minWidth: 175 }} xl={1} lg={2} md={3} sm={4} xs={6}>
-                                                            <div
-                                                                style={{
-                                                                    position: 'relative',
-                                                                    width: '100%',
-                                                                    backgroundColor: '#f1f1f1',
-                                                                    display: "flex",
-                                                                    flexDirection: "column",
-                                                                    justifyContent: "center",
-                                                                    alignItems: "center",
-                                                                    border: '1px solid #e5e5e5'
+                                                            <OverlayTrigger
+                                                                placement="bottom"
+                                                                delay={{ dhow: 500 }}
+                                                                overlay={(props) => {
+                                                                    return (
+                                                                        <div
+                                                                            {...props}
+                                                                            style={{
+                                                                                fontSize: '11px',
+                                                                                minWidth: 125,
+                                                                                color: "#212529",
+                                                                                backgroundColor: '#f1f1f1',
+                                                                                border: '1px solid #e5e5e5',
+                                                                                padding: 2,
+                                                                                ...props.style,
+                                                                            }}
+                                                                        >
+                                                                            {this.calculatePathToItem(item.id).slice(1)}
+                                                                        </div>
+                                                                    )
                                                                 }}
                                                             >
-                                                                <img alt=''
-                                                                    src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile}
+                                                                <div
                                                                     style={{
                                                                         position: 'relative',
                                                                         width: '100%',
-                                                                        cursor: "pointer",
-                                                                        borderBottom: '1px solid #e5e5e5'
-                                                                    }}
-                                                                    onClick={() => { this.props.handleDownloadClick(item) }}
-                                                                />
-                                                                <span
-                                                                    style={{
-                                                                        position: 'absolute',
-                                                                        right: '0px',
-                                                                        top: '0px',
-                                                                        cursor: 'pointer'
-                                                                    }}
-                                                                    onClick={() => { this.props.handleFavoriteClick(item.id) }}
-                                                                >
-                                                                    {
-                                                                        this.props.user.key !== '' && this.isItemFavorite(item.id) ? <FontAwesomeIcon icon={faStar} color="gold" /> : <FontAwesomeIcon icon={faStar} color="lightgrey" />
-                                                                    }
-                                                                </span>
-                                                                <span
-                                                                    style={{
-                                                                        fontSize: '11px',
-                                                                        width: '100%',
-                                                                        padding: 5,
-                                                                        borderBottom: '1px solid #e6e6e6'
+                                                                        backgroundColor: '#f1f1f1',
+                                                                        display: "flex",
+                                                                        flexDirection: "column",
+                                                                        justifyContent: "center",
+                                                                        alignItems: "center",
+                                                                        border: '1px solid #e5e5e5'
                                                                     }}
                                                                 >
-                                                                    {item.title}
-                                                                </span>
-                                                                <span
-                                                                    style={{
-                                                                        height: 27
-                                                                    }}
-                                                                >
-                                                                    <span
+                                                                    <img alt='testing 1 2 3'
+                                                                        src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile}
                                                                         style={{
-                                                                            position: 'absolute',
-                                                                            left: '5px',
-                                                                            bottom: '4px',
-                                                                            fontSize: '11px',
-                                                                            fontWeight: '600'
-                                                                        }}
-                                                                    >
-                                                                        {this.formatFileSize(item.fileSize)} MB
-                                                                        </span>
-                                                                    <span
-                                                                        style={{
-                                                                            position: 'absolute',
-                                                                            right: '5px',
-                                                                            bottom: '2px',
-                                                                            cursor: 'pointer'
+                                                                            position: 'relative',
+                                                                            width: '100%',
+                                                                            cursor: "pointer",
+                                                                            borderBottom: '1px solid #e5e5e5'
                                                                         }}
                                                                         onClick={() => { this.props.handleDownloadClick(item) }}
+                                                                    />
+                                                                    <span
+                                                                        style={{
+                                                                            position: 'absolute',
+                                                                            right: '0px',
+                                                                            top: '0px',
+                                                                            cursor: 'pointer'
+                                                                        }}
+                                                                        onClick={() => { this.props.handleFavoriteClick(item.id) }}
                                                                     >
                                                                         {
-                                                                            this.props.user.key !== '' || item.type === 'free' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
+                                                                            this.props.user.key !== '' && this.isItemFavorite(item.id) ? <FontAwesomeIcon icon={faStar} color="gold" /> : <FontAwesomeIcon icon={faStar} color="lightgrey" />
                                                                         }
                                                                     </span>
-                                                                </span>
-                                                            </div>
+                                                                    <span
+                                                                        style={{
+                                                                            fontSize: '11px',
+                                                                            width: '100%',
+                                                                            padding: 5,
+                                                                            borderBottom: '1px solid #e6e6e6'
+                                                                        }}
+                                                                    >
+                                                                        {item.title}
+                                                                    </span>
+                                                                    <span
+                                                                        style={{
+                                                                            height: 27
+                                                                        }}
+                                                                    >
+                                                                        <span
+                                                                            style={{
+                                                                                position: 'absolute',
+                                                                                left: '5px',
+                                                                                bottom: '4px',
+                                                                                fontSize: '11px',
+                                                                                fontWeight: '600'
+                                                                            }}
+                                                                        >
+                                                                            {this.formatFileSize(item.fileSize)} MB
+                                                                        </span>
+                                                                        <span
+                                                                            style={{
+                                                                                position: 'absolute',
+                                                                                right: '5px',
+                                                                                bottom: '2px',
+                                                                                cursor: 'pointer'
+                                                                            }}
+                                                                            onClick={() => { this.props.handleDownloadClick(item) }}
+                                                                        >
+                                                                            {
+                                                                                this.props.user.key !== '' || item.type === 'free' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
+                                                                            }
+                                                                        </span>
+                                                                    </span>
+                                                                </div>
+                                                            </OverlayTrigger>
                                                         </Col>
                                                     )
                                                 })
@@ -315,14 +338,14 @@ export class Page extends React.Component {
                                                                         <Dropdown.Toggle variant="light" id="dropdown-basic">
                                                                             {sortBy}
                                                                         </Dropdown.Toggle>
-                                                                            <Dropdown.Menu>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('File Name (A to Z)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Name (A to Z)</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('File Name (Z to A)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Name (Z to A)</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('File Size (High to Low)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Size (High to Low)</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('File Size (Low to High)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Size (Low to High)</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('Date Uploaded (New to Old)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>Date Uploaded (New to Old)</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('Date Uploaded (Old to New)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>Date Uploaded (Old to New)</Dropdown.Item>
-                                                                            </Dropdown.Menu>
+                                                                        <Dropdown.Menu>
+                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('File Name (A to Z)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Name (A to Z)</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('File Name (Z to A)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Name (Z to A)</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('File Size (High to Low)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Size (High to Low)</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('File Size (Low to High)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Size (Low to High)</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('Date Uploaded (New to Old)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>Date Uploaded (New to Old)</Dropdown.Item>
+                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('Date Uploaded (Old to New)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>Date Uploaded (Old to New)</Dropdown.Item>
+                                                                        </Dropdown.Menu>
                                                                     </Dropdown>
                                                                     <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
                                                                     <Dropdown>

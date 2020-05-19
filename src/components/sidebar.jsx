@@ -44,66 +44,80 @@ export class SideBar extends React.Component {
 
         return (
             <React.Fragment>
-                <hr />
-                {
-                    selectedCategory.id !== 1 && selectedCategory.id !== 217 && selectedCategory.id !== 218 ? <React.Fragment>
-                        <ul>
-                            {
-                                this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, searchTerm, onlyFree, onlyRecent, sortBy)
-                            }
-                        </ul>
-                        <hr />
-                    </React.Fragment> : null
-                }
-                <div className="form-check">
-                    <input className="form-check-input" type="checkbox" defaultChecked={onlyFree} onChange={(e) => {
-                        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${e.target.checked}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
-                    }} id="freeChecked" />
-                    <label className="form-check-label" htmlFor="freeChecked">
-                        Show only free files
-                    </label>
-                </div>
-                {/* <div className="form-check" hidden={selectedCategory.id === 1} >
-                    <input className="form-check-input" type="checkbox" onChange={(e) => {
-                        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${e.target.checked}&sortBy=${sortBy}`);
-                    }} value="" id="recentChecked" />
-                    <label className="form-check-label" htmlFor="recentChecked">
-                        Show only recent files
-                    </label>
-                </div> */}
-                <hr />
-                {
-
-                    this.props.user.key !== '' ? <React.Fragment>
-                        <ul>
-                            {
-                                homeCategories.map((category, index) => {
-                                    return (
-                                        <li key={index}>
-                                            <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
-                                                {category.title}
-                                            </span>
-                                        </li>
-                                    )
-                                })
-                            }
-                        </ul>
-                        <hr />
-                    </React.Fragment> : null
-                }
-                <ul>
+                <div style={{
+                    backgroundColor: "#f1f1f1",
+                    margin: 10,
+                    padding: 0,
+                    border: "1px solid #e5e5e5"
+                }}>
                     {
-                        primaryCategories.map((category, index) => {
-                            return category.title !== 'HDR' ? (
-                                <li key={index}>
-                                    <span style={category.id === selectedCategory.id ? { fontWeight: "bold", cursor: "pointer" } : { cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
-                                        {category.title}
-                                    </span>
-                                </li>
-                            ) : null
-                        })
+                        selectedCategory.id !== 1 && selectedCategory.id !== 217 && selectedCategory.id !== 218 ? <React.Fragment>
+                            <ul>
+                                {
+                                    this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, searchTerm, onlyFree, onlyRecent, sortBy)
+                                }
+                            </ul>
+                        </React.Fragment> : null
                     }
-                </ul>
+                    <hr style={{width: "90%"}}/>
+                    <div className="form-check" style={{margin: 10}}>
+                        <input className="form-check-input" type="checkbox" defaultChecked={onlyFree} onChange={(e) => {
+                            this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${e.target.checked}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
+                        }} id="freeChecked" />
+                        <label className="form-check-label" htmlFor="freeChecked">
+                            Show only free files
+                        </label>
+                    </div>
+                    <hr style={{width: "90%"}}/>
+                    {
+
+                        this.props.user.key !== '' ? <React.Fragment>
+                            <ul>
+                                {
+                                    homeCategories.map((category, index) => {
+                                        return (
+                                            <li key={index} style={{
+                                                padding: 0,
+                                                margin: 5
+                                            }}>
+                                                <button style={{
+                                                    width: "100%",
+                                                    backgroundColor: "#f7f5f5",
+                                                    border: "1px solid #e5e5e5",
+                                                    textAlign: "left"
+                                                }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
+                                                    {category.title}
+                                                </button>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                            <hr style={{width: "90%"}} />
+                        </React.Fragment> : null
+                    }
+                    <ul>
+                        {
+                            primaryCategories.map((category, index) => {
+                                return category.title !== 'HDR' ? (
+                                    <li key={index} style={{
+                                        padding: 0,
+                                        margin: 2
+                                    }}>
+                                        <button style={{
+                                            width: "100%",
+                                            backgroundColor: "#f7f5f5",
+                                            border: "1px solid #e5e5e5",
+                                            textAlign: "left"
+                                        }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
+                                            {category.title}
+                                        </button>
+                                    </li>
+                                ) : null
+                            })
+                        }
+                    </ul>
+                </div>
             </React.Fragment>
         );
     }
