@@ -3,7 +3,7 @@ const fs = require('fs');
 
 class Files {
     constructor() {
-        this.files = [];
+        this.items = [];
         this.categories = [{
             "id": 1,
             "title": "Home",
@@ -49,9 +49,8 @@ class Files {
                 const l = files.length;
                 for (let f = 0; f < l; f++) {
                     const file = files[f];
-
-                    this.files.push({
-                        dateUploaded: file.date_uploaded,
+                    this.addRelationships(file);
+                    this.items.push({
                         filename: file.filename,
                         fileSize: file.file_size,
                         id: file.id,
@@ -59,7 +58,8 @@ class Files {
                         hash: file.hash,
                         tags: file.tags,
                         title: file.title,
-                        type: file.type
+                        type: file.type,
+                        uploadDate: file.date_uploaded
                     });
                 }
 
@@ -67,13 +67,38 @@ class Files {
                 if (response.data.next_page_url) {
                     this.getFiles(path, page + 1);
                 } else {
-                    fs.writeFile(`./utilities/json/files.json`, JSON.stringify(this.files), (err) => {
+                    fs.writeFile(`./utilities/json/files.json`, JSON.stringify(this.items), (err) => {
                         if (err) return console.log(err);
-                        console.log(this.files.length);
+                        console.log(`${this.items.length} items`);
+                        console.log("complete");
+                    });
+                    fs.writeFile(`./utilities/json/relationships.json`, JSON.stringify(this.relationships), (err) => {
+                        if (err) return console.log(err);
+                        console.log(`${this.relationships.length} relationships`);
                         console.log("complete");
                     });
                 }
             });
+    }
+
+    addRelationships(file) {
+        const l = file.category.length;
+        for (let c = 0; c < l; c++) {
+            const parentId = file.category[c].id;
+            const category = this.categories.find((c) => {
+                return c.id === parentId;
+            });
+            if(category === undefined) {
+                console.log(`Parent category id ${parentId} not found`);
+            } else {
+                const id = this.relationships.length + 1;
+                this.relationships.push({
+                    id: id,
+                    itemId: file.id,
+                    categoryId: category.id
+                });
+            }
+        }
     }
 }
 
