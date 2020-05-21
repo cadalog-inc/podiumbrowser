@@ -40,7 +40,6 @@ class App extends React.Component {
                                 return (
                                     <React.Fragment>
                                         <NavBar
-                                            queryValues={this.state.queryValues}
                                             saveQueryValues={this.saveQueryValues}
                                             handleCategoryChange={this.handleCategoryChange}
                                             handleKeySearchChange={this.handleKeySearchChange}

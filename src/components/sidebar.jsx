@@ -16,7 +16,7 @@ export class SideBar extends React.Component {
         if (queryValues.searchTerm && queryValues.searchTerm !== "") {
             searchTerm = queryValues.searchTerm;
         }
-        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 8) {
+        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 6) {
             pageSize = queryValues.pageSize;
         }
         if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
@@ -24,6 +24,9 @@ export class SideBar extends React.Component {
         }
         if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
             onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
+        }
+        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 6) {
+            pageSize = queryValues.pageSize;
         }
         if (queryValues.sortBy !== undefined && queryValues.sortBy !== "") {
             sortBy = queryValues.sortBy;

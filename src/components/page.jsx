@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Col, Dropdown, Row, InputGroup, OverlayTrigger, Tooltip } from 'react-bootstrap';
+import { Col, Dropdown, Row, InputGroup, OverlayTrigger } from 'react-bootstrap';
 import { SideBar } from './sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faAngleLeft, faAngleRight, faDownload } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +24,7 @@ export class Page extends React.Component {
         if (queryValues.pageIndex && queryValues.pageIndex !== "" && queryValues.pageIndex >= 0) {
             pageIndex = queryValues.pageIndex;
         }
-        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 8) {
+        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 6) {
             pageSize = queryValues.pageSize;
         }
         if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
