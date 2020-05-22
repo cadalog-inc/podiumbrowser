@@ -6,15 +6,26 @@ import { Alert } from 'react-bootstrap';
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { NavBar } from './components/navbar';
 import { Page } from './components/page';
+import Category from './models/Category';
+import Item from './models/Item';
+import Relationship from './models/Relationship';
+import User from './models/User';
+import categories from './data/categories.json';
+import items from './data/items.json';
+import relationships from './data/relationships.json';
 /*global sketchup*/
 
+// todo: handle removing all items on favorites page
+// todo: don't pass entire license into app from ruby
+// note: https://v4.pdm-plants-textures.com/
+// note: 2a2d4d95325c15bf
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             user: {
                 "id": 1,
-                "key": "" // 2a2d4d95325c15bf
+                "key": "" 
             },
             homeCategoryId: 1,
             categories: [],
@@ -26,7 +37,18 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.getData();
+        this.setState({
+            categories: Category.fromArray(categories),
+            items: Item.fromArray(items),
+            relationships: Relationship.fromArray(relationships)
+        }, () => {
+            const homeCategory = this.state.categories.find((category) => category.title === 'Home');
+            this.setState({
+                homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
+            }, () => {
+                this.getLicense()
+            });
+        });
     }
 
     render() {
@@ -101,7 +123,6 @@ class App extends React.Component {
         }
     }
 
-    // todo: handle removing all items on favorites page
     handleFavoriteClick = (itemId) => {
         if (this.state.user.key !== '') {
             const item = this.state.items.find((e) => {
@@ -139,16 +160,6 @@ class App extends React.Component {
                         console.log(response);
                     });
             });
-        }
-    }
-
-    findHomeCategory = (categories) => {
-        const l = categories.length;
-        for (let c = 0; c < l; c++) {
-            const category = categories[c];
-            if (category.title === "Home") {
-                return category;
-            }
         }
     }
 
@@ -262,49 +273,6 @@ class App extends React.Component {
         return values;
     }
 
-    getData = () => {
-        this.getCategories(); // begins a chain of data downloads from categories to items
-    }
-
-    // https://v4.pdm-plants-textures.com/
-    getCategories = () => {
-        axios.get('categories.json')
-            .then((response) => {
-                this.setState({
-                    categories: response.data
-                }, () => {
-                    const homeCategory = this.findHomeCategory(this.state.categories);
-                    this.setState({
-                        homeCategory: homeCategory.id ? homeCategory.id : 1
-                    }, () => {
-                        this.getRelationships();
-                    });
-                });
-            });
-    }
-
-    getRelationships = () => {
-        axios.get('relationships.json')
-            .then((response) => {
-                this.setState({
-                    relationships: response.data
-                }, () => {
-                    this.getItems();
-                });
-            });
-    }
-
-    getItems = () => {
-        axios.get('items.json')
-            .then((response) => {
-                this.setState({
-                    items: response.data
-                }, () => {
-                    this.getLicense();
-                });
-            });
-    }
-
     getLicense() {
         // call sketchup to get license
         // sketchup will call set license below
@@ -328,10 +296,7 @@ class App extends React.Component {
         axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/set_license/${key}`)
             .then((response) => {
                 this.setState({
-                    user: {
-                        id: response.data.id,
-                        key: key
-                    }
+                    user: new User(response.data.id, response.data.key)
                 }, () => {
                     this.getFavorites();
                 });
