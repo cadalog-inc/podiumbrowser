@@ -83,7 +83,8 @@ export class SideBar extends React.Component {
                                         return (
                                             <Button key={index} variant="light"
                                                 style={{
-                                                    margin: 2
+                                                    margin: 2,
+                                                    textAlign: "left"
                                                 }}
                                                 onClick={() => {
                                                     this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)
@@ -105,7 +106,8 @@ export class SideBar extends React.Component {
                                 return (
                                     <Button key={index} variant="light"
                                         style={{
-                                            margin: 2
+                                            margin: 2,
+                                            textAlign: "left"
                                         }}
                                         onClick={() => {
                                             this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)

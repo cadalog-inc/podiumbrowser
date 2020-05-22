@@ -331,15 +331,7 @@ export class Page extends React.Component {
             </React.Fragment>
         );
     }
-
-    handleSortByClick = (sortBy, pageSize, searchTerm, categoryId, onlyFree, onlyRecent) => {
-        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
-    }
-
-    handlePageSizeClick = (pageSize, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) => {
-        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
-    }
-
+    
     parseQueryString = (queryString) => {
         const values = {};
         const elements = queryString.replace('?', '').split("&");
