@@ -60,7 +60,7 @@ export class Options extends React.Component {
                     <ButtonGroup>
                         <Dropdown style={{ margin: 5 }}>
                             <Dropdown.Toggle variant="light">
-                                Per Page: {6}
+                                Per Page: {this.props.pageSize}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                     {

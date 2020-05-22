@@ -63,7 +63,6 @@ export class SideBar extends React.Component {
                             </ul>
                         </React.Fragment> : null
                     }
-                    <hr style={{ width: "90%" }} />
                     <div className="form-check" style={{ margin: 10 }}>
                         <input className="form-check-input" type="checkbox" defaultChecked={onlyFree} onChange={(e) => {
                             this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${e.target.checked}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
@@ -72,17 +71,19 @@ export class SideBar extends React.Component {
                             Show only free files
                         </label>
                     </div>
-                    <hr style={{ width: "90%" }} />
                     {
 
                         this.props.user.key !== '' ? <React.Fragment>
-                            <ButtonGroup vertical>
+                            <ButtonGroup vertical style={{
+                                padding: 5,
+                                width: '100%'
+                            }}>
                                 {
                                     homeCategories.map((category, index) => {
                                         return (
                                             <Button key={index} variant="light"
                                                 style={{
-                                                    margin: 3
+                                                    margin: 2
                                                 }}
                                                 onClick={() => {
                                                     this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)
@@ -93,16 +94,18 @@ export class SideBar extends React.Component {
                                     })
                                 }
                             </ButtonGroup>
-                            <hr style={{ width: "90%" }} />
                         </React.Fragment> : null
                     }
-                    <ButtonGroup vertical>
+                    <ButtonGroup vertical style={{
+                        padding: 5,
+                        width: '100%'
+                    }}>
                         {
                             primaryCategories.filter((category) => category.title !== 'HDR').map((category, index) => {
                                 return (
                                     <Button key={index} variant="light"
                                         style={{
-                                            margin: 3
+                                            margin: 2
                                         }}
                                         onClick={() => {
                                             this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)
