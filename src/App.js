@@ -105,6 +105,8 @@ class App extends React.Component {
             );
     }
 
+    // ruby calls
+
     handleDownloadClick = (item) => {
         if (this.state.user.key !== '' || item.type === 'free') {
             sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}`);
@@ -163,6 +165,8 @@ class App extends React.Component {
             });
         }
     }
+
+    // category methods
 
     getHomeCategory = () => {
         return this.state.homeCategoryId;
@@ -257,6 +261,8 @@ class App extends React.Component {
         return itemsInCategory;
     }
 
+    // query method
+
     parseQueryString = (queryString) => {
         const values = {};
         const elements = decodeURIComponent(queryString).replace('?', '').split("&");
@@ -273,6 +279,8 @@ class App extends React.Component {
         }
         return values;
     }
+
+    // api calls
 
     getLicense() {
         // call sketchup to get license

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { Path } from './path';
 
 export class SideBar extends React.Component {
     render() {
@@ -56,11 +57,18 @@ export class SideBar extends React.Component {
                 }}>
                     {
                         selectedCategory.id !== this.props.getHomeCategory() && selectedCategory.id !== 217 && selectedCategory.id !== 218 ? <React.Fragment>
-                            <ul>
-                                {
-                                    this.renderPath(this.props.calculatePathToCategory(categoryId), 0, categories, searchTerm, onlyFree, onlyRecent, sortBy)
-                                }
-                            </ul>
+                            <Path
+                                handleCategoryChange={this.handleCategoryChange}
+                                renderPath={this.renderPath}
+                                getHomeCategory={this.props.getHomeCategory}
+                                categories={this.props.categories}
+                                subCategories={categories}
+                                categoryId={categoryId}
+                                searchTerm={searchTerm}
+                                onlyFree={onlyFree}
+                                onlyRecent={onlyRecent}
+                                sortBy={sortBy}
+                            />
                         </React.Fragment> : null
                     }
                     <div className="form-check" style={{ margin: 10 }}>
@@ -125,40 +133,5 @@ export class SideBar extends React.Component {
 
     handleCategoryChange = (value, searchTerm, onlyFree, onlyRecent, sortBy) => {
         this.props.history.push(`/?categoryId=${value}&searchTerm=${searchTerm}&pageIndex=0&pageSize=6&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
-    }
-
-    renderPath = (path, index, categories, searchTerm, onlyFree, onlyRecent, sortBy) => {
-        const category = path[index];
-        return category ? index < path.length - 1 ? (
-            <li>
-                <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
-                    {category.title}
-                </span>
-                <ul>
-                    {this.renderPath(path, index + 1, categories, searchTerm, onlyFree, onlyRecent, sortBy)}
-                </ul>
-            </li>
-        ) : (
-                <li>
-                    <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
-                        {category.title}
-                    </span>
-                    <ul>
-                        {
-                            categories.length > 1 ? (
-                                categories.map((item, index) => {
-                                    return item.title !== 'HDR' ? (
-                                        <li key={index}>
-                                            <span style={{ cursor: "pointer" }} onClick={() => this.handleCategoryChange(item.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
-                                                {item.title}
-                                            </span>
-                                        </li>
-                                    ) : null
-                                })
-                            ) : null
-                        }
-                    </ul>
-                </li>
-            ) : null
     }
 }

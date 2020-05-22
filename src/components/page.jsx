@@ -53,7 +53,7 @@ export class Page extends React.Component {
                         <Col xl={2} lg={3} md={4} sm={5} xs={6} style={{ padding: 0 }}>
                             <SideBar
                                 user={this.props.user}
-                                categories={categories}
+                                categories={this.props.categories}
                                 parseQueryString={this.props.parseQueryString}
                                 getSubCategories={this.props.getSubCategories}
                                 calculatePathToCategory={this.calculatePathToCategory}
