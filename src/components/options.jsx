@@ -79,7 +79,7 @@ export class Options extends React.Component {
                     </ButtonGroup>
                     <ButtonGroup>
                         <Button type="button" variant="light" disabled style={{ margin: 5 }}>
-                            {this.props.itemsBegin} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}
+                            {this.props.itemsBegin+1} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}
                         </Button>
                         <Button type="button" variant="light" style={{ margin: 5 }}
                             onClick={() => this.handlePageIndexClick(this.props.pageBack)}>

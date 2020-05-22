@@ -5,6 +5,7 @@ import { SideBar } from './sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faAngleLeft, faAngleRight, faDownload } from '@fortawesome/free-solid-svg-icons';
 import { Options } from './options';
+import { Item } from './item';
 
 export class Page extends React.Component {
     render() {
@@ -75,81 +76,11 @@ export class Page extends React.Component {
                                 let items = (this.props.isHomeCategory(category.id) ? this.props.items : this.props.getItemsInCategory(category.id)).filter((item) => {
                                     return (onlyFree === false || item.type === 'free') && (searchTerm === "" || item.title.includes(searchTerm) || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
                                 });
-                                if (onlyRecent) {
-                                    items = items.sort((a, b) => {
-                                        if (a.uploadDate < b.uploadDate) {
-                                            return -1;
-                                        }
-                                        if (a.uploadDate > b.uploadDate) {
-                                            return 1;
-                                        }
-                                        return 0;
-                                    }).splice(0, 100);
-                                } else {
-                                    if (sortBy === "File Size (Low to High)") {
-                                        items = items.sort((a, b) => {
-                                            if (a.fileSize < b.fileSize) {
-                                                return -1;
-                                            }
-                                            if (a.fileSize > b.fileSize) {
-                                                return 1;
-                                            }
-                                            return 0;
-                                        });
-                                    } else if (sortBy === "File Size (High to Low)") {
-                                        items = items.sort((a, b) => {
-                                            if (a.fileSize > b.fileSize) {
-                                                return -1;
-                                            }
-                                            if (a.fileSize < b.fileSize) {
-                                                return 1;
-                                            }
-                                            return 0;
-                                        });
-                                    } else if (sortBy === "Date Uploaded (New to Old)") {
-                                        items = items.sort((a, b) => {
-                                            if (a.uploadDate > b.uploadDate) {
-                                                return -1;
-                                            }
-                                            if (a.uploadDate < b.uploadDate) {
-                                                return 1;
-                                            }
-                                            return 0;
-                                        });
-                                    } else if (sortBy === "Date Uploaded (Old to New)") {
-                                        items = items.sort((a, b) => {
-                                            if (a.uploadDate < b.uploadDate) {
-                                                return -1;
-                                            }
-                                            if (a.uploadDate > b.uploadDate) {
-                                                return 1;
-                                            }
-                                            return 0;
-                                        });
-                                    } else if (sortBy === "File Name (Z to A)") {
-                                        items = items.sort((a, b) => {
-                                            if (a.title > b.title) {
-                                                return -1;
-                                            }
-                                            if (a.title < b.title) {
-                                                return 1;
-                                            }
-                                            return 0;
-                                        });
-                                    } else {
-                                        items = items.sort((a, b) => {
-                                            if (a.title < b.title) {
-                                                return -1;
-                                            }
-                                            if (a.title > b.title) {
-                                                return 1;
-                                            }
-                                            return 0;
-                                        });
-                                    }
-                                }
+                                
+                                this.sortItems(items, onlyRecent, sortBy);
+
                                 let itemsBegin = categories.length === 1 || category.id === this.props.getHomeCategory() ? pageIndex * pageSize : 0;
-                                let itemsEnd = categories.length === 1 || category.id === this.props.getHomeCategory() ? itemsBegin + pageSize : 8;
+                                let itemsEnd = categories.length === 1 || category.id === this.props.getHomeCategory() ? itemsBegin + pageSize : 6;
                                 let itemsLength = items.length;
                                 let pageBack = pageIndex - 1 > 0 ? pageIndex - 1 : 0;
                                 let pageNext = this.calculateNextPage(pageIndex, pageSize, itemsLength);
@@ -198,105 +129,15 @@ export class Page extends React.Component {
                                                 items.slice(itemsBegin, itemsEnd).map((item, index) => {
                                                     return (
                                                         <Col key={index} style={{ marginTop: 20, minWidth: 175 }} xl={1} lg={2} md={3} sm={4} xs={6}>
-                                                            <OverlayTrigger
-                                                                placement="bottom"
-                                                                delay={{ dhow: 500 }}
-                                                                overlay={(props) => {
-                                                                    return (
-                                                                        <div
-                                                                            {...props}
-                                                                            style={{
-                                                                                fontSize: '11px',
-                                                                                minWidth: 125,
-                                                                                color: "#212529",
-                                                                                backgroundColor: '#f1f1f1',
-                                                                                border: '1px solid #e5e5e5',
-                                                                                padding: 2,
-                                                                                ...props.style,
-                                                                            }}
-                                                                        >
-                                                                            {this.calculatePathToItem(item.id).slice(1)}
-                                                                        </div>
-                                                                    )
-                                                                }}
-                                                            >
-                                                                <div
-                                                                    style={{
-                                                                        position: 'relative',
-                                                                        width: '100%',
-                                                                        backgroundColor: '#f1f1f1',
-                                                                        display: "flex",
-                                                                        flexDirection: "column",
-                                                                        justifyContent: "center",
-                                                                        alignItems: "center",
-                                                                        border: '1px solid #e5e5e5'
-                                                                    }}
-                                                                >
-                                                                    <img alt='testing 1 2 3'
-                                                                        src={"http://v3.pdm-plants-textures.com/images/" + item.imageFile}
-                                                                        style={{
-                                                                            position: 'relative',
-                                                                            width: '100%',
-                                                                            cursor: "pointer",
-                                                                            borderBottom: '1px solid #e5e5e5'
-                                                                        }}
-                                                                        onClick={() => { this.props.handleDownloadClick(item) }}
-                                                                    />
-                                                                    <span
-                                                                        style={{
-                                                                            position: 'absolute',
-                                                                            right: '0px',
-                                                                            top: '0px',
-                                                                            cursor: 'pointer'
-                                                                        }}
-                                                                        onClick={() => { this.props.handleFavoriteClick(item.id) }}
-                                                                    >
-                                                                        {
-                                                                            this.props.user.key !== '' && this.isItemFavorite(item.id) ? <FontAwesomeIcon icon={faStar} color="gold" /> : <FontAwesomeIcon icon={faStar} color="lightgrey" />
-                                                                        }
-                                                                    </span>
-                                                                    <span
-                                                                        style={{
-                                                                            fontSize: '11px',
-                                                                            width: '100%',
-                                                                            padding: 5,
-                                                                            borderBottom: '1px solid #e6e6e6'
-                                                                        }}
-                                                                    >
-                                                                        {item.title}
-                                                                    </span>
-                                                                    <span
-                                                                        style={{
-                                                                            height: 27
-                                                                        }}
-                                                                    >
-                                                                        <span
-                                                                            style={{
-                                                                                position: 'absolute',
-                                                                                left: '5px',
-                                                                                bottom: '4px',
-                                                                                fontSize: '11px',
-                                                                                fontWeight: '600'
-                                                                            }}
-                                                                        >
-                                                                            {this.formatFileSize(item.fileSize)} MB
-                                                                        </span>
-                                                                        <span
-                                                                            style={{
-                                                                                position: 'absolute',
-                                                                                right: '5px',
-                                                                                bottom: '2px',
-                                                                                cursor: 'pointer'
-                                                                            }}
-                                                                            onClick={() => { this.props.handleDownloadClick(item) }}
-                                                                        >
-                                                                            {
-                                                                                this.props.user.key !== '' || item.type === 'free' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
-                                                                            }
-                                                                        </span>
-                                                                    </span>
-                                                                </div>
-                                                            </OverlayTrigger>
+                                                            <Item
+                                                                item={item}
+                                                                user={this.props.user}
+                                                                calculatePathToItem={this.calculatePathToItem}
+                                                                handleDownloadClick={this.props.handleDownloadClick}
+                                                                handleFavoriteClick={this.props.handleFavoriteClick}
+                                                                isItemFavorite={this.isItemFavorite}
+                                                                formatFileSize={this.formatFileSize}
+                                                            />
                                                         </Col>
                                                     )
                                                 })
@@ -330,6 +171,82 @@ export class Page extends React.Component {
                 </div>
             </React.Fragment>
         );
+    }
+
+    sortItems = (items, onlyRecent, sortBy) => {
+        if (onlyRecent) {
+            items = items.sort((a, b) => {
+                if (a.uploadDate < b.uploadDate) {
+                    return -1;
+                }
+                if (a.uploadDate > b.uploadDate) {
+                    return 1;
+                }
+                return 0;
+            }).splice(0, 100);
+        } else {
+            if (sortBy === "File Size (Low to High)") {
+                items = items.sort((a, b) => {
+                    if (a.fileSize < b.fileSize) {
+                        return -1;
+                    }
+                    if (a.fileSize > b.fileSize) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            } else if (sortBy === "File Size (High to Low)") {
+                items = items.sort((a, b) => {
+                    if (a.fileSize > b.fileSize) {
+                        return -1;
+                    }
+                    if (a.fileSize < b.fileSize) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            } else if (sortBy === "Date Uploaded (New to Old)") {
+                items = items.sort((a, b) => {
+                    if (a.uploadDate > b.uploadDate) {
+                        return -1;
+                    }
+                    if (a.uploadDate < b.uploadDate) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            } else if (sortBy === "Date Uploaded (Old to New)") {
+                items = items.sort((a, b) => {
+                    if (a.uploadDate < b.uploadDate) {
+                        return -1;
+                    }
+                    if (a.uploadDate > b.uploadDate) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            } else if (sortBy === "File Name (Z to A)") {
+                items = items.sort((a, b) => {
+                    if (a.title > b.title) {
+                        return -1;
+                    }
+                    if (a.title < b.title) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            } else {
+                items = items.sort((a, b) => {
+                    if (a.title < b.title) {
+                        return -1;
+                    }
+                    if (a.title > b.title) {
+                        return 1;
+                    }
+                    return 0;
+                });
+            }
+        }
     }
     
     parseQueryString = (queryString) => {
