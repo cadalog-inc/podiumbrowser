@@ -8,6 +8,7 @@ import { NavBar } from './components/navbar';
 import { Page } from './components/page';
 import Category from './models/Category';
 import Item from './models/Item';
+import Query from './models/Query';
 import Relationship from './models/Relationship';
 import User from './models/User';
 import categories from './data/categories.json';

@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { Col, Dropdown, Row, InputGroup, OverlayTrigger } from 'react-bootstrap';
+import { Button, Col, Dropdown, InputGroup, Row, Form, OverlayTrigger } from 'react-bootstrap';
 import { SideBar } from './sidebar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faAngleLeft, faAngleRight, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { Options } from './options';
 
 export class Page extends React.Component {
     render() {
@@ -107,20 +108,20 @@ export class Page extends React.Component {
                                         });
                                     } else if (sortBy === "Date Uploaded (New to Old)") {
                                         items = items.sort((a, b) => {
-                                            if (a.uploadDate < b.uploadDate) {
+                                            if (a.uploadDate > b.uploadDate) {
                                                 return -1;
                                             }
-                                            if (a.uploadDate > b.uploadDate) {
+                                            if (a.uploadDate < b.uploadDate) {
                                                 return 1;
                                             }
                                             return 0;
                                         });
                                     } else if (sortBy === "Date Uploaded (Old to New)") {
                                         items = items.sort((a, b) => {
-                                            if (a.uploadDate > b.uploadDate) {
+                                            if (a.uploadDate < b.uploadDate) {
                                                 return -1;
                                             }
-                                            if (a.uploadDate < b.uploadDate) {
+                                            if (a.uploadDate > b.uploadDate) {
                                                 return 1;
                                             }
                                             return 0;
@@ -155,7 +156,7 @@ export class Page extends React.Component {
                                 return (
                                     <React.Fragment key={index}>
                                         {
-                                            categories.length > 1 && items.length > 0 ?
+                                            categories.length > 1 ?
                                                 <Row style={{ marginTop: 20 }}>
                                                     <Col>
                                                         <h5>{category.title} - {itemsLength} files</h5>
@@ -173,48 +174,21 @@ export class Page extends React.Component {
                                                         </Row>
                                                         <Row>
                                                             <Col>
-                                                                <div className="float-right">
-                                                                    <InputGroup className="mb-3">
-                                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Sort by:</InputGroup.Text></span>
-                                                                        <Dropdown>
-                                                                            <Dropdown.Toggle variant="light" id="dropdown-basic">
-                                                                                {sortBy}
-                                                                            </Dropdown.Toggle>
-                                                                            <Dropdown.Menu>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('File Name (A to Z)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Name (A to Z)</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('File Name (Z to A)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Name (Z to A)</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('File Size (High to Low)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Size (High to Low)</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('File Size (Low to High)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Size (Low to High)</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('Date Uploaded (New to Old)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>Date Uploaded (New to Old)</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handleSortByClick('Date Uploaded (Old to New)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>Date Uploaded (Old to New)</Dropdown.Item>
-                                                                            </Dropdown.Menu>
-                                                                        </Dropdown>
-                                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
-                                                                        <Dropdown>
-                                                                            <Dropdown.Toggle variant="light" id="dropdown-basic">
-                                                                                {pageSize}
-                                                                            </Dropdown.Toggle>
-                                                                            <Dropdown.Menu>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(6, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>6</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(12, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>12</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(24, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>24</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(48, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>48</Dropdown.Item>
-                                                                                <Dropdown.Item onClick={() => { this.handlePageSizeClick(96, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>96</Dropdown.Item>
-                                                                            </Dropdown.Menu>
-                                                                        </Dropdown>
-                                                                        <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
-                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`}>
-                                                                                <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
-                                                                            </Link>
-                                                                        </InputGroup.Text>
-                                                                        <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                            <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`}>
-                                                                                <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
-                                                                            </Link>
-                                                                        </InputGroup.Text>
-                                                                    </InputGroup>
-                                                                </div>
+                                                                <Options
+                                                                    categoryId={categoryId}
+                                                                    searchTerm={searchTerm}
+                                                                    pageIndex={pageIndex}
+                                                                    pageSize={pageSize}
+                                                                    onlyFree={onlyFree}
+                                                                    onlyRecent={onlyRecent}
+                                                                    sortBy={sortBy}
+                                                                    pageBack={pageBack}
+                                                                    pageNext={pageNext}
+                                                                    itemsBegin={itemsBegin}
+                                                                    itemsEnd={itemsEnd}
+                                                                    itemsLength={itemsLength}
+                                                                    {...this.props}
+                                                                />
                                                             </Col>
                                                         </Row>
                                                     </React.Fragment> : null
@@ -329,54 +303,23 @@ export class Page extends React.Component {
                                             }
                                         </Row>
                                         {
-                                            categories.length > 1 && items.length > 0 ?
+                                            categories.length > 1 ?
                                                 null : items.length > 0 ?
-                                                    <Row style={{ marginTop: 20 }}>
-                                                        <Col>
-                                                            <div className="float-right">
-                                                                <InputGroup className="mb-3">
-                                                                    <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Sort by:</InputGroup.Text></span>
-                                                                    <Dropdown>
-                                                                        <Dropdown.Toggle variant="light" id="dropdown-basic">
-                                                                            {sortBy}
-                                                                        </Dropdown.Toggle>
-                                                                        <Dropdown.Menu>
-                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('File Name (A to Z)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Name (A to Z)</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('File Name (Z to A)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Name (Z to A)</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('File Size (High to Low)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Size (High to Low)</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('File Size (Low to High)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>File Size (Low to High)</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('Date Uploaded (New to Old)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>Date Uploaded (New to Old)</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handleSortByClick('Date Uploaded (Old to New)', pageSize, searchTerm, categoryId, onlyFree, onlyRecent) }}>Date Uploaded (Old to New)</Dropdown.Item>
-                                                                        </Dropdown.Menu>
-                                                                    </Dropdown>
-                                                                    <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>Items per page:</InputGroup.Text></span>
-                                                                    <Dropdown>
-                                                                        <Dropdown.Toggle variant="light" id="dropdown-basic">
-                                                                            {pageSize}
-                                                                        </Dropdown.Toggle>
-                                                                        <Dropdown.Menu>
-                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(8, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>8</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(16, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>16</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(32, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>32</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(64, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>64</Dropdown.Item>
-                                                                            <Dropdown.Item onClick={() => { this.handlePageSizeClick(128, searchTerm, categoryId, onlyFree, onlyRecent, sortBy) }}>128</Dropdown.Item>
-                                                                        </Dropdown.Menu>
-                                                                    </Dropdown>
-                                                                    <span><InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}> {itemsBegin} - {itemsEnd <= itemsLength ? itemsEnd : itemsLength} of {itemsLength} </InputGroup.Text></span>
-                                                                    <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                        <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageBack}&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`}>
-                                                                            <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
-                                                                        </Link>
-                                                                    </InputGroup.Text>
-                                                                    <InputGroup.Text style={{ backgroundColor: "white", borderColor: "white" }}>
-                                                                        <Link to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=${pageNext}&pageSize=${pageSize}&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`}>
-                                                                            <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
-                                                                        </Link>
-                                                                    </InputGroup.Text>
-                                                                </InputGroup>
-                                                            </div>
-                                                        </Col>
-                                                    </Row> : null
+                                                    <Options
+                                                        categoryId={categoryId}
+                                                        searchTerm={searchTerm}
+                                                        pageIndex={pageIndex}
+                                                        pageSize={pageSize}
+                                                        onlyFree={onlyFree}
+                                                        onlyRecent={onlyRecent}
+                                                        sortBy={sortBy}
+                                                        pageBack={pageBack}
+                                                        pageNext={pageNext}
+                                                        itemsBegin={itemsBegin}
+                                                        itemsEnd={itemsEnd}
+                                                        itemsLength={itemsLength}
+                                                        {...this.props}
+                                                    /> : null
                                         }
                                     </React.Fragment>
                                 )
