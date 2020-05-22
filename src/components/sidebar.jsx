@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
 
 export class SideBar extends React.Component {
     render() {
@@ -62,8 +63,8 @@ export class SideBar extends React.Component {
                             </ul>
                         </React.Fragment> : null
                     }
-                    <hr style={{width: "90%"}}/>
-                    <div className="form-check" style={{margin: 10}}>
+                    <hr style={{ width: "90%" }} />
+                    <div className="form-check" style={{ margin: 10 }}>
                         <input className="form-check-input" type="checkbox" defaultChecked={onlyFree} onChange={(e) => {
                             this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${e.target.checked}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
                         }} id="freeChecked" />
@@ -71,55 +72,47 @@ export class SideBar extends React.Component {
                             Show only free files
                         </label>
                     </div>
-                    <hr style={{width: "90%"}}/>
+                    <hr style={{ width: "90%" }} />
                     {
 
                         this.props.user.key !== '' ? <React.Fragment>
-                            <ul>
+                            <ButtonGroup vertical>
                                 {
                                     homeCategories.map((category, index) => {
                                         return (
-                                            <li key={index} style={{
-                                                padding: 0,
-                                                margin: 5
-                                            }}>
-                                                <button style={{
-                                                    width: "100%",
-                                                    backgroundColor: "#f7f5f5",
-                                                    border: "1px solid #e5e5e5",
-                                                    textAlign: "left"
-                                                }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
-                                                    {category.title}
-                                                </button>
-                                            </li>
+                                            <Button key={index} variant="light"
+                                                style={{
+                                                    margin: 3
+                                                }}
+                                                onClick={() => {
+                                                    this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)
+                                                }}>
+                                                {category.title}
+                                            </Button>
                                         )
                                     })
                                 }
-                            </ul>
-                            <hr style={{width: "90%"}} />
+                            </ButtonGroup>
+                            <hr style={{ width: "90%" }} />
                         </React.Fragment> : null
                     }
-                    <ul>
+                    <ButtonGroup vertical>
                         {
-                            primaryCategories.map((category, index) => {
-                                return category.title !== 'HDR' ? (
-                                    <li key={index} style={{
-                                        padding: 0,
-                                        margin: 2
-                                    }}>
-                                        <button style={{
-                                            width: "100%",
-                                            backgroundColor: "#f7f5f5",
-                                            border: "1px solid #e5e5e5",
-                                            textAlign: "left"
-                                        }} onClick={() => this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
-                                            {category.title}
-                                        </button>
-                                    </li>
-                                ) : null
+                            primaryCategories.filter((category) => category.title !== 'HDR').map((category, index) => {
+                                return (
+                                    <Button key={index} variant="light"
+                                        style={{
+                                            margin: 3
+                                        }}
+                                        onClick={() => {
+                                            this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)
+                                        }}>
+                                        {category.title}
+                                    </Button>
+                                )
                             })
                         }
-                    </ul>
+                    </ButtonGroup>
                 </div>
             </React.Fragment>
         );
