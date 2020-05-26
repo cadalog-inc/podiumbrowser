@@ -133,5 +133,6 @@ export class SideBar extends React.Component {
 
     handleCategoryChange = (value, searchTerm, onlyFree, onlyRecent, sortBy) => {
         this.props.history.push(`/?categoryId=${value}&searchTerm=${searchTerm}&pageIndex=0&pageSize=6&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
+        window.scrollTo(0, 0);
     }
 }

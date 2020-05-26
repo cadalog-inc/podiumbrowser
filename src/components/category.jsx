@@ -1,8 +1,9 @@
 import React from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
+import { Options } from './options';
 import { Item } from './item';
 
-export class SubCategories extends React.Component {
+export class Category extends React.Component {
     render() {
         let items = (this.props.isHomeCategory(this.props.category.id) ? this.props.items : this.props.getItemsInCategory(this.props.category.id)).filter((item) => {
             return (this.props.onlyFree === false || item.type === 'free') && (this.props.searchTerm === "" || item.title.includes(this.props.searchTerm) || this.props.searchArray(item.tags, this.props.searchTerm)) && item.filename.split('.')[1] !== 'hdr';
@@ -13,20 +14,34 @@ export class SubCategories extends React.Component {
         let itemsBegin = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? this.props.pageIndex * this.props.pageSize : 0;
         let itemsEnd = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? itemsBegin + this.props.pageSize : 6;
         let itemsLength = items.length;
+        let pageBack = this.props.pageIndex - 1 > 0 ? this.props.pageIndex - 1 : 0;
+        let pageNext = this.props.calculateNextPage(this.props.pageIndex, this.props.pageSize, itemsLength);
         return (
             <React.Fragment>
                 <Row style={{ marginTop: 20 }}>
                     <Col>
-                        <h5>{this.props.category.title} - {itemsLength} files</h5>
+                        <h3>{this.props.category.title}</h3>
                     </Col>
+                </Row>
+                <Row>
                     <Col>
-                        <Button 
-                            variant="light" 
-                            className="float-right"
-                            onClick={this.handleSeeAllClick}
-                        >
-                            See All
-                        </Button>
+                        <Options
+                            categoryId={this.props.categoryId}
+                            searchTerm={this.props.searchTerm}
+                            pageIndex={this.props.pageIndex}
+                            pageSize={this.props.pageSize}
+                            onlyFree={this.props.onlyFree}
+                            onlyRecent={this.props.onlyRecent}
+                            sortBy={this.props.sortBy}
+                            pageBack={pageBack}
+                            pageNext={pageNext}
+                            itemsBegin={itemsBegin}
+                            itemsEnd={itemsEnd}
+                            itemsLength={itemsLength}
+                            handleDownloadClick={this.props.handleDownloadClick}
+                            handleFavoriteClick={this.props.handleFavoriteClick}
+                            {...this.props}
+                        />
                     </Col>
                 </Row>
                 <Row>
@@ -55,12 +70,24 @@ export class SubCategories extends React.Component {
                         })
                     }
                 </Row>
+                <Options
+                    categoryId={this.props.categoryId}
+                    searchTerm={this.props.searchTerm}
+                    pageIndex={this.props.pageIndex}
+                    pageSize={this.props.pageSize}
+                    onlyFree={this.props.onlyFree}
+                    onlyRecent={this.props.onlyRecent}
+                    sortBy={this.props.sortBy}
+                    pageBack={pageBack}
+                    pageNext={pageNext}
+                    itemsBegin={itemsBegin}
+                    itemsEnd={itemsEnd}
+                    itemsLength={itemsLength}
+                    handleDownloadClick={this.props.handleDownloadClick}
+                    handleFavoriteClick={this.props.handleFavoriteClick}
+                    {...this.props}
+                />
             </React.Fragment>
         );
-    }
-
-    handleSeeAllClick = (pageIndex) => {
-        this.props.history.push(`/?categoryId=${this.props.category.id}&searchTerm=${this.props.searchTerm}&pageIndex=${pageIndex}&pageSize=${this.props.pageSize}&onlyFree=${this.props.onlyFree}&onlyRecent=${this.props.onlyRecent}&sortBy=${this.props.sortBy}`);
-        window.scrollTo(0, 0);
     }
 }

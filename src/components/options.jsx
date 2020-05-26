@@ -23,14 +23,17 @@ export class Options extends React.Component {
 
     handlePageSizeClick = (pageSize) => {
         this.props.history.push(`/?categoryId=${this.props.categoryId}&searchTerm=${this.props.searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${this.props.onlyFree}&onlyRecent=${this.props.onlyRecent}&sortBy=${this.props.sortBy}`);
+        window.scrollTo(0, 0);
     }
 
     handleSortByClick = (sortBy) => {
         this.props.history.push(`/?categoryId=${this.props.categoryId}&searchTerm=${this.props.searchTerm}&pageIndex=0&pageSize=${this.props.pageSize}&onlyFree=${this.props.onlyFree}&onlyRecent=${this.props.onlyRecent}&sortBy=${sortBy}`);
+        window.scrollTo(0, 0);
     }
 
     handlePageIndexClick = (pageIndex) => {
         this.props.history.push(`/?categoryId=${this.props.categoryId}&searchTerm=${this.props.searchTerm}&pageIndex=${pageIndex}&pageSize=${this.props.pageSize}&onlyFree=${this.props.onlyFree}&onlyRecent=${this.props.onlyRecent}&sortBy=${this.props.sortBy}`);
+        window.scrollTo(0, 0);
     }
 
     render() {

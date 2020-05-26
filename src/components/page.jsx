@@ -1,11 +1,8 @@
 import React from 'react';
-import { Link } from "react-router-dom";
-import { Button, Col, Dropdown, InputGroup, Row, Form, OverlayTrigger } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { SideBar } from './sidebar';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faAngleLeft, faAngleRight, faDownload } from '@fortawesome/free-solid-svg-icons';
-import { Options } from './options';
-import { Item } from './item';
+import { Category } from './category';
+import { SubCategories } from './subcategories';
 
 export class Page extends React.Component {
     render() {
@@ -73,97 +70,57 @@ export class Page extends React.Component {
                                     </Row> : null
                             }
                             {categories.map((category, index) => {
-                                let items = (this.props.isHomeCategory(category.id) ? this.props.items : this.props.getItemsInCategory(category.id)).filter((item) => {
-                                    return (onlyFree === false || item.type === 'free') && (searchTerm === "" || item.title.includes(searchTerm) || this.searchArray(item.tags, searchTerm)) && item.filename.split('.')[1] !== 'hdr';
-                                });
-                                
-                                this.sortItems(items, onlyRecent, sortBy);
-
-                                let itemsBegin = categories.length === 1 || category.id === this.props.getHomeCategory() ? pageIndex * pageSize : 0;
-                                let itemsEnd = categories.length === 1 || category.id === this.props.getHomeCategory() ? itemsBegin + pageSize : 6;
-                                let itemsLength = items.length;
-                                let pageBack = pageIndex - 1 > 0 ? pageIndex - 1 : 0;
-                                let pageNext = this.calculateNextPage(pageIndex, pageSize, itemsLength);
-                                return (
-                                    <React.Fragment key={index}>
-                                        {
-                                            categories.length > 1 ?
-                                                <Row style={{ marginTop: 20 }}>
-                                                    <Col>
-                                                        <h5>{category.title} - {itemsLength} files</h5>
-                                                    </Col>
-                                                    <Col></Col>
-                                                    <Col>
-                                                        <Link className="float-right" to={`/?categoryId=${category.id}&searchTerm=${searchTerm}&pageIndex=0&pageSize=6&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`}>See All</Link>
-                                                    </Col>
-                                                </Row> : items.length > 0 ?
-                                                    <React.Fragment>
-                                                        <Row style={{ marginTop: 20 }}>
-                                                            <Col>
-                                                                <h3>{category.title}</h3>
-                                                            </Col>
-                                                        </Row>
-                                                        <Row>
-                                                            <Col>
-                                                                <Options
-                                                                    categoryId={categoryId}
-                                                                    searchTerm={searchTerm}
-                                                                    pageIndex={pageIndex}
-                                                                    pageSize={pageSize}
-                                                                    onlyFree={onlyFree}
-                                                                    onlyRecent={onlyRecent}
-                                                                    sortBy={sortBy}
-                                                                    pageBack={pageBack}
-                                                                    pageNext={pageNext}
-                                                                    itemsBegin={itemsBegin}
-                                                                    itemsEnd={itemsEnd}
-                                                                    itemsLength={itemsLength}
-                                                                    {...this.props}
-                                                                />
-                                                            </Col>
-                                                        </Row>
-                                                    </React.Fragment> : null
-                                        }
-                                        <Row>
-                                            {
-                                                items.slice(itemsBegin, itemsEnd).map((item, index) => {
-                                                    return (
-                                                        <Col key={index} style={{ marginTop: 20, minWidth: 175 }} xl={1} lg={2} md={3} sm={4} xs={6}>
-                                                            <Item
-                                                                item={item}
-                                                                user={this.props.user}
-                                                                calculatePathToItem={this.calculatePathToItem}
-                                                                handleDownloadClick={this.props.handleDownloadClick}
-                                                                handleFavoriteClick={this.props.handleFavoriteClick}
-                                                                isItemFavorite={this.isItemFavorite}
-                                                                formatFileSize={this.formatFileSize}
-                                                            />
-                                                        </Col>
-                                                    )
-                                                })
-                                            }
-                                        </Row>
-                                        {
-                                            categories.length > 1 ?
-                                                null : items.length > 0 ?
-                                                    <Options
-                                                        categoryId={categoryId}
-                                                        searchTerm={searchTerm}
-                                                        pageIndex={pageIndex}
-                                                        pageSize={pageSize}
-                                                        onlyFree={onlyFree}
-                                                        onlyRecent={onlyRecent}
-                                                        sortBy={sortBy}
-                                                        pageBack={pageBack}
-                                                        pageNext={pageNext}
-                                                        itemsBegin={itemsBegin}
-                                                        itemsEnd={itemsEnd}
-                                                        itemsLength={itemsLength}
-                                                        {...this.props}
-                                                    /> : null
-                                        }
-                                    </React.Fragment>
-                                )
+                                return categories.length > 1 ? (
+                                    <SubCategories
+                                        key={index}
+                                        category={category}
+                                        categoriesLength={categories.length}
+                                        getHomeCategory={this.props.getHomeCategory}
+                                        isHomeCategory={this.props.isHomeCategory}
+                                        getItemsInCategory={this.props.getItemsInCategory}
+                                        searchArray={this.searchArray}
+                                        sortItems={this.sortItems}
+                                        calculateNextPage={this.calculateNextPage}
+                                        calculatePathToItem={this.calculatePathToItem}
+                                        handleDownloadClick={this.props.handleDownloadClick}
+                                        handleFavoriteClick={this.props.handleFavoriteClick}
+                                        isItemFavorite={this.isItemFavorite}
+                                        formatFileSize={this.formatFileSize}
+                                        categoryId={categoryId}
+                                        searchTerm={searchTerm}
+                                        onlyFree={onlyFree}
+                                        onlyRecent={onlyRecent}
+                                        pageIndex={pageIndex}
+                                        pageSize={pageSize}
+                                        sortBy={sortBy}
+                                        {...this.props}
+                                    />
+                                ) : (
+                                        <Category
+                                            key={index}
+                                            category={category}
+                                            categoriesLength={categories.length}
+                                            getHomeCategory={this.props.getHomeCategory}
+                                            isHomeCategory={this.props.isHomeCategory}
+                                            getItemsInCategory={this.props.getItemsInCategory}
+                                            searchArray={this.searchArray}
+                                            sortItems={this.sortItems}
+                                            calculateNextPage={this.calculateNextPage}
+                                            calculatePathToItem={this.calculatePathToItem}
+                                            handleDownloadClick={this.props.handleDownloadClick}
+                                            handleFavoriteClick={this.props.handleFavoriteClick}
+                                            isItemFavorite={this.isItemFavorite}
+                                            formatFileSize={this.formatFileSize}
+                                            categoryId={categoryId}
+                                            searchTerm={searchTerm}
+                                            onlyFree={onlyFree}
+                                            onlyRecent={onlyRecent}
+                                            pageIndex={pageIndex}
+                                            pageSize={pageSize}
+                                            sortBy={sortBy}
+                                            {...this.props}
+                                        />
+                                    );
                             })
                             }
                         </Col>
@@ -248,7 +205,7 @@ export class Page extends React.Component {
             }
         }
     }
-    
+
     parseQueryString = (queryString) => {
         const values = {};
         const elements = queryString.replace('?', '').split("&");
