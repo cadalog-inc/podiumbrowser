@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, FormControl, Navbar, NavItem, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
+import { Button, FormControl, InputGroup, Navbar, NavItem, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
 import Autocomplete from 'react-autocomplete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faHome, faSearch, faSync } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faHome, faSearch, faSync, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 export class NavBar extends React.Component {
     constructor(props) {
@@ -21,7 +21,7 @@ export class NavBar extends React.Component {
     componentDidMount() {
         // use most recent query values persisted in local storage
         const savedQueryValues = localStorage.getItem("PodiumBrowserStandaloneQueryValues") || "";
-        if(savedQueryValues !== "") {
+        if (savedQueryValues !== "") {
             this.props.history.push(`/${savedQueryValues}`);
         }
 
@@ -56,7 +56,7 @@ export class NavBar extends React.Component {
             categoryId: categoryId,
             searchTerm: searchTerm,
             onlyFree: onlyFree,
-            onlyRecent: onlyRecent, 
+            onlyRecent: onlyRecent,
             pageSize: pageSize,
             sortBy: sortBy
         });
@@ -100,7 +100,7 @@ export class NavBar extends React.Component {
                 categoryId: categoryId,
                 searchTerm: searchTerm,
                 onlyFree: onlyFree,
-                onlyRecent: onlyRecent, 
+                onlyRecent: onlyRecent,
                 pageSize: pageSize,
                 sortBy: sortBy
             });
@@ -136,7 +136,7 @@ export class NavBar extends React.Component {
         const suggestions = this.state.searchTerm === "" ? [] : this.findSuggestions(this.state.searchTerm);
         return this.props.items.length > 0 ? (
             <React.Fragment>
-                <Navbar fill="true" fixed="top" expand="lg" bg="dark" variant="dark" style={{zIndex: 1}}>
+                <Navbar fill="true" fixed="top" expand="lg" bg="dark" variant="dark" style={{ zIndex: 1 }}>
                     <NavItem>
                         <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>
                             <FontAwesomeIcon icon={faArrowLeft} />
@@ -209,25 +209,43 @@ export class NavBar extends React.Component {
                             }
                             renderInput={(props) => {
                                 return (
-                                    <FormControl
-                                        type="text"
-                                        className="mr-sm-2"
-                                        style={{ width: 400 }}
-                                        onKeyUp={this.handleOnSearchKey}
-                                        onChange={(e) => {
-                                            this.handleSearchTermChange(e.target.value);
-                                        }}
-                                        {...props}
-                                    />
+                                    <InputGroup className="mb-3">
+                                        <FormControl
+                                            type="text"
+                                            variant="light"
+                                            style={{ width: 400 }}
+                                            onKeyUp={this.handleOnSearchKey}
+                                            onChange={(e) => {
+                                                this.handleSearchTermChange(e.target.value);
+                                            }}
+                                            {...props}
+                                        />
+                                        <InputGroup.Append>
+                                            <Button
+                                                type="button"
+                                                variant="light"
+                                                style={{ 
+                                                    marginLeft: 0,
+                                                    borderTopRightRadius: 5,
+                                                    borderBottomRightRadius: 5
+                                                }}
+                                                onClick={() => {
+                                                    this.handleSearchTermChange('')
+                                                }}
+                                            >
+                                                <FontAwesomeIcon icon={faTimes} />
+                                            </Button>
+                                            <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>
+                                                <FontAwesomeIcon icon={faSearch} />
+                                            </Button>
+                                        </InputGroup.Append>
+                                    </InputGroup >
                                 )
                             }}
                             value={this.state.searchTerm}
                             onChange={(e) => this.handleSearchTermChange(e.target.value)}
                             onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
                         />
-                        <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>
-                            <FontAwesomeIcon icon={faSearch} />
-                        </Button>
                     </NavItem>
                 </Navbar>
             </React.Fragment>

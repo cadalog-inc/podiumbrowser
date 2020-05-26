@@ -3,9 +3,13 @@ import { Col, Row } from 'react-bootstrap';
 import { SideBar } from './sidebar';
 import { Category } from './category';
 import { SubCategories } from './subcategories';
+import Query from '../models/Query';
 
 export class Page extends React.Component {
     render() {
+        const query = Query.fromQueryString(this.props.location.search);
+        console.log(query);
+
         const queryValues = this.props.parseQueryString(this.props.location.search);
         let categoryId = this.props.getHomeCategory();
         let searchTerm = "";
