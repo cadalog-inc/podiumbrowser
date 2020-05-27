@@ -7,13 +7,9 @@ export class Path extends React.Component {
                 <ul>
                     {
                         this.renderPath(
-                            this.calculatePathToCategory(this.props.categoryId), 
+                            this.calculatePathToCategory(this.props.query.categoryId), 
                             0, 
-                            this.props.subCategories, 
-                            this.props.searchTerm, 
-                            this.props.onlyFree, 
-                            this.props.onlyRecent, 
-                            this.props.sortBy
+                            this.props.subCategories
                         )
                     }
                 </ul>
@@ -21,20 +17,20 @@ export class Path extends React.Component {
         );
     }
 
-    renderPath = (path, index, categories, searchTerm, onlyFree, onlyRecent, sortBy) => {
+    renderPath = (path, index, categories) => {
         const category = path[index];
         return category ? index < path.length - 1 ? (
             <li>
-                <span style={{ cursor: "pointer" }} onClick={() => this.props.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
+                <span style={{ cursor: "pointer" }} onClick={() => this.props.handleCategoryChange(category.id)}>
                     {category.title}
                 </span>
                 <ul>
-                    {this.renderPath(path, index + 1, categories, searchTerm, onlyFree, onlyRecent, sortBy)}
+                    {this.renderPath(path, index + 1, categories)}
                 </ul>
             </li>
         ) : (
                 <li>
-                    <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => this.props.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
+                    <span style={{ fontWeight: "bold", cursor: "pointer" }} onClick={() => this.props.handleCategoryChange(category.id)}>
                         {category.title}
                     </span>
                     <ul>
@@ -43,7 +39,7 @@ export class Path extends React.Component {
                                 categories.map((item, index) => {
                                     return item.title !== 'HDR' ? (
                                         <li key={index}>
-                                            <span style={{ cursor: "pointer" }} onClick={() => this.props.handleCategoryChange(item.id, searchTerm, onlyFree, onlyRecent, sortBy)}>
+                                            <span style={{ cursor: "pointer" }} onClick={() => this.props.handleCategoryChange(item.id)}>
                                                 {item.title}
                                             </span>
                                         </li>

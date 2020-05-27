@@ -8,41 +8,10 @@ import Query from '../models/Query';
 export class Page extends React.Component {
     render() {
         const query = Query.fromQueryString(this.props.location.search);
-        console.log(query);
 
-        const queryValues = this.props.parseQueryString(this.props.location.search);
-        let categoryId = this.props.getHomeCategory();
-        let searchTerm = "";
-        let onlyFree = false;
-        let onlyRecent = false;
-        let pageIndex = 0;
-        let pageSize = 6;
-        let sortBy = "File Name (A to Z)";
-        if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
-            categoryId = queryValues.categoryId;
-        }
-        if (queryValues.searchTerm && queryValues.searchTerm !== "") {
-            searchTerm = queryValues.searchTerm;
-        }
-        if (queryValues.pageIndex && queryValues.pageIndex !== "" && queryValues.pageIndex >= 0) {
-            pageIndex = queryValues.pageIndex;
-        }
-        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 6) {
-            pageSize = queryValues.pageSize;
-        }
-        if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
-            onlyFree = queryValues.onlyFree === 'true' ? true : false;
-        }
-        if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
-            onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
-        }
-        if (queryValues.sortBy !== undefined && queryValues.sortBy !== "") {
-            sortBy = queryValues.sortBy;
-        }
-
-        let categories = this.props.isHomeCategory(categoryId) ? [] : this.props.getSubCategories(categoryId);
+        let categories = this.props.isHomeCategory(query.categoryId) ? [] : this.props.getSubCategories(query.categoryId);
         const selectedCategory = this.props.categories.find((category) => {
-            return category.id === categoryId
+            return category.id === query.categoryId
         });
         if (categories.length === 0) {
 
@@ -54,9 +23,9 @@ export class Page extends React.Component {
                     <Row>
                         <Col xl={2} lg={3} md={4} sm={5} xs={6} style={{ padding: 0 }}>
                             <SideBar
+                                query={query}
                                 user={this.props.user}
                                 categories={this.props.categories}
-                                parseQueryString={this.props.parseQueryString}
                                 getSubCategories={this.props.getSubCategories}
                                 calculatePathToCategory={this.calculatePathToCategory}
                                 getHomeCategory={this.getHomeCategory}
@@ -90,13 +59,7 @@ export class Page extends React.Component {
                                         handleFavoriteClick={this.props.handleFavoriteClick}
                                         isItemFavorite={this.isItemFavorite}
                                         formatFileSize={this.formatFileSize}
-                                        categoryId={categoryId}
-                                        searchTerm={searchTerm}
-                                        onlyFree={onlyFree}
-                                        onlyRecent={onlyRecent}
-                                        pageIndex={pageIndex}
-                                        pageSize={pageSize}
-                                        sortBy={sortBy}
+                                        query={query}
                                         {...this.props}
                                     />
                                 ) : (
@@ -115,13 +78,7 @@ export class Page extends React.Component {
                                             handleFavoriteClick={this.props.handleFavoriteClick}
                                             isItemFavorite={this.isItemFavorite}
                                             formatFileSize={this.formatFileSize}
-                                            categoryId={categoryId}
-                                            searchTerm={searchTerm}
-                                            onlyFree={onlyFree}
-                                            onlyRecent={onlyRecent}
-                                            pageIndex={pageIndex}
-                                            pageSize={pageSize}
-                                            sortBy={sortBy}
+                                            query={query}
                                             {...this.props}
                                         />
                                     );
@@ -134,8 +91,38 @@ export class Page extends React.Component {
         );
     }
 
-    sortItems = (items, onlyRecent, sortBy) => {
-        if (onlyRecent) {
+    sortItems = (items, sortBy) => {
+        if (sortBy === "File Size (Low to High)") {
+            items = items.sort((a, b) => {
+                if (a.fileSize < b.fileSize) {
+                    return -1;
+                }
+                if (a.fileSize > b.fileSize) {
+                    return 1;
+                }
+                return 0;
+            });
+        } else if (sortBy === "File Size (High to Low)") {
+            items = items.sort((a, b) => {
+                if (a.fileSize > b.fileSize) {
+                    return -1;
+                }
+                if (a.fileSize < b.fileSize) {
+                    return 1;
+                }
+                return 0;
+            });
+        } else if (sortBy === "Date Uploaded (New to Old)") {
+            items = items.sort((a, b) => {
+                if (a.uploadDate > b.uploadDate) {
+                    return -1;
+                }
+                if (a.uploadDate < b.uploadDate) {
+                    return 1;
+                }
+                return 0;
+            });
+        } else if (sortBy === "Date Uploaded (Old to New)") {
             items = items.sort((a, b) => {
                 if (a.uploadDate < b.uploadDate) {
                     return -1;
@@ -144,87 +131,28 @@ export class Page extends React.Component {
                     return 1;
                 }
                 return 0;
-            }).splice(0, 100);
+            });
+        } else if (sortBy === "File Name (Z to A)") {
+            items = items.sort((a, b) => {
+                if (a.title > b.title) {
+                    return -1;
+                }
+                if (a.title < b.title) {
+                    return 1;
+                }
+                return 0;
+            });
         } else {
-            if (sortBy === "File Size (Low to High)") {
-                items = items.sort((a, b) => {
-                    if (a.fileSize < b.fileSize) {
-                        return -1;
-                    }
-                    if (a.fileSize > b.fileSize) {
-                        return 1;
-                    }
-                    return 0;
-                });
-            } else if (sortBy === "File Size (High to Low)") {
-                items = items.sort((a, b) => {
-                    if (a.fileSize > b.fileSize) {
-                        return -1;
-                    }
-                    if (a.fileSize < b.fileSize) {
-                        return 1;
-                    }
-                    return 0;
-                });
-            } else if (sortBy === "Date Uploaded (New to Old)") {
-                items = items.sort((a, b) => {
-                    if (a.uploadDate > b.uploadDate) {
-                        return -1;
-                    }
-                    if (a.uploadDate < b.uploadDate) {
-                        return 1;
-                    }
-                    return 0;
-                });
-            } else if (sortBy === "Date Uploaded (Old to New)") {
-                items = items.sort((a, b) => {
-                    if (a.uploadDate < b.uploadDate) {
-                        return -1;
-                    }
-                    if (a.uploadDate > b.uploadDate) {
-                        return 1;
-                    }
-                    return 0;
-                });
-            } else if (sortBy === "File Name (Z to A)") {
-                items = items.sort((a, b) => {
-                    if (a.title > b.title) {
-                        return -1;
-                    }
-                    if (a.title < b.title) {
-                        return 1;
-                    }
-                    return 0;
-                });
-            } else {
-                items = items.sort((a, b) => {
-                    if (a.title < b.title) {
-                        return -1;
-                    }
-                    if (a.title > b.title) {
-                        return 1;
-                    }
-                    return 0;
-                });
-            }
+            items = items.sort((a, b) => {
+                if (a.title < b.title) {
+                    return -1;
+                }
+                if (a.title > b.title) {
+                    return 1;
+                }
+                return 0;
+            });
         }
-    }
-
-    parseQueryString = (queryString) => {
-        const values = {};
-        const elements = queryString.replace('?', '').split("&");
-        const l = elements.length;
-        for (let i = 0; i < l; i++) {
-            const element = elements[i];
-            const pair = element.split('=');
-            const key = pair[0];
-            let value = pair[1];
-            if (!isNaN(parseInt(value))) {
-                value = parseInt(value);
-            }
-            values[key] = value;
-        }
-        return values;
     }
 
     calculatePathToCategory = (categoryId) => {

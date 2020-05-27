@@ -5,13 +5,13 @@ import { Item } from './item';
 export class SubCategories extends React.Component {
     render() {
         let items = (this.props.isHomeCategory(this.props.category.id) ? this.props.items : this.props.getItemsInCategory(this.props.category.id)).filter((item) => {
-            return (this.props.onlyFree === false || item.type === 'free') && (this.props.searchTerm === "" || item.title.includes(this.props.searchTerm) || this.props.searchArray(item.tags, this.props.searchTerm)) && item.filename.split('.')[1] !== 'hdr';
+            return (this.props.query.onlyFree === false || item.type === 'free') && (this.props.query.searchTerm === "" || item.title.includes(this.props.query.searchTerm) || this.props.searchArray(item.tags, this.props.query.searchTerm)) && item.filename.split('.')[1] !== 'hdr';
         });
 
-        this.props.sortItems(items, this.props.onlyRecent, this.props.sortBy);
+        this.props.sortItems(items, this.props.query.sortBy);
 
-        let itemsBegin = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? this.props.pageIndex * this.props.pageSize : 0;
-        let itemsEnd = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? itemsBegin + this.props.pageSize : 6;
+        let itemsBegin = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? this.props.query.pageIndex * this.props.query.pageSize : 0;
+        let itemsEnd = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? itemsBegin + this.props.query.pageSize : 6;
         let itemsLength = items.length;
         return (
             <React.Fragment>
@@ -60,7 +60,7 @@ export class SubCategories extends React.Component {
     }
 
     handleSeeAllClick = (pageIndex) => {
-        this.props.history.push(`/?categoryId=${this.props.category.id}&searchTerm=${this.props.searchTerm}&pageIndex=${pageIndex}&pageSize=${this.props.pageSize}&onlyFree=${this.props.onlyFree}&onlyRecent=${this.props.onlyRecent}&sortBy=${this.props.sortBy}`);
+        this.props.history.push(`/?categoryId=${this.props.category.id}&searchTerm=${this.props.query.searchTerm}&pageIndex=${pageIndex}&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
         window.scrollTo(0, 0);
     }
 }

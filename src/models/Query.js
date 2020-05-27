@@ -37,6 +37,10 @@ class Query {
             let [key, value] = element.split('=');
             if(!isNaN(parseInt(value))) {
                 value = parseInt(value);
+            } else if(value === 'true') {
+                value = true;
+            } else if(value === 'false') {
+                value = false;
             }
             values[key] = value;
         });

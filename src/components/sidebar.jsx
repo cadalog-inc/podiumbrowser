@@ -1,44 +1,14 @@
 import React from 'react';
-import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { Button, ButtonGroup } from 'react-bootstrap';
 import { Path } from './path';
 
 export class SideBar extends React.Component {
     render() {
-        const queryValues = this.props.parseQueryString(this.props.location.search);
-        let categoryId = this.props.getHomeCategory();
-        let searchTerm = "";
-        let onlyFree = false;
-        let onlyRecent = false;
-        let pageSize = 6;
-        let sortBy = "File Name (A to Z)";
-
-        if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
-            categoryId = queryValues.categoryId;
-        }
-        if (queryValues.searchTerm && queryValues.searchTerm !== "") {
-            searchTerm = queryValues.searchTerm;
-        }
-        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 6) {
-            pageSize = queryValues.pageSize;
-        }
-        if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
-            onlyFree = queryValues.onlyFree === 'true' ? true : false;
-        }
-        if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
-            onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
-        }
-        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 6) {
-            pageSize = queryValues.pageSize;
-        }
-        if (queryValues.sortBy !== undefined && queryValues.sortBy !== "") {
-            sortBy = queryValues.sortBy;
-        }
-
         const selectedCategory = this.props.categories.find((category) => {
-            return category.id === categoryId
+            return category.id === this.props.query.categoryId
         });
-        let categories = this.props.getSubCategories(categoryId);
-        if (this.props.isHomeCategory(categoryId) || categories.length === 0) {
+        let categories = this.props.getSubCategories(this.props.query.categoryId);
+        if (this.props.isHomeCategory(this.props.query.categoryId) || categories.length === 0) {
             categories = [selectedCategory];
         }
         const primaryCategories = this.props.getSubCategories(this.props.getHomeCategory());
@@ -58,22 +28,17 @@ export class SideBar extends React.Component {
                     {
                         selectedCategory.id !== this.props.getHomeCategory() && selectedCategory.id !== 217 && selectedCategory.id !== 218 ? <React.Fragment>
                             <Path
-                                handleCategoryChange={this.handleCategoryChange}
-                                renderPath={this.renderPath}
-                                getHomeCategory={this.props.getHomeCategory}
                                 categories={this.props.categories}
                                 subCategories={categories}
-                                categoryId={categoryId}
-                                searchTerm={searchTerm}
-                                onlyFree={onlyFree}
-                                onlyRecent={onlyRecent}
-                                sortBy={sortBy}
+                                query={this.props.query}
+                                getHomeCategory={this.props.getHomeCategory}
+                                handleCategoryChange={this.handleCategoryChange}
                             />
                         </React.Fragment> : null
                     }
                     <div className="form-check" style={{ margin: 10 }}>
-                        <input className="form-check-input" type="checkbox" defaultChecked={onlyFree} onChange={(e) => {
-                            this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${e.target.checked}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
+                        <input className="form-check-input" type="checkbox" defaultChecked={this.props.query.onlyFree} onChange={(e) => {
+                            this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${this.props.query.pageSize}&onlyFree=${e.target.checked}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
                         }} id="freeChecked" />
                         <label className="form-check-label" htmlFor="freeChecked">
                             Show only free files
@@ -95,7 +60,7 @@ export class SideBar extends React.Component {
                                                     textAlign: "left"
                                                 }}
                                                 onClick={() => {
-                                                    this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)
+                                                    this.handleCategoryChange(category.id)
                                                 }}>
                                                 {category.title}
                                             </Button>
@@ -118,7 +83,7 @@ export class SideBar extends React.Component {
                                             textAlign: "left"
                                         }}
                                         onClick={() => {
-                                            this.handleCategoryChange(category.id, searchTerm, onlyFree, onlyRecent, sortBy)
+                                            this.handleCategoryChange(category.id)
                                         }}>
                                         {category.title}
                                     </Button>
@@ -131,8 +96,8 @@ export class SideBar extends React.Component {
         );
     }
 
-    handleCategoryChange = (value, searchTerm, onlyFree, onlyRecent, sortBy) => {
-        this.props.history.push(`/?categoryId=${value}&searchTerm=${searchTerm}&pageIndex=0&pageSize=6&onlyFree=${onlyFree}&onlyRecent=${onlyRecent}&sortBy=${sortBy}`);
+    handleCategoryChange = (value) => {
+        this.props.history.push(`/?categoryId=${value}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=6&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
         window.scrollTo(0, 0);
     }
 }

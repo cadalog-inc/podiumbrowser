@@ -22,17 +22,17 @@ export class Options extends React.Component {
     }
 
     handlePageSizeClick = (pageSize) => {
-        this.props.history.push(`/?categoryId=${this.props.categoryId}&searchTerm=${this.props.searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${this.props.onlyFree}&onlyRecent=${this.props.onlyRecent}&sortBy=${this.props.sortBy}`);
+        this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
         window.scrollTo(0, 0);
     }
 
     handleSortByClick = (sortBy) => {
-        this.props.history.push(`/?categoryId=${this.props.categoryId}&searchTerm=${this.props.searchTerm}&pageIndex=0&pageSize=${this.props.pageSize}&onlyFree=${this.props.onlyFree}&onlyRecent=${this.props.onlyRecent}&sortBy=${sortBy}`);
+        this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${sortBy}`);
         window.scrollTo(0, 0);
     }
 
     handlePageIndexClick = (pageIndex) => {
-        this.props.history.push(`/?categoryId=${this.props.categoryId}&searchTerm=${this.props.searchTerm}&pageIndex=${pageIndex}&pageSize=${this.props.pageSize}&onlyFree=${this.props.onlyFree}&onlyRecent=${this.props.onlyRecent}&sortBy=${this.props.sortBy}`);
+        this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=${pageIndex}&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
         window.scrollTo(0, 0);
     }
 
@@ -43,7 +43,7 @@ export class Options extends React.Component {
                     <ButtonGroup>
                         <Dropdown style={{ margin: 5 }}>
                             <Dropdown.Toggle variant="light">
-                                Sort By: {this.props.sortBy}
+                                Sort By: {this.props.query.sortBy}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                     {
@@ -63,7 +63,7 @@ export class Options extends React.Component {
                     <ButtonGroup>
                         <Dropdown style={{ margin: 5 }}>
                             <Dropdown.Toggle variant="light">
-                                Per Page: {this.props.pageSize}
+                                Per Page: {this.props.query.pageSize}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
                                     {

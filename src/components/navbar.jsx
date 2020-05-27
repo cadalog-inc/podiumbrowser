@@ -3,17 +3,14 @@ import { Button, FormControl, InputGroup, Navbar, NavItem, Col, Row, OverlayTrig
 import Autocomplete from 'react-autocomplete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faArrowRight, faHome, faSearch, faSync, faTimes } from '@fortawesome/free-solid-svg-icons';
+import Query from '../models/Query';
 
 export class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedCategoryId: this.props.getHomeCategory(),
-            searchTerm: "",
-            onlyFree: false,
-            onlyRecent: false,
-            pageSize: 6,
-            sortBy: "File Name (A to Z)"
+            query: new Query()
         }
         this.search = "";
     }
@@ -26,39 +23,10 @@ export class NavBar extends React.Component {
         }
 
         this.search = this.props.location.search;
-        const queryValues = this.props.parseQueryString(this.props.location.search);
-        let categoryId = this.props.getHomeCategory();
-        let searchTerm = "";
-        let onlyFree = false;
-        let onlyRecent = false;
-        let pageSize = 6;
-        let sortBy = "File Name (A to Z)";
-
-        if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
-            categoryId = queryValues.categoryId;
-        }
-        if (queryValues.searchTerm && queryValues.searchTerm !== "") {
-            searchTerm = queryValues.searchTerm;
-        }
-        if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
-            onlyFree = queryValues.onlyFree === 'true' ? true : false;
-        }
-        if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
-            onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
-        }
-        if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 6) {
-            pageSize = queryValues.pageSize;
-        }
-        if (queryValues.sortBy !== undefined && queryValues.sortBy !== "") {
-            sortBy = queryValues.sortBy;
-        }
+        
+        const query = Query.fromQueryString(this.props.location.search);
         this.setState({
-            categoryId: categoryId,
-            searchTerm: searchTerm,
-            onlyFree: onlyFree,
-            onlyRecent: onlyRecent,
-            pageSize: pageSize,
-            sortBy: sortBy
+            query: query
         });
     }
 
@@ -69,40 +37,9 @@ export class NavBar extends React.Component {
             // persist latest query values in local storage
             localStorage.setItem("PodiumBrowserStandaloneQueryValues", this.props.location.search);
 
-            const queryValues = this.props.parseQueryString(this.props.location.search);
-            let categoryId = this.props.getHomeCategory();
-            let searchTerm = "";
-            let onlyFree = false;
-            let onlyRecent = false;
-            let pageSize = 6;
-            let sortBy = "File Name (A to Z)";
-
-            if (queryValues.categoryId && queryValues.categoryId !== "" && queryValues.categoryId > 0) {
-                categoryId = queryValues.categoryId;
-            }
-            if (queryValues.searchTerm && queryValues.searchTerm !== "") {
-                searchTerm = queryValues.searchTerm;
-            }
-            if (queryValues.onlyFree !== undefined && queryValues.onlyFree !== "") {
-                onlyFree = queryValues.onlyFree === 'true' ? true : false;
-            }
-            if (queryValues.onlyRecent !== undefined && queryValues.onlyRecent !== "") {
-                onlyRecent = queryValues.onlyRecent === 'true' ? true : false;
-            }
-            if (queryValues.pageSize && queryValues.pageSize !== "" && queryValues.pageSize >= 6) {
-                pageSize = queryValues.pageSize;
-            }
-            if (queryValues.sortBy !== undefined && queryValues.sortBy !== "") {
-                sortBy = queryValues.sortBy;
-            }
-
+            const query = Query.fromQueryString(this.props.location.search);
             this.setState({
-                categoryId: categoryId,
-                searchTerm: searchTerm,
-                onlyFree: onlyFree,
-                onlyRecent: onlyRecent,
-                pageSize: pageSize,
-                sortBy: sortBy
+                query: query
             });
         }
     }
@@ -147,9 +84,6 @@ export class NavBar extends React.Component {
                         <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(this.props.getHomeCategory()) }}>
                             <FontAwesomeIcon icon={faHome} />
                         </Button>
-                        {/* <Button type="button" variant="dark" onClick={() => { window.location.reload(); }}>
-                            <FontAwesomeIcon icon={faSync} />
-                        </Button> */}
                     </NavItem>
                     <NavItem>
                         <OverlayTrigger
@@ -264,7 +198,7 @@ export class NavBar extends React.Component {
         this.setState({
             selectedCategoryId: value
         }, () => {
-            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=${this.state.pageSize}&onlyFree=${this.state.onlyFree}&onlyRecent=${this.state.onlyRecent}&sortBy=${this.state.sortBy}`);
+            this.props.history.push(`/?categoryId=${this.state.selectedCategoryId}&searchTerm=${this.state.query.searchTerm}&pageIndex=0&pageSize=${this.state.query.pageSize}&onlyFree=${this.state.query.onlyFree}&onlyRecent=${this.state.query.onlyRecent}&sortBy=${this.state.query.sortBy}`);
             window.scrollTo(0, 0);
         });
     }
@@ -313,7 +247,7 @@ export class NavBar extends React.Component {
     }
 
     handleOnSearchClick = () => {
-        this.props.history.push(`/?categoryId=${this.state.categoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=${this.state.pageSize}&onlyFree=${this.state.onlyFree}&onlyRecent=${this.state.onlyRecent}&sortBy=${this.state.sortBy}`);
+        this.props.history.push(`/?categoryId=${this.state.query.categoryId}&searchTerm=${this.state.query.searchTerm}&pageIndex=0&pageSize=${this.state.query.pageSize}&onlyFree=${this.state.query.onlyFree}&onlyRecent=${this.state.query.onlyRecent}&sortBy=${this.state.query.sortBy}`);
         window.scrollTo(0, 0);
     }
 }
