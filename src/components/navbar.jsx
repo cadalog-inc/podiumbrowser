@@ -143,7 +143,7 @@ export class NavBar extends React.Component {
                             }
                             renderInput={(props) => {
                                 return (
-                                    <InputGroup className="mb-3">
+                                    <InputGroup>
                                         <FormControl
                                             type="text"
                                             variant="light"
