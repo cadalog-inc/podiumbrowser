@@ -70,7 +70,6 @@ class App extends React.Component {
                                             getItemsInCategory={this.getItemsInCategory}
                                             categories={this.state.categories}
                                             getSubCategories={this.getSubCategories}
-                                            parseQueryString={this.parseQueryString}
                                             getHomeCategory={this.getHomeCategory}
                                             {...props}
                                         />
@@ -81,7 +80,6 @@ class App extends React.Component {
                                             items={this.state.items}
                                             getItemsInCategory={this.getItemsInCategory}
                                             relationships={this.state.relationships}
-                                            parseQueryString={this.parseQueryString}
                                             handleDownloadClick={this.handleDownloadClick}
                                             handleFavoriteClick={this.handleFavoriteClick}
                                             getHomeCategory={this.getHomeCategory}
@@ -259,25 +257,6 @@ class App extends React.Component {
         }
 
         return itemsInCategory;
-    }
-
-    // query method
-
-    parseQueryString = (queryString) => {
-        const values = {};
-        const elements = decodeURIComponent(queryString).replace('?', '').split("&");
-        const l = elements.length;
-        for (let i = 0; i < l; i++) {
-            const element = elements[i];
-            const pair = element.split('=');
-            const key = pair[0];
-            let value = pair[1];
-            if (!isNaN(parseInt(value))) {
-                value = parseInt(value);
-            }
-            values[key] = value;
-        }
-        return values;
     }
 
     // api calls
