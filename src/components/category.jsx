@@ -1,5 +1,5 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Button, Col, Form, Navbar, NavbarBrand, Nav, Row } from 'react-bootstrap';
 import { Options } from './options';
 import { Item } from './item';
 
@@ -18,14 +18,10 @@ export class Category extends React.Component {
         let pageNext = this.props.calculateNextPage(this.props.query.pageIndex, this.props.query.pageSize, itemsLength);
         return (
             <React.Fragment>
-                <Row style={{ marginTop: 20 }}>
-                    <Col>
-                        <h3>{this.props.category.title}</h3>
-                    </Col>
-                </Row>
                 <Row>
                     <Col>
                         <Options
+                            upper={true}
                             query={this.props.query}
                             pageBack={pageBack}
                             pageNext={pageNext}
@@ -38,7 +34,7 @@ export class Category extends React.Component {
                         />
                     </Col>
                 </Row>
-                <Row>
+                <Row style={{justifyContent: 'center'}}>
                     {
                         items.slice(itemsBegin, itemsEnd).map((item, index) => {
                             return (
@@ -65,6 +61,7 @@ export class Category extends React.Component {
                     }
                 </Row>
                 <Options
+                    upper={false}
                     query={this.props.query}
                     pageBack={pageBack}
                     pageNext={pageNext}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, ButtonGroup, Dropdown } from 'react-bootstrap';
+import { Button, Dropdown, Form, Nav, Navbar, NavbarBrand } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
@@ -37,64 +37,77 @@ export class Options extends React.Component {
     }
 
     render() {
-        return (
+        return this.props.upper ? (
             <React.Fragment>
-                <div className="float-right" style={{ margin: 15 }}>
-                    <ButtonGroup>
-                        <Dropdown style={{ margin: 5 }}>
+                <Navbar expand="lg" bg="light" style={{
+                    marginTop: 20
+                }}>
+                    <NavbarBrand>
+                        {this.props.category.title}
+                    </NavbarBrand>
+                    <Navbar.Text>
+                        {this.props.itemsBegin + 1} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}
+                    </Navbar.Text>
+                    <Navbar.Toggle aria-controls="options-navbar-nav" />
+                    <Navbar.Collapse className="justify-content-end" id="options-navbar-nav" >
+                        <Dropdown size="sm" style={{ margin: 5 }}>
                             <Dropdown.Toggle variant="light">
-                                Sort By: {this.props.query.sortBy}
+                                Per page: {this.props.query.pageSize}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                    {
-                                        this.state.sortBys.map((sortBy, index) => {
-                                            return (
-                                                <Dropdown.Item key={index} onClick={() => {
-                                                    this.handleSortByClick(sortBy)
-                                                }}>
-                                                    {sortBy}
-                                                </Dropdown.Item>
-                                            );
-                                        })
-                                    }
+                                {
+                                    this.state.pageSizes.map((pageSize, index) => {
+                                        return (
+                                            <Dropdown.Item key={index} onClick={() => {
+                                                this.handlePageSizeClick(pageSize)
+                                            }}>
+                                                {pageSize}
+                                            </Dropdown.Item>
+                                        );
+                                    })
+                                }
                             </Dropdown.Menu>
                         </Dropdown>
-                    </ButtonGroup>
-                    <ButtonGroup>
-                        <Dropdown style={{ margin: 5 }}>
+                        <Dropdown size="sm" style={{ margin: 5 }}>
                             <Dropdown.Toggle variant="light">
-                                Per Page: {this.props.query.pageSize}
+                                Sort by: {this.props.query.sortBy}
                             </Dropdown.Toggle>
                             <Dropdown.Menu>
-                                    {
-                                        this.state.pageSizes.map((pageSize, index) => {
-                                            return (
-                                                <Dropdown.Item key={index} onClick={() => {
-                                                    this.handlePageSizeClick(pageSize)
-                                                }}>
-                                                    {pageSize}
-                                                </Dropdown.Item>
-                                            );
-                                        })
-                                    }
+                                {
+                                    this.state.sortBys.map((sortBy, index) => {
+                                        return (
+                                            <Dropdown.Item key={index} onClick={() => {
+                                                this.handleSortByClick(sortBy)
+                                            }}>
+                                                {sortBy}
+                                            </Dropdown.Item>
+                                        );
+                                    })
+                                }
                             </Dropdown.Menu>
                         </Dropdown>
-                    </ButtonGroup>
-                    <ButtonGroup>
-                        <Button type="button" variant="light" disabled style={{ margin: 5 }}>
-                            {this.props.itemsBegin+1} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}
-                        </Button>
+                    </Navbar.Collapse>
+                </Navbar>
+            </React.Fragment>
+        ) : (
+                <React.Fragment>
+                    <Navbar bg="light" style={{
+                        marginTop: 20,
+                        justifyContent: 'center'
+                    }}>
                         <Button type="button" variant="light" style={{ margin: 5 }}
                             onClick={() => this.handlePageIndexClick(this.props.pageBack)}>
                             <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
                         </Button>
+                        <Navbar.Text>
+                            {this.props.itemsBegin + 1} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}
+                        </Navbar.Text>
                         <Button type="button" variant="light" style={{ margin: 5 }}
                             onClick={() => this.handlePageIndexClick(this.props.pageNext)}>
                             <FontAwesomeIcon icon={faAngleRight} color="darkgrey" />
                         </Button>
-                    </ButtonGroup>
-                </div>
-            </React.Fragment>
-        );
+                    </Navbar>
+                </React.Fragment>
+            );
     }
 }

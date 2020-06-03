@@ -18,10 +18,10 @@ import License from './models/License';
 
 // todo: handle removing all items on favorites page
 // todo: don't pass entire license into app from ruby
+// todo?: default key = AB:CD:EF:GH and fingerprint = 123:456:789:101112
 // note: https://v4.pdm-plants-textures.com/
 // note: 2a2d4d95325c15bf
 class App extends React.Component {
-    // todo: default key = AB:CD:EF:GH and fingerprint = 123:456:789:101112
     constructor(props) {
         super(props);
         this.state = {
@@ -267,25 +267,26 @@ class App extends React.Component {
         axios.get(`https://v4.pdm-plants-textures.com/validate.php?key=${this.state.license.key}&fingerprint=${this.state.license.fingerprint}`)
         .then((response) => {
             if(response.status === 200 && response.data.statusCode === 200) {
-                try {
-                    const expiry = response.data.expiry;
-                    if(expiry.year) {
-                        let checkinDate = new Date(this.state.license.checkin);
-                        const expiryDate = new Date(expiry.year, expiry.month-1, expiry.day);
-                        if(checkinDate < expiryDate) {
-                            checkinDate = expiryDate;
-                        }
-                        this.state.license.updateCheckin(expiryDate.toLocaleDateString());
+                const license = this.state.license;
+                const expiry = response.data.expiry;
+                if(expiry.year) {
+                    let checkinDate = new Date(this.state.license.checkin);
+                    const expiryDate = new Date(expiry.year, expiry.month-1, expiry.day);
+                    if(checkinDate < expiryDate) {
+                        checkinDate = expiryDate;
                     }
-                } catch(e) {
-                    console.log(e);
-                    this.dataDownloaded();
+                    license.checkin = checkinDate.toLocaleDateString();
                 }
-                if(response.data.valid) {
-                    this.getUser();
-                } else {
-                    this.dataDownloaded();
-                }
+                
+                this.setState({
+                    license: license
+                }, () => {
+                    if(response.data.valid) {
+                        this.getUser();
+                    } else {
+                        this.dataDownloaded();
+                    }
+                });
             } else {
                 this.dataDownloaded();
             }

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Button, Col, Form, Row, Nav, Navbar, NavbarBrand } from 'react-bootstrap';
 import { Item } from './item';
 
 export class SubCategories extends React.Component {
@@ -15,21 +15,29 @@ export class SubCategories extends React.Component {
         let itemsLength = items.length;
         return (
             <React.Fragment>
-                <Row style={{ marginTop: 20 }}>
+                <Row style={{
+                    marginTop: 20
+                }}>
                     <Col>
-                        <h5>{this.props.category.title} - {itemsLength} files</h5>
-                    </Col>
-                    <Col>
-                        <Button 
-                            variant="light" 
-                            className="float-right"
-                            onClick={this.handleSeeAllClick}
-                        >
-                            See All
-                        </Button>
+                        <Navbar bg="light">
+                            <NavbarBrand>
+                                {this.props.category.title} - {itemsLength} files
+                            </NavbarBrand>
+                            <Nav className="mr-auto">
+                            </Nav>
+                            <Form inline>
+                                <Button variant="light" onClick={this.handleSeeAllClick}>
+                                    See All
+                                </Button>
+                            </Form>
+                        </Navbar>
                     </Col>
                 </Row>
-                <Row>
+                <Row style={{
+                    alignContent: 'center',
+                    alignItems: 'center',
+                    justifyContent: 'center'
+                }}>
                     {
                         items.slice(itemsBegin, itemsEnd).map((item, index) => {
                             return (
@@ -59,8 +67,8 @@ export class SubCategories extends React.Component {
         );
     }
 
-    handleSeeAllClick = (pageIndex) => {
-        this.props.history.push(`/?categoryId=${this.props.category.id}&searchTerm=${this.props.query.searchTerm}&pageIndex=${pageIndex}&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
+    handleSeeAllClick = () => {
+        this.props.history.push(`/?categoryId=${this.props.category.id}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
         window.scrollTo(0, 0);
     }
 }

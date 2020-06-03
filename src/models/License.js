@@ -6,9 +6,8 @@ class License {
         this.checkin = checkin;
     }
 
-    updateCheckin(value) {
-        this.checkin = value;
-        License.setLicense(this);
+    static isValid() {
+        return new Date() <= new Date(License.getLicense().checkin);
     }
 
     static getLicense() {

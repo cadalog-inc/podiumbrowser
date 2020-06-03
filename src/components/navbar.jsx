@@ -23,7 +23,7 @@ export class NavBar extends React.Component {
         }
 
         this.search = this.props.location.search;
-        
+
         const query = Query.fromQueryString(this.props.location.search);
         this.setState({
             query: query
@@ -73,7 +73,7 @@ export class NavBar extends React.Component {
         const suggestions = this.state.searchTerm === "" ? [] : this.findSuggestions(this.state.searchTerm);
         return this.props.items.length > 0 ? (
             <React.Fragment>
-                <Navbar fill="true" fixed="top" expand="lg" bg="dark" variant="dark" style={{ zIndex: 1 }}>
+                <Navbar fill="true" fixed="top" expand="md" bg="dark" variant="dark" style={{ zIndex: 1 }}>
                     <NavItem>
                         <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>
                             <FontAwesomeIcon icon={faArrowLeft} />
@@ -85,102 +85,105 @@ export class NavBar extends React.Component {
                             <FontAwesomeIcon icon={faHome} />
                         </Button>
                     </NavItem>
-                    <NavItem>
-                        <OverlayTrigger
-                            trigger="click"
-                            rootClose
-                            key={'bottom'}
-                            placement={'bottom'}
-                            overlay={
-                                <Container style={{
-                                    zIndex: 2,
-                                    backgroundColor: '#fff',
-                                    border: '1px solid #e5e5e5',
-                                    boxShadow: 50,
-                                    borderRadius: 10,
-                                    padding: 20,
-                                    display: "flex",
-                                    flexDirection: "column",
-                                    justifyContent: "center",
-                                    alignItems: "center"
-                                }}>
-                                    <Row>
-                                        {
-                                            primaryCategories.map((category, index) => {
-                                                return category.title !== 'HDR' ? (
-                                                    <Col lg={3} md={4} key={index}>
-                                                        <span
-                                                            style={{ cursor: 'pointer' }}
-                                                            onClick={
-                                                                () => {
-                                                                    this.handleCategoryChange(category.id)
+                    <Navbar.Toggle aria-controls="top-navbar-nav" />
+                    <Navbar.Collapse className="justify-content-center" id="top-navbar-nav">
+                        <NavItem>
+                            <OverlayTrigger
+                                trigger="click"
+                                rootClose
+                                key={'bottom'}
+                                placement={'bottom'}
+                                overlay={
+                                    <Container style={{
+                                        zIndex: 2,
+                                        backgroundColor: '#fff',
+                                        border: '1px solid #e5e5e5',
+                                        boxShadow: 50,
+                                        borderRadius: 10,
+                                        padding: 20,
+                                        display: "flex",
+                                        flexDirection: "column",
+                                        justifyContent: "center",
+                                        alignItems: "center"
+                                    }}>
+                                        <Row>
+                                            {
+                                                primaryCategories.map((category, index) => {
+                                                    return category.title !== 'HDR' ? (
+                                                        <Col lg={3} md={4} key={index}>
+                                                            <span
+                                                                style={{ cursor: 'pointer' }}
+                                                                onClick={
+                                                                    () => {
+                                                                        this.handleCategoryChange(category.id)
+                                                                    }
                                                                 }
-                                                            }
-                                                        >
-                                                            {category.title}
-                                                        </span>
-                                                    </Col>
-                                                ) : null
-                                            })
-                                        }
-                                    </Row>
-                                </Container>
-                            }
-                        >
-                            <Button variant="dark">
-                                Categories
+                                                            >
+                                                                {category.title}
+                                                            </span>
+                                                        </Col>
+                                                    ) : null
+                                                })
+                                            }
+                                        </Row>
+                                    </Container>
+                                }
+                            >
+                                <Button variant="dark">
+                                    Categories
                             </Button>
-                        </OverlayTrigger>
-                    </NavItem>
-                    <NavItem>
-                        <Autocomplete
-                            getItemValue={(item) => item.label}
-                            items={suggestions}
-                            renderItem={(item, isHighlighted) =>
-                                <Container style={{ cursor: 'pointer', background: isHighlighted ? 'lightgray' : 'white' }}>
-                                    {item.label}
-                                </Container>
-                            }
-                            renderInput={(props) => {
-                                return (
-                                    <InputGroup>
-                                        <FormControl
-                                            type="text"
-                                            variant="light"
-                                            style={{ width: 400 }}
-                                            onKeyUp={this.handleOnSearchKey}
-                                            onChange={(e) => {
-                                                this.handleSearchTermChange(e.target.value);
-                                            }}
-                                            {...props}
-                                        />
-                                        <InputGroup.Append>
-                                            <Button
-                                                type="button"
+                            </OverlayTrigger>
+                        </NavItem>
+                        <NavItem>
+                            <Autocomplete
+                                getItemValue={(item) => item.label}
+                                items={suggestions}
+                                renderItem={(item, isHighlighted) =>
+                                    <Container style={{ cursor: 'pointer', background: isHighlighted ? 'lightgray' : 'white' }}>
+                                        {item.label}
+                                    </Container>
+                                }
+                                renderInput={(props) => {
+                                    return (
+                                        <InputGroup>
+                                            <FormControl
+                                                type="text"
                                                 variant="light"
-                                                style={{ 
-                                                    marginLeft: 0,
-                                                    borderTopRightRadius: 5,
-                                                    borderBottomRightRadius: 5
+                                                style={{ width: 400 }}
+                                                onKeyUp={this.handleOnSearchKey}
+                                                onChange={(e) => {
+                                                    this.handleSearchTermChange(e.target.value);
                                                 }}
-                                                onClick={() => {
-                                                    this.handleSearchTermChange('')
-                                                }}
-                                            >
-                                                <FontAwesomeIcon icon={faTimes} />
-                                            </Button>
-                                            <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>
-                                                <FontAwesomeIcon icon={faSearch} />
-                                            </Button>
-                                        </InputGroup.Append>
-                                    </InputGroup >
-                                )
-                            }}
-                            value={this.state.searchTerm}
-                            onChange={(e) => this.handleSearchTermChange(e.target.value)}
-                            onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
-                        />
-                    </NavItem>
+                                                {...props}
+                                            />
+                                            <InputGroup.Append>
+                                                <Button
+                                                    type="button"
+                                                    variant="light"
+                                                    style={{
+                                                        marginLeft: 0,
+                                                        borderTopRightRadius: 5,
+                                                        borderBottomRightRadius: 5
+                                                    }}
+                                                    onClick={() => {
+                                                        this.handleSearchTermChange('')
+                                                    }}
+                                                >
+                                                    <FontAwesomeIcon icon={faTimes} />
+                                                </Button>
+                                                <Button type="button" variant="dark" onClick={this.handleOnSearchClick}>
+                                                    <FontAwesomeIcon icon={faSearch} />
+                                                </Button>
+                                            </InputGroup.Append>
+                                        </InputGroup >
+                                    )
+                                }}
+                                value={this.state.searchTerm}
+                                onChange={(e) => this.handleSearchTermChange(e.target.value)}
+                                onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
+                            />
+                        </NavItem>
+                    </Navbar.Collapse>
                 </Navbar>
             </React.Fragment>
         ) : null;
