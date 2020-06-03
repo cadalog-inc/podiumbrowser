@@ -38,7 +38,7 @@ export class Page extends React.Component {
                                 categories.length > 1 ?
                                     <Row>
                                         <Col>
-                                            <h3>{selectedCategory.title}</h3>
+                                            <h3 style={{marginTop: 5}}>{selectedCategory.title}</h3>
                                         </Col>
                                     </Row> : null
                             }
