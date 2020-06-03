@@ -8,7 +8,6 @@ import { NavBar } from './components/navbar';
 import { Page } from './components/page';
 import Category from './models/Category';
 import Item from './models/Item';
-import Query from './models/Query';
 import Relationship from './models/Relationship';
 import User from './models/User';
 import categories from './data/categories.json';
@@ -21,12 +20,19 @@ import relationships from './data/relationships.json';
 // note: https://v4.pdm-plants-textures.com/
 // note: 2a2d4d95325c15bf
 class App extends React.Component {
+    // todo: default key = AB:CD:EF:GH and fingerprint = 123:456:789:101112
+    static license = {
+        checkin: "06/03/2020",
+        fingerprint: "455a24e3-74b3-d45c-541a-82df077340b6",
+        id: "1686c596-2d31-4e24-9790-0f82e8c7d366",
+        key: "96d6410f-10f3-48cb-a0f9-64a3931d4074"
+    }
     constructor(props) {
         super(props);
         this.state = {
             user: {
                 "id": 1,
-                "key": "" 
+                "key": ""
             },
             homeCategoryId: 1,
             categories: [],
@@ -34,7 +40,7 @@ class App extends React.Component {
             relationships: [],
             dataDownloaded: false
         };
-        window["setLicense"] = this.setLicense.bind(this);
+        // window["setLicense"] = this.setLicense.bind(this);
     }
 
     componentDidMount() {
@@ -47,7 +53,7 @@ class App extends React.Component {
             this.setState({
                 homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
             }, () => {
-                this.getLicense()
+                this.validateLicense();
             });
         });
     }
@@ -107,7 +113,7 @@ class App extends React.Component {
 
     handleDownloadClick = (item) => {
         if (this.state.user.key !== '' || item.type === 'free') {
-            sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}`);
+            sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}|${App.license.key}|${App.license.fingerprint}`);
             axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_recent/${this.state.user.id}/${item.id}/218`)
                 .then((response) => {
                     console.log(response.data);
@@ -261,23 +267,81 @@ class App extends React.Component {
 
     // api calls
 
-    getLicense() {
-        // call sketchup to get license
-        // sketchup will call set license below
-        if (window.sketchup !== undefined) {
-            sketchup.getLicense();
-        } else {
+    validateLicense = () => {
+        let license = this.getLicense();
+
+        axios.get(`https://v4.pdm-plants-textures.com/validate.php?key=${license.key}&fingerprint=${license.fingerprint}`)
+        .then((response) => {
+            if(response.status === 200 && response.data.statusCode === 200) {
+                try {
+                    const expiry = response.data.expiry;
+                    if(expiry.year) {
+                        let checkinDate = new Date(license.checkin);
+                        const expiryDate = new Date(expiry.year, expiry.month-1, expiry.day);
+                        if(checkinDate < expiryDate) {
+                            checkinDate = expiryDate;
+                        }
+                        license.checkin = expiryDate.toLocaleDateString();
+                    }
+                    // this.setLicense(license);
+                } catch(e) {
+                    console.log(e);
+                    this.dataDownloaded();
+                }
+                if(response.data.valid) {
+                    this.getUser(license.key);
+                } else {
+                    this.dataDownloaded();
+                }
+            } else {
+                this.dataDownloaded();
+            }
+        })
+        .catch(() => {
             this.dataDownloaded();
+        });
+    }
+
+    getLicense = () => {
+        try {
+            this.setLicense(App.license);
+            const licenseEncoded = localStorage.getItem("PodiumBrowserStandaloneLicense") || "";
+            const licenseDecoded = atob(licenseEncoded);
+            const license = JSON.parse(licenseDecoded);
+
+            return license;
+
+        } catch (e) {
+            console.log(e);
+            return null;
         }
     }
 
-    setLicense(license, isValid) {
-        if (isValid) {
-            this.getUser(license.key);
-        } else {
-            this.dataDownloaded();
+    setLicense = (license) => {
+        try {
+            localStorage.setItem("PodiumBrowserStandaloneLicense", btoa(JSON.stringify(license)));
+        } catch(e) {
+            console.log(e);
         }
     }
+
+    // getLicense() {
+    //     // call sketchup to get license
+    //     // sketchup will call set license below
+    //     if (window.sketchup !== undefined) {
+    //         sketchup.getLicense();
+    //     } else {
+    //         this.dataDownloaded();
+    //     }
+    // }
+
+    // setLicense(license, isValid) {
+    //     if (isValid) {
+    //         this.getUser(license.key);
+    //     } else {
+    //         this.dataDownloaded();
+    //     }
+    // }
 
     getUser = (key) => {
         // todo: first get license and if it doesn't exist, then set license?
@@ -289,7 +353,7 @@ class App extends React.Component {
                     this.getFavorites();
                 });
             })
-            .catch((e) => {
+            .catch(() => {
                 this.dataDownloaded();
             });
     }
@@ -310,7 +374,7 @@ class App extends React.Component {
                 }
                 this.getRecent();
             })
-            .catch((e) => {
+            .catch(() => {
                 this.dataDownloaded();
             });
     }
@@ -331,7 +395,7 @@ class App extends React.Component {
                 }
                 this.dataDownloaded();
             })
-            .catch((e) => {
+            .catch(() => {
                 this.dataDownloaded();
             });
     }
