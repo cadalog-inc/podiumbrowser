@@ -13,6 +13,7 @@ import User from './models/User';
 import categories from './data/categories.json';
 import items from './data/items.json';
 import relationships from './data/relationships.json';
+import License from './models/License';
 /*global sketchup*/
 
 // todo: handle removing all items on favorites page
@@ -21,12 +22,6 @@ import relationships from './data/relationships.json';
 // note: 2a2d4d95325c15bf
 class App extends React.Component {
     // todo: default key = AB:CD:EF:GH and fingerprint = 123:456:789:101112
-    static license = {
-        checkin: "06/03/2020",
-        fingerprint: "455a24e3-74b3-d45c-541a-82df077340b6",
-        id: "1686c596-2d31-4e24-9790-0f82e8c7d366",
-        key: "96d6410f-10f3-48cb-a0f9-64a3931d4074"
-    }
     constructor(props) {
         super(props);
         this.state = {
@@ -34,20 +29,21 @@ class App extends React.Component {
                 "id": 1,
                 "key": ""
             },
+            license: null,
             homeCategoryId: 1,
             categories: [],
             items: [],
             relationships: [],
             dataDownloaded: false
         };
-        // window["setLicense"] = this.setLicense.bind(this);
     }
 
     componentDidMount() {
         this.setState({
             categories: Category.fromArray(categories),
             items: Item.fromArray(items),
-            relationships: Relationship.fromArray(relationships)
+            relationships: Relationship.fromArray(relationships),
+            license: License.getLicense()
         }, () => {
             const homeCategory = this.state.categories.find((category) => category.title === 'Home');
             this.setState({
@@ -268,28 +264,25 @@ class App extends React.Component {
     // api calls
 
     validateLicense = () => {
-        let license = this.getLicense();
-
-        axios.get(`https://v4.pdm-plants-textures.com/validate.php?key=${license.key}&fingerprint=${license.fingerprint}`)
+        axios.get(`https://v4.pdm-plants-textures.com/validate.php?key=${this.state.license.key}&fingerprint=${this.state.license.fingerprint}`)
         .then((response) => {
             if(response.status === 200 && response.data.statusCode === 200) {
                 try {
                     const expiry = response.data.expiry;
                     if(expiry.year) {
-                        let checkinDate = new Date(license.checkin);
+                        let checkinDate = new Date(this.state.license.checkin);
                         const expiryDate = new Date(expiry.year, expiry.month-1, expiry.day);
                         if(checkinDate < expiryDate) {
                             checkinDate = expiryDate;
                         }
-                        license.checkin = expiryDate.toLocaleDateString();
+                        this.state.license.updateCheckin(expiryDate.toLocaleDateString());
                     }
-                    // this.setLicense(license);
                 } catch(e) {
                     console.log(e);
                     this.dataDownloaded();
                 }
                 if(response.data.valid) {
-                    this.getUser(license.key);
+                    this.getUser();
                 } else {
                     this.dataDownloaded();
                 }
@@ -302,50 +295,9 @@ class App extends React.Component {
         });
     }
 
-    getLicense = () => {
-        try {
-            this.setLicense(App.license);
-            const licenseEncoded = localStorage.getItem("PodiumBrowserStandaloneLicense") || "";
-            const licenseDecoded = atob(licenseEncoded);
-            const license = JSON.parse(licenseDecoded);
-
-            return license;
-
-        } catch (e) {
-            console.log(e);
-            return null;
-        }
-    }
-
-    setLicense = (license) => {
-        try {
-            localStorage.setItem("PodiumBrowserStandaloneLicense", btoa(JSON.stringify(license)));
-        } catch(e) {
-            console.log(e);
-        }
-    }
-
-    // getLicense() {
-    //     // call sketchup to get license
-    //     // sketchup will call set license below
-    //     if (window.sketchup !== undefined) {
-    //         sketchup.getLicense();
-    //     } else {
-    //         this.dataDownloaded();
-    //     }
-    // }
-
-    // setLicense(license, isValid) {
-    //     if (isValid) {
-    //         this.getUser(license.key);
-    //     } else {
-    //         this.dataDownloaded();
-    //     }
-    // }
-
     getUser = (key) => {
         // todo: first get license and if it doesn't exist, then set license?
-        axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/set_license/${key}`)
+        axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/set_license/${this.state.license.key}`)
             .then((response) => {
                 this.setState({
                     user: new User(response.data.id, response.data.key)
