@@ -42,8 +42,8 @@ export class Category extends React.Component {
                                     key={index}
                                     xl={1} lg={2} md={3} sm={4} xs={6}
                                     style={{
-                                        marginTop: 20,
-                                        minWidth: 175
+                                        marginTop: 30,
+                                        minWidth: 160
                                     }}
                                 >
                                     <Item
