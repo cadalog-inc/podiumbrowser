@@ -29,7 +29,7 @@ export class Item extends React.Component {
                         )
                     }}
                 >
-                    <div
+                    <div className="mb-4"
                         style={{
                             position: 'relative',
                             width: '100%',

@@ -15,9 +15,7 @@ export class SubCategories extends React.Component {
         let itemsLength = items.length;
         return (
             <React.Fragment>
-                <Row style={{
-                    marginTop: 20
-                }}>
+                <Row className="ml-1 mb-4">
                     <Col>
                         <Navbar bg="light">
                             <NavbarBrand>
@@ -33,11 +31,7 @@ export class SubCategories extends React.Component {
                         </Navbar>
                     </Col>
                 </Row>
-                <Row style={{
-                    alignContent: 'center',
-                    alignItems: 'center',
-                    justifyContent: 'center'
-                }}>
+                <Row className="ml-1 mb-4">
                     {
                         items.slice(itemsBegin, itemsEnd).map((item, index) => {
                             return (
@@ -45,7 +39,6 @@ export class SubCategories extends React.Component {
                                     key={index}
                                     xl={1} lg={2} md={3} sm={4} xs={6}
                                     style={{
-                                        marginTop: 30,
                                         minWidth: 160
                                     }}
                                 >

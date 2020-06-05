@@ -1,16 +1,19 @@
 import React from 'react';
-import { Button, FormControl, InputGroup, Navbar, NavItem, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
+import { Button, ButtonGroup, FormControl, InputGroup, Modal, Navbar, NavItem, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
 import Autocomplete from 'react-autocomplete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faHome, faSearch, faSync, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faHome, faSearch, faUserCog, faSync, faTimes } from '@fortawesome/free-solid-svg-icons';
+import License from '../models/License';
 import Query from '../models/Query';
+import { LicenseManager } from './licensemanager';
 
 export class NavBar extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             selectedCategoryId: this.props.getHomeCategory(),
-            query: new Query()
+            query: new Query(),
+            showLicenseManager: false
         }
         this.search = "";
     }
@@ -84,6 +87,9 @@ export class NavBar extends React.Component {
                         <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(this.props.getHomeCategory()) }}>
                             <FontAwesomeIcon icon={faHome} />
                         </Button>
+                        <Button type="button" variant="dark" onClick={() => { this.setState({ showLicenseManager: true }) }}>
+                            {License.isValid() ? <FontAwesomeIcon icon={faUserCog} color={"gold"} /> : <FontAwesomeIcon icon={faUserCog} color={"grey"} />}
+                        </Button>
                     </NavItem>
                     <Navbar.Toggle aria-controls="top-navbar-nav" />
                     <Navbar.Collapse className="justify-content-center" id="top-navbar-nav">
@@ -96,10 +102,11 @@ export class NavBar extends React.Component {
                                 overlay={
                                     <Container style={{
                                         zIndex: 2,
+                                        marginTop: "10px",
                                         backgroundColor: '#fff',
-                                        border: '1px solid #e5e5e5',
-                                        boxShadow: 50,
+                                        border: '1px solid #343a4055',
                                         borderRadius: 10,
+                                        boxShadow: "2px 2px 14px #343a4055",
                                         padding: 20,
                                         display: "flex",
                                         flexDirection: "column",
@@ -185,6 +192,37 @@ export class NavBar extends React.Component {
                         </NavItem>
                     </Navbar.Collapse>
                 </Navbar>
+                <Modal
+                    show={this.state.showLicenseManager}
+                    onHide={() => this.setState({ showLicenseManager: false })}
+                    backdrop="static"
+                    keyboard={false}
+                >
+                    <Modal.Header style={{
+                        backgroundColor: '#343a40',
+                        color: '#fff'
+                    }}>
+                        <Modal.Title>License Manager</Modal.Title>
+                        <ButtonGroup>
+                            <Button type="button" variant="dark" onClick={() => {
+                                this.setState({
+                                    showLicenseManager: false
+                                }, () => {
+                                    License.setLicense(new License("", "", "", ""));
+                                    this.props.handleUpdateLicense(License.getLicense());
+                                });
+                            }}>
+                                <FontAwesomeIcon icon={faSync} color="white" />
+                            </Button>
+                            <Button type="button" variant="dark" onClick={() => this.setState({ showLicenseManager: false })}>
+                                <FontAwesomeIcon icon={faTimes} color="white" />
+                            </Button>
+                        </ButtonGroup>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <LicenseManager license={this.props.license} handleUpdateLicense={this.props.handleUpdateLicense} />
+                    </Modal.Body>
+                </Modal>
             </React.Fragment>
         ) : null;
     }
@@ -210,6 +248,19 @@ export class NavBar extends React.Component {
         this.setState({
             searchTerm: value
         }, callback);
+    }
+
+    handleOnSearchKey = (e) => {
+        // User pressed the enter key
+        if (e.keyCode === 13) {
+            this.handleOnSearchClick();
+            e.target.blur();
+        }
+    }
+
+    handleOnSearchClick = () => {
+        this.props.history.push(`/?categoryId=${this.state.query.categoryId}&searchTerm=${this.state.query.searchTerm}&pageIndex=0&pageSize=${this.state.query.pageSize}&onlyFree=${this.state.query.onlyFree}&onlyRecent=${this.state.query.onlyRecent}&sortBy=${this.state.query.sortBy}`);
+        window.scrollTo(0, 0);
     }
 
     searchTags = (tags, value) => {
@@ -239,18 +290,5 @@ export class NavBar extends React.Component {
         });
 
         return final;
-    }
-
-    handleOnSearchKey = (e) => {
-        // User pressed the enter key
-        if (e.keyCode === 13) {
-            this.handleOnSearchClick();
-            e.target.blur();
-        }
-    }
-
-    handleOnSearchClick = () => {
-        this.props.history.push(`/?categoryId=${this.state.query.categoryId}&searchTerm=${this.state.query.searchTerm}&pageIndex=0&pageSize=${this.state.query.pageSize}&onlyFree=${this.state.query.onlyFree}&onlyRecent=${this.state.query.onlyRecent}&sortBy=${this.state.query.sortBy}`);
-        window.scrollTo(0, 0);
     }
 }
