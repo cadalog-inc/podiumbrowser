@@ -43,6 +43,7 @@ export class SubCategories extends React.Component {
                                     }}
                                 >
                                     <Item
+                                        license={this.props.license}
                                         item={item}
                                         user={this.props.user}
                                         calculatePathToItem={this.props.calculatePathToItem}

@@ -88,6 +88,7 @@ class App extends React.Component {
                                             {...props}
                                         />
                                         <Page
+                                            license={this.state.license}
                                             user={this.state.user}
                                             categories={this.state.categories}
                                             getSubCategories={this.getSubCategories}
@@ -128,7 +129,7 @@ class App extends React.Component {
     // ruby calls
 
     handleDownloadClick = (item) => {
-        if ((this.state.user.key !== '' && this.state.license.key !== '') || item.type === 'free') {
+        if ((this.state.user.key !== '' && License.isValid(this.state.license)) || item.type === 'free') {
             sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}|${this.state.license.key}|${this.state.license.fingerprint}`);
             axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_recent/${this.state.user.id}/${item.id}/218`)
                 .then((response) => {

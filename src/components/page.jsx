@@ -45,6 +45,7 @@ export class Page extends React.Component {
                             {categories.map((category, index) => {
                                 return categories.length > 1 ? (
                                     <SubCategories
+                                        license={this.props.license}
                                         key={index}
                                         category={category}
                                         categoriesLength={categories.length}
@@ -64,6 +65,7 @@ export class Page extends React.Component {
                                     />
                                 ) : (
                                         <Category
+                                            license={this.props.license}
                                             key={index}
                                             category={category}
                                             categoriesLength={categories.length}
