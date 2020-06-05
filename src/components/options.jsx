@@ -39,9 +39,7 @@ export class Options extends React.Component {
     render() {
         return this.props.upper ? (
             <React.Fragment>
-                <Navbar expand="lg" bg="light" style={{
-                    marginTop: 20
-                }}>
+                <Navbar expand="lg" bg="light">
                     <NavbarBrand>
                         {this.props.category.title}
                     </NavbarBrand>
@@ -92,7 +90,6 @@ export class Options extends React.Component {
         ) : (
                 <React.Fragment>
                     <Navbar bg="light" style={{
-                        marginTop: 20,
                         justifyContent: 'center'
                     }}>
                         <Button type="button" variant="light" style={{ margin: 5 }}

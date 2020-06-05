@@ -2,6 +2,7 @@ import React from 'react';
 import { OverlayTrigger } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faDownload } from '@fortawesome/free-solid-svg-icons';
+import License from '../models/License';
 
 export class Item extends React.Component {
     render() {
@@ -29,7 +30,7 @@ export class Item extends React.Component {
                         )
                     }}
                 >
-                    <div
+                    <div className="mb-4"
                         style={{
                             position: 'relative',
                             width: '100%',
@@ -100,7 +101,7 @@ export class Item extends React.Component {
                                 onClick={() => { this.props.handleDownloadClick(this.props.item) }}
                             >
                                 {
-                                    this.props.user.key !== '' || this.props.item.type === 'free' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
+                                    (this.props.user.key !== '' && License.isValid(this.props.license)) || this.props.item.type === 'free' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
                                 }
                             </span>
                         </span>

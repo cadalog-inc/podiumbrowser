@@ -36,15 +36,16 @@ export class Page extends React.Component {
                         <Col xl={10} lg={9} md={8} sm={7} xs={6}>
                             {
                                 categories.length > 1 ?
-                                    <Row>
+                                    <Row className="ml-1 mt-4">
                                         <Col>
-                                            <h3 style={{marginTop: 5}}>{selectedCategory.title}</h3>
+                                            <h3 style={{marginBottom: 35}}>{selectedCategory.title}</h3>
                                         </Col>
                                     </Row> : null
                             }
                             {categories.map((category, index) => {
                                 return categories.length > 1 ? (
                                     <SubCategories
+                                        license={this.props.license}
                                         key={index}
                                         category={category}
                                         categoriesLength={categories.length}
@@ -64,6 +65,7 @@ export class Page extends React.Component {
                                     />
                                 ) : (
                                         <Category
+                                            license={this.props.license}
                                             key={index}
                                             category={category}
                                             categoriesLength={categories.length}

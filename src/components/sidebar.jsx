@@ -21,8 +21,8 @@ export class SideBar extends React.Component {
             <React.Fragment>
                 <div style={{
                     backgroundColor: "#f1f1f1",
-                    margin: 10,
-                    padding: 0,
+                    margin: 0,
+                    padding: 10,
                     border: "1px solid #e5e5e5"
                 }}>
                     {

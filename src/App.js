@@ -17,10 +17,8 @@ import License from './models/License';
 /*global sketchup*/
 
 // todo: handle removing all items on favorites page
-// todo: don't pass entire license into app from ruby
-// todo?: default key = AB:CD:EF:GH and fingerprint = 123:456:789:101112
 // note: https://v4.pdm-plants-textures.com/
-// note: 2a2d4d95325c15bf
+// note: 2a2d4d95325c15bf 96d6410f-10f3-48cb-a0f9-64a3931d4074
 class App extends React.Component {
     constructor(props) {
         super(props);
@@ -29,7 +27,7 @@ class App extends React.Component {
                 "id": 1,
                 "key": ""
             },
-            license: null,
+            license: new License("", "", "", ""),
             homeCategoryId: 1,
             categories: [],
             items: [],
@@ -49,7 +47,19 @@ class App extends React.Component {
             this.setState({
                 homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
             }, () => {
-                this.validateLicense();
+                this.state.license.validate((license, valid)=>{
+                    this.setState({
+                        license: license
+                    }, () => {
+                        if(valid) {
+                            this.getUser();
+                        } else {
+                            this.dataDownloaded();
+                        }
+                    });
+                }, ()=> {
+                    this.dataDownloaded();
+                });
             });
         });
     }
@@ -65,6 +75,8 @@ class App extends React.Component {
                                 return (
                                     <React.Fragment>
                                         <NavBar
+                                            license={this.state.license}
+                                            handleUpdateLicense={this.handleUpdateLicense}
                                             saveQueryValues={this.saveQueryValues}
                                             handleCategoryChange={this.handleCategoryChange}
                                             handleKeySearchChange={this.handleKeySearchChange}
@@ -76,6 +88,7 @@ class App extends React.Component {
                                             {...props}
                                         />
                                         <Page
+                                            license={this.state.license}
                                             user={this.state.user}
                                             categories={this.state.categories}
                                             getSubCategories={this.getSubCategories}
@@ -105,11 +118,19 @@ class App extends React.Component {
             );
     }
 
+    // license methods
+
+    handleUpdateLicense = (license, callback = () => {}) => {
+        this.setState({
+            license: license
+        }, callback);
+    }
+
     // ruby calls
 
     handleDownloadClick = (item) => {
-        if (this.state.user.key !== '' || item.type === 'free') {
-            sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}|${App.license.key}|${App.license.fingerprint}`);
+        if ((this.state.user.key !== '' && License.isValid(this.state.license)) || item.type === 'free') {
+            sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}|${this.state.license.key}|${this.state.license.fingerprint}`);
             axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_recent/${this.state.user.id}/${item.id}/218`)
                 .then((response) => {
                     console.log(response.data);
@@ -261,40 +282,7 @@ class App extends React.Component {
         return itemsInCategory;
     }
 
-    // api calls
-
-    validateLicense = () => {
-        axios.get(`https://v4.pdm-plants-textures.com/validate.php?key=${this.state.license.key}&fingerprint=${this.state.license.fingerprint}`)
-        .then((response) => {
-            if(response.status === 200 && response.data.statusCode === 200) {
-                const license = this.state.license;
-                const expiry = response.data.expiry;
-                if(expiry.year) {
-                    let checkinDate = new Date(this.state.license.checkin);
-                    const expiryDate = new Date(expiry.year, expiry.month-1, expiry.day);
-                    if(checkinDate < expiryDate) {
-                        checkinDate = expiryDate;
-                    }
-                    license.checkin = checkinDate.toLocaleDateString();
-                }
-                
-                this.setState({
-                    license: license
-                }, () => {
-                    if(response.data.valid) {
-                        this.getUser();
-                    } else {
-                        this.dataDownloaded();
-                    }
-                });
-            } else {
-                this.dataDownloaded();
-            }
-        })
-        .catch(() => {
-            this.dataDownloaded();
-        });
-    }
+    // v4 api calls
 
     getUser = (key) => {
         // todo: first get license and if it doesn't exist, then set license?

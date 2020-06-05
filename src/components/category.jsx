@@ -18,7 +18,7 @@ export class Category extends React.Component {
         let pageNext = this.props.calculateNextPage(this.props.query.pageIndex, this.props.query.pageSize, itemsLength);
         return (
             <React.Fragment>
-                <Row>
+                <Row className="ml-1 mb-4 mt-4">
                     <Col>
                         <Options
                             upper={true}
@@ -34,7 +34,7 @@ export class Category extends React.Component {
                         />
                     </Col>
                 </Row>
-                <Row style={{justifyContent: 'center'}}>
+                <Row className="ml-1">
                     {
                         items.slice(itemsBegin, itemsEnd).map((item, index) => {
                             return (
@@ -42,11 +42,11 @@ export class Category extends React.Component {
                                     key={index}
                                     xl={1} lg={2} md={3} sm={4} xs={6}
                                     style={{
-                                        marginTop: 30,
                                         minWidth: 160
                                     }}
                                 >
                                     <Item
+                                        license={this.props.license}
                                         item={item}
                                         user={this.props.user}
                                         calculatePathToItem={this.props.calculatePathToItem}
@@ -60,18 +60,22 @@ export class Category extends React.Component {
                         })
                     }
                 </Row>
-                <Options
-                    upper={false}
-                    query={this.props.query}
-                    pageBack={pageBack}
-                    pageNext={pageNext}
-                    itemsBegin={itemsBegin}
-                    itemsEnd={itemsEnd}
-                    itemsLength={itemsLength}
-                    handleDownloadClick={this.props.handleDownloadClick}
-                    handleFavoriteClick={this.props.handleFavoriteClick}
-                    {...this.props}
-                />
+                <Row className="ml-1 mb-4">
+                    <Col>
+                        <Options
+                            upper={false}
+                            query={this.props.query}
+                            pageBack={pageBack}
+                            pageNext={pageNext}
+                            itemsBegin={itemsBegin}
+                            itemsEnd={itemsEnd}
+                            itemsLength={itemsLength}
+                            handleDownloadClick={this.props.handleDownloadClick}
+                            handleFavoriteClick={this.props.handleFavoriteClick}
+                            {...this.props}
+                        />
+                    </Col>
+                </Row>
             </React.Fragment>
         );
     }
