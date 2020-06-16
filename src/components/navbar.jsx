@@ -116,7 +116,7 @@ export class NavBar extends React.Component {
                                         <Row>
                                             {
                                                 primaryCategories.map((category, index) => {
-                                                    return category.title !== 'HDR' ? (
+                                                    return (this.props.useHDR || category.title !== 'HDR') ? (
                                                         <Col lg={3} md={4} key={index}>
                                                             <span
                                                                 style={{ cursor: 'pointer' }}

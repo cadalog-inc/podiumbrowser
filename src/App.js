@@ -33,6 +33,7 @@ class App extends React.Component {
             categories: [],
             items: [],
             relationships: [],
+            useHDR: false,
             dataDownloaded: false
         };
     }
@@ -83,6 +84,7 @@ class App extends React.Component {
                                             categories={this.state.categories}
                                             getSubCategories={this.getSubCategories}
                                             getHomeCategory={this.getHomeCategory}
+                                            useHDR={this.state.useHDR}
                                             {...props}
                                         />
                                         <Page
@@ -97,6 +99,7 @@ class App extends React.Component {
                                             handleFavoriteClick={this.handleFavoriteClick}
                                             getHomeCategory={this.getHomeCategory}
                                             isHomeCategory={this.isHomeCategory}
+                                            useHDR={this.state.useHDR}
                                             {...props}
                                         />
                                     </React.Fragment>
@@ -136,7 +139,8 @@ class App extends React.Component {
 
     setLicense(license, isValid) {
         this.setState({
-            license: license
+            license: license,
+            useHDR: true
         }, () => {
             if (isValid) {
                 this.getUser();
@@ -282,7 +286,7 @@ class App extends React.Component {
             "Bedroom",
             "Exterior residential",
             "Exterior public",
-            // "HDR",
+            "HDR",
             "Holiday"
         ];
 

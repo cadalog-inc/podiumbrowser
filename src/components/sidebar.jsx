@@ -31,6 +31,7 @@ export class SideBar extends React.Component {
                                 categories={this.props.categories}
                                 subCategories={categories}
                                 query={this.props.query}
+                                useHDR={this.props.useHDR}
                                 getHomeCategory={this.props.getHomeCategory}
                                 handleCategoryChange={this.handleCategoryChange}
                             />
@@ -75,7 +76,7 @@ export class SideBar extends React.Component {
                         width: '100%'
                     }}>
                         {
-                            primaryCategories.filter((category) => category.title !== 'HDR').map((category, index) => {
+                            primaryCategories.filter((category) => (this.props.useHDR || category.title !== 'HDR')).map((category, index) => {
                                 return (
                                     <Button key={index} variant="light"
                                         style={{

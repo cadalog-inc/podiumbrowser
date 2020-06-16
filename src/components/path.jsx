@@ -37,7 +37,7 @@ export class Path extends React.Component {
                         {
                             categories.length > 1 ? (
                                 categories.map((item, index) => {
-                                    return item.title !== 'HDR' ? (
+                                    return (this.props.useHDR || item.title !== 'HDR') ? (
                                         <li key={index}>
                                             <span style={{ cursor: "pointer" }} onClick={() => this.props.handleCategoryChange(item.id)}>
                                                 {item.title}
