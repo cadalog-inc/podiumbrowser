@@ -36,6 +36,8 @@ class App extends React.Component {
             useHDR: false,
             dataDownloaded: false
         };
+        window["setLicense"] = this.setLicense.bind(this);
+        window["validateLicense"] = this.validateLicense.bind(this);
     }
 
     componentDidMount() {
