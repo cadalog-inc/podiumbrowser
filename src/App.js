@@ -14,6 +14,7 @@ import categories from './data/categories.json';
 import items from './data/items.json';
 import relationships from './data/relationships.json';
 import License from './models/License';
+import { Upload } from './components/upload';
 /*global sketchup*/
 
 // todo: handle removing all items on favorites page
@@ -47,19 +48,7 @@ class App extends React.Component {
             this.setState({
                 homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
             }, () => {
-                this.state.license.validate((license, valid)=>{
-                    this.setState({
-                        license: license
-                    }, () => {
-                        if(valid) {
-                            this.getUser();
-                        } else {
-                            this.dataDownloaded();
-                        }
-                    });
-                }, ()=> {
-                    this.dataDownloaded();
-                });
+                this.getLicense();
             });
         });
     }
@@ -69,6 +58,15 @@ class App extends React.Component {
             <React.Fragment>
                 <BrowserRouter>
                     <Switch>
+                        <Route exact path="/upload" render={
+                            (props) => {
+                                return (
+                                    <React.Fragment>
+                                        <Upload />
+                                    </React.Fragment>
+                                )
+                            }
+                        } />
                         {/* using exact broke this in production */}
                         <Route path="/" render={
                             (props) => {
@@ -120,10 +118,48 @@ class App extends React.Component {
 
     // license methods
 
-    handleUpdateLicense = (license, callback = () => {}) => {
+    handleUpdateLicense = (license, callback = () => { }) => {
         this.setState({
             license: license
         }, callback);
+    }
+
+    getLicense() {
+        // call sketchup to get license
+        // sketchup will call set license below
+        if (window.sketchup !== undefined) {
+            sketchup.getLicense();
+        } else {
+            this.dataDownloaded();
+        }
+    }
+
+    setLicense(license, isValid) {
+        this.setState({
+            license: license
+        }, () => {
+            if (isValid) {
+                this.getUser();
+            } else {
+                this.dataDownloaded();
+            }
+        })
+    }
+
+    validateLicense() {
+        this.state.license.validate((license, valid) => {
+            this.setState({
+                license: license
+            }, () => {
+                if (valid) {
+                    this.getUser();
+                } else {
+                    this.dataDownloaded();
+                }
+            });
+        }, () => {
+            this.dataDownloaded();
+        });
     }
 
     // ruby calls
@@ -284,7 +320,7 @@ class App extends React.Component {
 
     // v4 api calls
 
-    getUser = (key) => {
+    getUser = () => {
         // todo: first get license and if it doesn't exist, then set license?
         axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/set_license/${this.state.license.key}`)
             .then((response) => {
