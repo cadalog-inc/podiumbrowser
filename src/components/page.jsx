@@ -30,6 +30,7 @@ export class Page extends React.Component {
                                 calculatePathToCategory={this.calculatePathToCategory}
                                 getHomeCategory={this.getHomeCategory}
                                 isHomeCategory={this.props.isHomeCategory}
+                                useHDR={this.props.useHDR}
                                 {...this.props}
                             />
                         </Col>
@@ -61,6 +62,7 @@ export class Page extends React.Component {
                                         isItemFavorite={this.isItemFavorite}
                                         formatFileSize={this.formatFileSize}
                                         query={query}
+                                        useHDR={this.props.useHDR}
                                         {...this.props}
                                     />
                                 ) : (
@@ -81,6 +83,7 @@ export class Page extends React.Component {
                                             isItemFavorite={this.isItemFavorite}
                                             formatFileSize={this.formatFileSize}
                                             query={query}
+                                            useHDR={this.props.useHDR}
                                             {...this.props}
                                         />
                                     );
