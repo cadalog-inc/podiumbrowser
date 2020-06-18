@@ -87,9 +87,12 @@ export class NavBar extends React.Component {
                         <Button type="button" variant="dark" onClick={() => { this.handleCategoryChange(this.props.getHomeCategory()) }}>
                             <FontAwesomeIcon icon={faHome} />
                         </Button>
-                        <Button type="button" variant="dark" onClick={() => { this.setState({ showLicenseManager: true }) }}>
-                            {License.isValid() ? <FontAwesomeIcon icon={faUserCog} color={"gold"} /> : <FontAwesomeIcon icon={faUserCog} color={"grey"} />}
-                        </Button>
+                        {
+                            this.props.standalone ? null : (<Button type="button" variant="dark" onClick={() => { this.setState({ showLicenseManager: true }) }}>
+                                {License.isValid() ? <FontAwesomeIcon icon={faUserCog} color={"gold"} /> : <FontAwesomeIcon icon={faUserCog} color={"grey"} />}
+                            </Button>)
+                        }
+
                     </NavItem>
                     <Navbar.Toggle aria-controls="top-navbar-nav" />
                     <Navbar.Collapse className="justify-content-center" id="top-navbar-nav">

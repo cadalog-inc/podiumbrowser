@@ -34,6 +34,7 @@ class App extends React.Component {
             items: [],
             relationships: [],
             useHDR: false,
+            standalone: false,
             dataDownloaded: false
         };
         window["setLicense"] = this.setLicense.bind(this);
@@ -87,6 +88,7 @@ class App extends React.Component {
                                             getSubCategories={this.getSubCategories}
                                             getHomeCategory={this.getHomeCategory}
                                             useHDR={this.state.useHDR}
+                                            standalone={this.state.standalone}
                                             {...props}
                                         />
                                         <Page
@@ -142,7 +144,8 @@ class App extends React.Component {
     setLicense(license, isValid) {
         this.setState({
             license: license,
-            useHDR: true
+            useHDR: true,
+            standalone: true
         }, () => {
             if (isValid) {
                 this.getUser();
