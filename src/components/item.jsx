@@ -3,6 +3,7 @@ import { OverlayTrigger } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faDownload } from '@fortawesome/free-solid-svg-icons';
 import License from '../models/License';
+import App from '../App';
 
 export class Item extends React.Component {
     render() {
@@ -73,7 +74,15 @@ export class Item extends React.Component {
                                 borderBottom: '1px solid #e6e6e6'
                             }}
                         >
-                            {this.props.item.title}
+                            { 
+                                this.props.license.key === App.admin ? 
+                                    (
+                                        <input type='text' value={this.props.item.title} style={{
+                                            width: '100%'
+                                        }}/>
+                                    )
+                                : this.props.item.title
+                            }
                         </span>
                         <span
                             style={{

@@ -21,6 +21,7 @@ import { Upload } from './components/upload';
 // note: https://v4.pdm-plants-textures.com/
 // note: 2a2d4d95325c15bf 96d6410f-10f3-48cb-a0f9-64a3931d4074
 class App extends React.Component {
+    static admin = '3c54d6bf-dfd9-4f2e-a488-1beed5af31ef';
     constructor(props) {
         super(props);
         this.state = {
@@ -133,7 +134,7 @@ class App extends React.Component {
         // props: App.js -> Page -> Item
 
         /*
-        username === admin ? (render editing window to allow user to make changes and save them to the server) : null
+        username.  user.key === '3c54d6bf-dfd9-4f2e-a488-1beed5af31ef' ? (render editing window to allow user to make changes and save them to the server) : null
 
         */
 
