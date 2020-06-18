@@ -123,6 +123,33 @@ class App extends React.Component {
             );
     }
 
+    // admin gallery editing methods
+
+    handleGalleryElementClick = (username) => {
+
+        // username is the name of the user that is using the app
+
+        // This method will get passed down to the Item class via
+        // props: App.js -> Page -> Item
+
+        /*
+        username === admin ? (render editing window to allow user to make changes and save them to the server) : null
+
+        */
+
+    }
+
+    handleAddGalleryElement = (username) => {
+
+        // username is the name of the user that is using the app
+        // This feature should be available on the navbar and is 
+        // conditionally rendered.
+
+        // allows the user to add gallery elements and save them to the server.
+    }
+
+
+
     // license methods
 
     handleUpdateLicense = (license, callback = () => { }) => {
