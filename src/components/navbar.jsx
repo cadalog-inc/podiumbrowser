@@ -13,6 +13,7 @@ export class NavBar extends React.Component {
         this.state = {
             selectedCategoryId: this.props.getHomeCategory(),
             query: new Query(),
+            searchTerm: "",
             showLicenseManager: false
         }
         this.search = "";
@@ -29,7 +30,8 @@ export class NavBar extends React.Component {
 
         const query = Query.fromQueryString(this.props.location.search);
         this.setState({
-            query: query
+            query: query,
+            searchTerm: query.searchTerm
         });
     }
 
@@ -42,7 +44,8 @@ export class NavBar extends React.Component {
 
             const query = Query.fromQueryString(this.props.location.search);
             this.setState({
-                query: query
+                query: query,
+                searchTerm: query.searchTerm
             });
         }
     }
@@ -262,7 +265,7 @@ export class NavBar extends React.Component {
     }
 
     handleOnSearchClick = () => {
-        this.props.history.push(`/?categoryId=${this.state.query.categoryId}&searchTerm=${this.state.query.searchTerm}&pageIndex=0&pageSize=${this.state.query.pageSize}&onlyFree=${this.state.query.onlyFree}&onlyRecent=${this.state.query.onlyRecent}&sortBy=${this.state.query.sortBy}`);
+        this.props.history.push(`/?categoryId=${this.state.query.categoryId}&searchTerm=${this.state.searchTerm}&pageIndex=0&pageSize=${this.state.query.pageSize}&onlyFree=${this.state.query.onlyFree}&onlyRecent=${this.state.query.onlyRecent}&sortBy=${this.state.query.sortBy}`);
         window.scrollTo(0, 0);
     }
 

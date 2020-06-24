@@ -41,6 +41,12 @@ class App extends React.Component {
         };
         window["setLicense"] = this.setLicense.bind(this);
         window["validateLicense"] = this.validateLicense.bind(this);
+        // development
+        window.document.body.addEventListener('keyup', (e) => {
+            if(e.code === 'F5') {        
+                window.location = window.location.origin;
+            }
+        });
     }
 
     componentDidMount() {
@@ -149,7 +155,6 @@ class App extends React.Component {
 
         // allows the user to add gallery elements and save them to the server.
     }
-
 
 
     // license methods
