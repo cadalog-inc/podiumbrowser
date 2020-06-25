@@ -243,7 +243,7 @@ export class Page extends React.Component {
         const l = items.length;
         for (let i = 0; i < l; i++) {
             const item = items[i];
-            if (item.includes(value)) {
+            if (item.toUpperCase().includes(value.toUpperCase())) {
                 return true;
             }
         }
