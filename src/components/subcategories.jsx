@@ -11,7 +11,7 @@ export class SubCategories extends React.Component {
         this.props.sortItems(items, this.props.query.sortBy);
 
         let itemsBegin = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? this.props.query.pageIndex * this.props.query.pageSize : 0;
-        let itemsEnd = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? itemsBegin + this.props.query.pageSize : 6;
+        let itemsEnd = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? itemsBegin + this.props.query.pageSize : 25;
         let itemsLength = items.length;
         return (
             <React.Fragment>

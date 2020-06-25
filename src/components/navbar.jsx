@@ -23,7 +23,10 @@ export class NavBar extends React.Component {
         // use most recent query values persisted in local storage
         const savedQueryValues = localStorage.getItem("PodiumBrowserStandaloneQueryValues") || "";
         if (savedQueryValues !== "") {
-            this.props.history.push(`/${savedQueryValues}`);
+
+            const query = Query.fromQueryString(savedQueryValues);
+            query.searchTerm = "";
+            this.props.history.push(`/${query.searchTerm}`);
         }
 
         this.search = this.props.location.search;
@@ -179,7 +182,7 @@ export class NavBar extends React.Component {
                                                         borderBottomRightRadius: 5
                                                     }}
                                                     onClick={() => {
-                                                        this.handleSearchTermChange('')
+                                                        this.handleSearchTermChange('', this.handleOnSearchClick)
                                                     }}
                                                 >
                                                     <FontAwesomeIcon icon={faTimes} />

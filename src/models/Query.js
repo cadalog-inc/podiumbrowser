@@ -5,7 +5,7 @@ class Query {
         onlyFree = false,
         onlyRecent = false,
         pageIndex = 0,
-        pageSize = 6,
+        pageSize = 25,
         sortBy = "File Name (A to Z)"
     ) {
         this.categoryId = categoryId;
