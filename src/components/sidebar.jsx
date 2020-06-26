@@ -98,7 +98,7 @@ export class SideBar extends React.Component {
     }
 
     handleCategoryChange = (value) => {
-        this.props.history.push(`/?categoryId=${value}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=25&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
+        this.props.history.push(`/?categoryId=${value}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
         window.scrollTo(0, 0);
     }
 }
