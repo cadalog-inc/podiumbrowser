@@ -43,7 +43,7 @@ class App extends React.Component {
         window["validateLicense"] = this.validateLicense.bind(this);
         // development
         window.document.body.addEventListener('keyup', (e) => {
-            if(e.code === 'F5') {        
+            if (e.code === 'F5') {
                 window.location = window.location.origin;
             }
         });
@@ -156,6 +156,25 @@ class App extends React.Component {
         // allows the user to add gallery elements and save them to the server.
     }
 
+    handleAdminCategoryChange = (username) => {
+
+        // username is the name of the user that is using the app
+        // This feature should be available on the navbar and is 
+        // conditionally rendered.
+
+        // allows the user to change the gallery element's category.
+
+    }
+
+    handleAdminCategoryAdd = (username) => {
+
+        // username is the name of the user that is using the app
+        // This feature should be available on the navbar and is 
+        // conditionally rendered.
+
+        // allows the user to add categories to the gallery element database.
+
+    }
 
     // license methods
 
