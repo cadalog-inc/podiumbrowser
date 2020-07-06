@@ -87,7 +87,7 @@ export class LicenseManager extends React.Component {
                     Deactivate License
                 </Button>
                 <Form.Text className="text-muted">
-                    Your SU Podium trial expired on <span style={{fontWeight: 'bold'}}>{this.props.license.checkin}</span>.
+                    License expiration date: <span style={{fontWeight: 'bold'}}>{this.props.license.checkin}</span>.
                     You have <span style={{fontWeight: 'bold'}}>{this.props.license.days()}</span> days remaining.
                 </Form.Text>
             </Form>

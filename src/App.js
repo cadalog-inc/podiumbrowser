@@ -43,7 +43,7 @@ class App extends React.Component {
         window["validateLicense"] = this.validateLicense.bind(this);
         // development
         window.document.body.addEventListener('keyup', (e) => {
-            if(e.code === 'F5') {        
+            if (e.code === 'F5') {
                 window.location = window.location.origin;
             }
         });
@@ -112,6 +112,7 @@ class App extends React.Component {
                                             getHomeCategory={this.getHomeCategory}
                                             isHomeCategory={this.isHomeCategory}
                                             useHDR={this.state.useHDR}
+                                            handleClearFavoritesClick={this.handleClearFavoritesClick}
                                             {...props}
                                         />
                                     </React.Fragment>
@@ -222,6 +223,39 @@ class App extends React.Component {
                     this.setState({
                         relationships: this.state.relationships
                     });
+                });
+        }
+    }
+
+    handleClearFavoritesClick = () => {
+        if (this.state.user.key !== '') {
+            const relationshipsToSave = [];
+            const relationshipsToRemove = [];
+            const l = this.state.relationships.length;
+            for (let i = 0; i < l; i++) {
+                const relationship = this.state.relationships[i];
+                if (relationship.categoryId === 217) {
+                    relationshipsToRemove.push(relationship);
+                } else {
+                    relationshipsToSave.push(relationship);
+                }
+            }
+            this.setState({
+                relationships: relationshipsToSave
+            }, () => {
+                this.clearFavorites(relationshipsToRemove);
+            });
+        }
+    }
+
+    clearFavorites = (relationships) => {
+        if(relationships.length > 0) {
+            const relationship = relationships[0];
+            axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/remove_favorite/${this.state.user.id}/${relationship.itemId}/217`)
+                .then((response) => {
+                    console.log(response);
+                    relationships.shift();
+                    this.clearFavorites(relationships);
                 });
         }
     }

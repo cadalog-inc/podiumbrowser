@@ -44,7 +44,7 @@ export class Options extends React.Component {
                         {this.props.category.title}
                     </NavbarBrand>
                     <Navbar.Text>
-                        {this.props.itemsBegin + 1} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}
+                        {this.props.itemsLength > 0 ? this.props.itemsBegin + 1 : 0} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}
                     </Navbar.Text>
                     <Navbar.Toggle aria-controls="options-navbar-nav" />
                     <Navbar.Collapse className="justify-content-end" id="options-navbar-nav" >
@@ -84,6 +84,18 @@ export class Options extends React.Component {
                                 }
                             </Dropdown.Menu>
                         </Dropdown>
+                        {
+                            this.props.category.id === 217 ?
+                            (
+                                <Button type="button" variant="light" style={{ margin: 5 }}
+                                    onClick={(e) => {
+                                        this.props.handleClearFavoritesClick();
+                                    }}>
+                                        Clear My Favorites
+                                </Button>
+                            )
+                            : null
+                        }
                     </Navbar.Collapse>
                 </Navbar>
             </React.Fragment>
@@ -97,7 +109,7 @@ export class Options extends React.Component {
                             <FontAwesomeIcon icon={faAngleLeft} color="darkgrey" />
                         </Button>
                         <Navbar.Text>
-                            {this.props.itemsBegin + 1} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}
+                            {this.props.itemsLength > 0 ? this.props.itemsBegin + 1 : 0} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}
                         </Navbar.Text>
                         <Button type="button" variant="light" style={{ margin: 5 }}
                             onClick={() => this.handlePageIndexClick(this.props.pageNext)}>

@@ -84,6 +84,7 @@ export class Page extends React.Component {
                                             formatFileSize={this.formatFileSize}
                                             query={query}
                                             useHDR={this.props.useHDR}
+                                            handleClearFavoritesClick={this.props.handleClearFavoritesClick}
                                             {...this.props}
                                         />
                                     );

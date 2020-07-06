@@ -28,6 +28,7 @@ export class Category extends React.Component {
                             itemsBegin={itemsBegin}
                             itemsEnd={itemsEnd}
                             itemsLength={itemsLength}
+                            handleClearFavoritesClick={this.props.handleClearFavoritesClick}
                             handleDownloadClick={this.props.handleDownloadClick}
                             handleFavoriteClick={this.props.handleFavoriteClick}
                             {...this.props}
