@@ -9,7 +9,7 @@ class Files {
             title: "Home",
             parentId: 0
         };
-        this.updateDir = "src/data"; // utilities/json
+        this.updateDir = "src/data"; // utils/json
         this.categories = [
             this.homeCategory,
         ];

@@ -5,7 +5,9 @@ import { Item } from './item';
 
 export class Category extends React.Component {
     render() {
-        let items = (this.props.isHomeCategory(this.props.category.id) ? this.props.items : this.props.getItemsInCategory(this.props.category.id)).filter((item) => {
+        let items = (this.props.isHomeCategory(this.props.category.id) ? this.props.items.filter((item) => {
+            return this.props.searchArray(item.tags, "homepage") && (this.props.useHDR || item.filename.split('.')[1] !== 'hdr');
+        }) : this.props.getItemsInCategory(this.props.category.id)).filter((item) => {
             return (this.props.query.onlyFree === false || item.type === 'free') && (this.props.query.searchTerm === "" || item.title.toUpperCase().includes(this.props.query.searchTerm.toUpperCase()) || this.props.searchArray(item.tags, this.props.query.searchTerm)) && (this.props.useHDR || item.filename.split('.')[1] !== 'hdr');
         });
 
