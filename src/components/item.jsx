@@ -43,9 +43,7 @@ export class Item extends React.Component {
                             border: '1px solid #e5e5e5'
                         }}
                     >
-                        <img alt='testing 1 2 3'
-                            // src={"http://v3.pdm-plants-textures.com/images/" + this.props.item.imageFile}
-                            
+                        <img alt={this.props.item.title}
                             src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash}.jpg`}
                             style={{
                                 position: 'relative',
