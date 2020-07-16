@@ -229,7 +229,7 @@ class App extends React.Component {
 
     handleDownloadClick = (item) => {
         if ((this.state.user.key !== '' && License.isValid(this.state.license)) || item.type === 'free') {
-            const path = `https://v3.pdm-plants-textures.com/.secret/files/${hash}`;
+            const path = `https://v3.pdm-plants-textures.com/.secret/files/${item.hash}`;
             sketchup.on_load_comp(`${path}|${item.filename.split('.')[1]}|${item.title}`);
             // sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}|${this.state.license.key}|${this.state.license.fingerprint}`);
             axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_recent/${this.state.user.id}/${item.id}/218`)
