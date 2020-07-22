@@ -20,9 +20,26 @@ class UploadData {
         // if(categories.length > 0) {
         //     this.uploadCategory(0);
         // }
-        if(relationships.length > 0) {
-            this.uploadRelationship(0);
+        // if(items.length > 0) {
+        //     this.uploadItem(0);
+        // }
+        // if(relationships.length > 0) {
+        //     this.uploadRelationship(0);
+        // }
+        this.getItems();
+    }
+
+    getItems() {
+        const params = {
+            TableName: "Categories"
         }
+        docClient.scan(params, (err, data) => {
+            if(err) {
+                console.log(err);
+            } else {
+                console.log(data);
+            }
+        })
     }
 
     uploadCategory(index) {
@@ -37,6 +54,23 @@ class UploadData {
                 console.log(`{ category: { index: ${index}, data: ${data} } }`);
                 if(index+1 < categories.length) {
                     this.uploadCategory(index+1);
+                }
+            }
+        });
+    }
+
+    uploadItem(index) {
+        const params = {
+            TableName: "Items",
+            Item: items[index]
+        };
+        docClient.put(params, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(`{ item: { index: ${index}, data: ${data} } }`);
+                if(index+1 < items.length) {
+                    this.uploadItem(index+1);
                 }
             }
         });

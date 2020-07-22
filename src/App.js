@@ -10,14 +10,27 @@ import Category from './models/Category';
 import Item from './models/Item';
 import Relationship from './models/Relationship';
 import User from './models/User';
-import categories from './data/categories.json';
-import items from './data/items.json';
-import relationships from './data/relationships.json';
+// import categories from './data/categories.json';
+// import items from './data/items.json';
+// import relationships from './data/relationships.json';
 import License from './models/License';
 import { Upload } from './components/upload';
 /*global sketchup*/
 
-// todo: handle removing all items on favorites page
+// aws
+const AWS = require('aws-sdk');
+AWS.config.update({
+    region: "us-west-2",
+    endpoint: 'https://dynamodb.us-west-2.amazonaws.com/',
+    // accessKeyId default can be used while using the downloadable version of DynamoDB. 
+    // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
+    accessKeyId: "AKIAZKYMH4JCAPSG7KBT",
+    // secretAccessKey default can be used while using the downloadable version of DynamoDB. 
+    // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
+    secretAccessKey: "DGuyDELYKwLcruTp6gOUCMOOqPR+w7v34V3NoUF8"
+});
+const docClient = new AWS.DynamoDB.DocumentClient();
+
 // note: https://v4.pdm-plants-textures.com/
 // note: 2a2d4d95325c15bf 96d6410f-10f3-48cb-a0f9-64a3931d4074
 class App extends React.Component {
@@ -50,19 +63,8 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            categories: Category.fromArray(categories),
-            items: Item.fromArray(items),
-            relationships: Relationship.fromArray(relationships),
-            license: License.getLicense()
-        }, () => {
-            const homeCategory = this.state.categories.find((category) => category.title === 'Home');
-            this.setState({
-                homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
-            }, () => {
-                this.getLicense();
-            });
-        });
+        // start chain of downloading data
+        this.getCategories();
     }
 
     render() {
@@ -130,51 +132,6 @@ class App extends React.Component {
                     </Alert>
                 </React.Fragment>
             );
-    }
-
-    // admin gallery editing methods
-
-    handleGalleryElementClick = (username) => {
-
-        // username is the name of the user that is using the app
-
-        // This method will get passed down to the Item class via
-        // props: App.js -> Page -> Item
-
-        /*
-        username.  user.key === '3c54d6bf-dfd9-4f2e-a488-1beed5af31ef' ? (render editing window to allow user to make changes and save them to the server) : null
-
-        */
-
-    }
-
-    handleAddGalleryElement = (username) => {
-
-        // username is the name of the user that is using the app
-        // This feature should be available on the navbar and is 
-        // conditionally rendered.
-
-        // allows the user to add gallery elements and save them to the server.
-    }
-
-    handleAdminCategoryChange = (username) => {
-
-        // username is the name of the user that is using the app
-        // This feature should be available on the navbar and is 
-        // conditionally rendered.
-
-        // allows the user to change the gallery element's category.
-
-    }
-
-    handleAdminCategoryAdd = (username) => {
-
-        // username is the name of the user that is using the app
-        // This feature should be available on the navbar and is 
-        // conditionally rendered.
-
-        // allows the user to add categories to the gallery element database.
-
     }
 
     // license methods
@@ -410,10 +367,73 @@ class App extends React.Component {
             const item = this.state.items.find((e) => {
                 return e.id === itemsCategory.itemId
             });
-            itemsInCategory.push(item);
+            if(item && item !== undefined) {
+                itemsInCategory.push(item);
+            }
         }
 
         return itemsInCategory;
+    }
+
+    // aws
+
+    getCategories = () => {
+        const params = {
+            TableName: "Categories"
+        }
+        docClient.scan(params, (err, data) => {
+            if(err) {
+                console.log(err);
+                this.dataDownloaded();
+            } else {              
+                this.setState({
+                    categories: Category.fromArray(data.Items)
+                }, () => {
+                    this.getItems();
+                });
+            }
+        })
+    }
+
+    getItems = () => {
+        const params = {
+            TableName: "Items"
+        }
+        docClient.scan(params, (err, data) => {
+            if(err) {
+                console.log(err);
+                this.dataDownloaded();
+            } else {          
+                this.setState({items: Item.fromArray(data.Items)
+                }, () => {
+                    this.getRelationships();
+                });
+            }
+        })
+    }
+
+    getRelationships = () => {
+        const params = {
+            TableName: "Relationships"
+        }
+        docClient.scan(params, (err, data) => {
+            if(err) {
+                console.log(err);
+                this.dataDownloaded();
+            } else {
+                this.setState({
+                    relationships: Relationship.fromArray(data.Items),
+                    license: License.getLicense()
+                }, () => {
+                    const homeCategory = this.state.categories.find((category) => category.title === 'Home');
+                    this.setState({
+                        homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
+                    }, () => {
+                        this.getLicense();
+                    });
+                });
+            }
+        })
     }
 
     // v4 api calls
