@@ -183,10 +183,13 @@ class App extends React.Component {
     // ruby calls
 
     handleDownloadClick = (item) => {
-        if ((this.state.user.key !== '' && License.isValid(this.state.license)) || item.type === 'free') {
-            const path = `https://v3.pdm-plants-textures.com/.secret/files/${item.hash}`;
-            sketchup.on_load_comp(`${path}|${item.filename.split('.')[1]}|${item.title}`);
-            // sketchup.on_load_comp(`${item.hash}|${item.filename.split('.')[1]}|${item.title}|${this.state.license.key}|${this.state.license.fingerprint}`);
+        const path = `https://v3.pdm-plants-textures.com/.secret/files/${item.hash}`;
+        if (this.state.user.key !== '' && License.isValid(this.state.license)) {
+            if(window.sketchup !== undefined) {
+                sketchup.on_load_comp(`${path}|${item.filename.split('.')[1]}|${item.title}`);
+            } else {
+                window.location = `${path}.skp`;
+            }
             axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_recent/${this.state.user.id}/${item.id}/218`)
                 .then((response) => {
                     console.log(response.data);
@@ -200,6 +203,12 @@ class App extends React.Component {
                         relationships: this.state.relationships
                     });
                 });
+        } else if(item.type === 'free') {
+            if(window.sketchup !== undefined) {
+                sketchup.on_load_comp(`${path}|${item.filename.split('.')[1]}|${item.title}`);
+            } else {
+                window.location = `${path}.skp`;
+            }
         }
     }
 
