@@ -6,6 +6,9 @@ import License from '../models/License';
 import App from '../App';
 
 export class Item extends React.Component {
+    parseExt = (item) => {
+        return item.imageFile.split('.')[1];
+    }
     render() {
         return (
             <React.Fragment>
@@ -44,7 +47,7 @@ export class Item extends React.Component {
                         }}
                     >
                         <img alt={this.props.item.title}
-                            src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash}.jpg`}
+                            src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash}.${this.parseExt(this.props.item)}`}
                             style={{
                                 position: 'relative',
                                 width: '100%',
