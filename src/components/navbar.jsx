@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, FormControl, InputGroup, Modal, Navbar, NavItem, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
 import Autocomplete from 'react-autocomplete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faHome, faSearch, faUserCog, faSync, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft, faArrowRight, faHome, faSearch, faUserCog, faSync, faTimes, faQuestion } from '@fortawesome/free-solid-svg-icons';
 import License from '../models/License';
 import Query from '../models/Query';
 import { LicenseManager } from './licensemanager';
@@ -199,6 +199,11 @@ export class NavBar extends React.Component {
                                 onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
                             />
                         </NavItem>
+                        <Button type="button" variant="dark" onClick={(e) => { 
+                            window.open("http://podiumbrowser.com/"); 
+                        }}>
+                            podiumbrowser.com
+                        </Button>
                     </Navbar.Collapse>
                 </Navbar>
                 <Modal
