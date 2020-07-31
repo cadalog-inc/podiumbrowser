@@ -60,7 +60,15 @@ export class LicenseManager extends React.Component {
                             screen: 'activated'
                         });
                     }, (error) => {
-                        window.alert(error);
+                        const errors = error.errors;
+                        const e = errors[0];
+                        const code = e.code;
+                        const detail = e.detail;
+                        if(code === "MACHINE_LIMIT_EXCEEDED") {
+                            window.alert("Activation count has reached maximum allowed.  To activate again, please deactivate from the SketchUp that license was activated on.");
+                        } else {
+                            window.alert(detail);
+                        }
                     });
                 }}>
                     Activate License
