@@ -137,7 +137,10 @@ class App extends React.Component {
     handleUpdateLicense = (license, callback = () => { }) => {
         this.setState({
             license: license
-        }, callback);
+        }, () => {
+            this.forceUpdate();
+            callback();
+        });
     }
 
     getLicense() {
