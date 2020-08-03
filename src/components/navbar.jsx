@@ -94,9 +94,15 @@ export class NavBar extends React.Component {
                             <FontAwesomeIcon icon={faHome} />
                         </Button>
                         {
-                            this.props.standalone ? null : (<Button type="button" variant="dark" onClick={() => { this.setState({ showLicenseManager: true }) }}>
-                                {License.isValid() ? <FontAwesomeIcon icon={faUserCog} color={"gold"} /> : <FontAwesomeIcon icon={faUserCog} color={"grey"} />}
-                            </Button>)
+                            this.props.standalone ? (
+                                <Button type="button" variant="dark" onClick={() => { this.setState({ showLicenseManager: true }) }}>
+                                {
+                                    License.isValid(this.props.license) ? 
+                                        <FontAwesomeIcon icon={faUserCog} color={"gold"} /> : 
+                                        <FontAwesomeIcon icon={faUserCog} color={"grey"} />
+                                }
+                                </Button>
+                            ) : null
                         }
 
                     </NavItem>

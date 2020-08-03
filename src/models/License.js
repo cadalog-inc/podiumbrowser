@@ -94,8 +94,8 @@ class License {
         });
     }
 
-    static isValid() {
-        return this.checkin === "" ? false : new Date() <= new Date(License.getLicense().checkin);
+    static isValid(license) {
+        return (license.checkin === "" || license.checkin === undefined || license.checkin === null) ? false : new Date() <= new Date(license.checkin);
     }
 
     static getLicense() {

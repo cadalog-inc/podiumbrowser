@@ -37,7 +37,8 @@ class App extends React.Component {
             relationships: [],
             useHDR: false,
             standalone: false,
-            dataDownloaded: false
+            dataDownloaded: false,
+            isValid: false
         };
         window["setLicense"] = this.setLicense.bind(this);
         window["validateLicense"] = this.validateLicense.bind(this);
@@ -53,8 +54,7 @@ class App extends React.Component {
         this.setState({
             categories: Category.fromArray(categories),
             items: Item.fromArray(items),
-            relationships: Relationship.fromArray(relationships),
-            license: License.getLicense()
+            relationships: Relationship.fromArray(relationships)
         }, () => {
             const homeCategory = this.state.categories.find((category) => category.title === 'Home');
             this.setState({
@@ -154,29 +154,30 @@ class App extends React.Component {
         this.setState({
             license: license,
             useHDR: true,
-            standalone: true
+            standalone: false,
+            isValid: isValid
         }, () => {
-            if (isValid) {
-                this.getUser();
-            } else {
-                this.dataDownloaded();
-            }
+            this.getUser();
         })
     }
 
     validateLicense() {
-        this.state.license.validate((license, valid) => {
+        License.getLicense().validate((license, valid) => {
             this.setState({
-                license: license
+                license: license,
+                useHDR: false,
+                standalone: true,
+                isValid: valid
             }, () => {
-                if (valid) {
-                    this.getUser();
-                } else {
-                    this.dataDownloaded();
-                }
+                this.getUser();
             });
         }, () => {
-            this.dataDownloaded();
+            this.setState({
+                useHDR: false,
+                standalone: true
+            }, () => {
+                this.dataDownloaded();
+            });
         });
     }
 
@@ -185,7 +186,7 @@ class App extends React.Component {
     handleDownloadClick = (item) => {
         const path = `https://v3.pdm-plants-textures.com/.secret/files/${item.hash}`;
         if (this.state.user.key !== '' && License.isValid(this.state.license)) {
-            if(window.sketchup !== undefined) {
+            if (window.sketchup !== undefined) {
                 sketchup.on_load_comp(`${path}|${item.filename.split('.')[1]}|${item.title}`);
             } else {
                 window.location = `${path}.skp`;
@@ -203,8 +204,8 @@ class App extends React.Component {
                         relationships: this.state.relationships
                     });
                 });
-        } else if(item.type === 'free') {
-            if(window.sketchup !== undefined) {
+        } else if (item.type === 'free') {
+            if (window.sketchup !== undefined) {
                 sketchup.on_load_comp(`${path}|${item.filename.split('.')[1]}|${item.title}`);
             } else {
                 window.location = `${path}.skp`;
@@ -234,7 +235,7 @@ class App extends React.Component {
     }
 
     clearFavorites = (relationships) => {
-        if(relationships.length > 0) {
+        if (relationships.length > 0) {
             const relationship = relationships[0];
             axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/remove_favorite/${this.state.user.id}/${relationship.itemId}/217`)
                 .then((response) => {
@@ -374,7 +375,7 @@ class App extends React.Component {
             const item = this.state.items.find((e) => {
                 return e.id === itemsCategory.itemId
             });
-            if(item && item !== undefined) {
+            if (item && item !== undefined) {
                 itemsInCategory.push(item);
             }
         }
@@ -385,18 +386,19 @@ class App extends React.Component {
     // v4 api calls
 
     getUser = () => {
-        // todo: first get license and if it doesn't exist, then set license?
-        axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/set_license/${this.state.license.key}`)
-            .then((response) => {
-                this.setState({
-                    user: new User(response.data.id, response.data.key)
-                }, () => {
-                    this.getFavorites();
-                });
-            })
-            .catch(() => {
-                this.dataDownloaded();
-            });
+        this.state.isValid ?
+            // todo: first get license and if it doesn't exist, then set license?
+            axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/set_license/${this.state.license.key}`)
+                .then((response) => {
+                    this.setState({
+                        user: new User(response.data.id, this.state.license.key)
+                    }, () => {
+                        this.getFavorites();
+                    });
+                })
+                .catch(() => {
+                    this.dataDownloaded();
+                }) : this.dataDownloaded();
     }
 
     getFavorites = () => {
