@@ -154,6 +154,9 @@ class App extends React.Component {
     }
 
     setLicense(license, isValid) {
+        const sd = license.checkin.split('/');
+        const nd = new Date(sd[2], sd[1]-1, sd[0]);
+        license.checkin = nd.toLocaleDateString();
         this.setState({
             license: license,
             useHDR: true,

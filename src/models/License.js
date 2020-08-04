@@ -42,6 +42,10 @@ class License {
                 const expiry = response.data.expiry;
                 if(expiry.year) {
                     this.checkin = new Date(expiry.year, expiry.month-1, expiry.day).toLocaleDateString();
+                } else {
+                    const nd = new Date();
+                    nd.setMonth(nd.getMonth() + 1);
+                    this.checkin = nd.toLocaleDateString();
                 }
                 // todo: set expiry if not already set
                 License.setLicense(this);
@@ -63,6 +67,10 @@ class License {
                 const expiry = response.data.expiry;
                 if(expiry.year) {
                     this.checkin = new Date(expiry.year, expiry.month-1, expiry.day).toLocaleDateString();
+                } else {
+                    const nd = new Date();
+                    nd.setMonth(nd.getMonth() + 1);
+                    this.checkin = nd.toLocaleDateString();
                 }
                 License.setLicense(this);
                 callback(this, response.data.valid);
@@ -95,7 +103,12 @@ class License {
     }
 
     static isValid(license) {
-        return (license.checkin === "" || license.checkin === undefined || license.checkin === null) ? false : new Date() <= new Date(license.checkin);
+        
+        return (
+            (license.checkin === "" || license.checkin === undefined || license.checkin === null) ? 
+            false : 
+            new Date() <= new Date(license.checkin)
+        );
     }
 
     static getLicense() {
