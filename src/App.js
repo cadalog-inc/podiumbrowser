@@ -17,12 +17,7 @@ import License from './models/License';
 import { Upload } from './components/upload';
 /*global sketchup*/
 
-// todo: handle removing all items on favorites page
-// note: https://v4.pdm-plants-textures.com/
-// note: 2a2d4d95325c15bf 96d6410f-10f3-48cb-a0f9-64a3931d4074
 class App extends React.Component {
-    // static admin = '3c54d6bf-dfd9-4f2e-a488-1beed5af31ef';
-    static admin = 'abcdefghijklmnopqrstuvwxyz';
     constructor(props) {
         super(props);
         this.state = {

@@ -77,15 +77,7 @@ export class Item extends React.Component {
                                 borderBottom: '1px solid #e6e6e6'
                             }}
                         >
-                            { 
-                                this.props.license.key === App.admin ? 
-                                    (
-                                        <input type='text' value={this.props.item.title} style={{
-                                            width: '100%'
-                                        }}/>
-                                    )
-                                : this.props.item.title
-                            }
+                            {this.props.item.title}
                         </span>
                         <span
                             style={{
