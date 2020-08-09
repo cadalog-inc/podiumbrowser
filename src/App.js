@@ -10,12 +10,22 @@ import Category from './models/Category';
 import Item from './models/Item';
 import Relationship from './models/Relationship';
 import User from './models/User';
-import categories from './data/categories.json';
-import items from './data/items.json';
-import relationships from './data/relationships.json';
 import License from './models/License';
 import { Upload } from './components/upload';
 /*global sketchup*/
+
+const AWS = require('aws-sdk');
+AWS.config.update({
+    region: "us-west-2",
+    endpoint: 'https://dynamodb.us-west-2.amazonaws.com/',
+    // accessKeyId default can be used while using the downloadable version of DynamoDB. 
+    // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
+    accessKeyId: "AKIAZKYMH4JCPQTQPQ4J",
+    // secretAccessKey default can be used while using the downloadable version of DynamoDB. 
+    // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
+    secretAccessKey: "+/M1uIc1EUN42miGL+6BCLbujs7wYudoZHimcV7P"
+});
+const docClient = new AWS.DynamoDB.DocumentClient();
 
 class App extends React.Component {
     constructor(props) {
@@ -33,6 +43,7 @@ class App extends React.Component {
             useHDR: false,
             standalone: false,
             dataDownloaded: false,
+            dataDownloadingMessage: 'data',
             isValid: false
         };
         window["setLicense"] = this.setLicense.bind(this);
@@ -46,18 +57,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.setState({
-            categories: Category.fromArray(categories),
-            items: Item.fromArray(items),
-            relationships: Relationship.fromArray(relationships)
-        }, () => {
-            const homeCategory = this.state.categories.find((category) => category.title === 'Home');
-            this.setState({
-                homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
-            }, () => {
-                this.getLicense();
-            });
-        });
+        this.getData();
     }
 
     render() {
@@ -122,6 +122,7 @@ class App extends React.Component {
                     <Alert variant="secondary">
                         <p> Loading up the home page. </p>
                         <p> This will take a few moments ... </p>
+                        <p> Downloading {this.state.dataDownloadingMessage}...</p>
                     </Alert>
                 </React.Fragment>
             );
@@ -150,7 +151,7 @@ class App extends React.Component {
 
     setLicense(license, isValid) {
         const sd = license.checkin.split('/');
-        const nd = new Date(sd[2], sd[1]-1, sd[0]);
+        const nd = new Date(sd[2], sd[1] - 1, sd[0]);
         license.checkin = nd.toLocaleDateString();
         this.setState({
             license: license,
@@ -442,6 +443,75 @@ class App extends React.Component {
             .catch(() => {
                 this.dataDownloaded();
             });
+    }
+
+    // aws dynamodb
+
+    getData() {
+        this.setState({
+            dataDownloadingMessage: 'categories'
+        }, () => {
+            this.getCategories();
+        });
+    }
+
+    getCategories() {
+        const params = {
+            TableName: "Categories"
+        }
+        docClient.scan(params, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                this.setState({
+                    categories: Category.fromArray(data.Items),
+                    dataDownloadingMessage: 'items'
+                }, () => {
+                    this.getItems();
+                });
+            }
+        })
+    }
+
+    getItems() {
+        const params = {
+            TableName: "Items"
+        }
+        docClient.scan(params, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                this.setState({
+                    items: Item.fromArray(data.Items),
+                    dataDownloadingMessage: 'relationships'
+                }, () => {
+                    this.getRelationships();
+                });
+            }
+        })
+    }
+
+    getRelationships() {
+        const params = {
+            TableName: "Relationships"
+        }
+        docClient.scan(params, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                this.setState({
+                    relationships: Relationship.fromArray(data.Items),
+                    dataDownloadingMessage: 'data'
+                }, () => {
+                    const homeCategory = this.state.categories.find((category) => category.title === 'Home');
+                    this.setState({
+                        homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
+                    }, () => {
+                        this.getLicense();
+                    });
+                });
+            }
+        })
     }
 
     dataDownloaded = () => {

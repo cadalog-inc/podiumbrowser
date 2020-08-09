@@ -241,11 +241,13 @@ export class Page extends React.Component {
     }
 
     searchArray = (items, value) => {
-        const l = items.length;
-        for (let i = 0; i < l; i++) {
-            const item = items[i];
-            if (item.toUpperCase().includes(value.toUpperCase())) {
-                return true;
+        if(items) {
+            const l = items.length;
+            for (let i = 0; i < l; i++) {
+                const item = items[i];
+                if (item.toUpperCase().includes(value.toUpperCase())) {
+                    return true;
+                }
             }
         }
         return false;
