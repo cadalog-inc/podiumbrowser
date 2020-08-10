@@ -1,22 +1,38 @@
 import React from 'react';
 import { OverlayTrigger } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faStar, faDownload } from '@fortawesome/free-solid-svg-icons';
 import License from '../models/License';
-import App from '../App';
+import { EditItem } from './EditItem';
 
 export class Item extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            show: false
+        }
+    }
     parseExt = (item) => {
         return item.imageFile.split('.')[1];
     }
     render() {
         return (
             <React.Fragment>
+                <EditItem
+                    show={this.state.show}
+                    item={this.props.item}
+                    parseExt={this.parseExt}
+                    handleClose={(e) => {
+                        this.setState({
+                            show: false
+                        })
+                    }}
+                />
                 <OverlayTrigger
                     placement="bottom"
                     delay={{ dhow: 500 }}
                     overlay={(props) => {
-                        return (
+                        return window.admin ? <span /> : (
                             <div
                                 {...props}
                                 style={{
@@ -56,19 +72,22 @@ export class Item extends React.Component {
                             }}
                             onClick={() => { this.props.handleDownloadClick(this.props.item) }}
                         />
-                        <span
-                            style={{
-                                position: 'absolute',
-                                right: '0px',
-                                top: '0px',
-                                cursor: 'pointer'
-                            }}
-                            onClick={() => { this.props.handleFavoriteClick(this.props.item.id) }}
-                        >
-                            {
-                                this.props.user.key !== '' && this.props.isItemFavorite(this.props.item.id) ? <FontAwesomeIcon icon={faStar} color="gold" /> : <FontAwesomeIcon icon={faStar} color="lightgrey" />
-                            }
-                        </span>
+                        {
+                            window.admin ? null :
+                                <span
+                                    style={{
+                                        position: 'absolute',
+                                        right: '0px',
+                                        top: '0px',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={() => { this.props.handleFavoriteClick(this.props.item.id) }}
+                                >
+                                    {
+                                        this.props.user.key !== '' && this.props.isItemFavorite(this.props.item.id) ? <FontAwesomeIcon icon={faStar} color="gold" /> : <FontAwesomeIcon icon={faStar} color="lightgrey" />
+                                    }
+                                </span>
+                        }
                         <span
                             style={{
                                 fontSize: '11px',
@@ -102,10 +121,18 @@ export class Item extends React.Component {
                                     bottom: '2px',
                                     cursor: 'pointer'
                                 }}
-                                onClick={() => { this.props.handleDownloadClick(this.props.item) }}
+                                onClick={(e) => {
+                                    if (window.admin) {
+                                        this.setState({
+                                            show: true
+                                        });
+                                    } else {
+                                        this.props.handleDownloadClick(this.props.item);
+                                    }
+                                }}
                             >
                                 {
-                                    (this.props.user.key !== '' && License.isValid(this.props.license)) || this.props.item.type === 'free' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
+                                    window.admin ? <FontAwesomeIcon icon={faEdit} /> : (this.props.user.key !== '' && License.isValid(this.props.license)) || this.props.item.type === 'free' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
                                 }
                             </span>
                         </span>

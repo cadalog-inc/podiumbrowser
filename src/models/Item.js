@@ -1,5 +1,5 @@
 class Item {
-    constructor(filename, fileSize, id, imageFile, hash, tags, title, type, uploadDate) {
+    constructor(filename, fileSize, id, imageFile, hash, tags=[], title, type, uploadDate) {
         this.filename = filename;
         this.fileSize = fileSize;
         this.id = id;

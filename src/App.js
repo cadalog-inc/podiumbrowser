@@ -54,6 +54,7 @@ class App extends React.Component {
                 window.location = window.location.origin;
             }
         });
+        window.admin = false;
     }
 
     componentDidMount() {
