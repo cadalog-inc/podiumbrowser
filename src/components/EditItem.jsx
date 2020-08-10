@@ -1,12 +1,20 @@
 import React from 'react';
-import { Button, Modal, Form, Row, Col, ListGroup } from 'react-bootstrap';
+import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 
 export class EditItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false
+            title: "",
+            tags: []
         }
+    }
+
+    componentDidMount() {
+        this.setState({
+            title: this.props.item.title,
+            tags: this.props.item.tags
+        })
     }
 
     render() {
@@ -28,23 +36,35 @@ export class EditItem extends React.Component {
                             <Row>
                                 <Col>
                                     <Form.Label>Title</Form.Label>
-                                    <Form.Control defaultValue={this.props.item.title}/>
+                                    <Form.Control 
+                                        defaultValue={this.state.title} 
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+                                            this.setState({
+                                                title: value
+                                            })
+                                        }}
+                                    />
                                 </Col>
                             </Row>
                             <Row>
                                 <Col>
                                     <Form.Label>Tags</Form.Label>
-                                    <ListGroup>
-                                        {
-                                            this.props.item.tags.map((tag, index) => {
-                                                return (
-                                                    <ListGroup.Item>
-                                                        <Form.Control defaultValue={tag}/>
-                                                    </ListGroup.Item>
-                                                )
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Control 
+                                        as="textarea" 
+                                        rows="3" 
+                                        defaultValue={this.state.tags.join(' ')}
+                                        onChange={(e) => {
+                                            const value = e.target.value;
+                                            this.setState({
+                                                tags: value.split(' ')
                                             })
-                                        }
-                                    </ListGroup>
+                                        }}
+                                    />
                                 </Col>
                             </Row>
                         </Form>
@@ -53,7 +73,32 @@ export class EditItem extends React.Component {
                         <Button variant="secondary" onClick={this.props.handleClose}>
                             Cancel
                         </Button>
-                        <Button variant="dark" onClick={this.props.handleClose}>
+                        <Button 
+                            variant="dark" 
+                            onClick={(e) => {
+                                this.props.item.title = this.state.title;
+                                this.props.item.tags = this.state.tags;
+                                var params = {
+                                    TableName: "Items",
+                                    Key: {
+                                        "id": this.props.item.id
+                                    },
+                                    UpdateExpression: "set tags=:tags, title=:title",
+                                    ExpressionAttributeValues: {
+                                        ":tags": this.props.item.tags,
+                                        ":title": this.props.item.title
+                                    },
+                                    ReturnValues: "UPDATED_NEW"
+                                };
+                                window.docClient.update(params, function(err, data) {
+                                    if(err) {
+                                        console.log(err);
+                                    } else {
+                                        console.log(data);
+                                    }
+                                });
+                                this.props.handleClose(e);
+                            }}>
                             Save
                         </Button>
                     </Modal.Footer>

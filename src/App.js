@@ -25,7 +25,7 @@ AWS.config.update({
     // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
     secretAccessKey: "+/M1uIc1EUN42miGL+6BCLbujs7wYudoZHimcV7P"
 });
-const docClient = new AWS.DynamoDB.DocumentClient();
+window.docClient = new AWS.DynamoDB.DocumentClient();
 
 class App extends React.Component {
     constructor(props) {
@@ -54,7 +54,7 @@ class App extends React.Component {
                 window.location = window.location.origin;
             }
         });
-        window.admin = false;
+        window.admin = true;
     }
 
     componentDidMount() {
@@ -460,7 +460,7 @@ class App extends React.Component {
         const params = {
             TableName: "Categories"
         }
-        docClient.scan(params, (err, data) => {
+        window.docClient.scan(params, (err, data) => {
             if (err) {
                 console.log(err);
             } else {
@@ -478,7 +478,7 @@ class App extends React.Component {
         const params = {
             TableName: "Items"
         }
-        docClient.scan(params, (err, data) => {
+        window.docClient.scan(params, (err, data) => {
             if (err) {
                 console.log(err);
             } else {
@@ -496,7 +496,7 @@ class App extends React.Component {
         const params = {
             TableName: "Relationships"
         }
-        docClient.scan(params, (err, data) => {
+        window.docClient.scan(params, (err, data) => {
             if (err) {
                 console.log(err);
             } else {

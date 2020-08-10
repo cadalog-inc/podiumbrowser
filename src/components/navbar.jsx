@@ -108,54 +108,57 @@ export class NavBar extends React.Component {
                     </NavItem>
                     <Navbar.Toggle aria-controls="top-navbar-nav" />
                     <Navbar.Collapse className="justify-content-center" id="top-navbar-nav">
-                        <NavItem>
-                            <OverlayTrigger
-                                trigger="click"
-                                rootClose
-                                key={'bottom'}
-                                placement={'bottom'}
-                                overlay={
-                                    <Container style={{
-                                        zIndex: 2,
-                                        marginTop: "10px",
-                                        backgroundColor: '#fff',
-                                        border: '1px solid #343a4055',
-                                        borderRadius: 10,
-                                        boxShadow: "2px 2px 14px #343a4055",
-                                        padding: 20,
-                                        display: "flex",
-                                        flexDirection: "column",
-                                        justifyContent: "center",
-                                        alignItems: "center"
-                                    }}>
-                                        <Row>
-                                            {
-                                                primaryCategories.map((category, index) => {
-                                                    return (this.props.useHDR || category.title !== 'HDR') ? (
-                                                        <Col lg={3} md={4} key={index}>
-                                                            <span
-                                                                style={{ cursor: 'pointer' }}
-                                                                onClick={
-                                                                    () => {
-                                                                        this.handleCategoryChange(category.id)
+                        {
+                            window.admin ? null :
+                            <NavItem>
+                                <OverlayTrigger
+                                    trigger="click"
+                                    rootClose
+                                    key={'bottom'}
+                                    placement={'bottom'}
+                                    overlay={
+                                        <Container style={{
+                                            zIndex: 2,
+                                            marginTop: "10px",
+                                            backgroundColor: '#fff',
+                                            border: '1px solid #343a4055',
+                                            borderRadius: 10,
+                                            boxShadow: "2px 2px 14px #343a4055",
+                                            padding: 20,
+                                            display: "flex",
+                                            flexDirection: "column",
+                                            justifyContent: "center",
+                                            alignItems: "center"
+                                        }}>
+                                            <Row>
+                                                {
+                                                    primaryCategories.map((category, index) => {
+                                                        return (this.props.useHDR || category.title !== 'HDR') ? (
+                                                            <Col lg={3} md={4} key={index}>
+                                                                <span
+                                                                    style={{ cursor: 'pointer' }}
+                                                                    onClick={
+                                                                        () => {
+                                                                            this.handleCategoryChange(category.id)
+                                                                        }
                                                                     }
-                                                                }
-                                                            >
-                                                                {category.title}
-                                                            </span>
-                                                        </Col>
-                                                    ) : null
-                                                })
-                                            }
-                                        </Row>
-                                    </Container>
-                                }
-                            >
-                                <Button variant="dark">
-                                    Categories
-                            </Button>
-                            </OverlayTrigger>
-                        </NavItem>
+                                                                >
+                                                                    {category.title}
+                                                                </span>
+                                                            </Col>
+                                                        ) : null
+                                                    })
+                                                }
+                                            </Row>
+                                        </Container>
+                                    }
+                                >
+                                    <Button variant="dark">
+                                        Categories
+                                </Button>
+                                </OverlayTrigger>
+                            </NavItem>
+                        }
                         <NavItem>
                             <Autocomplete
                                 getItemValue={(item) => item.label}
@@ -205,11 +208,14 @@ export class NavBar extends React.Component {
                                 onSelect={(value) => this.handleSearchTermChange(value, this.handleOnSearchClick)}
                             />
                         </NavItem>
-                        <Button type="button" variant="dark" onClick={(e) => { 
-                            window.open("http://podiumbrowser.com/"); 
-                        }}>
-                            podiumbrowser.com
-                        </Button>
+                        {
+                            window.admin ? null :
+                            <Button type="button" variant="dark" onClick={(e) => { 
+                                window.open("http://podiumbrowser.com/"); 
+                            }}>
+                                podiumbrowser.com
+                            </Button>
+                        }
                     </Navbar.Collapse>
                 </Navbar>
                 <Modal
