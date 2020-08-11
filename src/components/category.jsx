@@ -25,6 +25,7 @@ export class Category extends React.Component {
                         <Options
                             upper={true}
                             query={this.props.query}
+                            category={this.props.category}
                             pageBack={pageBack}
                             pageNext={pageNext}
                             itemsBegin={itemsBegin}

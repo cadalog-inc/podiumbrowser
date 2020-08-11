@@ -66,15 +66,6 @@ class App extends React.Component {
             <React.Fragment>
                 <BrowserRouter>
                     <Switch>
-                        <Route exact path="/upload" render={
-                            (props) => {
-                                return (
-                                    <React.Fragment>
-                                        <Upload />
-                                    </React.Fragment>
-                                )
-                            }
-                        } />
                         {/* using exact broke this in production */}
                         <Route path="/" render={
                             (props) => {
@@ -324,44 +315,17 @@ class App extends React.Component {
     }
 
     getPrimaryCategories = () => {
-        const primaryCategoryNames = [
-            "Light fixtures exterior",
-            "Light fixtures interior",
-            "Environment",
-            "Materials",
-            "Vegetation",
-            "People & animals",
-            "Vehicles",
-            "Kitchen",
-            "Bathroom",
-            "Bedroom",
-            "Dining",
-            "Living",
-            "Office",
-            "Electronic",
-            "Decoration",
-            "Hardware & construction",
-            "Sports equipment",
-            "Assembly spaces",
-            "Full 3D Models",
-            "Windows",
-            "Bedroom",
-            "Exterior residential",
-            "Exterior public",
-            "HDR",
-            "Holiday"
-        ];
+        const primaryCategoryIds = [300, 305, 324, 6, 131, 9, 136, 116, 130, 144, 120, 122, 151, 114, 126, 154, 253, 258, 337, 420, 144, 174, 166, 414, 184];
 
         const primaryCategories = [];
-        const l = primaryCategoryNames.length;
+        const l = primaryCategoryIds.length;
         for (let i = 0; i < l; i++) {
-            const primaryCategoryName = primaryCategoryNames[i];
+            const primaryCategoryId = primaryCategoryIds[i];
             const primaryCategory = this.state.categories.filter((category) => {
-                return category.title === primaryCategoryName;
+                return category.id === primaryCategoryId;
             })[0];
             primaryCategories.push(primaryCategory);
         }
-
         return primaryCategories;
     }
 

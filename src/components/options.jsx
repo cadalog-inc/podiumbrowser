@@ -1,7 +1,8 @@
 import React from 'react';
-import { Button, Dropdown, Form, Nav, Navbar, NavbarBrand } from 'react-bootstrap';
+import { Button, Dropdown, Navbar, NavbarBrand } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { EditCategory } from './EditCategory';
 
 export class Options extends React.Component {
     constructor(props) {
@@ -17,7 +18,8 @@ export class Options extends React.Component {
                 'File Size (Low to High)',
                 'Date Uploaded (New to Old)',
                 'Date Uploaded (Old to New)'
-            ]
+            ],
+            show: false
         }
     }
 
@@ -39,9 +41,21 @@ export class Options extends React.Component {
     render() {
         return this.props.upper ? (
             <React.Fragment>
+                {
+                    window.admin ? 
+                    <EditCategory
+                        show={this.state.show}
+                        category={this.props.category}
+                        handleClose={(e) => {
+                            this.setState({
+                                show: false
+                            })
+                        }}
+                    /> : null
+                }
                 <Navbar expand="lg" bg="light">
                     <NavbarBrand>
-                        {this.props.category.title}
+                        {this.props.category.title} {window.admin ?  <FontAwesomeIcon onClick={(e)=>{this.setState({show: true})}} icon={faEdit} /> : null}
                     </NavbarBrand>
                     <Navbar.Text>
                         {this.props.itemsLength > 0 ? this.props.itemsBegin + 1 : 0} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}

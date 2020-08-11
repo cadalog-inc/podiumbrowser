@@ -18,16 +18,19 @@ export class Item extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <EditItem
-                    show={this.state.show}
-                    item={this.props.item}
-                    parseExt={this.parseExt}
-                    handleClose={(e) => {
-                        this.setState({
-                            show: false
-                        })
-                    }}
-                />
+                {
+                    window.admin ? <EditItem
+                        show={this.state.show}
+                        item={this.props.item}
+                        parseExt={this.parseExt}
+                        handleClose={(e) => {
+                            this.setState({
+                                show: false
+                            })
+                        }}
+                    /> : null
+                }
+
                 <OverlayTrigger
                     placement="bottom"
                     delay={{ dhow: 500 }}
