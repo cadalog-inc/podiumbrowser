@@ -46,66 +46,55 @@ export class EditCategory extends React.Component {
                             </Row>
                             {
                                 this.props.category.id === 1 || this.props.canUploadItems === false ? null :
-                                    <Row>
-                                        <Col>
-                                            <Form.Label>Add New Items</Form.Label>
-                                            <div style={{ margin: 10 }}>
-                                                <span>Drag files:</span>
-                                                <div
-                                                    style={{
-                                                        border: '1px solid black',
-                                                        width: '100%',
-                                                        height: 300
-                                                    }}
-                                                    onDrop={this.upload}
-                                                    onDragOver={(e) => e.preventDefault()}
-                                                />
-                                                <div
-                                                    style={{
-                                                        display: 'grid',
-                                                        gridTemplateColumns: '300px 300px'
-                                                    }}
-                                                >
-                                                    <div
-                                                        style={{
-                                                            border: '1px solid black',
-                                                            width: '50%',
-                                                            height: 300
-                                                        }}
-                                                    >
-                                                        <span style={{ margin: 5 }}>Files added:</span>
-                                                        <ul>
-                                                            {
-                                                                this.state.added.map((item, index) => {
-                                                                    return (
-                                                                        <li key={index}>{item.title}</li>
-                                                                    );
-                                                                })
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                    <div
-                                                        style={{
-                                                            border: '1px solid black',
-                                                            width: '50%',
-                                                            height: 300
-                                                        }}
-                                                    >
-                                                        <span style={{ margin: 5 }}>Files uploaded:</span>
-                                                        <ul>
-                                                            {
-                                                                this.state.uploaded.map((item, index) => {
-                                                                    return (
-                                                                        <li key={index}>{item.title}</li>
-                                                                    );
-                                                                })
-                                                            }
-                                                        </ul>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </Col>
-                                    </Row>
+                                    <React.Fragment>
+                                        <Row>
+                                            <Col>
+                                                <Form.Label style={{marginTop: 10}}>Add New Items</Form.Label>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col
+                                                style={{ 
+                                                    height: 100, 
+                                                    border: '1px solid #ced4da', 
+                                                    marginLeft: 15,
+                                                    marginRight: 15,
+                                                    marginBottom: 15
+                                                }}
+                                                onDrop={this.upload}
+                                                onDragOver={(e) => e.preventDefault()}
+                                            >
+                                                
+                                                <Form.Label>Drag Files here...</Form.Label>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col style={{ height: 300, border: '1px solid #ced4da', margin: 15 }}>
+                                                <Form.Label>Files added...</Form.Label>
+                                                <ul>
+                                                    {
+                                                        this.state.added.map((item, index) => {
+                                                            return (
+                                                                <li key={index}>{item.title}</li>
+                                                            );
+                                                        })
+                                                    }
+                                                </ul>
+                                            </Col>
+                                            <Col style={{ height: 300, border: '1px solid #ced4da', margin: 15 }}>
+                                                <Form.Label>Files uploaded...</Form.Label>
+                                                <ul>
+                                                    {
+                                                        this.state.uploaded.map((item, index) => {
+                                                            return (
+                                                                <li key={index}>{item.title}</li>
+                                                            );
+                                                        })
+                                                    }
+                                                </ul>
+                                            </Col>
+                                        </Row>
+                                    </React.Fragment>
                             }
                         </Form>
                     </Modal.Body>
@@ -141,18 +130,17 @@ export class EditCategory extends React.Component {
                         </Button>
                     </Modal.Footer>
                 </Modal>
-            </React.Fragment>
+            </React.Fragment >
         );
     }
 
     saveItem = (item) => {
-        const id = this.calculateNextItemId();
         var params = {
             TableName: "Items",
             Item: {
                 filename: item.filename,
                 fileSize: item.fileSize,
-                id: id,
+                id: item.id,
                 imageFile: item.imageFile,
                 hash: item.hash,
                 tags: item.tags,
@@ -168,7 +156,7 @@ export class EditCategory extends React.Component {
                 console.log(err);
             } else {
                 console.log(data);
-                callback(id);
+                callback(item.id);
             }
         });
     }
@@ -177,7 +165,7 @@ export class EditCategory extends React.Component {
         const relationships = this.calculateRelationships();
         const rl = relationships.length;
         for (let r = 0; r < rl; r++) {
-            let id = this.calculateNextRelationshipId();
+            let id = Utils.create_UUID().replace(/-/g, '');
             var params = {
                 TableName: "Relationships",
                 Item: {
@@ -199,7 +187,7 @@ export class EditCategory extends React.Component {
 
     calculateRelationships = () => {
         const relationships = [];
-        let category = this.state.categories[this.state.categoryIndex];
+        let category = this.props.category;
         if (category && category !== undefined) {
             let id = category.id;
             let parentId = category.parentId;
@@ -209,7 +197,7 @@ export class EditCategory extends React.Component {
                 if (id === 1) {
                     break;
                 } else {
-                    category = this.state.categories.find((c) => c.id === parentId);
+                    category = this.props.categories.find((c) => c.id === parentId);
                     if (category && category !== undefined) {
                         id = category.id;
                         parentId = category.parentId;
@@ -238,7 +226,7 @@ export class EditCategory extends React.Component {
                         items.push({
                             "filename": file.name,
                             "fileSize": file.size,
-                            "id": null,
+                            "id": Utils.create_UUID().replace(/-/g, ''),
                             "imageFile": null,
                             "hash": Utils.create_UUID().replace(/-/g, ''),
                             "tags": [],
@@ -287,7 +275,7 @@ export class EditCategory extends React.Component {
                             axios
                                 .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.jpg/img`, imgFormData)
                                 .then((r) => {
-                                    this.props.saveItem(item);
+                                    this.saveItem(item);
                                 })
                                 .catch((e) => {
                                     console.log(e)

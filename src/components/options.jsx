@@ -46,6 +46,7 @@ export class Options extends React.Component {
                     <EditCategory
                         show={this.state.show}
                         category={this.props.category}
+                        categories={this.props.categories}
                         handleClose={(e) => {
                             this.setState({
                                 show: false

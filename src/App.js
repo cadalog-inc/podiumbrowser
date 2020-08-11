@@ -11,7 +11,10 @@ import Item from './models/Item';
 import Relationship from './models/Relationship';
 import User from './models/User';
 import License from './models/License';
-import { Upload } from './components/upload';
+import categories from './data/categories.json';
+import items from './data/items.json';
+import relationships from './data/relationships.json';
+
 /*global sketchup*/
 
 const AWS = require('aws-sdk');
@@ -54,11 +57,26 @@ class App extends React.Component {
                 window.location = window.location.origin;
             }
         });
-        window.admin = true;
+        window.admin = false;
     }
 
     componentDidMount() {
-        this.getData();
+        if(window.admin) {
+            this.getData();
+        } else {
+            this.setState({
+                categories: Category.fromArray(categories),
+                items: Item.fromArray(items),
+                relationships: Relationship.fromArray(relationships)
+            }, () => {
+                const homeCategory = this.state.categories.find((category) => category.title === 'Home');
+                this.setState({
+                    homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
+                }, () => {
+                    this.getLicense();
+                });
+            });
+        }
     }
 
     render() {
@@ -114,7 +132,9 @@ class App extends React.Component {
                     <Alert variant="secondary">
                         <p> Loading up the home page. </p>
                         <p> This will take a few moments ... </p>
-                        <p> Downloading {this.state.dataDownloadingMessage}...</p>
+                        {
+                            window.admin ? <p> Downloading {this.state.dataDownloadingMessage}...</p> : null
+                        }                        
                     </Alert>
                 </React.Fragment>
             );
