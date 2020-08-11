@@ -6,9 +6,9 @@ import { Item } from './item';
 export class Category extends React.Component {
     render() {
         let items = (this.props.isHomeCategory(this.props.category.id) ? this.props.items.filter((item) => {
-            return (this.props.searchArray(item.tags, "homepage") || this.props.query.searchTerm !== "") && (this.props.useHDR || item.filename.split('.')[1] !== 'hdr');
+            return (this.props.searchArray(item.tags, "homepage") || this.props.query.searchTerm !== "") && (this.props.useHDR || item.fileExt !== 'hdr');
         }) : this.props.getItemsInCategory(this.props.category.id)).filter((item) => {
-            return (this.props.query.onlyFree === false || item.type === 'free') && (this.props.query.searchTerm === "" || item.title.toUpperCase().includes(this.props.query.searchTerm.toUpperCase()) || this.props.searchArray(item.tags, this.props.query.searchTerm)) && (this.props.useHDR || item.filename.split('.')[1] !== 'hdr');
+            return (this.props.query.onlyFree === false || item.isFree) && (this.props.query.searchTerm === "" || item.title.toUpperCase().includes(this.props.query.searchTerm.toUpperCase()) || this.props.searchArray(item.tags, this.props.query.searchTerm)) && (this.props.useHDR || item.fileExt !== 'hdr');
         });
 
         this.props.sortItems(items, this.props.query.sortBy);
@@ -35,6 +35,8 @@ export class Category extends React.Component {
                             handleClearFavoritesClick={this.props.handleClearFavoritesClick}
                             handleDownloadClick={this.props.handleDownloadClick}
                             handleFavoriteClick={this.props.handleFavoriteClick}
+                            getRecentDownloadedCategoryId={this.props.getRecentDownloadedCategoryId}
+                            getMyFavoritesCategoryId={this.props.getMyFavoritesCategoryId}
                             {...this.props}
                         />
                     </Col>
@@ -77,6 +79,8 @@ export class Category extends React.Component {
                             itemsLength={itemsLength}
                             handleDownloadClick={this.props.handleDownloadClick}
                             handleFavoriteClick={this.props.handleFavoriteClick}
+                            getRecentDownloadedCategoryId={this.props.getRecentDownloadedCategoryId}
+                            getMyFavoritesCategoryId={this.props.getMyFavoritesCategoryId}
                             {...this.props}
                         />
                     </Col>

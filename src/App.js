@@ -113,6 +113,8 @@ class App extends React.Component {
                                             getHomeCategory={this.getHomeCategory}
                                             isHomeCategory={this.isHomeCategory}
                                             useHDR={this.state.useHDR}
+                                            getRecentDownloadedCategoryId={this.getRecentDownloadedCategoryId}
+                                            getMyFavoritesCategoryId={this.getMyFavoritesCategoryId}
                                             handleClearFavoritesClick={this.handleClearFavoritesClick}
                                             {...props}
                                         />
@@ -193,44 +195,73 @@ class App extends React.Component {
 
     // ruby calls
 
+    getRecentDownloadedCategoryId = () => {
+        const l = this.state.categories.length;
+        for(let c = 0; c < l; c++) {
+            const category = this.state.categories[c];
+            if(category.title === "Recent Downloaded") {
+                return category.id;
+            }
+        }
+        return null;
+    }
+
+    getMyFavoritesCategoryId = () => {
+        const l = this.state.categories.length;
+        for(let c = 0; c < l; c++) {
+            const category = this.state.categories[c];
+            if(category.title === "My Favorites") {
+                return category.id;
+            }
+        }
+        return null;
+    }
+
     handleDownloadClick = (item) => {
         const path = `https://v3.pdm-plants-textures.com/.secret/files/${item.hash}`;
         if (this.state.user.key !== '' && License.isValid(this.state.license)) {
             if (window.sketchup !== undefined) {
-                sketchup.on_load_comp(`${path}|${item.filename.split('.')[1]}|${item.title}`);
+                sketchup.on_load_comp(`${path}|${item.fileExt}|${item.title}`);
             } else {
-                window.location = `${path}.skp`;
+                window.location = `${path}.${item.fileExt}`;
             }
-            axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_recent/${this.state.user.id}/${item.id}/218`)
-                .then((response) => {
-                    console.log(response.data);
-                    this.state.relationships.push({
-                        id: this.state.relationships.length,
-                        userId: this.state.user.id,
-                        itemId: item.id,
-                        categoryId: 218
-                    });
-                    this.setState({
-                        relationships: this.state.relationships
-                    });
-                });
+            this.addRecentDownloaded(item.id);
         } else if (item.type === 'free') {
             if (window.sketchup !== undefined) {
-                sketchup.on_load_comp(`${path}|${item.filename.split('.')[1]}|${item.title}`);
+                sketchup.on_load_comp(`${path}|${item.fileExt}|${item.title}`);
             } else {
-                window.location = `${path}.skp`;
+                window.location = `${path}.${item.fileExt}`;
             }
         }
     }
 
+    addRecentDownloaded = (itemId) => {
+        const categoryId = this.getRecentDownloadedCategoryId();
+        if(categoryId !== null) {
+            axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_recent/${this.state.user.id}/${itemId}/${categoryId}`)
+            .then((response) => {
+                this.state.relationships.push({
+                    id: this.state.relationships.length,
+                    userId: this.state.user.id,
+                    itemId: itemId,
+                    categoryId: categoryId
+                });
+                this.setState({
+                    relationships: this.state.relationships
+                });
+            });
+        }
+    }
+
     handleClearFavoritesClick = () => {
-        if (this.state.user.key !== '') {
+        const categoryId = this.getMyFavoritesCategoryId();
+        if(categoryId !== null && this.state.user.key !== '') {
             const relationshipsToSave = [];
             const relationshipsToRemove = [];
             const l = this.state.relationships.length;
             for (let i = 0; i < l; i++) {
                 const relationship = this.state.relationships[i];
-                if (relationship.categoryId === 217) {
+                if (relationship.categoryId === categoryId) {
                     relationshipsToRemove.push(relationship);
                 } else {
                     relationshipsToSave.push(relationship);
@@ -245,11 +276,11 @@ class App extends React.Component {
     }
 
     clearFavorites = (relationships) => {
-        if (relationships.length > 0) {
+        const categoryId = this.getMyFavoritesCategoryId();
+        if(categoryId !== null && relationships.length > 0) {
             const relationship = relationships[0];
-            axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/remove_favorite/${this.state.user.id}/${relationship.itemId}/217`)
+            axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/remove_favorite/${this.state.user.id}/${relationship.itemId}/${categoryId}`)
                 .then((response) => {
-                    console.log(response);
                     relationships.shift();
                     this.clearFavorites(relationships);
                 });
@@ -257,20 +288,21 @@ class App extends React.Component {
     }
 
     handleFavoriteClick = (itemId) => {
-        if (this.state.user.key !== '') {
+        const categoryId = this.getMyFavoritesCategoryId();
+        if(categoryId !== null && this.state.user.key !== '') {
             const item = this.state.items.find((e) => {
                 return e.id === itemId
             });
             const l = this.state.relationships.length;
             for (let i = 0; i < l; i++) {
                 const relationship = this.state.relationships[i];
-                if (relationship.categoryId === 217 && relationship.itemId === itemId) {
+                if (relationship.categoryId === categoryId && relationship.itemId === itemId) {
                     // remove from 
                     this.state.relationships.splice(i, 1);
                     this.setState({
                         relationships: this.state.relationships
                     }, () => {
-                        axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/remove_favorite/${this.state.user.id}/${itemId}/217`)
+                        axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/remove_favorite/${this.state.user.id}/${itemId}/${categoryId}`)
                             .then((response) => {
                                 console.log(response);
                             });
@@ -283,12 +315,12 @@ class App extends React.Component {
                 id: this.state.relationships.length,
                 userId: this.state.user.id,
                 itemId: item.id,
-                categoryId: 217
+                categoryId: categoryId
             });
             this.setState({
                 relationship: this.state.relationships
             }, () => {
-                axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_favorite/${this.state.user.id}/${itemId}/217`)
+                axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_favorite/${this.state.user.id}/${itemId}/${categoryId}`)
                     .then((response) => {
                         console.log(response);
                     });
@@ -331,16 +363,13 @@ class App extends React.Component {
     }
 
     getPrimaryCategories = () => {
-        const primaryCategoryIds = [300, 305, 324, 6, 131, 9, 136, 116, 130, 144, 120, 122, 151, 114, 126, 154, 253, 258, 337, 420, 144, 174, 166, 414, 184];
-
         const primaryCategories = [];
-        const l = primaryCategoryIds.length;
-        for (let i = 0; i < l; i++) {
-            const primaryCategoryId = primaryCategoryIds[i];
-            const primaryCategory = this.state.categories.filter((category) => {
-                return category.id === primaryCategoryId;
-            })[0];
-            primaryCategories.push(primaryCategory);
+        const l = this.state.categories.length;
+        for(let c = 0; c < l; c++) {
+            const category = this.state.categories[c];
+            if(category.primaryIndex !== -1) {
+                primaryCategories.push(category);
+            }
         }
         return primaryCategories;
     }

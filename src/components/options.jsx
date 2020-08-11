@@ -100,7 +100,7 @@ export class Options extends React.Component {
                             </Dropdown.Menu>
                         </Dropdown>
                         {
-                            this.props.category.id === 217 ?
+                            this.props.category.id === this.props.getMyFavoritesCategoryId() ?
                             (
                                 <Button type="button" variant="light" style={{ margin: 5 }}
                                     onClick={(e) => {

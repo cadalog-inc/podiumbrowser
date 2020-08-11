@@ -9,7 +9,7 @@ class Files {
             title: "Home",
             parentId: 0
         };
-        this.updateDir = "src/data";
+        this.updateDir = "utils/json"; //"src/data";
         this.categories = [
             this.homeCategory,
         ];
@@ -39,17 +39,17 @@ class Files {
                 }
 
                 this.categories.push({
-                    id: 217,
+                    id: 2,
                     title: "My Favorites",
                     parentId: this.homeCategory.id
                 });
                 this.categories.push({
-                    id: 218,
+                    id: 3,
                     title: "Recent Downloaded",
                     parentId: this.homeCategory.id
                 });
 
-                fs.writeFile(`./${this.updateDir}/categories.json`, JSON.stringify(this.categories), (err) => {
+                fs.writeFile(`./${this.updateDir}/categories.json`, JSON.stringify(this.categories.sort((a, b) => a.parentId > b.parentId ? 1 : a.id > b.id ? 1 : -1)), (err) => {
                     if (err) return console.log(err);
                     console.log(this.categories.length);
                     console.log("complete");

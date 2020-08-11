@@ -54,6 +54,8 @@ export class Page extends React.Component {
                                 getHomeCategory={this.getHomeCategory}
                                 isHomeCategory={this.props.isHomeCategory}
                                 useHDR={this.props.useHDR}
+                                getRecentDownloadedCategoryId={this.props.getRecentDownloadedCategoryId}
+                                getMyFavoritesCategoryId={this.props.getMyFavoritesCategoryId}
                                 {...this.props}
                             />
                         </Col>
@@ -86,6 +88,8 @@ export class Page extends React.Component {
                                         formatFileSize={this.formatFileSize}
                                         query={query}
                                         useHDR={this.props.useHDR}
+                                        getRecentDownloadedCategoryId={this.props.getRecentDownloadedCategoryId}
+                                        getMyFavoritesCategoryId={this.props.getMyFavoritesCategoryId}
                                         {...this.props}
                                     />
                                 ) : (
@@ -107,6 +111,8 @@ export class Page extends React.Component {
                                             formatFileSize={this.formatFileSize}
                                             query={query}
                                             useHDR={this.props.useHDR}
+                                            getRecentDownloadedCategoryId={this.props.getRecentDownloadedCategoryId}
+                                            getMyFavoritesCategoryId={this.props.getMyFavoritesCategoryId}
                                             handleClearFavoritesClick={this.props.handleClearFavoritesClick}
                                             {...this.props}
                                         />
@@ -230,7 +236,7 @@ export class Page extends React.Component {
                 const category = this.props.categories.find((c) => {
                     return c.id === itemCategory.categoryId
                 });
-                if (category.parentId === pathToItem.lastCategoryId) {
+                if (category && category.parentId === pathToItem.lastCategoryId) {
                     pathToItem.categoryIds.push(itemCategory.categoryId);
                     pathToItem.lastCategoryId = itemCategory.categoryId;
                     itemsCategories.splice(i, 1);
@@ -258,7 +264,7 @@ export class Page extends React.Component {
 
     isItemFavorite = (itemId) => {
         const relationship = this.props.relationships.find((item) => {
-            return item.categoryId === 217 && item.itemId === itemId
+            return item.categoryId === this.props.getMyFavoritesCategoryId() && item.itemId === itemId
         });
         return relationship !== undefined;
     }

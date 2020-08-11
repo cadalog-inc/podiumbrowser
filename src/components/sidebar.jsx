@@ -14,7 +14,7 @@ export class SideBar extends React.Component {
         const primaryCategories = this.props.getSubCategories(this.props.getHomeCategory());
 
         const homeCategories = this.props.categories.filter((category) => {
-            return category.id === 217 || category.id === 218;
+            return category.id === this.props.getMyFavoritesCategoryId() || category.id === this.props.getRecentDownloadedCategoryId();
         });
 
         return (
@@ -26,7 +26,7 @@ export class SideBar extends React.Component {
                     border: "1px solid #e5e5e5"
                 }}>
                     {
-                        selectedCategory.id !== this.props.getHomeCategory() && selectedCategory.id !== 217 && selectedCategory.id !== 218 ? <React.Fragment>
+                        selectedCategory.id !== this.props.getHomeCategory() && selectedCategory.id !== this.props.getMyFavoritesCategoryId() && selectedCategory.id !== this.props.getRecentDownloadedCategoryId() ? <React.Fragment>
                             <Path
                                 categories={this.props.categories}
                                 subCategories={categories}

@@ -12,9 +12,6 @@ export class Item extends React.Component {
             show: false
         }
     }
-    parseExt = (item) => {
-        return item.imageFile.split('.')[1];
-    }
     render() {
         return (
             <React.Fragment>
@@ -31,7 +28,7 @@ export class Item extends React.Component {
                     /> : null
                 }
 
-                <OverlayTrigger
+                {/* <OverlayTrigger
                     placement="bottom"
                     delay={{ dhow: 500 }}
                     overlay={(props) => {
@@ -52,7 +49,7 @@ export class Item extends React.Component {
                             </div>
                         )
                     }}
-                >
+                > */}
                     <div className="mb-4"
                         style={{
                             position: 'relative',
@@ -66,7 +63,7 @@ export class Item extends React.Component {
                         }}
                     >
                         <img alt={this.props.item.title}
-                            src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash}.${this.parseExt(this.props.item)}`}
+                            src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash}.${this.props.item.thumbnailExt}`}
                             style={{
                                 position: 'relative',
                                 width: '100%',
@@ -135,12 +132,12 @@ export class Item extends React.Component {
                                 }}
                             >
                                 {
-                                    window.admin ? <FontAwesomeIcon icon={faEdit} /> : (this.props.user.key !== '' && License.isValid(this.props.license)) || this.props.item.type === 'free' ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
+                                    window.admin ? <FontAwesomeIcon icon={faEdit} /> : (this.props.user.key !== '' && License.isValid(this.props.license)) || this.props.item.isFree ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
                                 }
                             </span>
                         </span>
                     </div>
-                </OverlayTrigger>
+                {/* </OverlayTrigger> */}
             </React.Fragment>
         );
     }
