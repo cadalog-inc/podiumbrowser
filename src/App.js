@@ -19,14 +19,10 @@ import relationships from './data/relationships.json';
 
 const AWS = require('aws-sdk');
 AWS.config.update({
-    region: "us-west-2",
-    endpoint: 'https://dynamodb.us-west-2.amazonaws.com/',
-    // accessKeyId default can be used while using the downloadable version of DynamoDB. 
-    // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-    accessKeyId: "AKIAZKYMH4JCPQTQPQ4J",
-    // secretAccessKey default can be used while using the downloadable version of DynamoDB. 
-    // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-    secretAccessKey: "+/M1uIc1EUN42miGL+6BCLbujs7wYudoZHimcV7P"
+    region: process.env.REACT_APP_region,
+    endpoint: process.env.REACT_APP_endpoint,
+    accessKeyId: process.env.REACT_APP_accessKeyId,
+    secretAccessKey: process.env.REACT_APP_secretAccessKey
 });
 window.docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -57,7 +53,7 @@ class App extends React.Component {
                 window.location = window.location.origin;
             }
         });
-        window.admin = false;
+        window.admin = process.env.REACT_APP_admin === "true" ? true : false;
     }
 
     componentDidMount() {
