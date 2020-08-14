@@ -1,6 +1,6 @@
-const categories = require('./json/categories.json');
-const items = require('./json/items.json');
-const relationships = require('./json/relationships.json');
+const categories = require('../src/data/categories.json');
+const items = require('../src/data/items.json');
+const relationships = require('../src/data/relationships.json');
 
 const AWS = require('aws-sdk');
 AWS.config.update({
@@ -8,10 +8,10 @@ AWS.config.update({
     endpoint: 'https://dynamodb.us-west-2.amazonaws.com/',
     // accessKeyId default can be used while using the downloadable version of DynamoDB. 
     // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-    accessKeyId: "AKIAZKYMH4JCAPSG7KBT",
+    accessKeyId: "AKIAZKYMH4JCPQTQPQ4J",
     // secretAccessKey default can be used while using the downloadable version of DynamoDB. 
     // For security reasons, do not store AWS Credentials in your files. Use Amazon Cognito instead.
-    secretAccessKey: "DGuyDELYKwLcruTp6gOUCMOOqPR+w7v34V3NoUF8"
+    secretAccessKey: "+/M1uIc1EUN42miGL+6BCLbujs7wYudoZHimcV7P"
 });
 const docClient = new AWS.DynamoDB.DocumentClient();
 
@@ -23,23 +23,9 @@ class UploadData {
         // if(items.length > 0) {
         //     this.uploadItem(0);
         // }
-        // if(relationships.length > 0) {
-        //     this.uploadRelationship(0);
-        // }
-        this.getItems();
-    }
-
-    getItems() {
-        const params = {
-            TableName: "Categories"
+        if(relationships.length > 0) {
+            this.uploadRelationship(0);
         }
-        docClient.scan(params, (err, data) => {
-            if(err) {
-                console.log(err);
-            } else {
-                console.log(data);
-            }
-        })
     }
 
     uploadCategory(index) {

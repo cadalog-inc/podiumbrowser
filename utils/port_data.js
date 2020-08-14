@@ -17,6 +17,7 @@ class PortV3toV4 {
         const il = items.length;
         const rl = relationships.length;
 
+        // categories
         for (let c = 0; c < cl; c++) {
             const newId = c + 1;
             const category = categories[c];
@@ -33,12 +34,33 @@ class PortV3toV4 {
 
             for (let r = 0; r < rl; r++) {
                 const relationship = relationships[r];
-                if (relationship.parentId === category.id) {
-                    relationship.newParentId = newId;
+                if (relationship.categoryId === category.id) {
+                    relationship.newCategoryId = newId;
                 }
             }
         }
 
+        // primary categories
+        for (let c = 0; c < cl; c++) {
+            const category = categories[c];
+            let primaryIndex = -1;
+            for(let p = 0; p < pl; p++) {
+                const primaryCategoryId = primaryCategoryIds[p];
+                if(category.id === primaryCategoryId) {
+                    primaryIndex = p;
+                    console.log(`p = ${p} pc = ${primaryCategoryId}`);
+                    break;
+                }
+            }
+            this.categories.push({
+                id: category.newId,
+                title: category.title,
+                primaryIndex: primaryIndex,
+                parentId: category.newId === 1 ? 0 : category.newParentId
+            });
+        }
+
+        // items
         for (let i = 0; i < il; i++) {
             const newId = i + 1;
             const item = items[i];
@@ -50,32 +72,6 @@ class PortV3toV4 {
                     relationship.newItemId = newId;
                 }
             }
-        }
-
-        for (let c = 0; c < cl; c++) {
-            const category = categories[c];
-            let primaryIndex = -1;
-            for(let p = 0; p < pl; p++) {
-                const primaryCategoryId = primaryCategoryIds[p];
-                if(category.id === primaryCategoryId) {
-                    primaryIndex = p;
-                }
-            }
-            this.categories.push({
-                id: category.newId,
-                title: category.title,
-                primaryIndex: primaryIndex,
-                parentId: category.newId === 1 ? 0 : category.newParentId
-            });
-        }
-
-        for (let r = 0; r < rl; r++) {
-            const relationship = relationships[r];
-            this.relationships.push({
-                id: r+1,
-                itemId: relationship.itemId,
-                categoryId: relationship.categoryId
-            });
         }
 
         for (let i = 0; i < il; i++) {
@@ -95,6 +91,16 @@ class PortV3toV4 {
                 thumbnailExt: thumbnailExt,
                 fileSize: item.fileSize,
                 uploadDate: item.uploadDate
+            });
+        }
+
+        // relationships
+        for (let r = 0; r < rl; r++) {
+            const relationship = relationships[r];
+            this.relationships.push({
+                id: r+1,
+                itemId: relationship.newItemId,
+                categoryId: relationship.newCategoryId
             });
         }
 

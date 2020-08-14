@@ -371,7 +371,7 @@ class App extends React.Component {
                 primaryCategories.push(category);
             }
         }
-        return primaryCategories;
+        return primaryCategories.sort((a, b) => a.primaryIndex > b.primaryIndex ? 1 : -1);
     }
 
     getItemsInCategory = (categoryId) => {

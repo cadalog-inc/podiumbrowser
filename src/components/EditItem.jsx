@@ -30,7 +30,7 @@ export class EditItem extends React.Component {
                         <Form>
                             <Row>
                                 <Col>
-                                    <img alt="" style={{ width: '100%' }} src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash}.${this.props.parseExt(this.props.item)}`} />
+                                    <img alt="" style={{ width: '100%' }} src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash}.${this.props.item.thumbnailExt}`} />
                                 </Col>
                             </Row>
                             <Row>
