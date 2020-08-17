@@ -149,29 +149,27 @@ export class EditCategory extends React.Component {
                 uploadDate: item.uploadDate
             }
         };
-        console.log(params);
         const callback = this.saveRelationships;
         window.docClient.put(params, function (err, data) {
             if (err) {
                 console.log(err);
             } else {
-                console.log(data);
-                callback(item.id);
+                callback(item);
             }
         });
     }
 
-    saveRelationships = (itemId) => {
+    saveRelationships = (item) => {
         const relationships = this.calculateRelationships();
         const rl = relationships.length;
         for (let r = 0; r < rl; r++) {
-            let id = Utils.create_UUID().replace(/-/g, '');
+            let id = Number(new Date())+r;
             var params = {
                 TableName: "Relationships",
                 Item: {
                     id: id,
                     categoryId: relationships[r],
-                    itemId: itemId
+                    itemId: item.id
                 }
             };
             console.log(params);
@@ -179,10 +177,11 @@ export class EditCategory extends React.Component {
                 if (err) {
                     console.log(err);
                 } else {
-                    console.log(data);
                 }
             });
         }
+        this.state.uploaded.push(item);
+        this.forceUpdate();
     }
 
     calculateRelationships = () => {
@@ -223,10 +222,11 @@ export class EditCategory extends React.Component {
                     const title = file.name.split('.')[0];
                     const ext = file.name.split('.')[1];
                     if (ext === 'skp') {
+                        const id = Number(new Date())+items.length;
                         items.push({
                             "filename": file.name,
                             "fileSize": file.size,
-                            "id": Utils.create_UUID().replace(/-/g, ''),
+                            "id": id,
                             "imageFile": null,
                             "hash": Utils.create_UUID().replace(/-/g, ''),
                             "tags": [],
@@ -271,7 +271,6 @@ export class EditCategory extends React.Component {
                     axios
                         .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.skp/skp`, skpFormData)
                         .then((r) => {
-                            console.log(r);
                             axios
                                 .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.jpg/img`, imgFormData)
                                 .then((r) => {

@@ -34,6 +34,7 @@ export class Page extends React.Component {
                     show={this.state.show}
                     category={selectedCategory}
                     categories={this.props.categories}
+                    items={this.props.items}
                     canUploadItems={false}
                     handleClose={(e) => {
                         this.setState({

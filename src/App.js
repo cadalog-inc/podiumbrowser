@@ -483,6 +483,7 @@ class App extends React.Component {
         })
     }
 
+    // get all pages of items
     getItems() {
         const params = {
             TableName: "Items"
