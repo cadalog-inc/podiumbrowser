@@ -57,7 +57,7 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        if(window.admin) {
+        if (window.admin) {
             this.getData();
         } else {
             this.setState({
@@ -132,7 +132,7 @@ class App extends React.Component {
                         <p> This will take a few moments ... </p>
                         {
                             window.admin ? <p> Downloading {this.state.dataDownloadingMessage}...</p> : null
-                        }                        
+                        }
                     </Alert>
                 </React.Fragment>
             );
@@ -197,9 +197,9 @@ class App extends React.Component {
 
     getRecentDownloadedCategoryId = () => {
         const l = this.state.categories.length;
-        for(let c = 0; c < l; c++) {
+        for (let c = 0; c < l; c++) {
             const category = this.state.categories[c];
-            if(category.title === "Recent Downloaded") {
+            if (category.title === "Recent Downloaded") {
                 return category.id;
             }
         }
@@ -208,9 +208,9 @@ class App extends React.Component {
 
     getMyFavoritesCategoryId = () => {
         const l = this.state.categories.length;
-        for(let c = 0; c < l; c++) {
+        for (let c = 0; c < l; c++) {
             const category = this.state.categories[c];
-            if(category.title === "My Favorites") {
+            if (category.title === "My Favorites") {
                 return category.id;
             }
         }
@@ -237,25 +237,25 @@ class App extends React.Component {
 
     addRecentDownloaded = (itemId) => {
         const categoryId = this.getRecentDownloadedCategoryId();
-        if(categoryId !== null) {
+        if (categoryId !== null) {
             axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/add_recent/${this.state.user.id}/${itemId}/${categoryId}`)
-            .then((response) => {
-                this.state.relationships.push({
-                    id: this.state.relationships.length,
-                    userId: this.state.user.id,
-                    itemId: itemId,
-                    categoryId: categoryId
+                .then((response) => {
+                    this.state.relationships.push({
+                        id: this.state.relationships.length,
+                        userId: this.state.user.id,
+                        itemId: itemId,
+                        categoryId: categoryId
+                    });
+                    this.setState({
+                        relationships: this.state.relationships
+                    });
                 });
-                this.setState({
-                    relationships: this.state.relationships
-                });
-            });
         }
     }
 
     handleClearFavoritesClick = () => {
         const categoryId = this.getMyFavoritesCategoryId();
-        if(categoryId !== null && this.state.user.key !== '') {
+        if (categoryId !== null && this.state.user.key !== '') {
             const relationshipsToSave = [];
             const relationshipsToRemove = [];
             const l = this.state.relationships.length;
@@ -277,7 +277,7 @@ class App extends React.Component {
 
     clearFavorites = (relationships) => {
         const categoryId = this.getMyFavoritesCategoryId();
-        if(categoryId !== null && relationships.length > 0) {
+        if (categoryId !== null && relationships.length > 0) {
             const relationship = relationships[0];
             axios.get(`https://v3.pdm-plants-textures.com/v4/api/users/remove_favorite/${this.state.user.id}/${relationship.itemId}/${categoryId}`)
                 .then((response) => {
@@ -289,7 +289,7 @@ class App extends React.Component {
 
     handleFavoriteClick = (itemId) => {
         const categoryId = this.getMyFavoritesCategoryId();
-        if(categoryId !== null && this.state.user.key !== '') {
+        if (categoryId !== null && this.state.user.key !== '') {
             const item = this.state.items.find((e) => {
                 return e.id === itemId
             });
@@ -365,9 +365,9 @@ class App extends React.Component {
     getPrimaryCategories = () => {
         const primaryCategories = [];
         const l = this.state.categories.length;
-        for(let c = 0; c < l; c++) {
+        for (let c = 0; c < l; c++) {
             const category = this.state.categories[c];
-            if(category.primaryIndex !== -1) {
+            if (category.primaryIndex !== -1) {
                 primaryCategories.push(category);
             }
         }
@@ -466,6 +466,7 @@ class App extends React.Component {
     }
 
     getCategories() {
+        console.log('get categories:');
         const params = {
             TableName: "Categories"
         }
@@ -477,50 +478,85 @@ class App extends React.Component {
                     categories: Category.fromArray(data.Items),
                     dataDownloadingMessage: 'items'
                 }, () => {
-                    this.getItems();
+                    this.getItems({ action: 'start' });
                 });
             }
         })
     }
 
-    // get all pages of items
-    getItems() {
+    getItems(options) {
+        console.log('get items:');
         const params = {
             TableName: "Items"
         }
-        window.docClient.scan(params, (err, data) => {
-            if (err) {
-                console.log(err);
-            } else {
-                this.setState({
-                    items: Item.fromArray(data.Items),
-                    dataDownloadingMessage: 'relationships'
-                }, () => {
-                    this.getRelationships();
-                });
-            }
-        })
-    }
-
-    getRelationships() {
-        const params = {
-            TableName: "Relationships"
+        if(options.hasOwnProperty('lastEvaluatedKey')) {
+            params['ExclusiveStartKey'] = options.lastEvaluatedKey;
         }
         window.docClient.scan(params, (err, data) => {
             if (err) {
                 console.log(err);
             } else {
-                this.setState({
-                    relationships: Relationship.fromArray(data.Items),
-                    dataDownloadingMessage: 'data'
-                }, () => {
-                    const homeCategory = this.state.categories.find((category) => category.title === 'Home');
+                let items = [];
+                if (options.action === 'start') {
+                    items = Item.fromArray(data.Items);
+                } else if (options.action === 'continue') {
+                    items = [...this.state.items, ...Item.fromArray(data.Items)];
+                }
+                if (data.hasOwnProperty('LastEvaluatedKey')) {
                     this.setState({
-                        homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
+                        items: items
                     }, () => {
-                        this.getLicense();
+                        this.getItems({ action: 'continue', lastEvaluatedKey: data.LastEvaluatedKey });
+                    })
+                } else {
+                    this.setState({
+                        items: items,
+                        dataDownloadingMessage: 'relationships'
+                    }, () => {
+                        this.getRelationships({ action: 'start' });
                     });
-                });
+                }
+            }
+        })
+    }
+
+    getRelationships(options) {
+        console.log('get relationships:');
+        const params = {
+            TableName: "Relationships"
+        }
+        if(options.hasOwnProperty('lastEvaluatedKey')) {
+            params['ExclusiveStartKey'] = options.lastEvaluatedKey;
+        }
+        window.docClient.scan(params, (err, data) => {
+            if (err) {
+                console.log(err);
+            } else {
+                let relationships = [];
+                if (options.action === 'start') {
+                    relationships = Relationship.fromArray(data.Items);
+                } else if (options.action === 'continue') {
+                    relationships = [...this.state.relationships, ...Relationship.fromArray(data.Items)];
+                }
+                if (data.hasOwnProperty('LastEvaluatedKey')) {
+                    this.setState({
+                        relationships: relationships
+                    }, () => {
+                        this.getRelationships({ action: 'continue', lastEvaluatedKey: data.LastEvaluatedKey });
+                    })
+                } else {
+                    this.setState({
+                        relationships: relationships,
+                        dataDownloadingMessage: 'data'
+                    }, () => {
+                        const homeCategory = this.state.categories.find((category) => category.title === 'Home');
+                        this.setState({
+                            homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
+                        }, () => {
+                            this.getLicense();
+                        });
+                    });
+                }
             }
         })
     }
