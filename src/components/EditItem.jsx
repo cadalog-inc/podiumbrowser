@@ -5,6 +5,7 @@ export class EditItem extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            hash: "",
             title: "",
             tags: []
         }
@@ -12,9 +13,20 @@ export class EditItem extends React.Component {
 
     componentDidMount() {
         this.setState({
+            hash: this.props.item.hash,
             title: this.props.item.title,
             tags: this.props.item.tags
         })
+    }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.item.hash !== this.props.item.hash) {
+            this.setState({
+                hash: this.props.item.hash,
+                title: this.props.item.title,
+                tags: this.props.item.tags
+            });
+        }
     }
 
     render() {

@@ -135,17 +135,22 @@ export class EditCategory extends React.Component {
     }
 
     saveItem = (item) => {
+        const filenameSplit = item.filename.split('.');
+        const fileExt = filenameSplit[filenameSplit.length-1];
+        const imageFileSplit = item.imageFile.split('.');
+        const thumbnailExt = imageFileSplit[imageFileSplit.length-1];
+        const isFree = item.type !== "paid";
         var params = {
             TableName: "Items",
             Item: {
-                filename: item.filename,
-                fileSize: item.fileSize,
                 id: item.id,
-                imageFile: item.imageFile,
                 hash: item.hash,
-                tags: item.tags,
                 title: item.title,
-                type: item.type,
+                tags: item.tags,
+                isFree: isFree,
+                fileExt: fileExt,
+                thumbnailExt: thumbnailExt,
+                fileSize: item.fileSize,
                 uploadDate: item.uploadDate
             }
         };
