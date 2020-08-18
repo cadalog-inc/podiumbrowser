@@ -15,7 +15,9 @@ export class EditCategory extends React.Component {
 
     componentDidMount() {
         this.setState({
-            title: this.props.category.title
+            title: this.props.category.title,
+            added: [],
+            uploaded: []
         })
     }
 
@@ -49,22 +51,22 @@ export class EditCategory extends React.Component {
                                     <React.Fragment>
                                         <Row>
                                             <Col>
-                                                <Form.Label style={{marginTop: 10}}>Add New Items</Form.Label>
+                                                <Form.Label style={{ marginTop: 10 }}>Add New Items</Form.Label>
                                             </Col>
                                         </Row>
                                         <Row>
                                             <Col
-                                                style={{ 
-                                                    height: 100, 
-                                                    border: '1px solid #ced4da', 
+                                                style={{
+                                                    height: 100,
+                                                    border: '1px solid #ced4da',
                                                     marginLeft: 15,
                                                     marginRight: 15,
                                                     marginBottom: 15
                                                 }}
-                                                onDrop={this.upload}
+                                                onDrop={this.uploadItems}
                                                 onDragOver={(e) => e.preventDefault()}
                                             >
-                                                
+
                                                 <Form.Label>Drag Files here...</Form.Label>
                                             </Col>
                                         </Row>
@@ -136,9 +138,9 @@ export class EditCategory extends React.Component {
 
     saveItem = (item) => {
         const filenameSplit = item.filename.split('.');
-        const fileExt = filenameSplit[filenameSplit.length-1];
+        const fileExt = filenameSplit[filenameSplit.length - 1];
         const imageFileSplit = item.imageFile.split('.');
-        const thumbnailExt = imageFileSplit[imageFileSplit.length-1];
+        const thumbnailExt = imageFileSplit[imageFileSplit.length - 1];
         const isFree = item.type !== "paid";
         var params = {
             TableName: "Items",
@@ -168,7 +170,7 @@ export class EditCategory extends React.Component {
         const relationships = this.calculateRelationships();
         const rl = relationships.length;
         for (let r = 0; r < rl; r++) {
-            let id = Number(new Date())+r;
+            let id = Number(new Date()) + r;
             var params = {
                 TableName: "Relationships",
                 Item: {
@@ -216,7 +218,7 @@ export class EditCategory extends React.Component {
         return relationships;
     }
 
-    upload = (e) => {
+    uploadItems = (e) => {
         e.preventDefault();
         if (e.dataTransfer.items) {
             const dataTransferItems = e.dataTransfer.items;
@@ -227,7 +229,7 @@ export class EditCategory extends React.Component {
                     const title = file.name.split('.')[0];
                     const ext = file.name.split('.')[1];
                     if (ext === 'skp') {
-                        const id = Number(new Date())+items.length;
+                        const id = Number(new Date()) + items.length;
                         items.push({
                             "filename": file.name,
                             "fileSize": file.size,
@@ -249,7 +251,7 @@ export class EditCategory extends React.Component {
                     const file = e.dataTransfer.items[i].getAsFile();
                     const title = file.name.split('.')[0];
                     const ext = file.name.split('.')[1];
-                    if (ext === 'jpg') {
+                    if (ext === 'jpg' || ext === 'png') {
                         for (let j = 0; j < items.length; j++) {
                             if (items[j].title === title) {
                                 items[j].imageFile = file.name;
@@ -260,36 +262,51 @@ export class EditCategory extends React.Component {
                     }
                 }
             }
+            const added = [];
+            for(let i = 0; i < items.length; i++) {
+                const item = items[i];
+                const filename = item.filename;
+                const imageFile = item.imageFile;
+                if(filename && filename !== "" && imageFile && imageFile !== "") {
+                    added.push(item);
+                }
+            }
             this.setState({
-                added: items,
+                added: added,
                 uploaded: []
             }, () => {
-                for (let i = 0; i < items.length; i++) {
-                    const item = items[i];
-                    const hash = item.hash;
-                    const skp = dataTransferItems[item.skpIndex].getAsFile();
-                    const img = dataTransferItems[item.imgIndex].getAsFile();
-                    const skpFormData = new FormData();
-                    skpFormData.append('file', skp);
-                    const imgFormData = new FormData();
-                    imgFormData.append('file', img);
-                    axios
-                        .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.skp/skp`, skpFormData)
-                        .then((r) => {
-                            axios
-                                .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.jpg/img`, imgFormData)
-                                .then((r) => {
-                                    this.saveItem(item);
-                                })
-                                .catch((e) => {
-                                    console.log(e)
-                                });
-                        })
-                        .catch((e) => {
-                            console.log(e)
-                        });
-                }
+                this.uploadItem(0);
             });
         }
+    }
+
+    uploadItem = (dataTransferItems, index) => {
+        const item = this.state.added[index];
+        const hash = item.hash;
+        const skp = dataTransferItems[item.skpIndex].getAsFile();
+        const img = dataTransferItems[item.imgIndex].getAsFile();
+        const skpFormData = new FormData();
+        skpFormData.append('file', skp);
+        const imgFormData = new FormData();
+        imgFormData.append('file', img);
+        axios
+            .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.skp/skp`, skpFormData)
+            .then((r) => {
+                axios
+                    .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.jpg/img`, imgFormData)
+                    .then((r) => {
+                        this.saveItem(item);
+                        const nextIndex = index + 1;
+                        if (nextIndex < this.state.added.length) {
+                            this.uploadItem(nextIndex);
+                        }
+                    })
+                    .catch((e) => {
+                        console.log(e)
+                    });
+            })
+            .catch((e) => {
+                console.log(e)
+            });
     }
 }
