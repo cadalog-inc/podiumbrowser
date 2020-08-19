@@ -15,9 +15,7 @@ export class EditCategory extends React.Component {
 
     componentDidMount() {
         this.setState({
-            title: this.props.category.title,
-            added: [],
-            uploaded: []
+            title: this.props.category.title
         })
     }
 
@@ -63,7 +61,7 @@ export class EditCategory extends React.Component {
                                                     marginRight: 15,
                                                     marginBottom: 15
                                                 }}
-                                                onDrop={this.uploadItems}
+                                                onDrop={this.upload}
                                                 onDragOver={(e) => e.preventDefault()}
                                             >
 
@@ -137,11 +135,6 @@ export class EditCategory extends React.Component {
     }
 
     saveItem = (item) => {
-        const filenameSplit = item.filename.split('.');
-        const fileExt = filenameSplit[filenameSplit.length - 1];
-        const imageFileSplit = item.imageFile.split('.');
-        const thumbnailExt = imageFileSplit[imageFileSplit.length - 1];
-        const isFree = item.type !== "paid";
         var params = {
             TableName: "Items",
             Item: {
@@ -149,9 +142,9 @@ export class EditCategory extends React.Component {
                 hash: item.hash,
                 title: item.title,
                 tags: item.tags,
-                isFree: isFree,
-                fileExt: fileExt,
-                thumbnailExt: thumbnailExt,
+                isFree: item.isFree,
+                fileExt: item.fileExt,
+                thumbnailExt: item.thumbnailExt,
                 fileSize: item.fileSize,
                 uploadDate: item.uploadDate
             }
@@ -218,95 +211,93 @@ export class EditCategory extends React.Component {
         return relationships;
     }
 
-    uploadItems = (e) => {
+    upload = (e) => {
         e.preventDefault();
         if (e.dataTransfer.items) {
             const dataTransferItems = e.dataTransfer.items;
-            const items = [];
+
+            const fileOptions = [];
+            const imageOptions = [];
+
             for (let i = 0; i < e.dataTransfer.items.length; i++) {
                 if (e.dataTransfer.items[i].kind === 'file') {
                     const file = e.dataTransfer.items[i].getAsFile();
                     const title = file.name.split('.')[0];
-                    const ext = file.name.split('.')[1];
+                    const ext = file.name.split('.')[file.name.split('.').length - 1];
+                    const options = {
+                        title: title,
+                        ext: ext,
+                        index: Number(i)
+                    }
                     if (ext === 'skp') {
-                        const id = Number(new Date()) + items.length;
-                        items.push({
-                            "filename": file.name,
-                            "fileSize": file.size,
-                            "id": id,
-                            "imageFile": null,
-                            "hash": Utils.create_UUID().replace(/-/g, ''),
-                            "tags": [],
-                            "title": title,
-                            "type": "paid",
-                            "uploadDate": Number(new Date()),
-                            skpIndex: i,
-                            imgIndex: null
-                        });
+                        fileOptions.push(options);
+                    } else if (ext === 'jpg' || ext === 'png') {
+                        imageOptions.push(options);
                     }
                 }
             }
-            for (let i = 0; i < e.dataTransfer.items.length; i++) {
-                if (e.dataTransfer.items[i].kind === 'file') {
-                    const file = e.dataTransfer.items[i].getAsFile();
-                    const title = file.name.split('.')[0];
-                    const ext = file.name.split('.')[1];
-                    if (ext === 'jpg' || ext === 'png') {
-                        for (let j = 0; j < items.length; j++) {
-                            if (items[j].title === title) {
-                                items[j].imageFile = file.name;
-                                items[j].imgIndex = j;
-                                break;
-                            }
-                        }
+
+            const fl = fileOptions.length;
+            const il = imageOptions.length;
+
+            const items = [];
+            for (let i = 0; i < fl; i++) {
+                const fileOption = fileOptions[i];
+                let imageOption = null;
+                for (let j = 0; j < il; j++) {
+                    if (imageOptions[j].title === fileOption.title) {
+                        imageOption = imageOptions[j];
                     }
                 }
-            }
-            const added = [];
-            for(let i = 0; i < items.length; i++) {
-                const item = items[i];
-                const filename = item.filename;
-                const imageFile = item.imageFile;
-                if(filename && filename !== "" && imageFile && imageFile !== "") {
-                    added.push(item);
+                if(imageOption) {
+                    const file = e.dataTransfer.items[fileOption.index].getAsFile();
+                    items.push({
+                        id: Number(new Date()) + items.length,
+                        hash: Utils.create_UUID().replace(/-/g, ''),
+                        title: fileOption.title,
+                        tags: [],
+                        isFree: false,
+                        fileExt: fileOption.ext,
+                        thumbnailExt: imageOption.ext,
+                        fileSize: file.size,
+                        uploadDate: Number(new Date()),
+                        skpIndex: fileOption.index,
+                        imgIndex: imageOption.index
+                    });
                 }
             }
+
             this.setState({
-                added: added,
+                added: items,
                 uploaded: []
-            }, () => {
-                this.uploadItem(0);
+            }, async () => {
+                for (let i = 0; i < items.length; i++) {
+                    const item = items[i];
+                    const hash = item.hash;
+                    const skp = dataTransferItems[item.skpIndex].getAsFile();
+                    const img = dataTransferItems[item.imgIndex].getAsFile();
+                    const skpFormData = new FormData();
+                    skpFormData.append('file', skp);
+                    const imgFormData = new FormData();
+                    imgFormData.append('file', img);
+
+                    axios
+                        .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.skp/skp`, skpFormData)
+                        .then((r) => {
+                            axios
+                                .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.jpg/img`, imgFormData)
+                                .then((r) => {
+                                    this.saveItem(item);
+                                })
+                                .catch((e) => {
+                                    console.log(e);
+                                });
+                        })
+                        .catch((e) => {
+                            console.log(e)
+                        });
+                }
             });
         }
-    }
-
-    uploadItem = (dataTransferItems, index) => {
-        const item = this.state.added[index];
-        const hash = item.hash;
-        const skp = dataTransferItems[item.skpIndex].getAsFile();
-        const img = dataTransferItems[item.imgIndex].getAsFile();
-        const skpFormData = new FormData();
-        skpFormData.append('file', skp);
-        const imgFormData = new FormData();
-        imgFormData.append('file', img);
-        axios
-            .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.skp/skp`, skpFormData)
-            .then((r) => {
-                axios
-                    .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.jpg/img`, imgFormData)
-                    .then((r) => {
-                        this.saveItem(item);
-                        const nextIndex = index + 1;
-                        if (nextIndex < this.state.added.length) {
-                            this.uploadItem(nextIndex);
-                        }
-                    })
-                    .catch((e) => {
-                        console.log(e)
-                    });
-            })
-            .catch((e) => {
-                console.log(e)
-            });
     }
 }
