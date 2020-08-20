@@ -69,25 +69,25 @@ export class EditCategory extends React.Component {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col style={{ height: 300, border: '1px solid #ced4da', margin: 15 }}>
+                                            <Col style={{ height: 300, fontSize: 8, border: '1px solid #ced4da', margin: 15 }}>
                                                 <Form.Label>Files added...</Form.Label>
                                                 <ul>
                                                     {
                                                         this.state.added.map((item, index) => {
                                                             return (
-                                                                <li key={index}>{item.title}</li>
+                                                                <li key={index}>{index}: {item.title}</li>
                                                             );
                                                         })
                                                     }
                                                 </ul>
                                             </Col>
-                                            <Col style={{ height: 300, border: '1px solid #ced4da', margin: 15 }}>
+                                            <Col style={{ height: 300, fontSize: 8, border: '1px solid #ced4da', margin: 15 }}>
                                                 <Form.Label>Files uploaded...</Form.Label>
                                                 <ul>
                                                     {
                                                         this.state.uploaded.map((item, index) => {
                                                             return (
-                                                                <li key={index}>{item.title}</li>
+                                                                <li key={index}>{index}: {item.title}</li>
                                                             );
                                                         })
                                                     }
@@ -249,12 +249,12 @@ export class EditCategory extends React.Component {
                         imageOption = imageOptions[j];
                     }
                 }
-                if(imageOption) {
+                if (imageOption) {
                     const file = e.dataTransfer.items[fileOption.index].getAsFile();
                     items.push({
                         id: Number(new Date()) + items.length,
                         hash: Utils.create_UUID().replace(/-/g, ''),
-                        title: fileOption.title,
+                        title: fileOption.title.replace(/_/g, ' '),
                         tags: [],
                         isFree: false,
                         fileExt: fileOption.ext,
