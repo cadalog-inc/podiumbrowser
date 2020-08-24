@@ -69,7 +69,9 @@ export class Page extends React.Component {
                                         </Col>
                                     </Row> : null
                             }
-                            {categories.map((category, index) => {
+                            {categories.sort((a, b) => {
+                                return a.title > b.title ? 1 : -1
+                            }).map((category, index) => {
                                 return categories.length > 1 ? (
                                     <SubCategories
                                         license={this.props.license}

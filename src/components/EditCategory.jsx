@@ -19,6 +19,14 @@ export class EditCategory extends React.Component {
         })
     }
 
+    componentDidUpdate(prevProps) {
+        if(prevProps.category.title !== this.props.category.title) {
+            this.setState({
+                title: this.props.category.title
+            });
+        }
+    }
+
     render() {
         return (
             <React.Fragment>

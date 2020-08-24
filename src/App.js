@@ -96,6 +96,7 @@ class App extends React.Component {
                                             categories={this.state.categories}
                                             getSubCategories={this.getSubCategories}
                                             getHomeCategory={this.getHomeCategory}
+                                            relationships={this.state.relationships}
                                             useHDR={this.state.useHDR}
                                             standalone={this.state.standalone}
                                             {...props}
