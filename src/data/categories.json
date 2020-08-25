@@ -457,7 +457,7 @@
     },
     {
         "id": 219,
-        "title": "hardware_and_construction",
+        "title": "Moulding",
         "parentId": 49,
         "primaryIndex": -1
     },
@@ -1039,7 +1039,7 @@
     },
     {
         "id": 49,
-        "title": "Moulding",
+        "title": "Hardware & construction",
         "parentId": 1,
         "primaryIndex": 15
     },

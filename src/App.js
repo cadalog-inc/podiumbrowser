@@ -14,6 +14,7 @@ import License from './models/License';
 import categories from './data/categories.json';
 import items from './data/items.json';
 import relationships from './data/relationships.json';
+import { AdminOptions } from './components/AdminOptions';
 
 /*global sketchup*/
 
@@ -54,6 +55,7 @@ class App extends React.Component {
             }
         });
         window.admin = process.env.REACT_APP_admin === "true" ? true : false;
+        console.log(process.env);
     }
 
     componentDidMount() {
@@ -80,6 +82,15 @@ class App extends React.Component {
             <React.Fragment>
                 <BrowserRouter>
                     <Switch>
+                        <Route path="/admin" render={
+                            (props) => {
+                                return (
+                                    <React.Fragment>
+                                        <AdminOptions/>
+                                    </React.Fragment>
+                                )
+                            }
+                        } />
                         {/* using exact broke this in production */}
                         <Route path="/" render={
                             (props) => {
