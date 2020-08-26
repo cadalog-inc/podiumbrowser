@@ -6,11 +6,26 @@ export class AdminOptions extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            region: 'us-west-2',
-            endpoint: 'https://dynamodb.us-west-2.amazonaws.com/',
-            accessKeyId: 'AKIAZKYMH4JCPQTQPQ4J',
-            secretAccessKey: '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',
+            region: '',
+            endpoint: '',
+            accessKeyId: '',
+            secretAccessKey: '',
             admin: false
+        }
+    }
+
+    componentDidMount() {
+        const value = localStorage.getItem("PodiumBrowserAdminOptions") || "";
+        if(value !== null || value !== undefined || value !== "") {
+            const options = JSON.parse(value);
+            console.log(options);
+            this.setState({
+                region: options.region,
+                endpoint: options.endpoint,
+                accessKeyId: options.accessKeyId,
+                secretAccessKey: options.secretAccessKey,
+                admin: options.admin
+            });
         }
     }
 
@@ -27,9 +42,9 @@ export class AdminOptions extends React.Component {
                                 <Col>
                                     <Form.Check
                                         type="checkbox"
-                                        label="Admin On"
+                                        label="Admin Mode"
                                         style={{ float: 'right' }}
-                                        defaultChecked={this.state.admin}
+                                        checked={this.state.admin}
                                         onChange={(e) => {
                                             const value = e.target.checked;
                                             this.setState({
@@ -101,7 +116,9 @@ export class AdminOptions extends React.Component {
                         <Button
                             variant="light"
                             onClick={(e) => {
-
+                                this.props.history.push(`/`);
+                                window.scrollTo(0, 0);
+                                window.location.reload();
                             }}
                         >
                             Return to Podium Browser
@@ -118,7 +135,7 @@ export class AdminOptions extends React.Component {
                             <Button
                                 variant="light"
                                 onClick={(e) => {
-
+                                    localStorage.setItem("PodiumBrowserAdminOptions", JSON.stringify(this.state));
                                 }}
                             >
                                 Save Changes

@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, ButtonGroup, FormControl, InputGroup, Modal, Navbar, NavItem, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
 import Autocomplete from 'react-autocomplete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faArrowRight, faHome, faSearch, faUserCog, faSync, faTimes, faQuestion, faFileExport } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faArrowLeft, faArrowRight, faHome, faSearch, faUserCog, faSync, faTimes, faQuestion, faFileExport } from '@fortawesome/free-solid-svg-icons';
 import License from '../models/License';
 import Query from '../models/Query';
 import { LicenseManager } from './licensemanager';
@@ -122,9 +122,17 @@ export class NavBar extends React.Component {
                         }
                         {
                             window.admin ? (
-                                <Button type="button" variant="dark" onClick={() => { this.setState({ showExportData: true }) }}>
-                                    <FontAwesomeIcon icon={faFileExport} color={"white"} />
-                                </Button>
+                                <React.Fragment>
+                                    <Button type="button" variant="dark" onClick={() => { this.setState({ showExportData: true }) }}>
+                                        <FontAwesomeIcon icon={faFileExport} color={"white"} />
+                                    </Button>
+                                    <Button type="button" variant="dark" onClick={() => {
+                                        this.props.history.push(`/admin`);
+                                        window.scrollTo(0, 0);
+                                    }}>
+                                        <FontAwesomeIcon icon={faCog} color={"white"} />
+                                    </Button>
+                                </React.Fragment>
                             ) : null
                         }
                     </NavItem>

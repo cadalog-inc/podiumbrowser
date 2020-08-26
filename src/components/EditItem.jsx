@@ -6,6 +6,7 @@ export class EditItem extends React.Component {
         super(props);
         this.state = {
             hash: "",
+            isFree: false,
             title: "",
             tags: []
         }
@@ -14,6 +15,7 @@ export class EditItem extends React.Component {
     componentDidMount() {
         this.setState({
             hash: this.props.item.hash,
+            isFree: this.props.item.isFree,
             title: this.props.item.title,
             tags: this.props.item.tags
         })
@@ -23,6 +25,7 @@ export class EditItem extends React.Component {
         if(prevProps.item.hash !== this.props.item.hash) {
             this.setState({
                 hash: this.props.item.hash,
+                isFree: this.props.item.isFree,
                 title: this.props.item.title,
                 tags: this.props.item.tags
             });
@@ -42,6 +45,22 @@ export class EditItem extends React.Component {
                         <Form>
                             <Row>
                                 <Col>
+                                    <Form.Check
+                                        type="checkbox"
+                                        label="Free"
+                                        style={{ float: 'right', marginBottom: 10 }}
+                                        checked={this.state.isFree}
+                                        onChange={(e) => {
+                                            const value = e.target.checked;
+                                            this.setState({
+                                                isFree: value
+                                            })
+                                        }}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col>
                                     <img alt="" style={{ width: '100%' }} src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash}.${this.props.item.thumbnailExt}`} />
                                 </Col>
                             </Row>
@@ -49,6 +68,8 @@ export class EditItem extends React.Component {
                                 <Col>
                                     <Form.Label>Title</Form.Label>
                                     <Form.Control 
+                                        as="textarea" 
+                                        rows="2" 
                                         defaultValue={this.state.title} 
                                         onChange={(e) => {
                                             const value = e.target.value;
@@ -88,15 +109,17 @@ export class EditItem extends React.Component {
                         <Button 
                             variant="dark" 
                             onClick={(e) => {
-                                this.props.item.title = this.state.title;
+                                this.props.item.isFree = this.state.isFree;
                                 this.props.item.tags = this.state.tags;
+                                this.props.item.title = this.state.title;
                                 var params = {
                                     TableName: "Items",
                                     Key: {
                                         "id": this.props.item.id
                                     },
-                                    UpdateExpression: "set tags=:tags, title=:title",
+                                    UpdateExpression: "set isFree:isFree, tags=:tags, title=:title",
                                     ExpressionAttributeValues: {
+                                        ":isFree": this.props.item.isFree,
                                         ":tags": this.props.item.tags,
                                         ":title": this.props.item.title
                                     },

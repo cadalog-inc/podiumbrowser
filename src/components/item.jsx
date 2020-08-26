@@ -74,8 +74,18 @@ export class Item extends React.Component {
                     />
                     {
                         window.admin ?
-                            <span style={{fontSize: 8}}>
-                                {this.props.item.hash}
+                            <span
+                                style={{
+                                    position: 'absolute',
+                                    right: '5px',
+                                    top: '0px',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={() => { 
+                                    // todo: select item for copy/cut/paste in categories
+                                }}
+                            >
+                                <input type="checkbox"/>
                             </span>
                             :
                             <span

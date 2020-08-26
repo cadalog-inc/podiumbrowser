@@ -19,13 +19,20 @@ import { AdminOptions } from './components/AdminOptions';
 /*global sketchup*/
 
 const AWS = require('aws-sdk');
-AWS.config.update({
-    region: process.env.REACT_APP_region,
-    endpoint: process.env.REACT_APP_endpoint,
-    accessKeyId: process.env.REACT_APP_accessKeyId,
-    secretAccessKey: process.env.REACT_APP_secretAccessKey
-});
-window.docClient = new AWS.DynamoDB.DocumentClient();
+const value = localStorage.getItem("PodiumBrowserAdminOptions") || "";
+if (value !== null || value !== undefined || value !== "") {
+    const options = JSON.parse(value);
+    AWS.config.update({
+        region: options.region,
+        endpoint: options.endpoint,
+        accessKeyId: options.accessKeyId,
+        secretAccessKey: options.secretAccessKey
+    });
+    window.docClient = new AWS.DynamoDB.DocumentClient();
+    window.admin = options.admin;
+} else {
+    window.admin = false;
+}
 
 class App extends React.Component {
     constructor(props) {
@@ -54,8 +61,6 @@ class App extends React.Component {
                 window.location = window.location.origin;
             }
         });
-        window.admin = process.env.REACT_APP_admin === "true" ? true : false;
-        console.log(process.env);
     }
 
     componentDidMount() {
@@ -78,7 +83,7 @@ class App extends React.Component {
     }
 
     render() {
-        return (this.state.dataDownloaded) ? (
+        return (
             <React.Fragment>
                 <BrowserRouter>
                     <Switch>
@@ -86,7 +91,7 @@ class App extends React.Component {
                             (props) => {
                                 return (
                                     <React.Fragment>
-                                        <AdminOptions/>
+                                        <AdminOptions {...props} />
                                     </React.Fragment>
                                 )
                             }
@@ -94,7 +99,7 @@ class App extends React.Component {
                         {/* using exact broke this in production */}
                         <Route path="/" render={
                             (props) => {
-                                return (
+                                return this.state.dataDownloaded ? (
                                     <React.Fragment>
                                         <NavBar
                                             license={this.state.license}
@@ -131,23 +136,23 @@ class App extends React.Component {
                                             {...props}
                                         />
                                     </React.Fragment>
-                                )
+                                ) : (
+                                        <React.Fragment>
+                                            <Alert variant="secondary">
+                                                <p> Loading up the home page. </p>
+                                                <p> This will take a few moments ... </p>
+                                                {
+                                                    window.admin ? <p> Downloading {this.state.dataDownloadingMessage}...</p> : null
+                                                }
+                                            </Alert>
+                                        </React.Fragment>
+                                    )
                             }
                         } />
                     </Switch>
                 </BrowserRouter>
             </React.Fragment>
-        ) : (
-                <React.Fragment>
-                    <Alert variant="secondary">
-                        <p> Loading up the home page. </p>
-                        <p> This will take a few moments ... </p>
-                        {
-                            window.admin ? <p> Downloading {this.state.dataDownloadingMessage}...</p> : null
-                        }
-                    </Alert>
-                </React.Fragment>
-            );
+        );
     }
 
     // license methods
@@ -501,7 +506,7 @@ class App extends React.Component {
         const params = {
             TableName: "Items"
         }
-        if(options.hasOwnProperty('lastEvaluatedKey')) {
+        if (options.hasOwnProperty('lastEvaluatedKey')) {
             params['ExclusiveStartKey'] = options.lastEvaluatedKey;
         }
         window.docClient.scan(params, (err, data) => {
@@ -537,7 +542,7 @@ class App extends React.Component {
         const params = {
             TableName: "Relationships"
         }
-        if(options.hasOwnProperty('lastEvaluatedKey')) {
+        if (options.hasOwnProperty('lastEvaluatedKey')) {
             params['ExclusiveStartKey'] = options.lastEvaluatedKey;
         }
         window.docClient.scan(params, (err, data) => {
