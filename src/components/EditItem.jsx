@@ -22,7 +22,7 @@ export class EditItem extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.item.hash !== this.props.item.hash) {
+        if (prevProps.item.hash !== this.props.item.hash) {
             this.setState({
                 hash: this.props.item.hash,
                 isFree: this.props.item.isFree,
@@ -67,10 +67,10 @@ export class EditItem extends React.Component {
                             <Row>
                                 <Col>
                                     <Form.Label>Title</Form.Label>
-                                    <Form.Control 
-                                        as="textarea" 
-                                        rows="2" 
-                                        defaultValue={this.state.title} 
+                                    <Form.Control
+                                        as="textarea"
+                                        rows="2"
+                                        defaultValue={this.state.title}
                                         onChange={(e) => {
                                             const value = e.target.value;
                                             this.setState({
@@ -87,9 +87,9 @@ export class EditItem extends React.Component {
                             </Row>
                             <Row>
                                 <Col>
-                                    <Form.Control 
-                                        as="textarea" 
-                                        rows="3" 
+                                    <Form.Control
+                                        as="textarea"
+                                        rows="3"
                                         defaultValue={this.state.tags.join(' ')}
                                         onChange={(e) => {
                                             const value = e.target.value;
@@ -103,11 +103,16 @@ export class EditItem extends React.Component {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={this.props.handleClose}>
-                            Cancel
+                        <Button variant="danger" onClick={(e) => {
+                            const value = window.confirm(`Are you certain that you want to DELETE: ${this.props.item.title}?`);
+                            if (value) {
+                                this.props.handleClose();
+                            }
+                        }}>
+                            Delete
                         </Button>
-                        <Button 
-                            variant="dark" 
+                        <Button
+                            variant="dark"
                             onClick={(e) => {
                                 this.props.item.isFree = this.state.isFree;
                                 this.props.item.tags = this.state.tags;
@@ -125,8 +130,8 @@ export class EditItem extends React.Component {
                                     },
                                     ReturnValues: "UPDATED_NEW"
                                 };
-                                window.docClient.update(params, function(err, data) {
-                                    if(err) {
+                                window.docClient.update(params, function (err, data) {
+                                    if (err) {
                                         console.log(err);
                                     } else {
                                         console.log(data);
@@ -134,7 +139,7 @@ export class EditItem extends React.Component {
                                 });
                                 this.props.handleClose(e);
                             }}>
-                            Save
+                            Save Changes
                         </Button>
                     </Modal.Footer>
                 </Modal>
