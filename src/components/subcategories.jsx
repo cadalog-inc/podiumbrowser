@@ -35,6 +35,7 @@ export class SubCategories extends React.Component {
                 </Row>
                 <Row className="ml-1 mb-4">
                     {
+                        window.admin ? null :
                         items.slice(itemsBegin, itemsEnd).map((item, index) => {
                             return (
                                 <Col
