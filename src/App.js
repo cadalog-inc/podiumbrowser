@@ -11,9 +11,6 @@ import Item from './models/Item';
 import Relationship from './models/Relationship';
 import User from './models/User';
 import License from './models/License';
-import categories from './data/categories.json';
-import items from './data/items.json';
-import relationships from './data/relationships.json';
 import { AdminOptions } from './components/AdminOptions';
 
 /*global sketchup*/
@@ -65,20 +62,9 @@ class App extends React.Component {
 
     componentDidMount() {
         if (window.admin) {
-            this.getData();
+            this.getLiveData();
         } else {
-            this.setState({
-                categories: Category.fromArray(categories),
-                items: Item.fromArray(items),
-                relationships: Relationship.fromArray(relationships)
-            }, () => {
-                const homeCategory = this.state.categories.find((category) => category.title === 'Home');
-                this.setState({
-                    homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
-                }, () => {
-                    this.getLicense();
-                });
-            });
+            this.getCachedData();
         }
     }
 
@@ -474,15 +460,15 @@ class App extends React.Component {
 
     // aws dynamodb
 
-    getData() {
+    getLiveData() {
         this.setState({
             dataDownloadingMessage: 'categories'
         }, () => {
-            this.getCategories();
+            this.getLiveCategories();
         });
     }
 
-    getCategories() {
+    getLiveCategories() {
         console.log('get categories:');
         const params = {
             TableName: "Categories"
@@ -495,13 +481,13 @@ class App extends React.Component {
                     categories: Category.fromArray(data.Items),
                     dataDownloadingMessage: 'items'
                 }, () => {
-                    this.getItems({ action: 'start' });
+                    this.getLiveItems({ action: 'start' });
                 });
             }
         })
     }
 
-    getItems(options) {
+    getLiveItems(options) {
         console.log('get items:');
         const params = {
             TableName: "Items"
@@ -523,21 +509,21 @@ class App extends React.Component {
                     this.setState({
                         items: items
                     }, () => {
-                        this.getItems({ action: 'continue', lastEvaluatedKey: data.LastEvaluatedKey });
+                        this.getLiveItems({ action: 'continue', lastEvaluatedKey: data.LastEvaluatedKey });
                     })
                 } else {
                     this.setState({
                         items: items,
                         dataDownloadingMessage: 'relationships'
                     }, () => {
-                        this.getRelationships({ action: 'start' });
+                        this.getLiveRelationships({ action: 'start' });
                     });
                 }
             }
         })
     }
 
-    getRelationships(options) {
+    getLiveRelationships(options) {
         console.log('get relationships:');
         const params = {
             TableName: "Relationships"
@@ -559,7 +545,7 @@ class App extends React.Component {
                     this.setState({
                         relationships: relationships
                     }, () => {
-                        this.getRelationships({ action: 'continue', lastEvaluatedKey: data.LastEvaluatedKey });
+                        this.getLiveRelationships({ action: 'continue', lastEvaluatedKey: data.LastEvaluatedKey });
                     })
                 } else {
                     this.setState({
@@ -576,6 +562,59 @@ class App extends React.Component {
                 }
             }
         })
+    }
+
+    // cached
+
+    getCachedData() {
+        this.getCachedCategories();
+    }
+
+    getCachedCategories() {
+        axios.get(`categories.json`)
+            .then((response) => {
+                this.setState({
+                    categories: Category.fromArray(response.data)
+                }, () => {
+                    this.getCachedItems();
+                })
+            })
+            .catch(() => {
+                this.dataDownloaded();
+            });
+    }
+
+    getCachedItems() {
+        axios.get(`items.json`)
+            .then((response) => {
+                this.setState({
+                    items: Item.fromArray(response.data)
+                }, () => {
+                    this.getCachedRelationships();
+                })
+            })
+            .catch(() => {
+                this.dataDownloaded();
+            });
+    }
+
+    getCachedRelationships() {
+        axios.get(`relationships.json`)
+            .then((response) => {
+                this.setState({
+                    relationships: Relationship.fromArray(response.data)
+                }, () => {
+                    const homeCategory = this.state.categories.find((category) => category.title === 'Home');
+                    this.setState({
+                        homeCategoryId: homeCategory && homeCategory.id ? homeCategory.id : 1
+                    }, () => {
+                        this.getLicense();
+                    });
+                })
+            })
+            .catch(() => {
+                this.dataDownloaded();
+            });
     }
 
     dataDownloaded = () => {
