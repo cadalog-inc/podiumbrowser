@@ -16,7 +16,7 @@ export class AdminOptions extends React.Component {
 
     componentDidMount() {
         const value = localStorage.getItem("PodiumBrowserAdminOptions") || "";
-        if(value !== null || value !== undefined || value !== "") {
+        if(value !== null && value !== undefined && value !== "") {
             const options = JSON.parse(value);
             console.log(options);
             this.setState({

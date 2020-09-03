@@ -43,7 +43,7 @@
     },
     {
         "id": 156,
-        "title": "Backgrounds 180°",
+        "title": "Backgrounds 180\u00b0",
         "parentId": 154,
         "primaryIndex": -1
     },
@@ -469,7 +469,7 @@
     },
     {
         "id": 155,
-        "title": "Backgrounds 360°",
+        "title": "Backgrounds 360\u00b0",
         "parentId": 154,
         "primaryIndex": -1
     },

@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { Button, ButtonGroup, FormControl, InputGroup, Modal, Navbar, NavItem, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
 import Autocomplete from 'react-autocomplete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,7 +7,6 @@ import { faCog, faArrowLeft, faArrowRight, faHome, faSearch, faUserCog, faSync, 
 import License from '../models/License';
 import Query from '../models/Query';
 import { LicenseManager } from './licensemanager';
-import { ExportData } from './ExportData';
 
 export class NavBar extends React.Component {
     constructor(props) {
@@ -15,8 +15,7 @@ export class NavBar extends React.Component {
             selectedCategoryId: this.props.getHomeCategory(),
             query: new Query(),
             searchTerm: "",
-            showLicenseManager: false,
-            showExportData: false
+            showLicenseManager: false
         }
         this.search = "";
     }
@@ -84,20 +83,6 @@ export class NavBar extends React.Component {
         const suggestions = this.state.searchTerm === "" ? [] : this.findSuggestions(this.state.searchTerm);
         return this.props.items.length > 0 ? (
             <React.Fragment>
-                {
-                    window.admin ?
-                        <ExportData
-                            show={this.state.showExportData}
-                            categories={this.props.categories}
-                            items={this.props.items}
-                            relationships={this.props.relationships}
-                            handleClose={(e) => {
-                                this.setState({
-                                    showExportData: false
-                                })
-                            }}
-                        /> : null
-                }
                 <Navbar fill="true" fixed="top" expand="md" bg="dark" variant="dark" style={{ zIndex: 1 }}>
                     <NavItem>
                         <Button type="button" variant="dark" onClick={() => { this.handleBackClick() }}>
@@ -123,7 +108,23 @@ export class NavBar extends React.Component {
                         {
                             window.admin ? (
                                 <React.Fragment>
-                                    <Button type="button" variant="dark" onClick={() => { this.setState({ showExportData: true }) }}>
+                                    <Button type="button" variant="dark" onClick={() => {
+                                        if (window.confirm("Are you certain you want to cache the data?")) {
+                                            axios.post('https://v4.pdm-plants-textures.com/cache.php', {
+                                                categories: this.props.categories,
+                                                items: this.props.items,
+                                                relationships: this.props.relationships
+                                            })
+                                                .then((response) => {
+                                                    if (response.status === 200) {
+                                                        window.alert("Data successfully cached!");
+                                                    }
+                                                })
+                                                .catch((error) => {
+                                                    window.alert(JSON.stringify(error));
+                                                });
+                                        }
+                                    }}>
                                         <FontAwesomeIcon icon={faFileExport} color={"white"} />
                                     </Button>
                                     <Button type="button" variant="dark" onClick={() => {

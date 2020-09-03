@@ -79,6 +79,7 @@ export class EditCategory extends React.Component {
                                         <Row>
                                             <Col style={{ height: 300, fontSize: 8, border: '1px solid #ced4da', margin: 15 }}>
                                                 <Form.Label>Files added...</Form.Label>
+                                                
                                                 <ul>
                                                     {
                                                         this.state.added.map((item, index) => {

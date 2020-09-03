@@ -17,7 +17,7 @@ import { AdminOptions } from './components/AdminOptions';
 
 const AWS = require('aws-sdk');
 const value = localStorage.getItem("PodiumBrowserAdminOptions") || "";
-if (value !== null || value !== undefined || value !== "") {
+if (value !== null && value !== undefined && value !== "") {
     const options = JSON.parse(value);
     AWS.config.update({
         region: options.region,
@@ -229,7 +229,7 @@ class App extends React.Component {
                 window.location = `${path}.${item.fileExt}`;
             }
             this.addRecentDownloaded(item.id);
-        } else if (item.type === 'free') {
+        } else if (item.isFree) {
             if (window.sketchup !== undefined) {
                 sketchup.on_load_comp(`${path}|${item.fileExt}|${item.title}`);
             } else {
