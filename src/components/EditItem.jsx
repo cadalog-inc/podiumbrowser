@@ -103,14 +103,14 @@ export class EditItem extends React.Component {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="danger" onClick={(e) => {
+                        {/* <Button variant="danger" onClick={(e) => {
                             const value = window.confirm(`Are you certain that you want to DELETE: ${this.props.item.title}?`);
                             if (value) {
                                 this.props.handleClose();
                             }
                         }}>
                             Delete
-                        </Button>
+                        </Button> */}
                         <Button
                             variant="dark"
                             onClick={(e) => {
@@ -122,7 +122,7 @@ export class EditItem extends React.Component {
                                     Key: {
                                         "id": this.props.item.id
                                     },
-                                    UpdateExpression: "set isFree:isFree, tags=:tags, title=:title",
+                                    UpdateExpression: "set isFree=:isFree, tags=:tags, title=:title",
                                     ExpressionAttributeValues: {
                                         ":isFree": this.props.item.isFree,
                                         ":tags": this.props.item.tags,

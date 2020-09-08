@@ -15,7 +15,8 @@ export class NavBar extends React.Component {
             selectedCategoryId: this.props.getHomeCategory(),
             query: new Query(),
             searchTerm: "",
-            showLicenseManager: false
+            showLicenseManager: false,
+            cachingData: false
         }
         this.search = "";
     }
@@ -110,22 +111,36 @@ export class NavBar extends React.Component {
                                 <React.Fragment>
                                     <Button type="button" variant="dark" onClick={() => {
                                         if (window.confirm("Are you certain you want to cache the data?")) {
-                                            axios.post('https://v4.pdm-plants-textures.com/cache.php', {
-                                                categories: this.props.categories,
-                                                items: this.props.items,
-                                                relationships: this.props.relationships
-                                            })
-                                                .then((response) => {
-                                                    if (response.status === 200) {
-                                                        window.alert("Data successfully cached!");
-                                                    }
+                                            this.setState({
+                                                cachingData: true
+                                            }, () => {
+                                                axios.post('https://v4.pdm-plants-textures.com/cache.php', {
+                                                    categories: this.props.categories,
+                                                    items: this.props.items,
+                                                    relationships: this.props.relationships
                                                 })
-                                                .catch((error) => {
-                                                    window.alert(JSON.stringify(error));
-                                                });
+                                                    .then((response) => {
+                                                        this.setState({
+                                                            cachingData: false
+                                                        }, () => {
+                                                            if (response.status === 200) {
+                                                                window.alert("Data successfully cached!");
+                                                            } else {
+                                                                window.alert("ERROR: data did not cache successfully.");
+                                                            }
+                                                        });
+                                                    })
+                                                    .catch((error) => {
+                                                        this.setState({
+                                                            cachingData: false
+                                                        }, () => {
+                                                            window.alert(JSON.stringify(error));
+                                                        });
+                                                    });
+                                            })
                                         }
                                     }}>
-                                        <FontAwesomeIcon icon={faFileExport} color={"white"} />
+                                        <FontAwesomeIcon icon={faFileExport} color={this.state.cachingData ? "gold" : "white"} />
                                     </Button>
                                     <Button type="button" variant="dark" onClick={() => {
                                         this.props.history.push(`/admin`);
