@@ -77,7 +77,7 @@ export class EditCategory extends React.Component {
                                             </Col>
                                         </Row>
                                         <Row>
-                                            <Col style={{ height: 300, fontSize: 8, border: '1px solid #ced4da', margin: 15 }}>
+                                            <Col style={{ overflowY: 'scroll', height: 300, fontSize: 8, border: '1px solid #ced4da', margin: 15 }}>
                                                 <Form.Label>Files added...</Form.Label>
                                                 
                                                 <ul>
@@ -90,7 +90,7 @@ export class EditCategory extends React.Component {
                                                     }
                                                 </ul>
                                             </Col>
-                                            <Col style={{ height: 300, fontSize: 8, border: '1px solid #ced4da', margin: 15 }}>
+                                            <Col style={{ overflowY: 'scroll',  height: 300, fontSize: 8, border: '1px solid #ced4da', margin: 15 }}>
                                                 <Form.Label>Files uploaded...</Form.Label>
                                                 <ul>
                                                     {
