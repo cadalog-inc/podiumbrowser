@@ -1,8 +1,9 @@
 import React from 'react';
 import { Button, Dropdown, Navbar, NavbarBrand } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlusSquare, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { EditCategory } from './EditCategory';
+import { AddItems } from './AddItems';
 
 export class Options extends React.Component {
     constructor(props) {
@@ -19,7 +20,8 @@ export class Options extends React.Component {
                 'Date Uploaded (New to Old)',
                 'Date Uploaded (Old to New)'
             ],
-            show: false
+            showEditCategory: false,
+            showAddItems: false
         }
     }
 
@@ -42,22 +44,45 @@ export class Options extends React.Component {
         return this.props.upper ? (
             <React.Fragment>
                 {
-                    window.admin ? 
-                    <EditCategory
-                        show={this.state.show}
-                        category={this.props.category}
-                        categories={this.props.categories}
-                        items={this.props.items}
-                        handleClose={(e) => {
-                            this.setState({
-                                show: false
-                            })
-                        }}
-                    /> : null
+                    window.admin ?
+                        <React.Fragment>
+                            <EditCategory
+                                show={this.state.showEditCategory}
+                                category={this.props.category}
+                                categories={this.props.categories}
+                                items={this.props.items}
+                                handleClose={(e) => {
+                                    this.setState({
+                                        showEditCategory: false
+                                    })
+                                }}
+                            />
+                            <AddItems
+                                show={this.state.showAddItems}
+                                category={this.props.category}
+                                categories={this.props.categories}
+                                items={this.props.items}
+                                handleClose={(e) => {
+                                    this.setState({
+                                        showAddItems: false
+                                    })
+                                }}
+                            />
+                        </React.Fragment>
+                        : null
                 }
                 <Navbar expand="lg" bg="light">
                     <NavbarBrand>
-                        {this.props.category.title} {window.admin ?  <FontAwesomeIcon onClick={(e)=>{this.setState({show: true})}} icon={faEdit} /> : null}
+                        {this.props.category.title} {
+                            window.admin ?
+                                <React.Fragment>
+                                    <FontAwesomeIcon onClick={(e) => { this.setState({ showEditCategory: true }) }} icon={faEdit} />
+                                    {
+                                        this.props.category.id === 1 ? null :
+                                            <FontAwesomeIcon style={{ marginLeft: 5 }} onClick={(e) => { this.setState({ showAddItems: true }) }} icon={faPlusSquare} />
+                                    }
+                                </React.Fragment>
+                                : null}
                     </NavbarBrand>
                     <Navbar.Text>
                         {this.props.itemsLength > 0 ? this.props.itemsBegin + 1 : 0} - {this.props.itemsEnd <= this.props.itemsLength ? this.props.itemsEnd : this.props.itemsLength} of {this.props.itemsLength}
@@ -102,15 +127,15 @@ export class Options extends React.Component {
                         </Dropdown>
                         {
                             this.props.category.id === this.props.getMyFavoritesCategoryId() ?
-                            (
-                                <Button type="button" variant="light" style={{ margin: 5 }}
-                                    onClick={(e) => {
-                                        this.props.handleClearFavoritesClick();
-                                    }}>
+                                (
+                                    <Button type="button" variant="light" style={{ margin: 5 }}
+                                        onClick={(e) => {
+                                            this.props.handleClearFavoritesClick();
+                                        }}>
                                         Clear My Favorites
-                                </Button>
-                            )
-                            : null
+                                    </Button>
+                                )
+                                : null
                         }
                     </Navbar.Collapse>
                 </Navbar>
