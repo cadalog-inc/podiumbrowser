@@ -571,7 +571,7 @@ class App extends React.Component {
     }
 
     getCachedCategories() {
-        axios.get(`https://v4.pdm-plants-textures.com/categories.json`)
+        axios.get(`https://v4.pdm-plants-textures.com/categories.php`)
             .then((response) => {
                 this.setState({
                     categories: Category.fromArray(response.data)
@@ -585,7 +585,7 @@ class App extends React.Component {
     }
 
     getCachedItems() {
-        axios.get(`https://v4.pdm-plants-textures.com/items.json`)
+        axios.get(`https://v4.pdm-plants-textures.com/items.php`)
             .then((response) => {
                 this.setState({
                     items: Item.fromArray(response.data)
@@ -599,7 +599,7 @@ class App extends React.Component {
     }
 
     getCachedRelationships() {
-        axios.get(`https://v4.pdm-plants-textures.com/relationships.json`)
+        axios.get(`https://v4.pdm-plants-textures.com/relationships.php`)
             .then((response) => {
                 this.setState({
                     relationships: Relationship.fromArray(response.data)
