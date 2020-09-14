@@ -1,6 +1,4 @@
 import React from 'react';
-import { Utils } from '../utils/uuid';
-import axios from 'axios';
 import { Button, Modal, Form, Row, Col } from 'react-bootstrap';
 
 export class EditCategory extends React.Component {

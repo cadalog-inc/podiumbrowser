@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { Button, Card, Form, Row, Col } from 'react-bootstrap';
 
 export class AdminOptions extends React.Component {
@@ -124,14 +123,6 @@ export class AdminOptions extends React.Component {
                             Return to Podium Browser
                         </Button>
                         <div style={{ float: 'right' }}>
-                            <Button
-                                variant="light"
-                                onClick={(e) => {
-
-                                }}
-                            >
-                                Test Connection
-                            </Button>
                             <Button
                                 variant="light"
                                 onClick={(e) => {
