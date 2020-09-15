@@ -28,22 +28,27 @@ export class Page extends React.Component {
         }
         return (
             <React.Fragment>
-            {
-                window.admin && selectedCategory !== null && selectedCategory !== undefined ? 
-                <EditCategory
-                    show={this.state.show}
-                    category={selectedCategory}
-                    categories={this.props.categories}
-                    items={this.props.items}
-                    canUploadItems={false}
-                    handleClose={(e) => {
-                        this.setState({
-                            show: false
-                        })
-                    }}
-                /> : null
-            }
-                <div style={{ marginTop: 55, marginBottom: 10, marginLeft: 10, marginRight: 10 }}>
+                {
+                    window.admin && selectedCategory !== null && selectedCategory !== undefined ?
+                        <EditCategory
+                            show={this.state.show}
+                            category={selectedCategory}
+                            categories={this.props.categories}
+                            items={this.props.items}
+                            canUploadItems={false}
+                            handleClose={(e) => {
+                                this.setState({
+                                    show: false
+                                })
+                            }}
+                        /> : null
+                }
+                <div style={{
+                    marginTop: 55,
+                    marginBottom: 10,
+                    marginLeft: 10,
+                    marginRight: 10
+                }}>
                     <Row>
                         <Col xl={2} lg={3} md={4} sm={5} xs={6} style={{ padding: 0 }}>
                             <SideBar
@@ -65,7 +70,7 @@ export class Page extends React.Component {
                                 categories.length > 1 ?
                                     <Row className="ml-1 mt-4">
                                         <Col>
-                                            <h3 style={{marginBottom: 35}}>{selectedCategory.title} {window.admin ?  <FontAwesomeIcon onClick={(e)=>{this.setState({show: true})}} icon={faEdit} /> : null}</h3>
+                                            <h3 style={{ marginBottom: 35 }}>{selectedCategory.title} {window.admin ? <FontAwesomeIcon onClick={(e) => { this.setState({ show: true }) }} icon={faEdit} /> : null}</h3>
                                         </Col>
                                     </Row> : null
                             }
@@ -273,7 +278,7 @@ export class Page extends React.Component {
     }
 
     searchArray = (items, value) => {
-        if(items) {
+        if (items) {
             const l = items.length;
             for (let i = 0; i < l; i++) {
                 const item = items[i];

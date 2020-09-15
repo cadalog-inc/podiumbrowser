@@ -81,7 +81,7 @@ export class LicenseManager extends React.Component {
                         <Form.Group>
                             <Form.Label>
                                 This computer has been activated with a fully licensed copy of SU Podium Browser Standalone
-                    </Form.Label>
+                        </Form.Label>
                             <Form.Control type="text" readOnly value={this.props.license.key} />
                         </Form.Group>
                         <Button variant="dark" type="button" onClick={() => {
@@ -95,7 +95,7 @@ export class LicenseManager extends React.Component {
                             })
                         }}>
                             Deactivate License
-                </Button>
+                        </Button>
                         <Form.Text className="text-muted">
                             License expiration date: <span style={{ fontWeight: 'bold' }}>{this.props.license.checkin}</span>.
                             You have <span style={{ fontWeight: 'bold' }}>{this.props.license.days()}</span> days remaining.

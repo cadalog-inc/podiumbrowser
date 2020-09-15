@@ -103,14 +103,6 @@ export class EditItem extends React.Component {
                         </Form>
                     </Modal.Body>
                     <Modal.Footer>
-                        {/* <Button variant="danger" onClick={(e) => {
-                            const value = window.confirm(`Are you certain that you want to DELETE: ${this.props.item.title}?`);
-                            if (value) {
-                                this.props.handleClose();
-                            }
-                        }}>
-                            Delete
-                        </Button> */}
                         <Button
                             variant="dark"
                             onClick={(e) => {
