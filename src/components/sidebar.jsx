@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, ButtonGroup } from 'react-bootstrap';
-import { Path } from './path';
+import { Path } from './Path';
 
 export class SideBar extends React.Component {
     render() {

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { Options } from './options';
-import { Item } from './item';
+import { Options } from './Options';
+import { Item } from './Item';
 
 export class Category extends React.Component {
     render() {

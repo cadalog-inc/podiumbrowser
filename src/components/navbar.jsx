@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCog, faArrowLeft, faArrowRight, faHome, faSearch, faUserCog, faSync, faTimes, faQuestion, faFileExport } from '@fortawesome/free-solid-svg-icons';
 import License from '../models/License';
 import Query from '../models/Query';
-import { LicenseManager } from './licensemanager';
+import { LicenseManager } from './LicenseManager';
 
 export class NavBar extends React.Component {
     constructor(props) {

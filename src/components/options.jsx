@@ -25,21 +25,6 @@ export class Options extends React.Component {
         }
     }
 
-    handlePageSizeClick = (pageSize) => {
-        this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
-        window.scrollTo(0, 0);
-    }
-
-    handleSortByClick = (sortBy) => {
-        this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${sortBy}`);
-        window.scrollTo(0, 0);
-    }
-
-    handlePageIndexClick = (pageIndex) => {
-        this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=${pageIndex}&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
-        window.scrollTo(0, 0);
-    }
-
     render() {
         return this.props.upper ? (
             <React.Fragment>
@@ -159,5 +144,20 @@ export class Options extends React.Component {
                     </Navbar>
                 </React.Fragment>
             );
+    }
+
+    handlePageSizeClick = (pageSize) => {
+        this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
+        window.scrollTo(0, 0);
+    }
+
+    handleSortByClick = (sortBy) => {
+        this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${sortBy}`);
+        window.scrollTo(0, 0);
+    }
+
+    handlePageIndexClick = (pageIndex) => {
+        this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=${pageIndex}&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
+        window.scrollTo(0, 0);
     }
 }

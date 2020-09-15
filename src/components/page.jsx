@@ -2,9 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'react-bootstrap';
-import { SideBar } from './sidebar';
-import { Category } from './category';
-import { SubCategories } from './subcategories';
+import { SideBar } from './SideBar';
+import { Category } from './Category';
+import { SubCategories } from './SubCategories';
 import Query from '../models/Query';
 import { EditCategory } from './EditCategory';
 

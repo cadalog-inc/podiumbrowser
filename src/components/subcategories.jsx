@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, Col, Form, Row, Nav, Navbar, NavbarBrand } from 'react-bootstrap';
-import { Item } from './item';
+import { Item } from './Item';
 
 export class SubCategories extends React.Component {
     render() {
