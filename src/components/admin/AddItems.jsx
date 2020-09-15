@@ -1,7 +1,7 @@
 import React from 'react';
-import { Utils } from '../utils/uuid';
 import axios from 'axios';
 import { Modal, Form, Row, Col } from 'react-bootstrap';
+import { Utils } from '../../utils/uuid';
 
 export class AddItems extends React.Component {
     constructor(props) {

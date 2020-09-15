@@ -6,7 +6,7 @@ import { SideBar } from './SideBar';
 import { Category } from './Category';
 import { SubCategories } from './SubCategories';
 import Query from '../models/Query';
-import { EditCategory } from './EditCategory';
+import { EditCategory } from './admin/EditCategory';
 
 export class Page extends React.Component {
     constructor(props) {

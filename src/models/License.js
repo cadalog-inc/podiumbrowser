@@ -7,6 +7,42 @@ class License {
         this.key = key;
         this.checkin = checkin;
     }
+
+    static getLicense() {
+        try {
+            const licenseEncoded = localStorage.getItem("PodiumBrowserStandaloneLicense") || "";
+            const licenseDecoded = atob(licenseEncoded);
+            const license = JSON.parse(licenseDecoded);
+
+            return new License(
+                license.fingerprint,
+                license.id,
+                license.key,
+                license.checkin
+            );
+
+        } catch (e) {
+            console.log(e);
+            return new License("", "", "", "");
+        }
+    }
+
+    static setLicense(license) {
+        try {
+            localStorage.setItem("PodiumBrowserStandaloneLicense", btoa(JSON.stringify(license)));
+        } catch(e) {
+            console.log(e);
+        }
+    }
+
+    static isValid(license) {
+        
+        return (
+            (license.checkin === "" || license.checkin === undefined || license.checkin === null) ? 
+            false : 
+            new Date() <= new Date(license.checkin)
+        );
+    }
     
     static create_UUID = () => {
         var dt = new Date().getTime();
@@ -100,42 +136,6 @@ class License {
         .catch(() => {
             fallback()
         });
-    }
-
-    static isValid(license) {
-        
-        return (
-            (license.checkin === "" || license.checkin === undefined || license.checkin === null) ? 
-            false : 
-            new Date() <= new Date(license.checkin)
-        );
-    }
-
-    static getLicense() {
-        try {
-            const licenseEncoded = localStorage.getItem("PodiumBrowserStandaloneLicense") || "";
-            const licenseDecoded = atob(licenseEncoded);
-            const license = JSON.parse(licenseDecoded);
-
-            return new License(
-                license.fingerprint,
-                license.id,
-                license.key,
-                license.checkin
-            );
-
-        } catch (e) {
-            console.log(e);
-            return new License("", "", "", "");
-        }
-    }
-
-    static setLicense(license) {
-        try {
-            localStorage.setItem("PodiumBrowserStandaloneLicense", btoa(JSON.stringify(license)));
-        } catch(e) {
-            console.log(e);
-        }
     }
 }
 

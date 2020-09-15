@@ -11,10 +11,11 @@ import Item from './models/Item';
 import Relationship from './models/Relationship';
 import User from './models/User';
 import License from './models/License';
-import { AdminOptions } from './components/AdminOptions';
+import { Settings } from './components/admin/Settings';
 
 /*global sketchup*/
 
+// aws for admin
 const AWS = require('aws-sdk');
 const value = localStorage.getItem("PodiumBrowserAdminOptions") || "";
 if (value !== null && value !== undefined && value !== "") {
@@ -77,7 +78,7 @@ class App extends React.Component {
                             (props) => {
                                 return (
                                     <React.Fragment>
-                                        <AdminOptions {...props} />
+                                        <Settings {...props} />
                                     </React.Fragment>
                                 )
                             }

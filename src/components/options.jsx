@@ -2,8 +2,8 @@ import React from 'react';
 import { Button, Dropdown, Navbar, NavbarBrand } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faPlusSquare, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { EditCategory } from './EditCategory';
-import { AddItems } from './AddItems';
+import { AddItems } from './admin/AddItems';
+import { EditCategory } from './admin/EditCategory';
 
 export class Options extends React.Component {
     constructor(props) {

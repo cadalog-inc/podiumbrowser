@@ -3,7 +3,7 @@ import { OverlayTrigger } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faStar, faDownload } from '@fortawesome/free-solid-svg-icons';
 import License from '../models/License';
-import { EditItem } from './EditItem';
+import { EditItem } from './admin/EditItem';
 
 export class Item extends React.Component {
     constructor(props) {

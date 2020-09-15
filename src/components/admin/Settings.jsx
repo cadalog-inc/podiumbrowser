@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Card, Form, Row, Col } from 'react-bootstrap';
 
-export class AdminOptions extends React.Component {
+export class Settings extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -33,7 +33,7 @@ export class AdminOptions extends React.Component {
             <React.Fragment>
                 <Card style={{ width: 600, margin: 10 }}>
                     <Card.Header>
-                        Admin Options
+                        Admin Settings
                     </Card.Header>
                     <Card.Body>
                         <Form>
