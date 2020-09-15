@@ -15,7 +15,7 @@ import { Settings } from './components/admin/Settings';
 
 /*global sketchup*/
 
-// aws for admin
+// admin
 const AWS = require('aws-sdk');
 const value = localStorage.getItem("PodiumBrowserAdminOptions") || "";
 if (value !== null && value !== undefined && value !== "") {
@@ -53,7 +53,7 @@ class App extends React.Component {
         };
         window["setLicense"] = this.setLicense.bind(this);
         window["validateLicense"] = this.validateLicense.bind(this);
-        // development
+        // admin
         window.document.body.addEventListener('keyup', (e) => {
             if (e.code === 'F5') {
                 window.location = window.location.origin;
@@ -143,7 +143,6 @@ class App extends React.Component {
     }
 
     // license methods
-
     handleUpdateLicense = (license, callback = () => { }) => {
         this.setState({
             license: license
@@ -198,7 +197,6 @@ class App extends React.Component {
     }
 
     // ruby calls
-
     getRecentDownloadedCategoryId = () => {
         const l = this.state.categories.length;
         for (let c = 0; c < l; c++) {
@@ -333,7 +331,6 @@ class App extends React.Component {
     }
 
     // category methods
-
     getHomeCategory = () => {
         return this.state.homeCategoryId;
     }
@@ -400,7 +397,6 @@ class App extends React.Component {
     }
 
     // v4 api calls
-
     getUser = () => {
         this.state.isValid ?
             // todo: first get license and if it doesn't exist, then set license?
@@ -460,7 +456,6 @@ class App extends React.Component {
     }
 
     // aws dynamodb
-
     getLiveData() {
         this.setState({
             dataDownloadingMessage: 'categories'
@@ -565,8 +560,7 @@ class App extends React.Component {
         })
     }
 
-    // cached
-
+    // cached data
     getCachedData() {
         this.getCachedCategories();
     }
