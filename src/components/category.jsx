@@ -8,7 +8,7 @@ export class Category extends React.Component {
         let items = (this.props.isHomeCategory(this.props.category.id) ? this.props.items.filter((item) => {
             return (this.props.searchArray(item.tags, "homepage") || this.props.query.searchTerm !== "") && (this.props.useHDR || item.fileExt !== 'hdr');
         }) : this.props.getItemsInCategory(this.props.category.id)).filter((item) => {
-            return (this.props.query.onlyFree === false || item.isFree) && (this.props.query.searchTerm === "" || item.title.toUpperCase().includes(this.props.query.searchTerm.toUpperCase()) || this.props.searchArray(item.tags, this.props.query.searchTerm)) && (this.props.useHDR || item.fileExt !== 'hdr');
+            return (this.props.query.onlyFree === false || item.isFree) && (this.props.query.onlyRecent === false || this.props.isItemRecent(item)) && (this.props.query.searchTerm === "" || item.title.toUpperCase().includes(this.props.query.searchTerm.toUpperCase()) || this.props.searchArray(item.tags, this.props.query.searchTerm)) && (this.props.useHDR || item.fileExt !== 'hdr');
         });
 
         this.props.sortItems(items, this.props.query.sortBy);

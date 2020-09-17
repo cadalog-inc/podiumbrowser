@@ -45,6 +45,7 @@ class App extends React.Component {
             categories: [],
             items: [],
             relationships: [],
+            recentDistance: 100,
             useHDR: false,
             standalone: false,
             dataDownloaded: false,
@@ -116,6 +117,7 @@ class App extends React.Component {
                                             handleFavoriteClick={this.handleFavoriteClick}
                                             getHomeCategory={this.getHomeCategory}
                                             isHomeCategory={this.isHomeCategory}
+                                            isItemRecent={this.isItemRecent}
                                             useHDR={this.state.useHDR}
                                             getRecentDownloadedCategoryId={this.getRecentDownloadedCategoryId}
                                             getMyFavoritesCategoryId={this.getMyFavoritesCategoryId}
@@ -328,6 +330,16 @@ class App extends React.Component {
                     });
             });
         }
+    }
+
+    // item methods
+    
+    isItemRecent = (item) => {
+        const now = new Date();
+        const then = new Date(item.uploadDate*1000);
+        const difference = now.getTime() - then.getTime();
+        const days = difference / (1000 * 3600 * 24);
+        return Math.abs(this.state.recentDistance - days) <= 100;
     }
 
     // category methods

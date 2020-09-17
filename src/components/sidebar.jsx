@@ -45,6 +45,14 @@ export class SideBar extends React.Component {
                             Show only free files
                         </label>
                     </div>
+                    <div className="form-check" style={{ margin: 10 }}>
+                        <input className="form-check-input" type="checkbox" defaultChecked={this.props.query.onlyRecent} onChange={(e) => {
+                            this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${e.target.checked}&sortBy=${this.props.query.sortBy}`);
+                        }} id="recentChecked" />
+                        <label className="form-check-label" htmlFor="recentChecked">
+                            Show only recent files
+                        </label>
+                    </div>
                     {
 
                         this.props.user.key !== '' ? <React.Fragment>

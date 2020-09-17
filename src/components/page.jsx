@@ -93,6 +93,7 @@ export class Page extends React.Component {
                                         handleDownloadClick={this.props.handleDownloadClick}
                                         handleFavoriteClick={this.props.handleFavoriteClick}
                                         isItemFavorite={this.isItemFavorite}
+                                        isItemRecent={this.props.isItemRecent}
                                         formatFileSize={this.formatFileSize}
                                         query={query}
                                         useHDR={this.props.useHDR}
@@ -116,6 +117,7 @@ export class Page extends React.Component {
                                             handleDownloadClick={this.props.handleDownloadClick}
                                             handleFavoriteClick={this.props.handleFavoriteClick}
                                             isItemFavorite={this.isItemFavorite}
+                                            isItemRecent={this.props.isItemRecent}
                                             formatFileSize={this.formatFileSize}
                                             query={query}
                                             useHDR={this.props.useHDR}
