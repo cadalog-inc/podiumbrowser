@@ -25,6 +25,7 @@ export class Page extends React.Component {
         if (categories.length === 0) {
 
             categories.push(selectedCategory);
+
         }
         return (
             <React.Fragment>

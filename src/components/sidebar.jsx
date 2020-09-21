@@ -17,6 +17,7 @@ export class SideBar extends React.Component {
             return category.id === this.props.getMyFavoritesCategoryId() || category.id === this.props.getRecentDownloadedCategoryId();
         });
 
+
         return (
             <React.Fragment>
                 <div style={{

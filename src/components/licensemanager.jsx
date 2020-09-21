@@ -19,6 +19,7 @@ export class LicenseManager extends React.Component {
         }
     }
 
+
     render() {
         return this.state.screen === 'purchase' ? (
             <Form>

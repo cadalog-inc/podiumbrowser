@@ -21,6 +21,7 @@ export class NavBar extends React.Component {
         this.search = "";
     }
 
+
     componentDidMount() {
         // use most recent query values persisted in local storage
         const savedQueryValues = localStorage.getItem("PodiumBrowserStandaloneQueryValues") || "";

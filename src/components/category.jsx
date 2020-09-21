@@ -18,7 +18,7 @@ export class Category extends React.Component {
         let itemsLength = items.length;
         let pageBack = this.props.query.pageIndex - 1 > 0 ? this.props.query.pageIndex - 1 : 0;
         let pageNext = this.props.calculateNextPage(this.props.query.pageIndex, this.props.query.pageSize, itemsLength);
-        
+
         return (
             <React.Fragment>
                 <Row className="ml-1 mb-4 mt-4">

@@ -7,8 +7,8 @@ export class Path extends React.Component {
                 <ul>
                     {
                         this.renderPath(
-                            this.calculatePathToCategory(this.props.query.categoryId), 
-                            0, 
+                            this.calculatePathToCategory(this.props.query.categoryId),
+                            0,
                             this.props.subCategories
                         )
                     }

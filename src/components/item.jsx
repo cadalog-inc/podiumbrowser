@@ -28,6 +28,7 @@ export class Item extends React.Component {
                     /> : null
                 }
 
+
                 <OverlayTrigger
                     placement="bottom"
                     delay={{ dhow: 500 }}

@@ -25,6 +25,7 @@ export class Options extends React.Component {
         }
     }
 
+
     render() {
         return this.props.upper ? (
             <React.Fragment>
