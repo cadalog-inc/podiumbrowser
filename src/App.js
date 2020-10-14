@@ -337,9 +337,16 @@ class App extends React.Component {
     isItemRecent = (item) => {
         const now = new Date();
         const then = new Date(item.uploadDate*1000);
-        const difference = now.getTime() - then.getTime();
-        const days = difference / (1000 * 3600 * 24);
-        return Math.abs(this.state.recentDistance - days) <= 100;
+        const nowTime = now.getTime();
+        const thenTime = then.getTime();
+        const difference = nowTime - thenTime;
+        let days = difference;
+        days = days / (1000 * 3600 * 24);
+        const daysDistance = Math.abs(this.state.recentDistance - days);
+        if(daysDistance <= 100) {
+            console.log(daysDistance);
+        }
+        return daysDistance <= 100;
     }
 
     // category methods
