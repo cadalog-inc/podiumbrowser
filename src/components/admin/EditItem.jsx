@@ -61,7 +61,7 @@ export class EditItem extends React.Component {
                             </Row>
                             <Row>
                                 <Col>
-                                    <img alt="" style={{ width: '100%' }} src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash}.${this.props.item.thumbnailExt}`} />
+                                    <img alt="" style={{ width: '100%' }} src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash.substring(0, 2)}/${this.props.item.hash}.${this.props.item.thumbnailExt}`} />
                                 </Col>
                             </Row>
                             <Row>

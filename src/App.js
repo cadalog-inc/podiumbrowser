@@ -343,9 +343,9 @@ class App extends React.Component {
         let days = difference;
         days = days / (1000 * 3600 * 24);
         const daysDistance = Math.abs(this.state.recentDistance - days);
-        if(daysDistance <= 100) {
-            console.log(daysDistance);
-        }
+        // if(daysDistance <= 100) {
+        //     console.log(daysDistance);
+        // }
         return daysDistance <= 100;
     }
 

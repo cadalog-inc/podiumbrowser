@@ -64,7 +64,7 @@ export class Item extends React.Component {
                         }}
                     >
                         <img alt={this.props.item.title}
-                            src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash}.${this.props.item.thumbnailExt}`}
+                            src={`http://v3.pdm-plants-textures.com/images/files/${this.props.item.hash.substring(0, 2)}/${this.props.item.hash}.${this.props.item.thumbnailExt}`}
                             style={{
                                 position: 'relative',
                                 width: '100%',

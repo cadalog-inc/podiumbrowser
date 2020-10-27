@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faPlusSquare, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { Col, Row } from 'react-bootstrap';
 import { SideBar } from './SideBar';
 import { Category } from './Category';
@@ -23,9 +23,7 @@ export class Page extends React.Component {
             return category.id === query.categoryId
         });
         if (categories.length === 0) {
-
             categories.push(selectedCategory);
-
         }
         return (
             <React.Fragment>
@@ -71,7 +69,14 @@ export class Page extends React.Component {
                                 categories.length > 1 ?
                                     <Row className="ml-1 mt-4">
                                         <Col>
-                                            <h3 style={{ marginBottom: 35 }}>{selectedCategory.title} {window.admin ? <FontAwesomeIcon onClick={(e) => { this.setState({ show: true }) }} icon={faEdit} /> : null}</h3>
+                                            <h3 style={{ marginBottom: 35 }}>{selectedCategory.title} {
+                                                window.admin ?
+                                                    <React.Fragment>
+                                                        <FontAwesomeIcon onClick={(e) => { this.setState({ show: true }) }} icon={faEdit} />
+                                                        <FontAwesomeIcon style={{ marginLeft: 5 }} onClick={(e) => { }} icon={faPlusSquare} />
+                                                    </React.Fragment>
+                                                    : null
+                                            }</h3>
                                         </Col>
                                     </Row> : null
                             }
