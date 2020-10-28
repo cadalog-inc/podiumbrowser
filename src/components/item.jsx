@@ -86,7 +86,7 @@ export class Item extends React.Component {
                                         // todo: select item for copy/cut/paste in categories
                                     }}
                                 >
-                                    {/* <input type="checkbox"/> */}
+                                    <input type="checkbox"/>
                                 </span>
                                 :
                                 <span

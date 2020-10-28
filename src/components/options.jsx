@@ -62,10 +62,35 @@ export class Options extends React.Component {
                         {this.props.category.title} {
                             window.admin ?
                                 <React.Fragment>
-                                    <FontAwesomeIcon onClick={(e) => { this.setState({ showEditCategory: true }) }} icon={faEdit} />
+                                    <FontAwesomeIcon 
+                                        onClick={(e) => { 
+                                            this.setState({ showEditCategory: true }) 
+                                        }} 
+                                        icon={faEdit}
+                                        title="Edit Category"
+                                    />
                                     {
                                         this.props.category.id === 1 ? null :
-                                            <FontAwesomeIcon style={{ marginLeft: 5 }} onClick={(e) => { this.setState({ showAddItems: true }) }} icon={faPlusSquare} />
+                                            (
+                                                <React.Fragment>
+                                                    <FontAwesomeIcon
+                                                        style={{ marginLeft: 5 }}
+                                                        onClick={(e) => {
+                                                            this.setState({ showAddItems: true })
+                                                        }}
+                                                        icon={faPlusSquare}
+                                                        title="Add Items"
+                                                    />
+                                                    {/* <FontAwesomeIcon
+                                                        style={{ marginLeft: 5 }}
+                                                        onClick={(e) => {
+                                                            
+                                                        }}
+                                                        icon={faPlusSquare}
+                                                        title="Add Sub Category"
+                                                    /> */}
+                                                </React.Fragment>
+                                            )
                                     }
                                 </React.Fragment>
                                 : null}

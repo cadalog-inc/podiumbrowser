@@ -72,8 +72,43 @@ export class Page extends React.Component {
                                             <h3 style={{ marginBottom: 35 }}>{selectedCategory.title} {
                                                 window.admin ?
                                                     <React.Fragment>
-                                                        <FontAwesomeIcon onClick={(e) => { this.setState({ show: true }) }} icon={faEdit} />
-                                                        <FontAwesomeIcon style={{ marginLeft: 5 }} onClick={(e) => { }} icon={faPlusSquare} />
+                                                        <FontAwesomeIcon 
+                                                            onClick={(e) => { 
+                                                                this.setState({ show: true }) 
+                                                            }} 
+                                                            icon={faEdit}
+                                                            title="Edit Category"
+                                                        />
+                                                        <FontAwesomeIcon 
+                                                            style={{ marginLeft: 5 }} 
+                                                            onClick={(e) => {
+                                                                var title = prompt("Enter title of new sub category");
+                                                                if (title !== null && title !== "") {
+                                                                    const category = {
+                                                                        id: Number(new Date()) + this.props.categories.length,
+                                                                        title: title,
+                                                                        parentId: query.categoryId,
+                                                                        primaryIndex: -1
+                                                                    }
+                                                                    const page = this;
+                                                                    var params = {
+                                                                        TableName: "Categories",
+                                                                        Item: category
+                                                                    };
+                                                                    window.docClient.put(params, function (err, data) {
+                                                                        if (err) {
+                                                                            console.log(err);
+                                                                        } else {
+                                                                            console.log(data);
+                                                                            page.props.categories.push(category);
+                                                                            page.forceUpdate();
+                                                                        }
+                                                                    });
+                                                                }
+                                                            }} 
+                                                            icon={faPlusSquare} 
+                                                            title="Add Sub Category"
+                                                        />
                                                     </React.Fragment>
                                                     : null
                                             }</h3>
@@ -112,6 +147,7 @@ export class Page extends React.Component {
                                             license={this.props.license}
                                             key={index}
                                             category={category}
+                                            categories={categories}
                                             categoriesLength={categories.length}
                                             getHomeCategory={this.props.getHomeCategory}
                                             isHomeCategory={this.props.isHomeCategory}
