@@ -32,6 +32,7 @@ export class Page extends React.Component {
                         <EditCategory
                             show={this.state.show}
                             category={selectedCategory}
+                            isHomeCategory={this.props.isHomeCategory}
                             categories={this.props.categories}
                             items={this.props.items}
                             canUploadItems={false}
@@ -72,15 +73,15 @@ export class Page extends React.Component {
                                             <h3 style={{ marginBottom: 35 }}>{selectedCategory.title} {
                                                 window.admin ?
                                                     <React.Fragment>
-                                                        <FontAwesomeIcon 
-                                                            onClick={(e) => { 
-                                                                this.setState({ show: true }) 
-                                                            }} 
+                                                        <FontAwesomeIcon
+                                                            onClick={(e) => {
+                                                                this.setState({ show: true })
+                                                            }}
                                                             icon={faEdit}
                                                             title="Edit Category"
                                                         />
-                                                        <FontAwesomeIcon 
-                                                            style={{ marginLeft: 5 }} 
+                                                        <FontAwesomeIcon
+                                                            style={{ marginLeft: 5 }}
                                                             onClick={(e) => {
                                                                 var title = prompt("Enter title of new sub category");
                                                                 if (title !== null && title !== "") {
@@ -105,8 +106,8 @@ export class Page extends React.Component {
                                                                         }
                                                                     });
                                                                 }
-                                                            }} 
-                                                            icon={faPlusSquare} 
+                                                            }}
+                                                            icon={faPlusSquare}
                                                             title="Add Sub Category"
                                                         />
                                                     </React.Fragment>
@@ -138,6 +139,9 @@ export class Page extends React.Component {
                                         formatFileSize={this.formatFileSize}
                                         query={query}
                                         useHDR={this.props.useHDR}
+                                        selectedAction={this.props.selectedAction}
+                                        selectedItems={this.props.selectedItems}
+                                        updateSelectedItems={this.props.updateSelectedItems}
                                         getRecentDownloadedCategoryId={this.props.getRecentDownloadedCategoryId}
                                         getMyFavoritesCategoryId={this.props.getMyFavoritesCategoryId}
                                         {...this.props}
@@ -163,6 +167,9 @@ export class Page extends React.Component {
                                             formatFileSize={this.formatFileSize}
                                             query={query}
                                             useHDR={this.props.useHDR}
+                                            selectedAction={this.props.selectedAction}
+                                            selectedItems={this.props.selectedItems}
+                                            updateSelectedItems={this.props.updateSelectedItems}
                                             getRecentDownloadedCategoryId={this.props.getRecentDownloadedCategoryId}
                                             getMyFavoritesCategoryId={this.props.getMyFavoritesCategoryId}
                                             handleClearFavoritesClick={this.props.handleClearFavoritesClick}

@@ -11,7 +11,26 @@ export class Item extends React.Component {
         this.state = {
             show: false
         }
+        this.selectedRef = React.createRef();
     }
+
+    componentDidUpdate(prevProps) {
+        if(prevProps.selectedAction !== this.props.selectedAction) {
+            this.selectedRef.current.checked = this.isSelected();
+        }
+    }
+
+    isSelected = () => {
+        let selected = false;
+        for (let i = 0; i < this.props.selectedItems.length; i++) {
+            if (this.props.selectedItems[i].item === this.props.item) {
+                selected = true;
+                break;
+            }
+        }
+        return selected;
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -74,7 +93,7 @@ export class Item extends React.Component {
                             onClick={() => { this.props.handleDownloadClick(this.props.item) }}
                         />
                         {
-                            window.admin ?
+                            window.admin ? !this.props.isHomeCategory(this.props.category.id) ?
                                 <span
                                     style={{
                                         position: 'absolute',
@@ -82,13 +101,30 @@ export class Item extends React.Component {
                                         top: '0px',
                                         cursor: 'pointer'
                                     }}
-                                    onClick={() => {
-                                        // todo: select item for copy/cut/paste in categories
-                                    }}
                                 >
-                                    <input type="checkbox"/>
+                                    <input
+                                        type="checkbox"
+                                        ref={this.selectedRef}
+                                        defaultChecked={this.isSelected()}
+                                        onClick={(e) => {
+                                            if (e.target.checked) {
+                                                this.props.selectedItems.push({
+                                                    category: this.props.category,
+                                                    item: this.props.item 
+                                                });
+                                            } else {
+                                                for (let i = 0; i < this.props.selectedItems.length; i++) {
+                                                    if (this.props.selectedItems[i].item === this.props.item) {
+                                                        this.props.selectedItems.splice(i, 1);
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            this.props.updateSelectedItems();
+                                        }}
+                                    />
                                 </span>
-                                :
+                                : null :
                                 <span
                                     style={{
                                         position: 'absolute',

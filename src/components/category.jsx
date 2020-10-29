@@ -58,11 +58,16 @@ export class Category extends React.Component {
                                         license={this.props.license}
                                         item={item}
                                         user={this.props.user}
+                                        category={this.props.category}
+                                        isHomeCategory={this.props.isHomeCategory}
                                         calculatePathToItem={this.props.calculatePathToItem}
                                         handleDownloadClick={this.props.handleDownloadClick}
                                         handleFavoriteClick={this.props.handleFavoriteClick}
                                         isItemFavorite={this.props.isItemFavorite}
                                         formatFileSize={this.props.formatFileSize}
+                                        selectedAction={this.props.selectedAction}
+                                        selectedItems={this.props.selectedItems}
+                                        updateSelectedItems={this.props.updateSelectedItems}
                                     />
                                 </Col>
                             )

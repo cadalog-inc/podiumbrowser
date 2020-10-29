@@ -3,7 +3,7 @@ import axios from 'axios';
 import { Button, ButtonGroup, FormControl, InputGroup, Modal, Navbar, NavItem, Col, Row, OverlayTrigger, Container } from 'react-bootstrap';
 import Autocomplete from 'react-autocomplete';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCog, faArrowLeft, faArrowRight, faHome, faSearch, faUserCog, faSync, faTimes, faQuestion, faFileExport } from '@fortawesome/free-solid-svg-icons';
+import { faCog, faArrowLeft, faArrowRight, faHome, faSearch, faUserCog, faSync, faTimes, faQuestion, faFileExport, faCut, faCopy, faEraser, faTrash, faPaste } from '@fortawesome/free-solid-svg-icons';
 import License from '../models/License';
 import Query from '../models/Query';
 import { LicenseManager } from './LicenseManager';
@@ -148,6 +148,42 @@ export class NavBar extends React.Component {
                                         window.scrollTo(0, 0);
                                     }}>
                                         <FontAwesomeIcon icon={faCog} color={"white"} />
+                                    </Button>
+                                    <Button type="button" variant="dark" onClick={() => {
+                                        this.props.updateSelectedAction("cut");
+                                    }}>
+                                        {
+                                            this.props.selectedItems.length > 0 ?
+                                                <FontAwesomeIcon icon={faCut} title="Cut Selected Items" color={"white"} /> :
+                                                <FontAwesomeIcon icon={faCut} title="Cut Selected Items" color={"darkgrey"} />
+                                        }
+                                    </Button>
+                                    <Button type="button" variant="dark" onClick={() => {
+                                        this.props.updateSelectedAction("copy");
+                                    }}>
+                                        {
+                                            this.props.selectedItems.length > 0 ?
+                                                <FontAwesomeIcon icon={faCopy} title="Copy Selected Items" color={"white"} /> :
+                                                <FontAwesomeIcon icon={faCopy} title="Copy Selected Items" color={"darkgrey"} />
+                                        }
+                                    </Button>
+                                    <Button type="button" variant="dark" onClick={() => {
+                                        
+                                    }}>
+                                        {
+                                            this.props.selectedItems.length > 0 && (this.props.selectedAction === "cut" || this.props.selectedAction === "copy") ?
+                                                <FontAwesomeIcon icon={faPaste} title="Paste Selected Items" color={"white"} /> :
+                                                <FontAwesomeIcon icon={faPaste} title="Paste Selected Items" color={"darkgrey"} />
+                                        }
+                                    </Button>
+                                    <Button type="button" variant="dark" onClick={() => {
+                                        this.props.clearSelectedItems();
+                                    }}>
+                                        {
+                                            this.props.selectedItems.length > 0 ?
+                                                <FontAwesomeIcon icon={faEraser} title="Clear Selected Items" color={"white"} /> :
+                                                <FontAwesomeIcon icon={faEraser} title="Clear Selected Items" color={"darkgrey"} />
+                                        }
                                     </Button>
                                 </React.Fragment>
                             ) : null

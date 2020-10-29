@@ -50,7 +50,9 @@ class App extends React.Component {
             standalone: false,
             dataDownloaded: false,
             dataDownloadingMessage: 'data',
-            isValid: false
+            isValid: false,
+            selectedAction: null,
+            selectedItems: []
         };
         window["setLicense"] = this.setLicense.bind(this);
         window["validateLicense"] = this.validateLicense.bind(this);
@@ -103,6 +105,11 @@ class App extends React.Component {
                                             relationships={this.state.relationships}
                                             useHDR={this.state.useHDR}
                                             standalone={this.state.standalone}
+                                            selectedAction={this.state.selectedAction}
+                                            updateSelectedAction={this.updateSelectedAction}
+                                            selectedItems={this.state.selectedItems}
+                                            updateSelectedItems={this.updateSelectedItems}
+                                            clearSelectedItems={this.clearSelectedItems}
                                             {...props}
                                         />
                                         <Page
@@ -119,6 +126,10 @@ class App extends React.Component {
                                             isHomeCategory={this.isHomeCategory}
                                             isItemRecent={this.isItemRecent}
                                             useHDR={this.state.useHDR}
+                                            selectedAction={this.state.selectedAction}
+                                            selectedItems={this.state.selectedItems}
+                                            updateSelectedItems={this.updateSelectedItems}
+                                            clearSelectedItems={this.clearSelectedItems}
                                             getRecentDownloadedCategoryId={this.getRecentDownloadedCategoryId}
                                             getMyFavoritesCategoryId={this.getMyFavoritesCategoryId}
                                             handleClearFavoritesClick={this.handleClearFavoritesClick}
@@ -634,6 +645,24 @@ class App extends React.Component {
     dataDownloaded = () => {
         this.setState({
             dataDownloaded: true
+        });
+    }
+
+    // admin
+    updateSelectedItems = () => {
+        this.forceUpdate();
+    }
+
+    clearSelectedItems = () => {
+        this.setState({
+            selectedAction: "clear",
+            selectedItems: []
+        });
+    }
+
+    updateSelectedAction = (action) => {
+        this.setState({
+            selectedAction: action
         });
     }
 }
