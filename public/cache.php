@@ -21,11 +21,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
 
 $_POST = json_decode(file_get_contents("php://input"),true);
 
-$file = dirname(__FILE__).'/categories.json';
-file_put_contents($file, json_encode($_POST['categories']));
-$file = dirname(__FILE__).'/items.json';
-file_put_contents($file, json_encode($_POST['items']));
-$file = dirname(__FILE__).'/relationships.json';
-file_put_contents($file, json_encode($_POST['relationships']));
+if(isset($_POST['categories']) && isset($_POST['items']) && isset($_POST['relationships'])) {
+    $file = dirname(__FILE__).'/categories.json';
+    file_put_contents($file, json_encode($_POST['categories']));
+    $file = dirname(__FILE__).'/items.json';
+    file_put_contents($file, json_encode($_POST['items']));
+    $file = dirname(__FILE__).'/relationships.json';
+    file_put_contents($file, json_encode($_POST['relationships']));
+    print("SUCCESS");
+} else {
+    print("ERROR");
+}
 
 ?>
