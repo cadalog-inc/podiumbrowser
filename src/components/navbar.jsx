@@ -149,40 +149,48 @@ export class NavBar extends React.Component {
                                     }}>
                                         <FontAwesomeIcon icon={faCog} color={"white"} />
                                     </Button>
-                                    <Button type="button" variant="dark" onClick={() => {
-                                        this.props.updateSelectedAction("cut");
+                                    <Button type="button" variant="dark" title="Clear Selected Items" onClick={() => {
+                                        if (window.confirm("Are you sure you want to CLEAR the selected items?")) {
+                                            this.props.clearSelectedItems();
+                                        }
                                     }}>
                                         {
                                             this.props.selectedItems.length > 0 ?
-                                                <FontAwesomeIcon icon={faCut} title="Cut Selected Items" color={"white"} /> :
-                                                <FontAwesomeIcon icon={faCut} title="Cut Selected Items" color={"darkgrey"} />
+                                                <FontAwesomeIcon icon={faEraser} color={"gold"} /> :
+                                                <FontAwesomeIcon icon={faEraser} color={"darkgrey"} />
                                         }
                                     </Button>
-                                    <Button type="button" variant="dark" onClick={() => {
-                                        this.props.updateSelectedAction("copy");
+                                    <Button type="button" variant="dark" title="Cut/Paste Selected Items" onClick={() => {
+                                        if (window.confirm("Are you sure you want to CUT/PASTE the selected items to this category?")) {
+
+                                        }
                                     }}>
                                         {
                                             this.props.selectedItems.length > 0 ?
-                                                <FontAwesomeIcon icon={faCopy} title="Copy Selected Items" color={"white"} /> :
-                                                <FontAwesomeIcon icon={faCopy} title="Copy Selected Items" color={"darkgrey"} />
+                                                <FontAwesomeIcon icon={faCut} color={"gold"} /> :
+                                                <FontAwesomeIcon icon={faCut} color={"darkgrey"} />
                                         }
                                     </Button>
-                                    <Button type="button" variant="dark" onClick={() => {
-                                        
-                                    }}>
-                                        {
-                                            this.props.selectedItems.length > 0 && (this.props.selectedAction === "cut" || this.props.selectedAction === "copy") ?
-                                                <FontAwesomeIcon icon={faPaste} title="Paste Selected Items" color={"white"} /> :
-                                                <FontAwesomeIcon icon={faPaste} title="Paste Selected Items" color={"darkgrey"} />
+                                    <Button type="button" variant="dark" title="Copy/Paste Selected Items" onClick={() => {
+                                        if (window.confirm("Are you sure you want to COPY/PASTE the selected items to this category?")) {
+
                                         }
-                                    </Button>
-                                    <Button type="button" variant="dark" onClick={() => {
-                                        this.props.clearSelectedItems();
                                     }}>
                                         {
                                             this.props.selectedItems.length > 0 ?
-                                                <FontAwesomeIcon icon={faEraser} title="Clear Selected Items" color={"white"} /> :
-                                                <FontAwesomeIcon icon={faEraser} title="Clear Selected Items" color={"darkgrey"} />
+                                                <FontAwesomeIcon icon={faCopy} color={"gold"} /> :
+                                                <FontAwesomeIcon icon={faCopy} color={"darkgrey"} />
+                                        }
+                                    </Button>
+                                    <Button type="button" variant="dark" title="Remove Selected Items" onClick={() => {
+                                        if (window.confirm("Are you sure you want to REMOVE the selected items from this category?")) {
+
+                                        }
+                                    }}>
+                                        {
+                                            this.props.selectedItems.length > 0 ?
+                                                <FontAwesomeIcon icon={faTrash} color={"violet"} /> :
+                                                <FontAwesomeIcon icon={faTrash} color={"darkgrey"} />
                                         }
                                     </Button>
                                 </React.Fragment>

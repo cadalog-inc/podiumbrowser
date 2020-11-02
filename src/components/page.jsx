@@ -139,7 +139,6 @@ export class Page extends React.Component {
                                         formatFileSize={this.formatFileSize}
                                         query={query}
                                         useHDR={this.props.useHDR}
-                                        selectedAction={this.props.selectedAction}
                                         selectedItems={this.props.selectedItems}
                                         updateSelectedItems={this.props.updateSelectedItems}
                                         getRecentDownloadedCategoryId={this.props.getRecentDownloadedCategoryId}
@@ -167,7 +166,6 @@ export class Page extends React.Component {
                                             formatFileSize={this.formatFileSize}
                                             query={query}
                                             useHDR={this.props.useHDR}
-                                            selectedAction={this.props.selectedAction}
                                             selectedItems={this.props.selectedItems}
                                             updateSelectedItems={this.props.updateSelectedItems}
                                             getRecentDownloadedCategoryId={this.props.getRecentDownloadedCategoryId}
