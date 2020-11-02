@@ -416,28 +416,66 @@ export class NavBar extends React.Component {
     }
 
     cutPasteSelectedItems = () => {
-
+        const category = this.props.categories.find((c) => c.id === this.state.query.categoryId);
+        if (category && category !== undefined) {
+            const l = this.props.selectedItems.length;
+            for (let i = 0; i < l; i++) {
+                const selectedItem = this.props.selectedItems[i];
+                if (selectedItem.category !== category) {
+                    let relationship = this.props.relationships.find((r) => r.itemId === selectedItem.item.id && r.categoryId === selectedItem.category.id);
+                    const index = this.props.relationships.indexOf(relationship);
+                    if (relationship && relationship !== undefined) {
+                        let params = {
+                            TableName: "Relationships",
+                            Item: relationship
+                        };
+                        console.log(params);
+                        // window.docClient.delete(params, function (err, data) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //     } else {
+                        //     }
+                        // });
+                        console.log(this.props.relationships[index]);
+                        this.props.relationships[index].categoryId = category.id;
+                        console.log(this.props.relationships[index]);
+                        relationship = this.props.relationships[index];
+                        console.log(relationship);
+                        params = {
+                            TableName: "Relationships",
+                            Item: relationship
+                        };
+                        console.log(params);
+                        // window.docClient.update(params, function (err, data) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //     } else {
+                        //     }
+                        // });
+                    }
+                }
+            }
+        }
+        this.props.clearSelectedItems();
         this.props.updateSelectedAction();
     }
 
     copyPasteSelectedItems = () => {
         const category = this.props.categories.find((c) => c.id === this.state.query.categoryId);
         if (category && category !== undefined) {
-            const relationships = this.calculateRelationships(category);
             const l = this.props.selectedItems.length;
             for (let i = 0; i < l; i++) {
-                const item = this.props.selectedItems[i].item;
-                const rl = relationships.length;
-                for (let r = 0; r < rl; r++) {
-                    let id = Number(new Date()) + r;
+                const selectedItem = this.props.selectedItems[i];
+                if (selectedItem.category !== category) {
+                    let id = Number(new Date());
                     const relationship = {
                         id: id,
-                        categoryId: relationships[r],
-                        itemId: item.id
+                        categoryId: category.id,
+                        itemId: selectedItem.item.id
                     };
                     var params = {
                         TableName: "Relationships",
-                        Item: relationship 
+                        Item: relationship
                     };
                     console.log(params);
                     this.props.relationships.push(relationship);
@@ -451,65 +489,32 @@ export class NavBar extends React.Component {
             }
         }
 
+        this.props.clearSelectedItems();
         this.props.updateSelectedAction();
     }
 
     removeSelectedItems = () => {
-        const category = this.props.categories.find((c) => c.id === this.state.query.categoryId);
-        if (category && category !== undefined) {
-            const relationships = this.calculateRelationships(category);
-            const l = this.props.selectedItems.length;
-            for (let i = 0; i < l; i++) {
-                const item = this.props.selectedItems[i].item;
-                const rl = relationships.length;
-                for (let r = 0; r < rl; r++) {
-                    let id = Number(new Date()) + r;
-                    const relationship = {
-                        id: id,
-                        categoryId: relationships[r],
-                        itemId: item.id
-                    };
-                    var params = {
-                        TableName: "Relationships",
-                        Item: relationship 
-                    };
-                    console.log(params);
-                    this.props.relationships.push(relationship);
-                    // window.docClient.put(params, function (err, data) {
-                    //     if (err) {
-                    //         console.log(err);
-                    //     } else {
-                    //     }
-                    // });
-                }
+        const l = this.props.selectedItems.length;
+        for (let i = 0; i < l; i++) {
+            const selectedItem = this.props.selectedItems[i];
+            const relationship = this.props.relationships.find((r) => r.itemId === selectedItem.item.id && r.categoryId === selectedItem.category.id);
+            if (relationship && relationship !== undefined) {
+                var params = {
+                    TableName: "Relationships",
+                    Item: relationship
+                };
+                console.log(params);
+                const index = this.props.relationships.indexOf(relationship);
+                this.props.relationships.splice(index, 1);
+                // window.docClient.delete(params, function (err, data) {
+                //     if (err) {
+                //         console.log(err);
+                //     } else {
+                //     }
+                // });
             }
         }
-
+        this.props.clearSelectedItems();
         this.props.updateSelectedAction();
-        this.props.updateSelectedAction();
-    }
-
-    calculateRelationships = (category) => {
-        const relationships = [];
-        let id = category.id;
-        let parentId = category.parentId;
-        let sanity = 0;
-        while (sanity < 10) {
-            relationships.push(id);
-            if (id === 1) {
-                break;
-            } else {
-                category = this.props.categories.find((c) => c.id === parentId);
-                if (category && category !== undefined) {
-                    id = category.id;
-                    parentId = category.parentId;
-                } else {
-                    break;
-                }
-            }
-
-            sanity = sanity + 1;
-        }
-        return relationships;
     }
 }

@@ -56,7 +56,6 @@ export class Page extends React.Component {
                                 user={this.props.user}
                                 categories={this.props.categories}
                                 getSubCategories={this.props.getSubCategories}
-                                calculatePathToCategory={this.calculatePathToCategory}
                                 getHomeCategory={this.getHomeCategory}
                                 isHomeCategory={this.props.isHomeCategory}
                                 useHDR={this.props.useHDR}
@@ -249,32 +248,6 @@ export class Page extends React.Component {
                 return 0;
             });
         }
-    }
-
-    calculatePathToCategory = (categoryId) => {
-        const path = [];
-        const selectedCategory = this.props.categories.find((category) => {
-            return category.id === categoryId
-        });
-        if (selectedCategory.id === this.props.getHomeCategory()) {
-            path.push(selectedCategory);
-        } else {
-            const parentCategory = this.props.categories.find((category) => {
-                return category.id === selectedCategory.parentId
-            });
-            if (parentCategory.id === this.props.getHomeCategory()) {
-                path.push(parentCategory);
-                path.push(selectedCategory);
-            } else {
-                const parentParentCategory = this.props.categories.find((category) => {
-                    return category.id === parentCategory.parentId
-                });
-                path.push(parentParentCategory);
-                path.push(parentCategory);
-                path.push(selectedCategory);
-            }
-        }
-        return path;
     }
 
     calculatePathToItem = (itemId) => {

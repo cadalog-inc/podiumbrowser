@@ -52,6 +52,7 @@ export class Path extends React.Component {
             ) : null
     }
 
+    // TODO: rework to handle deeper category tree
     calculatePathToCategory = (categoryId) => {
         const path = [];
         const selectedCategory = this.props.categories.find((category) => {

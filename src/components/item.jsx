@@ -15,7 +15,7 @@ export class Item extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(prevProps.selectedAction !== this.props.selectedAction) {
+        if(this.selectedRef.current && prevProps.selectedAction !== this.props.selectedAction) {
             this.selectedRef.current.checked = this.isSelected();
         }
     }
@@ -23,7 +23,7 @@ export class Item extends React.Component {
     isSelected = () => {
         let selected = false;
         for (let i = 0; i < this.props.selectedItems.length; i++) {
-            if (this.props.selectedItems[i].item === this.props.item) {
+            if (this.props.selectedItems[i].item === this.props.item && this.props.selectedItems[i].category === this.props.category) {
                 selected = true;
                 break;
             }
@@ -108,13 +108,15 @@ export class Item extends React.Component {
                                         defaultChecked={this.isSelected()}
                                         onClick={(e) => {
                                             if (e.target.checked) {
-                                                this.props.selectedItems.push({
-                                                    category: this.props.category,
-                                                    item: this.props.item 
-                                                });
+                                                if(!this.isSelected()) {
+                                                    this.props.selectedItems.push({
+                                                        category: this.props.category,
+                                                        item: this.props.item 
+                                                    });
+                                                }
                                             } else {
                                                 for (let i = 0; i < this.props.selectedItems.length; i++) {
-                                                    if (this.props.selectedItems[i].item === this.props.item) {
+                                                    if (this.props.selectedItems[i].item === this.props.item && this.props.selectedItems[i].category === this.props.category) {
                                                         this.props.selectedItems.splice(i, 1);
                                                         break;
                                                     }
