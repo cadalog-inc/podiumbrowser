@@ -105,6 +105,7 @@ class App extends React.Component {
                                             relationships={this.state.relationships}
                                             useHDR={this.state.useHDR}
                                             standalone={this.state.standalone}
+                                            selectedAction={this.state.selectedAction}
                                             updateSelectedAction={this.updateSelectedAction}
                                             selectedItems={this.state.selectedItems}
                                             updateSelectedItems={this.updateSelectedItems}
@@ -125,6 +126,7 @@ class App extends React.Component {
                                             isHomeCategory={this.isHomeCategory}
                                             isItemRecent={this.isItemRecent}
                                             useHDR={this.state.useHDR}
+                                            selectedAction={this.state.selectedAction}
                                             selectedItems={this.state.selectedItems}
                                             updateSelectedItems={this.updateSelectedItems}
                                             clearSelectedItems={this.clearSelectedItems}
@@ -649,6 +651,12 @@ class App extends React.Component {
     // admin
     updateSelectedItems = () => {
         this.forceUpdate();
+    }
+
+    updateSelectedAction = () => {
+        this.setState({
+            selectedAction: new Date().getTime()
+        })
     }
 
     clearSelectedItems = () => {

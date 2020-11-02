@@ -57,6 +57,7 @@ export class SubCategories extends React.Component {
                                             isItemFavorite={this.props.isItemFavorite}
                                             formatFileSize={this.props.formatFileSize}
                                             selectedAction={this.props.selectedAction}
+                                            updateSelectedAction={this.props.updateSelectedAction}
                                             selectedItems={this.props.selectedItems}
                                             updateSelectedItems={this.props.updateSelectedItems}
                                         />
