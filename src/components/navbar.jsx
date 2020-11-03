@@ -409,10 +409,9 @@ export class NavBar extends React.Component {
     }
 
     // admin
-
     clearSelectedItems = () => {
-        this.props.clearSelectedItems();
         this.props.updateSelectedAction();
+        this.props.clearSelectedItems();
     }
 
     cutPasteSelectedItems = () => {
@@ -425,39 +424,32 @@ export class NavBar extends React.Component {
                     let relationship = this.props.relationships.find((r) => r.itemId === selectedItem.item.id && r.categoryId === selectedItem.category.id);
                     const index = this.props.relationships.indexOf(relationship);
                     if (relationship && relationship !== undefined) {
+                        relationship.categoryId = category.id;
                         let params = {
                             TableName: "Relationships",
-                            Item: relationship
+                            Item: relationship,
+                            Key: {
+                                id: relationship.id
+                            },
+                            UpdateExpression: "set categoryId=:categoryId",
+                            ExpressionAttributeValues: {
+                                ":categoryId": relationship.categoryId
+                            },
+                            ReturnValues: "UPDATED_NEW"
                         };
+                        this.props.relationships[index] = relationship;
                         console.log(params);
-                        // window.docClient.delete(params, function (err, data) {
-                        //     if (err) {
-                        //         console.log(err);
-                        //     } else {
-                        //     }
-                        // });
-                        console.log(this.props.relationships[index]);
-                        this.props.relationships[index].categoryId = category.id;
-                        console.log(this.props.relationships[index]);
-                        relationship = this.props.relationships[index];
-                        console.log(relationship);
-                        params = {
-                            TableName: "Relationships",
-                            Item: relationship
-                        };
-                        console.log(params);
-                        // window.docClient.update(params, function (err, data) {
-                        //     if (err) {
-                        //         console.log(err);
-                        //     } else {
-                        //     }
-                        // });
+                        window.docClient.update(params, function (err, data) {
+                            if (err) {
+                                console.log(err);
+                            } else {
+                            }
+                        });
                     }
                 }
             }
         }
         this.props.clearSelectedItems();
-        this.props.updateSelectedAction();
     }
 
     copyPasteSelectedItems = () => {
@@ -479,18 +471,17 @@ export class NavBar extends React.Component {
                     };
                     console.log(params);
                     this.props.relationships.push(relationship);
-                    // window.docClient.put(params, function (err, data) {
-                    //     if (err) {
-                    //         console.log(err);
-                    //     } else {
-                    //     }
-                    // });
+                    window.docClient.put(params, function (err, data) {
+                        if (err) {
+                            console.log(err);
+                        } else {
+                        }
+                    });
                 }
             }
         }
 
         this.props.clearSelectedItems();
-        this.props.updateSelectedAction();
     }
 
     removeSelectedItems = () => {
@@ -501,20 +492,22 @@ export class NavBar extends React.Component {
             if (relationship && relationship !== undefined) {
                 var params = {
                     TableName: "Relationships",
-                    Item: relationship
+                    Item: relationship,
+                    Key: {
+                        id: relationship.id
+                    }
                 };
                 console.log(params);
                 const index = this.props.relationships.indexOf(relationship);
                 this.props.relationships.splice(index, 1);
-                // window.docClient.delete(params, function (err, data) {
-                //     if (err) {
-                //         console.log(err);
-                //     } else {
-                //     }
-                // });
+                window.docClient.delete(params, function (err, data) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                    }
+                });
             }
         }
         this.props.clearSelectedItems();
-        this.props.updateSelectedAction();
     }
 }

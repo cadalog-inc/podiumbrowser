@@ -15,8 +15,10 @@ export class Item extends React.Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.selectedRef.current && prevProps.selectedAction !== this.props.selectedAction) {
-            this.selectedRef.current.checked = this.isSelected();
+        if (prevProps.selectedAction !== this.props.selectedAction) {
+            if (this.selectedRef.current) {
+                this.selectedRef.current.checked = this.isSelected();
+            }
         }
     }
 
@@ -108,10 +110,10 @@ export class Item extends React.Component {
                                         defaultChecked={this.isSelected()}
                                         onClick={(e) => {
                                             if (e.target.checked) {
-                                                if(!this.isSelected()) {
+                                                if (!this.isSelected()) {
                                                     this.props.selectedItems.push({
                                                         category: this.props.category,
-                                                        item: this.props.item 
+                                                        item: this.props.item
                                                     });
                                                 }
                                             } else {
