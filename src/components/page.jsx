@@ -108,6 +108,7 @@ export class Page extends React.Component {
                                                             }}
                                                             icon={faPlusSquare}
                                                             title="Add Sub Category"
+                                                            color="teal"
                                                         />
                                                     </React.Fragment>
                                                     : null
@@ -167,6 +168,7 @@ export class Page extends React.Component {
                                             formatFileSize={this.formatFileSize}
                                             query={query}
                                             useHDR={this.props.useHDR}
+                                            updateFromOptions={this.updateFromOptions}
                                             selectedAction={this.props.selectedAction}
                                             updateSelectedAction={this.props.updateSelectedAction}
                                             selectedItems={this.props.selectedItems}
@@ -184,6 +186,10 @@ export class Page extends React.Component {
                 </div>
             </React.Fragment>
         );
+    }
+
+    updateFromOptions = () => {
+        this.forceUpdate();
     }
 
     sortItems = (items, sortBy) => {

@@ -62,10 +62,10 @@ export class Options extends React.Component {
                         {this.props.category.title} {
                             window.admin ?
                                 <React.Fragment>
-                                    <FontAwesomeIcon 
-                                        onClick={(e) => { 
-                                            this.setState({ showEditCategory: true }) 
-                                        }} 
+                                    <FontAwesomeIcon
+                                        onClick={(e) => {
+                                            this.setState({ showEditCategory: true })
+                                        }}
                                         icon={faEdit}
                                         title="Edit Category"
                                     />
@@ -80,17 +80,48 @@ export class Options extends React.Component {
                                                         }}
                                                         icon={faPlusSquare}
                                                         title="Add Items"
+                                                        color="orange"
                                                     />
-                                                    {/* <FontAwesomeIcon
+                                                </React.Fragment>
+                                            )
+                                    }
+                                    {
+                                        this.props.category.id !== 1 && this.props.itemsLength === 0 ?
+                                            (
+                                                <React.Fragment>
+                                                    <FontAwesomeIcon
                                                         style={{ marginLeft: 5 }}
                                                         onClick={(e) => {
-                                                            
+                                                            var title = prompt("Enter title of new sub category");
+                                                            if (title !== null && title !== "") {
+                                                                const category = {
+                                                                    id: Number(new Date()) + this.props.categories.length,
+                                                                    title: title,
+                                                                    parentId: this.props.query.categoryId,
+                                                                    primaryIndex: -1
+                                                                }
+                                                                const options = this;
+                                                                var params = {
+                                                                    TableName: "Categories",
+                                                                    Item: category
+                                                                };
+                                                                window.docClient.put(params, function (err, data) {
+                                                                    if (err) {
+                                                                        console.log(err);
+                                                                    } else {
+                                                                        console.log(data);
+                                                                        options.props.categories.push(category);
+                                                                        options.props.updateFromOptions();
+                                                                    }
+                                                                });
+                                                            }
                                                         }}
                                                         icon={faPlusSquare}
                                                         title="Add Sub Category"
-                                                    /> */}
+                                                        color="teal"
+                                                    />
                                                 </React.Fragment>
-                                            )
+                                            ) : null
                                     }
                                 </React.Fragment>
                                 : null}

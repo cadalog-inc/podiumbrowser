@@ -34,6 +34,7 @@ export class Category extends React.Component {
                             itemsBegin={itemsBegin}
                             itemsEnd={itemsEnd}
                             itemsLength={itemsLength}
+                            updateFromOptions={this.props.updateFromOptions}
                             handleClearFavoritesClick={this.props.handleClearFavoritesClick}
                             handleDownloadClick={this.props.handleDownloadClick}
                             handleFavoriteClick={this.props.handleFavoriteClick}
