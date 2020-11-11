@@ -95,7 +95,7 @@ export class Item extends React.Component {
                             onClick={() => { this.props.handleDownloadClick(this.props.item) }}
                         />
                         {
-                            window.admin ? !this.props.isHomeCategory(this.props.category.id) ?
+                            window.admin ? //!this.props.isHomeCategory(this.props.category.id) ?
                                 <span
                                     style={{
                                         position: 'absolute',
@@ -128,7 +128,7 @@ export class Item extends React.Component {
                                         }}
                                     />
                                 </span>
-                                : null :
+                                : //null :
                                 <span
                                     style={{
                                         position: 'absolute',

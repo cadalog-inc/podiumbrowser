@@ -348,16 +348,25 @@ class App extends React.Component {
     isItemRecent = (item) => {
         const now = new Date();
         const then = new Date(item.uploadDate*1000);
-        const nowTime = now.getTime();
-        const thenTime = then.getTime();
-        const difference = nowTime - thenTime;
-        let days = difference;
-        days = days / (1000 * 3600 * 24);
-        const daysDistance = Math.abs(this.state.recentDistance - days);
-        // if(daysDistance <= 100) {
-        //     console.log(daysDistance);
-        // }
-        return daysDistance <= 100;
+        // const nowTime = now.getTime();
+        // const thenTime = then.getTime();
+        // const difference = nowTime - thenTime;
+        // let days = difference;
+        // days = days / (1000 * 3600 * 24);
+        // const daysDistance = Math.abs(this.state.recentDistance - days);
+        // // if(daysDistance <= 100) {
+        // //     console.log(daysDistance);
+        // // }
+        // return daysDistance <= 100;
+
+        let diff = (now.getFullYear() - then.getFullYear()) * 12;
+        diff -= then.getMonth();
+        diff += now.getMonth();
+        let monthsDiff = diff <= 0 ? 0 : diff;
+        
+        // console.log(`${item.id} ${then.toDateString()} ${monthsDiff} ${monthsDiff <= 4 ? 'TRUE' : ''}`);
+        
+        return monthsDiff <= 4;
     }
 
     // category methods
