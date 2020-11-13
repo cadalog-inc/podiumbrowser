@@ -57,6 +57,8 @@ class App extends React.Component {
         window["setLicense"] = this.setLicense.bind(this);
         window["validateLicense"] = this.validateLicense.bind(this);
         // admin
+        window["currentCategory"] = null;
+        window["itemsInCurrentCategory"] = [];
         window.document.body.addEventListener('keyup', (e) => {
             if (e.code === 'F5') {
                 window.location = window.location.origin;
@@ -128,6 +130,7 @@ class App extends React.Component {
                                             useHDR={this.state.useHDR}
                                             selectedAction={this.state.selectedAction}
                                             selectedItems={this.state.selectedItems}
+                                            selectAllItemsInCategory={this.selectAllItemsInCategory}
                                             updateSelectedItems={this.updateSelectedItems}
                                             clearSelectedItems={this.clearSelectedItems}
                                             getRecentDownloadedCategoryId={this.getRecentDownloadedCategoryId}
@@ -658,6 +661,21 @@ class App extends React.Component {
     }
 
     // admin
+    selectAllItemsInCategory = (e) => {
+        if(window.currentCategory) {
+            const l = window.itemsInCurrentCategory.length;
+            for(let i = 0; i < l; i++) {
+                const item = window.itemsInCurrentCategory[i];
+                this.state.selectedItems.push({
+                    category: window.currentCategory,
+                    item: item
+                });
+            }
+            this.updateSelectedItems();
+            this.updateSelectedAction();
+        }
+    }
+
     updateSelectedItems = () => {
         this.forceUpdate();
     }
@@ -670,7 +688,10 @@ class App extends React.Component {
 
     clearSelectedItems = () => {
         this.setState({
-            selectedItems: []
+            selectedItems: [],
+            selectedAction: new Date().getTime()
+        }, () => {
+            this.forceUpdate();
         });
     }
 }

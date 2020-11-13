@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Dropdown, Navbar, NavbarBrand } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faPlusSquare, faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlusSquare, faAngleLeft, faAngleRight, faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
 import { AddItems } from './admin/AddItems';
 import { EditCategory } from './admin/EditCategory';
 
@@ -123,6 +123,16 @@ export class Options extends React.Component {
                                                 </React.Fragment>
                                             ) : null
                                     }
+                                    <FontAwesomeIcon
+                                        style={{ marginLeft: 5 }}
+                                        onClick={(e) => {
+                                            if (window.confirm(`Are you certain you want to select all items in ${this.props.category.title}?`)) {
+                                                this.props.selectAllItemsInCategory();
+                                            }
+                                        }}
+                                        icon={faClipboardCheck}
+                                        title={`Select All Items In ${this.props.category.title}`}
+                                    />
                                 </React.Fragment>
                                 : null}
                     </NavbarBrand>

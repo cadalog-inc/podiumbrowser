@@ -172,6 +172,7 @@ export class Page extends React.Component {
                                             selectedAction={this.props.selectedAction}
                                             updateSelectedAction={this.props.updateSelectedAction}
                                             selectedItems={this.props.selectedItems}
+                                            selectAllItemsInCategory={this.props.selectAllItemsInCategory}
                                             updateSelectedItems={this.props.updateSelectedItems}
                                             getRecentDownloadedCategoryId={this.props.getRecentDownloadedCategoryId}
                                             getMyFavoritesCategoryId={this.props.getMyFavoritesCategoryId}
