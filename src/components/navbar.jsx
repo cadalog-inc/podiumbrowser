@@ -415,11 +415,11 @@ export class NavBar extends React.Component {
     }
 
     cutPasteSelectedItems = () => {
-        const category = this.props.categories.find((c) => c.id === this.state.query.categoryId);
-        if (category && category !== undefined) {
-            const l = this.props.selectedItems.length;
-            for (let i = 0; i < l; i++) {
-                const selectedItem = this.props.selectedItems[i];
+        const l = this.props.selectedItems.length;
+        if (l > 0) {
+            const category = this.props.categories.find((c) => c.id === this.state.query.categoryId);
+            if (category && category !== undefined) {
+                const selectedItem = this.props.selectedItems[0];
                 if (selectedItem.category !== category) {
                     let relationship = this.props.relationships.find((r) => r.itemId === selectedItem.item.id && r.categoryId === selectedItem.category.id);
                     const index = this.props.relationships.indexOf(relationship);
@@ -437,27 +437,30 @@ export class NavBar extends React.Component {
                             },
                             ReturnValues: "UPDATED_NEW"
                         };
-                        this.props.relationships[index] = relationship;
-                        console.log(params);
+                        const navbar = this;
                         window.docClient.update(params, function (err, data) {
                             if (err) {
                                 console.log(err);
                             } else {
+                                navbar.props.relationships[index] = relationship;
+                                navbar.props.selectedItems.splice(0, 1);
+                                navbar.cutPasteSelectedItems();
                             }
                         });
                     }
                 }
             }
+        } else {
+            this.clearSelectedItems();
         }
-        this.props.clearSelectedItems();
     }
 
     copyPasteSelectedItems = () => {
-        const category = this.props.categories.find((c) => c.id === this.state.query.categoryId);
-        if (category && category !== undefined) {
-            const l = this.props.selectedItems.length;
-            for (let i = 0; i < l; i++) {
-                const selectedItem = this.props.selectedItems[i];
+        const l = this.props.selectedItems.length;
+        if (l > 0) {
+            const category = this.props.categories.find((c) => c.id === this.state.query.categoryId);
+            if (category && category !== undefined) {
+                const selectedItem = this.props.selectedItems[0];
                 if (selectedItem.category !== category) {
                     let id = Number(new Date());
                     const relationship = {
@@ -469,25 +472,27 @@ export class NavBar extends React.Component {
                         TableName: "Relationships",
                         Item: relationship
                     };
-                    console.log(params);
-                    this.props.relationships.push(relationship);
+                    const navbar = this;
                     window.docClient.put(params, function (err, data) {
                         if (err) {
                             console.log(err);
                         } else {
+                            navbar.props.relationships.push(relationship);
+                            navbar.props.selectedItems.splice(0, 1);
+                            navbar.copyPasteSelectedItems();
                         }
                     });
                 }
             }
+        } else {
+            this.clearSelectedItems();
         }
-
-        this.props.clearSelectedItems();
     }
 
     removeSelectedItems = () => {
         const l = this.props.selectedItems.length;
-        for (let i = 0; i < l; i++) {
-            const selectedItem = this.props.selectedItems[i];
+        if(l > 0) {
+            const selectedItem = this.props.selectedItems[0];
             const relationship = this.props.relationships.find((r) => r.itemId === selectedItem.item.id && r.categoryId === selectedItem.category.id);
             if (relationship && relationship !== undefined) {
                 var params = {
@@ -497,17 +502,20 @@ export class NavBar extends React.Component {
                         id: relationship.id
                     }
                 };
-                console.log(params);
-                const index = this.props.relationships.indexOf(relationship);
-                this.props.relationships.splice(index, 1);
+                const navbar = this;
                 window.docClient.delete(params, function (err, data) {
                     if (err) {
                         console.log(err);
                     } else {
+                        const index = navbar.props.relationships.indexOf(relationship);
+                        navbar.props.relationships.splice(index, 1);
+                        navbar.props.selectedItems.splice(0, 1);
+                        navbar.removeSelectedItems();
                     }
                 });
             }
+        } else {
+            this.clearSelectedItems();
         }
-        this.props.clearSelectedItems();
     }
 }

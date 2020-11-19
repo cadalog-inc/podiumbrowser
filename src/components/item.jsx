@@ -1,15 +1,17 @@
 import React from 'react';
 import { OverlayTrigger } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faStar, faDownload } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faStar, faDownload, faPlusSquare } from '@fortawesome/free-solid-svg-icons';
 import License from '../models/License';
 import { EditItem } from './admin/EditItem';
+import { UpdateItem} from './admin/UpdateItem';
 
 export class Item extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            show: false
+            showEditItem: false,
+            showUpdateitem: false
         }
         this.selectedRef = React.createRef();
     }
@@ -38,12 +40,24 @@ export class Item extends React.Component {
             <React.Fragment>
                 {
                     window.admin ? <EditItem
-                        show={this.state.show}
+                        show={this.state.showEditItem}
                         item={this.props.item}
                         parseExt={this.parseExt}
                         handleClose={(e) => {
                             this.setState({
-                                show: false
+                                showEditItem: false
+                            })
+                        }}
+                    /> : null
+                }
+                {
+                    window.admin ? <UpdateItem
+                        show={this.state.showUpdateItem}
+                        item={this.props.item}
+                        parseExt={this.parseExt}
+                        handleClose={(e) => {
+                            this.setState({
+                                showUpdateItem: false
                             })
                         }}
                     /> : null
@@ -169,6 +183,32 @@ export class Item extends React.Component {
                             >
                                 {this.props.formatFileSize(this.props.item.fileSize)} MB
                             </span>
+                            {
+                                window.admin ?
+                                    (
+
+                                        <span
+                                            style={{
+                                                position: 'absolute',
+                                                right: '28px',
+                                                bottom: '1px',
+                                                cursor: 'pointer'
+                                            }}
+                                            onClick={(e) => {
+                                                this.setState({
+                                                    showUpdateItem: true
+                                                });
+                                            }}
+                                        >
+                                            <FontAwesomeIcon 
+                                                icon={faPlusSquare} 
+                                                title="Update Skp/Thumbnail"
+                                                color="orange"
+                                            />
+                                        </span>
+                                    )
+                                    : null
+                            }
                             <span
                                 style={{
                                     position: 'absolute',
@@ -179,7 +219,7 @@ export class Item extends React.Component {
                                 onClick={(e) => {
                                     if (window.admin) {
                                         this.setState({
-                                            show: true
+                                            showEditItem: true
                                         });
                                     } else {
                                         this.props.handleDownloadClick(this.props.item);
@@ -187,7 +227,7 @@ export class Item extends React.Component {
                                 }}
                             >
                                 {
-                                    window.admin ? <FontAwesomeIcon icon={faEdit} /> : (this.props.user.key !== '' && License.isValid(this.props.license)) || this.props.item.isFree ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
+                                    window.admin ? <FontAwesomeIcon icon={faEdit} title="Edit Item" /> : (this.props.user.key !== '' && License.isValid(this.props.license)) || this.props.item.isFree ? <FontAwesomeIcon icon={faDownload} color="#343a40" /> : <FontAwesomeIcon icon={faDownload} color="lightgrey" />
                                 }
                             </span>
                         </span>
