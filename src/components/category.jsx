@@ -37,6 +37,8 @@ export class Category extends React.Component {
                             itemsBegin={itemsBegin}
                             itemsEnd={itemsEnd}
                             itemsLength={itemsLength}
+                            isHomeCategory={this.props.isHomeCategory}
+                            isPrimaryCategory={this.props.isPrimaryCategory}
                             selectAllItemsInCategory={this.props.selectAllItemsInCategory}
                             updateFromOptions={this.props.updateFromOptions}
                             handleClearFavoritesClick={this.props.handleClearFavoritesClick}

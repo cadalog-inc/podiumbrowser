@@ -156,6 +156,7 @@ export class Page extends React.Component {
                                             categoriesLength={categories.length}
                                             getHomeCategory={this.props.getHomeCategory}
                                             isHomeCategory={this.props.isHomeCategory}
+                                            isPrimaryCategory={this.props.isPrimaryCategory}
                                             getItemsInCategory={this.props.getItemsInCategory}
                                             searchArray={this.searchArray}
                                             sortItems={this.sortItems}

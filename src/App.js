@@ -127,6 +127,7 @@ class App extends React.Component {
                                             getHomeCategory={this.getHomeCategory}
                                             isHomeCategory={this.isHomeCategory}
                                             isItemRecent={this.isItemRecent}
+                                            isPrimaryCategory={this.isPrimaryCategory}
                                             useHDR={this.state.useHDR}
                                             selectedAction={this.state.selectedAction}
                                             selectedItems={this.state.selectedItems}
@@ -415,6 +416,10 @@ class App extends React.Component {
             }
         }
         return primaryCategories.sort((a, b) => a.primaryIndex > b.primaryIndex ? 1 : -1);
+    }
+
+    isPrimaryCategory = (category) => {
+        return category.primaryIndex !== -1;
     }
 
     getItemsInCategory = (categoryId) => {

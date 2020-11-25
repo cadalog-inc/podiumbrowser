@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Dropdown, Navbar, NavbarBrand } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faPlusSquare, faAngleLeft, faAngleRight, faClipboardCheck } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faPlusSquare, faAngleLeft, faAngleRight, faClipboardCheck, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { AddItems } from './admin/AddItems';
 import { EditCategory } from './admin/EditCategory';
 
@@ -70,6 +70,41 @@ export class Options extends React.Component {
                                         title="Edit Category"
                                     />
                                     {
+                                        !this.props.isHomeCategory(this.props.category) && !this.props.isPrimaryCategory(this.props.category) &&  this.props.itemsLength === 0 ?
+                                        (
+                                            <React.Fragment>
+                                                <FontAwesomeIcon
+                                                    style={{ marginLeft: 5 }}
+                                                    onClick={(e) => {
+                                                        if (window.confirm("Are you sure you want to REMOVE this category?")) {
+                                                            const category = this.props.category;
+                                                            var params = {
+                                                                TableName: "Categories",
+                                                                Item: category,
+                                                                Key: {
+                                                                    id: category.id
+                                                                }
+                                                            };
+                                                            const options = this;
+                                                            window.docClient.delete(params, function (err, data) {
+                                                                if (err) {
+                                                                    console.log(err);
+                                                                } else {
+                                                                    const index = options.props.categories.indexOf(category);
+                                                                    options.props.categories.splice(index, 1);
+                                                                    options.handleNavigateToParentCategory(category.parentId);
+                                                                }
+                                                            });
+                                                        }
+                                                    }}
+                                                    icon={faTrash}
+                                                    title="Remove Category"
+                                                    color="violet"
+                                                />
+                                            </React.Fragment>
+                                        ) : null
+                                    }
+                                    {
                                         this.props.category.id === 1 ? null :
                                             (
                                                 <React.Fragment>
@@ -86,7 +121,7 @@ export class Options extends React.Component {
                                             )
                                     }
                                     {
-                                        this.props.category.id !== 1 && this.props.itemsLength === 0 ?
+                                        !this.props.isHomeCategory(this.props.category) && this.props.itemsLength === 0 ?
                                             (
                                                 <React.Fragment>
                                                     <FontAwesomeIcon
@@ -225,6 +260,12 @@ export class Options extends React.Component {
 
     handlePageIndexClick = (pageIndex) => {
         this.props.history.push(`/?categoryId=${this.props.query.categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=${pageIndex}&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
+        window.scrollTo(0, 0);
+    }
+
+    // admin
+    handleNavigateToParentCategory = (categoryId) => {
+        this.props.history.push(`/?categoryId=${categoryId}&searchTerm=${this.props.query.searchTerm}&pageIndex=0&pageSize=${this.props.query.pageSize}&onlyFree=${this.props.query.onlyFree}&onlyRecent=${this.props.query.onlyRecent}&sortBy=${this.props.query.sortBy}`);
         window.scrollTo(0, 0);
     }
 }
