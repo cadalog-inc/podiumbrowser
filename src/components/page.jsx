@@ -128,6 +128,7 @@ export class Page extends React.Component {
                                         getHomeCategory={this.props.getHomeCategory}
                                         isHomeCategory={this.props.isHomeCategory}
                                         getItemsInCategory={this.props.getItemsInCategory}
+                                        getSubCategories={this.props.getSubCategories}
                                         searchArray={this.searchArray}
                                         sortItems={this.sortItems}
                                         calculateNextPage={this.calculateNextPage}

@@ -15,13 +15,18 @@ export class SubCategories extends React.Component {
         let itemsBegin = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? this.props.query.pageIndex * this.props.query.pageSize : 0;
         let itemsEnd = this.props.categoriesLength === 1 || this.props.category.id === this.props.getHomeCategory() ? itemsBegin + this.props.query.pageSize : 5;
         let itemsLength = items.length;
+
+        let subCategories = null;
+        if (!this.props.isHomeCategory(this.props.category.id)) {
+            subCategories = this.props.getSubCategories(this.props.category.id);
+        }
         return (
             <React.Fragment>
                 <Row className="ml-1 mb-4">
                     <Col>
                         <Navbar bg="light">
                             <NavbarBrand>
-                                {this.props.category.title} - {itemsLength} files
+                                {this.props.category.title} - {itemsLength} files {subCategories && subCategories.length > 0 ? (<React.Fragment> - { subCategories.length} categories</React.Fragment>) : null}
                             </NavbarBrand>
                             <Nav className="mr-auto">
                             </Nav>
