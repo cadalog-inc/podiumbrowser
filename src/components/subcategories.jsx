@@ -26,7 +26,7 @@ export class SubCategories extends React.Component {
                     <Col>
                         <Navbar bg="light">
                             <NavbarBrand>
-                                {this.props.category.title} - {itemsLength} files {subCategories && subCategories.length > 0 ? (<React.Fragment> - { subCategories.length} categories</React.Fragment>) : null}
+                                {this.props.category.title} {subCategories && subCategories.length > 0 ? (<React.Fragment> - { subCategories.length} categories</React.Fragment>) : <React.Fragment> - {itemsLength} files</React.Fragment>}
                             </NavbarBrand>
                             <Nav className="mr-auto">
                             </Nav>
