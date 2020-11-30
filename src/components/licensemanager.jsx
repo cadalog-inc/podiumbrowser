@@ -28,7 +28,7 @@ export class LicenseManager extends React.Component {
                         Purchase License
                     </Button>
                     <Form.Text className="text-muted">
-                        Visit the online store to purchase an SU Podium license.
+                        Visit the online store to purchase an SU Podium Browser license.
                     </Form.Text>
                 </Form.Group>
                 <Form.Group>
