@@ -159,7 +159,7 @@ export class NavBar extends React.Component {
                                                 <FontAwesomeIcon icon={faEraser} color={"darkgrey"} />
                                         }
                                     </Button>
-                                    <Button type="button" variant="dark" title="Cut/Paste Selected Items" onClick={() => {
+                                    {/* <Button type="button" variant="dark" title="Cut/Paste Selected Items" onClick={() => {
                                         if (window.confirm("Are you sure you want to CUT/PASTE the selected items to this category?")) {
                                             this.cutPasteSelectedItems();
                                         }
@@ -169,7 +169,7 @@ export class NavBar extends React.Component {
                                                 <FontAwesomeIcon icon={faCut} color={"gold"} /> :
                                                 <FontAwesomeIcon icon={faCut} color={"darkgrey"} />
                                         }
-                                    </Button>
+                                    </Button> */}
                                     <Button type="button" variant="dark" title="Copy/Paste Selected Items" onClick={() => {
                                         if (window.confirm("Are you sure you want to COPY/PASTE the selected items to this category?")) {
                                             this.copyPasteSelectedItems();

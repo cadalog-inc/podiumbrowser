@@ -28,7 +28,7 @@ export class LicenseManager extends React.Component {
                         Purchase License
                     </Button>
                     <Form.Text className="text-muted">
-                        Visit the online store to purchase an SU Podium Browser license.
+                        Visit the online store to purchase an Podium Browser license.
                     </Form.Text>
                 </Form.Group>
                 <Form.Group>
@@ -38,7 +38,7 @@ export class LicenseManager extends React.Component {
                         Activate License
                     </Button>
                     <Form.Text className="text-muted">
-                        Activate this computer with an SU Podium license.
+                        Activate this computer with an Podium Browser license.
                     </Form.Text>
                 </Form.Group>
             </Form>
@@ -46,7 +46,7 @@ export class LicenseManager extends React.Component {
             <Form>
                 <Form.Group>
                     <Form.Label>
-                        Please enter your license key to activate your SU Podium license on this computer...
+                        Please enter your license key to activate your Podium Browser license on this computer...
                     </Form.Label>
                     <Form.Control type="text" onChange={(e) => {
                         this.setState({
@@ -81,7 +81,7 @@ export class LicenseManager extends React.Component {
                     <Form>
                         <Form.Group>
                             <Form.Label>
-                                This computer has been activated with a fully licensed copy of SU Podium Browser Standalone
+                                This computer has been activated with a fully licensed copy of Podium Browser
                         </Form.Label>
                             <Form.Control type="text" readOnly value={this.props.license.key} />
                         </Form.Group>
