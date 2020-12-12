@@ -106,29 +106,49 @@ export class UpdateItem extends React.Component {
             const il = imageOptions.length;
 
             const items = [];
-            for (let i = 0; i < fl; i++) {
-                const fileOption = fileOptions[i];
-                let imageOption = null;
-                for (let j = 0; j < il; j++) {
-                    if (imageOptions[j].title === fileOption.title) {
-                        imageOption = imageOptions[j];
-                    }
-                }
-                if (imageOption) {
-                    const file = e.dataTransfer.items[fileOption.index].getAsFile();
+            if (fl > il) {
+                for (let i = 0; i < fl; i++) {
+                    const fileOption = fileOptions[i];
                     items.push({
-                        id: this.props.item.id,
+                        type: "file",
+                        title: fileOption.title,
                         hash: this.props.item.hash,
-                        title: this.props.item.title,
-                        tags: this.props.item.tags,
-                        isFree: this.props.item.isFree,
-                        fileExt: fileOption.ext,
-                        thumbnailExt: imageOption.ext,
-                        fileSize: file.size,
-                        uploadDate: Number(new Date()),
+                        thumbnailExt: "",
                         skpIndex: fileOption.index,
+                        imgIndex: -1
+                    });
+                }
+            } else if (il > fl) {
+                for (let i = 0; i < il; i++) {
+                    const imageOption = imageOptions[i];
+                    items.push({
+                        type: "image",
+                        title: imageOption.title,
+                        hash: this.props.item.hash,
+                        thumbnailExt: imageOption.ext,
+                        skpIndex: -1,
                         imgIndex: imageOption.index
                     });
+                }
+            } else {
+                for (let i = 0; i < fl; i++) {
+                    const fileOption = fileOptions[i];
+                    let imageOption = null;
+                    for (let j = 0; j < il; j++) {
+                        if (imageOptions[j].title === fileOption.title) {
+                            imageOption = imageOptions[j];
+                        }
+                    }
+                    if (imageOption) {
+                        items.push({
+                            type: "both",
+                            title: fileOption.title,
+                            hash: this.props.item.hash,
+                            thumbnailExt: imageOption.ext,
+                            skpIndex: fileOption.index,
+                            imgIndex: imageOption.index
+                        });
+                    }
                 }
             }
 
@@ -139,31 +159,58 @@ export class UpdateItem extends React.Component {
                 for (let i = 0; i < items.length; i++) {
                     const item = items[i];
                     const hash = item.hash;
-                    const skp = dataTransferItems[item.skpIndex].getAsFile();
-                    const img = dataTransferItems[item.imgIndex].getAsFile();
+                    const thumbnailExt = item.thumbnailExt;
+                    const skp = item.skpIndex !== -1 ? dataTransferItems[item.skpIndex].getAsFile() : null;
+                    const img = item.imgIndex !== -1 ? dataTransferItems[item.imgIndex].getAsFile() : null;
                     const skpFormData = new FormData();
-                    skpFormData.append('file', skp);
+                    if(item.skpIndex !== -1) {
+                        skpFormData.append('file', skp);
+                    }
                     const imgFormData = new FormData();
-                    imgFormData.append('file', img);
-
-                    axios
-                        .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.skp/skp`, skpFormData)
-                        .then((r) => {
-                            axios
-                                .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.jpg/img`, imgFormData)
-                                .then((r) => {
-                                    //this.saveItem(item);
-                                    this.state.uploaded.push(item);
-                                    this.forceUpdate();
-                                    console.log(item);
-                                })
-                                .catch((e) => {
-                                    console.log(e);
-                                });
-                        })
-                        .catch((e) => {
-                            console.log(e)
-                        });
+                    if(item.imgIndex !== -1) {
+                        imgFormData.append('file', img);
+                    }
+                    if (item.type === "file") {
+                        axios
+                            .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.skp/skp`, skpFormData)
+                            .then((r) => {
+                                this.state.uploaded.push(item);
+                                this.forceUpdate();
+                                console.log(item);
+                            })
+                            .catch((e) => {
+                                console.log(e)
+                            });
+                    } else if (item.type === "image") {
+                        axios
+                            .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.${thumbnailExt}/img`, imgFormData)
+                            .then((r) => {
+                                this.state.uploaded.push(item);
+                                this.forceUpdate();
+                                console.log(item);
+                            })
+                            .catch((e) => {
+                                console.log(e);
+                            });
+                    } else if (item.type === "both") {
+                        axios
+                            .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.skp/skp`, skpFormData)
+                            .then((r) => {
+                                axios
+                                    .post(`https://v3.pdm-plants-textures.com/api/upload/${hash}.${thumbnailExt}/img`, imgFormData)
+                                    .then((r) => {
+                                        this.state.uploaded.push(item);
+                                        this.forceUpdate();
+                                        console.log(item);
+                                    })
+                                    .catch((e) => {
+                                        console.log(e);
+                                    });
+                            })
+                            .catch((e) => {
+                                console.log(e)
+                            });
+                    }
                 }
             });
         }
