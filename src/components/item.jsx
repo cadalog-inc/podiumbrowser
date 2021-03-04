@@ -165,7 +165,7 @@ export class Item extends React.Component {
                                 borderBottom: '1px solid #e6e6e6'
                             }}
                         >
-                            {this.props.item.title}
+                            {this.props.item.title.replace(/_/g, " ")}
                         </span>
                         <span
                             style={{
