@@ -36,7 +36,9 @@ class Query {
         elements.forEach(element => {
             let [key, value] = element.split('=');
             if(!isNaN(parseInt(value))) {
-                value = parseInt(value);
+                if(key !== 'searchTerm') {
+                    value = parseInt(value);
+                }
             } else if(value === 'true') {
                 value = true;
             } else if(value === 'false') {
