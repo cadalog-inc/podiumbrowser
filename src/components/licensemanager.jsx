@@ -54,7 +54,7 @@ export class LicenseManager extends React.Component {
                         });
                     }} />
                 </Form.Group>
-                <Button variant="dark" type="button" disabled={!License.isUUID(this.state.key)} onClick={() => {
+                <Button variant="dark" type="button" disabled={!License.isUUID(this.state.key) && window.sketchup !== undefined} onClick={() => {
                     this.props.license.activate(
                         this.state.key,
                         (license) => {

@@ -320,7 +320,7 @@ export class NavBar extends React.Component {
                     }}>
                         <Modal.Title>License Manager</Modal.Title>
                         <ButtonGroup>
-                            <Button type="button" variant="dark" onClick={() => {
+                            {/* <Button type="button" variant="dark" onClick={() => {
                                 this.setState({
                                     showLicenseManager: false
                                 }, () => {
@@ -329,7 +329,7 @@ export class NavBar extends React.Component {
                                 });
                             }}>
                                 <FontAwesomeIcon icon={faSync} color="white" />
-                            </Button>
+                            </Button> */}
                             <Button type="button" variant="dark" onClick={() => this.setState({ showLicenseManager: false })}>
                                 <FontAwesomeIcon icon={faTimes} color="white" />
                             </Button>

@@ -47,7 +47,7 @@ class App extends React.Component {
             relationships: [],
             recentDistance: 100,
             useHDR: false,
-            standalone: false,
+            standalone: true,
             dataDownloaded: false,
             dataDownloadingMessage: 'data',
             isValid: false,
@@ -175,7 +175,8 @@ class App extends React.Component {
         if (window.sketchup !== undefined) {
             sketchup.getLicense();
         } else {
-            this.dataDownloaded();
+            // this.dataDownloaded();
+            this.validateLicense();
         }
     }
 
